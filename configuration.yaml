@@ -1,0 +1,456 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: -00.000000
+  longitude: -00.000000
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Sao_Paulo
+  # Customization file
+  customize: !include customize.yaml
+
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+  themes: !include_dir_merge_named themes/
+
+# Enables configuration UI
+config:
+
+recorder:
+  purge_keep_days: 8
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  #base_url: https://xxxxx.duckdns.org:8123
+  #ssl_certificate: /ssl/fullchain.pem
+  #ssl_key: /ssl/privkey.pem
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+# Weather prediction
+sensor:
+  - platform: darksky
+    api_key: !secret api_darksky
+    language: 'pt'
+    units: ca
+    monitored_conditions:
+      - temperature
+      - wind_speed
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+#      - minutely_summary
+      - hourly_summary
+      - daily_summary
+      - temperature_high
+      - temperature_low
+      - uv_index
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+  - platform: systemmonitor
+    resources:
+      - type: disk_free
+        arg: /
+      - type: disk_use
+        arg: /
+      - type: disk_use_percent
+        arg: /
+      - type: memory_free
+      - type: memory_use
+      - type: memory_use_percent
+      - type: processor_use
+      - type: last_boot
+  - platform: template
+    sensors:
+      spotify_volume:
+        friendly_name: "Spotify Volume"
+        value_template: "{{ states.media_player.spotify.attributes.volume_level }}"
+      spotify_shuffle:
+        friendly_name: "Spotify Shuffle"
+        value_template: "{{ states.media_player.spotify.attributes.shuffle }}"
+      alarm_clock_hour:
+        value_template: '{{ states.input_number.alarm_clock_hour.state | int }}'
+      alarm_clock_minutes:
+        value_template: '{{ states.input_number.alarm_clock_minutes.state | int }}'
+      alarm_clock_time:
+        value_template: >-
+          {{ states.sensor.alarm_clock_hour.state }}:
+          {%- if states.sensor.alarm_clock_minutes.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.alarm_clock_minutes.state }}
+      alarm_clock_time_long:
+        value_template: >-
+          {% if states.sensor.alarm_clock_hour.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.alarm_clock_hour.state }}:
+          {%- if states.sensor.alarm_clock_minutes.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.alarm_clock_minutes.state }}
+
+binary_sensor:
+  - platform: ping
+    host: 100.64.0.1
+    name: Internet
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    host: 100.64.0.15
+    name: Tv LG Sala
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    host: 100.64.0.2
+    name: UniFi AP
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    host: 100.64.0.3
+    name: Swt
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    host: 100.64.0.4
+    name: Ap Router Cli TV
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    host: 100.64.0.20
+    name: Chrome Cast Quarto
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    host: 100.64.0.21
+    name: Chrome Cast Sala
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    host: 100.64.0.22
+    name: Google Home Mini
+    count: 5
+    scan_interval: 120
+  - platform: ping
+    host: 100.64.0.23
+    name: Sonoff
+    count: 5
+    scan_interval: 240
+  - platform: ping
+    host: 100.64.0.26
+    name: Broadlink Rm Mini
+    count: 5
+    scan_interval: 240
+
+
+# Text to speech
+tts:
+  - platform: google
+    language: 'pt-br'
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+
+# Cloud
+cloud:
+
+# Editor
+panel_iframe:
+  tasmotaadm:
+    title: Tasmota ADM
+    url: http://100.64.0.5:9541
+    icon: mdi:pulse
+  configurator:
+    title: Editor
+    icon: mdi:wrench
+    url: http://100.64.0.5:3218
+
+# Localizador
+device_tracker:
+  - platform: google_maps
+    username: !secret gmail_user
+    password: !secret gmail_senha
+
+# Player
+media_extractor:
+media_player:
+  - platform: spotify
+    client_id: !secret spotify_client_id
+    client_secret: !secret spotify_client_secret
+
+# Mosquito
+mqtt:
+   broker: core-mosquitto
+   username: !secret mqtt_username
+   password: !secret mqtt_password
+
+switch:
+  - platform: broadlink
+    host: 100.64.0.26
+    mac: '34:EA:34:8E:EC:47'
+    timeout: 15
+    switches:
+      tv_quarto:
+        friendly_name: "TV"
+        command_on: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
+        command_off: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
+      parabolica:
+        friendly_name: "Parabolic"
+        command_on: 'JgBIAAABJZETNhMSEhITERMSEhITEhISEzYSEhM2EzYSNxI2EzYTNhISExISNhM2EzYTERM2EzYTNhI2ExITERMSEjYTEhISEwANBQ=='
+        command_off: 'JgBIAAABJZETNhMSEhITERMSEhITEhISEzYSEhM2EzYSNxI2EzYTNhISExISNhM2EzYTERM2EzYTNhI2ExITERMSEjYTEhISEwANBQ=='
+      ar_quarto:
+        friendly_name: "Air conditioner"
+        command_on: 'JgDKAJCNEzQTERI0EzQTERIREzQTERIREzQTERIREzQTNBMREjUSERMREhETNBM0EzQSNRI0EzQTNBM0ExESERMREhETERISEjQTNBM0EzQSERMRExESNBMRExESERMREjQTNBM0EKuQjhI0ExETNBM0EhETERI1EhETERM0EhETERM0EjUSERM0ExESERMREjUSNBM0EzQTNBM0EzQSNRIRExESERMREhETERM0EjUSNRI0ExESERMREzQSERMRExESERM0EjUSNRAADQUAAAAAAAAAAAAAAAAAAA=='
+        command_off: 'JgDKAIyQETYREhE2ETYREhETETURExESETYREhISETYRNRETETYREhE2ETURNhE2ERIRNhE2ETUSEhESERMREhE2ERISEhE2ETURNhETERIREhISERIRExESERMRNhE1ETYRNBM1EKyOjxE1ERMRNRE2ERISEhE2ERIRExE1EhIREhE2ETYREhE2ERMRNRE2ETYQNhETETURNhE2ERIRExESERMRNRETERISNRE0EzYREhETERIREhETERISEhESETYRNhE1ETYRNhAADQUAAAAAAAAAAAAAAAAAAA=='
+      xboom_som:
+        friendly_name: "Xboom"
+        command_on: 'JgBeAJOUEhMSExMSExIROBITERQRFBETEhMRFBEUETgSExEUERQRExI4EjcSOBI4ERMSExITETkRExITEhMRFBE4EjgSNxIABpWUlRI4EgAMVZKVEjgSAAxVk5UROBIADQUAAAAAAAAAAAAA'
+        command_off: 'JgBeAJOUEhMSExMSExIROBITERQRFBETEhMRFBEUETgSExEUERQRExI4EjcSOBI4ERMSExITETkRExITEhMRFBE4EjgSNxIABpWUlRI4EgAMVZKVEjgSAAxVk5UROBIADQUAAAAAAAAAAAAA'
+      tv_lg_55:
+        friendly_name: "Tv Sala"
+        command_on: 'JgBQAAABKZQQFRETEjgRFBEUERQRFBEUETgROREUETkRORA6EDkROREUERQRFBE5EBURExITEhMSOBE5EDoQFRE4ETkRORE5EAAFLAABKUoRAA0FAAAAAAAAAAA='
+        command_off: 'JgBQAAABKZQQFRETEjgRFBEUERQRFBEUETgROREUETkRORA6EDkROREUERQRFBE5EBURExITEhMSOBE5EDoQFRE4ETkRORE5EAAFLAABKUoRAA0FAAAAAAAAAAA='
+      sky_tv:
+        friendly_name: "Sky"
+        command_on: 'JgBuAMIpKCcTFBQTFCcUExQUFCcTJxQAA9dhKScnEhYSFRIpExQSFRQnEikUAAPXYSgmKRIVEhUSKRIVExUSKRIoEgAD2WEpJSkSFRMVEikSFRIVEikSKRIAA9lhKCYpEhUSFRIpEhUTFRIpEigSAA0FAAAAAAAAAAAAAA=='
+        command_off: 'JgBuAMIpKCcTFBQTFCcUExQUFCcTJxQAA9dhKScnEhYSFRIpExQSFRQnEikUAAPXYSgmKRIVEhUSKRIVExUSKRIoEgAD2WEpJSkSFRMVEikSFRIVEikSKRIAA9lhKCYpEhUSFRIpEhUTFRIpEigSAA0FAAAAAAAAAAAAAA=='
+      home_theater:
+        friendly_name: "Home Theater"
+        command_on: 'JgBeAJKUEhMSExE4EjgSEhI4EhMRExITExIROBI4ERMSOBITERMSExE4EjgSNxI4ERMTEhEUEzYSExEUERMSExM2EjgSNxIABf+SlRI4EgAMTZKVEjgSAAxNkZYSOBEADQUAAAAAAAAAAAAA'
+        command_off: 'JgBeAJKUEhMSExE4EjgSEhI4EhMRExITExIROBI4ERMSOBITERMSExE4EjgSNxI4ERMTEhEUEzYSExEUERMSExM2EjgSNxIABf+SlRI4EgAMTZKVEjgSAAxNkZYSOBEADQUAAAAAAAAAAAAA'
+      ar_consul:
+        friendly_name: "Ar Consul"
+        command_on: 'JgBgAQABKZgVNhU2FRETExQSFBISFRM4FRATORM4FBISFBQSEhQSFBITEhQSORQSFBIUEhQTEhMUEhQ3FBISFBIUFBISOhMSEhQSFBITEhQSFBQSFRISFBQRFBIUEhMSExMTFBIUFBESAAELFREUEhITEhQUEhIUFBMSORQSEhMUEhQSFBISFBIUEhQUEhITEhQSFBQSEhQUExITEhQSFBITEhQSFBIUEhUUEhITFBISFBITFBISFBQTEhQSExQSEhMTExIUFBMSFBQSEhMSFBIUEhMSFBQSFBMUEhITFDcUNxQSEhQSFBI6FDYUAAEJFBIUEhMSEhQSFBQSFBMTExM3FBIUEhIUFBIUEhQSFBIUEhITFBISFBQSFBIUEhQSEhQSExIUFBIUEhIUEhQUEhIUExISFBQSFBISFBQSFBISFBQRFBISFBQSFBIUEhIUFDcUEhQRFBISFBIUFBMTEhQADQUAAAAAAAAAAA=='
+        command_off: 'JgBgAQABK5cVNhM4FRETExMTExMTExM4ExMTOBU2ExMTExMTExMUEhMTExIUOBMTExMTExMTExMTEhM4ExMTExMTExMTORMTExITExMTExIUEhQTExMTExMSExMTExMTExIUExMTExITAAEKFRETEhMTExMTExMTExMTOBQSExMTEhQSFBIUEhQTExMTEhMTExMTEhQSFBIUExMTExITExMTExIUEhQSFBMTExMSExMTExMSFBIUExMTExMTEhMTExMTExMTExMTExMTExIUEhMTExMTExMTExMTExMTEzcTORQSExMTExM4FTYTAAEKFRETEhMTExMTExMTExMTExM4ExMTEhQSExMTExQTExMTEhMTExIUEhMTExMUExMTExITExMTExIUEhQTExMTExMSExMTExMTExMTExMTExMTEhMTExMTExMTExMTExMTEzgUERQSExMTExMTExMUEhMADQUAAAAAAAAAAA=='
+# EN
+#  - platform: mqtt
+#    name: "Sonoff"
+#    state_topic: "stat/sonoff02/POWER"
+#    command_topic: "cmnd/sonoff02/power"
+#    availability_topic: "tele/sonoff02/LWT"
+#    payload_available: "Online"
+#    payload_not_available: "Offline"
+#    qos: 1
+#    payload_on: "ON"
+#    payload_off: "OFF"
+#    retain: true
+# PT BR
+  - platform: mqtt
+    name: "Sonoff"
+    state_topic: "stat/sonoff01/POWER"
+    command_topic: "cmnd/sonoff01/POWER"
+    availability_topic: "tele/sonoff01/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+
+# Inputs text
+input_text:
+  text_clock:
+    name: Mensagem
+    initial: Bom dia, vamos acordar! São 7 e 10.
+  text_url_youtube:
+    name: URL Youtube
+#   initial: https://www.youtube.com/watch?v=wuLKvcn-c7A
+    initial: https://www.youtube.com/watch?v=gs9mi4j6_BY
+
+# Inputs number
+input_number:
+  spotify_volume:
+    name: Volume
+    icon: mdi:volume-high
+    initial: 100
+    min: 0
+    max: 100
+    step: 1
+  alarm_clock_hour:
+    name: Hour
+    icon: mdi:timer
+    initial: 7
+    min: 0
+    max: 23
+    step: 1
+    mode: slider
+  alarm_clock_minutes:
+    name: Minutes
+    icon: mdi:timer
+    initial: 10
+    min: 0
+    max: 59
+    step: 1
+    mode: slider
+  alarm_clock_volume:
+    name: Volume
+    icon: mdi:timer
+    initial: 0.40
+    min: 0
+    max: 0.99
+    step: 0.10
+    mode: slider
+  temperatura_ar:
+    name: 'Temperatura (On)'
+    icon: mdi:temperature-celsius
+    initial: 22
+    min: 17
+    max: 30
+    step: 1
+    mode: slider
+
+# Inputs select
+input_select:
+  spotify_playlist:
+    name: 'Playlist:'
+    options:
+      - Classicas da Zona
+      - Gauderias
+      - 50+ Brasil
+      - Bandinhas
+      - Sertanejo Mais Tocado
+      - Rock Sussa
+      - Classic Rock
+      - Rock Nacional
+      - Metallica Tops
+    icon: mdi:spotify
+
+# Inputs boolean
+input_boolean:
+  spotify_shuffle:
+    name: Shuffle
+    icon: mdi:shuffle-variant
+  alarm_clock_status:
+    initial: on
+
+#Repetido, apenas para teste
+light:
+  - platform: mqtt
+    name: "Luz Teste"
+    state_topic: "stat/sonoff01/POWER"
+    command_topic: "cmnd/sonoff01/POWER"
+    availability_topic: "tele/sonoff01/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+
+#camera:
+#  - platform: generic
+#    name: Camera
+
+#camera:
+#  - platform: ffmpeg
+#    name: Cam
+#    input: -rtsp_transport tcp -i rtsp://x.x.x.:7447/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx_1
+#camera:
+#  - platform: mjpeg
+#    name: CameraCelular
+#    mjpeg_url: http://x.x.x.x:8080/video
+
+#android_ip_webcam:
+#  - host: x.x.x.x
+#    port: 8080
+#    name: Oneplus3T
+#    username: admin
+#    password: admin
+#    scan_interval: 5
+#    motion_sensor: true
+#    sensors:
+##      - audio_connections
+#      - battery_level
+##      - battery_temp
+##      - battery_voltage
+##      - light
+#      - motion
+##      - pressure
+##      - proximity
+#      - sound
+##      - video_connections
+#    switches:
+#      - exposure_lock
+#      - ffc
+#      - focus
+#      - gps_active
+#      - night_vision
+#      - overlay
+##      - torch
+##      - whitebalance_lock
+##      - video_recording
+
+#google_assistant:
+#  project_id: !secret gg_project_id
+#  client_id: !secret gg_client_id
+#  access_token: !secret gg_access_token
+#  agent_user_id: !secret gg_agent_user_id
+#  api_key: !secret gg_api_key
+
+notify:
+  - name: telegrambot
+    platform: telegram
+    chat_id: 000000000
+
+telegram_bot:
+  platform: polling
+  api_key: 594389027:AAHWdFWMsvK59s46CjVYqIvzBNTpEBu3_LI
+  allowed_chat_ids:
+    - 000000000
+
+alarm_control_panel:
+  - platform: manual
+    name: Alarme da Casa
+    code: 1234
+    pending_time: 30
+    delay_time: 20
+    trigger_time: 4
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      pending_time: 0
+      delay_time: 0
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml

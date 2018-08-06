@@ -1,0 +1,31 @@
+title: Lovelace
+views:
+  - title: Home
+    icon: mdi:home-assistant
+    cards:
+      - type: markdown
+        title: Lovelace
+        content: >
+          Welcome to your **Lovelace UI**.
+      - type: glance
+        title: Glance card
+        entities:
+          - sensor.dark_sky_temperature
+          - sensor.dark_sky_wind_speed
+          - sensor.dark_sky_humidity
+  - title: Tempo
+    icon: mdi:weather-partlycloudy
+    cards:
+      - type: iframe
+        title: Chuva
+        url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=rain&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
+        aspect_ratio: 100%
+      - type: iframe
+        title: Vento
+        url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=wind&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
+      - type: iframe
+        title: Temperatura
+        url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=temp&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
+      - type: iframe
+        title: Nuvens
+        url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=clouds&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1

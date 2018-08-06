@@ -1,0 +1,197 @@
+view_controle_ir:
+   view: yes
+   icon: mdi:remote
+   entities:
+     - group.home_room_tv
+     - group.home_parabolic
+     - group.home_conditioner
+     - group.xboom_control
+     - group.sala_tv
+     - group.ar_consul
+     - group.lg55_grupo
+
+view_interruptores:
+   view: yes
+   icon: mdi:lightbulb-on-outline
+   entities:
+     - group.interruptores
+
+view_multimidia:
+   view: yes
+   icon: mdi:play-speed
+   entities:
+     - media_player.google_home
+     - media_player.tv_do_quarto
+     - media_player.tv_da_sala
+     - group.home_spotify_controls
+
+view_alarmes:
+   view: yes
+   icon: mdi:alarm
+   entities:
+     - group.alarm_clock
+     - group.horacerta
+
+view_systema:
+   view: yes
+   icon: mdi:engine
+   entities:
+     - group.sysinfo
+     - group.dispositivos_rede
+
+alarmecasa:
+  name: Alarme Casa
+  entities:
+    - alarm_control_panel.alarme_da_casa
+
+pessoas:
+  name: Localização
+  entities:
+    - device_tracker.google_maps_106566341309199592438
+    - device_tracker.google_maps_118429201781082195315
+
+interruptores:
+  name: Interruptores SONOFF
+  entities:
+    - switch.Sonoff
+
+clima:
+  name: 'Clima'
+  entities:
+    - sun.sun
+    - sensor.dark_sky_temperature
+    - sensor.dark_sky_daytime_high_temperature
+    - sensor.dark_sky_overnight_low_temperature
+    - sensor.dark_sky_cloud_coverage
+    - sensor.dark_sky_wind_speed
+    - sensor.dark_sky_humidity
+    - sensor.dark_sky_uv_index
+    - sensor.dark_sky_visibility
+    - sensor.dark_sky_pressure
+
+previsao:
+  name: 'Previsão do Tempo'
+  entities:
+#    - sensor.dark_sky_minutely_summary
+    - sensor.dark_sky_hourly_summary
+    - sensor.dark_sky_daily_summary
+
+dispositivos_rede:
+  name: Dispositivos na Rede
+  entities:
+    - binary_sensor.Internet
+    - binary_sensor.Tv_LG_Sala
+    - binary_sensor.UniFi_AP
+    - binary_sensor.Swt
+    - binary_sensor.Ap_Router_Cli_TV
+    - binary_sensor.Chrome_Cast_Quarto
+    - binary_sensor.Chrome_Cast_Sala
+    - binary_sensor.Google_Home_Mini
+    - binary_sensor.Sonoff
+    - binary_sensor.Broadlink_Rm_Mini
+
+sysinfo:
+  name: Raspberry System Info
+  entities:
+    - sensor.disk_use_
+    - sensor.disk_free_
+    - sensor.disk_use_percent_
+    - sensor.memory_use
+    - sensor.memory_free
+    - sensor.memory_use_percent
+    - sensor.processor_use
+    - sensor.last_boot
+
+horacerta:
+  name: Data Hora
+  entities:
+    - sensor.time
+    - sensor.date
+    - sensor.time_utc
+
+home_spotify_player:
+  name: Spotify Player
+  entities:
+    - media_player.spotify
+
+home_spotify_controls:
+  name: Spotify Controls
+  control: hidden
+  entities:
+    - input_select.spotify_playlist
+    - script.spotify_music
+    - input_number.spotify_volume
+    - input_boolean.spotify_shuffle
+
+home_room_tv:
+  name: TV Room
+  entities:
+    - script.tv_quarto_vol_up
+    - script.tv_quarto_vol_down
+    - script.tv_quarto_mute
+    - script.tv_quarto_sleep
+    - script.tv_quarto_input
+    - switch.tv_quarto
+
+home_parabolic:
+  name: Parabolic
+  entities:
+    - script.parabolica_sleep
+    - script.parabolica_vol_up
+    - script.parabolica_vol_down
+    - script.parabolica_up
+    - script.parabolica_down
+    - script.parabolica_ok
+    - switch.parabolica
+
+home_conditioner:
+  name: Air conditioner
+  entities:
+    - input_number.temperatura_ar
+    - script.air_quarto_led
+    - script.air_quarto_swing
+    - switch.ar_quarto
+
+alarm_clock:
+  name: Alarm Clock
+  entities:
+    - sensor.alarm_clock_time
+    - input_number.alarm_clock_hour
+    - input_number.alarm_clock_minutes
+    - input_text.text_clock
+    - input_text.text_url_youtube
+    - input_number.alarm_clock_volume
+    - input_boolean.alarm_clock_status
+
+sala_tv:
+  name: Sala de TV
+  entities:
+    - switch.tv_lg_55
+    - switch.sky_tv
+    - switch.home_theater
+
+xboom_control:
+  name: Xboom
+  entities:
+    - script.xboom_vol_up
+    - script.xboom_vol_down
+    - script.xboom_mute
+    - script.xboom_input
+    - script.xboom_equalizer
+    - switch.xboom_som
+
+lg55_grupo:
+  name: TV Lg 55
+  entities:
+    - script.lg55_input
+    - script.lg55_vol_up
+    - script.lg55_vol_down
+    - script.lg55_mute
+    - script.lg55_simplink
+    - script.lg55_exit
+    - switch.tv_lg_55
+
+ar_consul:
+  name: Ar Consul
+  entities:
+    - switch.ar_consul

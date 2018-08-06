@@ -1,0 +1,189 @@
+spotify_music:
+  alias: Play selected spotify playlist
+  sequence:
+  - service: media_player.play_media
+    data_template:
+      entity_id: media_player.spotify
+      media_content_type: playlist
+      media_content_id: 
+        '{% if is_state("input_select.spotify_playlist", "Classicas da Zona") %} spotify:user:rudiremontti:playlist:4YOoZ4EqhINjxVYStoo8xh
+        {% elif is_state("input_select.spotify_playlist", "Gauderias") %} spotify:user:jackson.antunes.93:playlist:6YJNp1P7UhzHAUaIWOqHZI
+        {% elif is_state("input_select.spotify_playlist", "50+ Brasil") %} spotify:user:spotifycharts:playlist:37i9dQZEVXbMXbN3EUUhlg
+        {% elif is_state("input_select.spotify_playlist", "Bandinhas") %} spotify:user:rudiremontti:playlist:55vLjLWFN9IyG1TjxqkRJ5
+        {% elif is_state("input_select.spotify_playlist", "Sertanejo Mais Tocado") %} spotify:user:redmusiccompany:playlist:68kJ4ASW7AWdDKMiC3C7mC
+        {% elif is_state("input_select.spotify_playlist", "Rock Sussa") %} spotify:user:rudiremontti:playlist:38fZXSVa5cOhIB7If211jJ
+        {% elif is_state("input_select.spotify_playlist", "Classic Rock") %} spotify:user:rudiremontti:playlist:3S33x7DEWFSD9vXC9NGAVP
+        {% elif is_state("input_select.spotify_playlist", "Rock Nacional") %} spotify:user:12125731248:playlist:6yxboZCApBt9U6srFv0Xz4
+        {% elif is_state("input_select.spotify_playlist", "Metallica Tops") %} spotify:user:rudiremontti:playlist:4UmJ20IrEc3Zw2bd2VXidh
+        {% endif %}'
+
+tv_quarto_vol_up:
+  alias: TV Volume Up
+  sequence:
+  - data:
+      packet:
+      - JgBQAAABJJURExITERMSExETEhMSNxISEjcTNhQ2EjcTNxI3EhISOBISEjgRExI4EjcTEhISEhMRNxQREzYUEBMSEzYTNxM1EwAFFwABJ0gTAA0FAAAAAAAAAAA=
+      - JgBQAAABJJURExITERMSExETEhMSNxISEjcTNhQ2EjcTNxI3EhISOBISEjgRExI4EjcTEhISEhMRNxQREzYUEBMSEzYTNxM1EwAFFwABJ0gTAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+tv_quarto_vol_down:
+  alias: TV Volume Down
+  sequence:
+  - data:
+      packet:
+      - JgBQAAABJ5EUERMRFBETERQRExEUNhMRFDUTNxM2EzYTNhQ2ExEUNRQRFDUUNhM2FDYTERMSExETNxISExISEhMSEjYUNRQ2EwAFFgABJ0gTAA0FAAAAAAAAAAA=
+      - JgBQAAABJ5EUERMRFBETERQRExEUNhMRFDUTNxM2EzYTNhQ2ExEUNRQRFDUUNhM2FDYTERMSExETNxISExISEhMSEjYUNRQ2EwAFFgABJ0gTAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+tv_quarto_mute:
+  alias: TV Mute
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+      - JgBYAAABJZIUEBQRFBAUERQQFBEUNRQREzYUNhM2EzYTNxM2ExISNhQRExEUERMRFDYTERQRExEUNhM2FDUUNRQREzcSNxM3EgAFFwABJUgUAAw9AAEnSBMADQU=
+tv_quarto_sleep:
+  alias: TV Sleep
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+      - JgBQAAABJZMSExETERQRExEUERMRORETETgROBI0FTgSNxI4ERMROBE5EhIRORETETkRExEUERMRFBE3ExISNxITEzQUNxI4EwAFFQABJkgTAA0FAAAAAAAAAAA=
+tv_quarto_input:
+  alias: "TV Input"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgBYAAABJZMSExETERQRExEUERMROBISEjgSNxI3EjgROBI4ERMRORE4EjcSOBE3ExISEhITEhISExISEhMSEhI4ETgSNxI4EgAFFQABJUoRAAxAAAElSRMADQU="
+parabolica_vol_up:
+  alias: "Parabolic Volume Up"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgBgAAABI5QRNxITERMRExITEBQRFBETETgRExE4ETgROBE3EjcROBE2ExMRExEUERMRExI3ETgRExE4ETgROBE3EjcRFBETEAAFGQABI0oTAAwxAAEjShIADDIAASNLEQANBQAAAAAAAAAA"
+parabolica_vol_down:
+  alias: "Parabolic Volume Down"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgBgAAABI5MSNxITERMRExITERMRFBETETgRExE4ETgRNxI3ETgRNxI3EhMRExE4ETgRExEUETcSExE4ETcRFBETETgROBETEQAFGAABI0oRAAwzAAEjShIADDIAASNKEgANBQAAAAAAAAAA"
+parabolica_up:
+  alias: "Parabolic Up"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgBgAAABI5MROBETERQRExETEhMRExETEjcSExE3EjYSOBE4ETgRNxITETgRExE4ERMRExI3ETgROBETETgRExI3ETgRExEUEQAFFwABJEoRAAwzAAEjSxEADDMAASNKEQANBQAAAAAAAAAA"
+parabolica_down:
+  alias: "Parabolic Down"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgBgAAABJJIQORAUERQQFBAUERQQFBEUEDgRFBA4ETgROBA5EDkQOBEUEDkQFBAUETgQFBE4EDkQORAUEDkQORAUEDkQFBAVEAAFGAABJUkSAAwyAAElSRAADDMAASZIEAANBQAAAAAAAAAA"
+parabolica_sleep:
+  alias: "Parabolic Sleep"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgBoAAABJZETNhMSEhITEhISExETEhISEzYTERM2EzYTNhI2EzYTNhM2EjcSEhMRExISEhMSEjYTEhISEzYTNhI2EzYTNhMREwAFFgABJkgTAAwxAAEmSBMADDEAASZIEwAMMQABJUgTAA0F"
+parabolica_ok:
+  alias: "Parabolic OK"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgBoAAABI5MROBETERQRExEUERMRExITETcSExE4ETcSNxE4ETgRNxITETgRNxI3ERMSExE4ETcSNxEUERMRExI3ETgRExEUEQAFFwABJEoRAAwzAAEjShIADDIAASNLEQAMMwABI0kSAA0F"
+air_quarto_swing:
+  alias: "Air Swing"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgDKAI6PETURExE1ETYRExESETYREhETETYREhESETYRNhESETYRExE1ETYREhE2ERMRNRI1ETYRExESETYREhE2ERIRExE2ETURNhETERIREhISERISEhESEhIRNhE1EjURNBM1EauOjhI1ERMRNRE2ERMREhE2ERIRExE2ERIREhI1ETYREhE2ERMRNRE2ERISNRETETYRNRE2ERMREhE2ERIRNhESERMRNhE1EjURExESERMREhETERIRExESETYRNRI1ETYRNhAADQUAAAAAAAAAAAAAAAAAAA=="
+air_quarto_led:
+  alias: "Air Led"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgDKAI6QEjQTERI1EjQTERI0ExESNRIREzQSERMREjQTERI1EhETNBI1EjQTNBISEjQTERI1EhETERIREhISNBMREjUSERM0EhETNBMREhETNBIREzQSEhI0EhISNBM0EhISNBMREKuPjRM0ExESNBM0EhETNBMREjQTERI1EhESEhI0ExESNBMREjUSNBM0EjUSERI1EhETNBMREhETERIREzQSERM0ExESNBMREjUSERMREjQTERI1EhESNRIREzQSNRIREjUSERAADQUAAAAAAAAAAAAAAAAAAA=="
+xboom_vol_up:
+  alias: Xboom Vol Up
+  sequence:
+  - data:
+      packet:
+      - JgBOAJKVExISExEUERQROBITERQRExITEhMRFBEUETgTEhEUERQROBI4ETgSExE5ERMSExITERQRFBETEjgSExE4EjgSNxIABpeSlRI4EQANBQAAAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+xboom_vol_down:
+  alias: Xboom Vol Down
+  sequence:
+  - data:
+      packet:
+      - JgBWAJGWEhMTERITEhMROBITEhMSExEUExIRExITETkRExITEhMRFBE4EjgSExM2EhMRFBEUETgSExEUETgSExM3EjcSOBIABpaTlRE4EgAMVpKVEjcSAA0FAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+xboom_mute:
+  alias: Xboom Mute
+  sequence:
+  - data:
+      packet:
+      - JgBWAJOUEhMSExMSERQSNxITERQRFBETEhMSExMSETgSExMSExITNhI4EjcSOBI3EhMSExEUERQRExITEhMRFBE4EjgSOBEABpeSlRI4EgAMVZKWEjcSAA0FAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+xboom_input:
+  alias: Xboom Input
+  sequence:
+  - data:
+      packet:
+      - JgBOAJGWFBEQFRAUERQRORQREBQRFBEUERQQFBITETkTEhAUERQSOBQ1ExMRExEUERMSExITEhMQFRE4EzcUNRQ2FDUSOBQABpSVkxQ1EwANBQAAAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+xboom_equalizer:
+  alias: Xboom Equalizer
+  sequence:
+  - data:
+      packet:
+      - JgBWAJOUEhMSExEUERQROBITERQRFBETEhMSExEUETgSExEUERQRExITEhMRFBEUERMSOBITETgSOBI3EjgSNxI4EhMROBIABpaSlRI4EgAMVJOVETgSAA0FAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+lg55_input:
+  alias: Lg 55 Input
+  sequence:
+  - data:
+      packet:
+      - JgBYAAABKpIRFBEUETkQFREUERQRExEUEjgROREUETkQORE5ETkRORE5EDkRFBI4ERQRFBEUERQRFBEUETgRFBI4ETkRORA5EQAFKwABKkkQAAxgAAEpSREADQU=
+    service: switch.broadlink_send_packet_100_64_0_26
+lg55_vol_up:
+  alias: Lg 55 Vol Up
+  sequence:
+  - data:
+      packet:
+      - JgBQAAABKZMRFBEUETkRFBEUERQQFRAVEDkROREUETkQOhA5ETkROREUEDoQFRAUERQRFBITERQROREUEDkRORE5ETkRORA5EQAFKwABKUoQAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+lg55_vol_down:
+  alias: Lg 55 Vol Don
+  sequence:
+  - data:
+      packet:
+      - JgBYAAABJ5UQFREUETgRFBITERQRFBEUETkQOREUEjgRORE5EDoQORE5ETkRFBEUERQRFBETEhMSExITETkRORA6EDkRORE5EQAFKwABKEoRAAxfAAEoSxAADQU=
+    service: switch.broadlink_send_packet_100_64_0_26
+lg55_mute:
+  alias: Lg 55 Mute
+  sequence:
+  - data:
+      packet:
+      - JgBYAAABJ5URFBEUETgRFBITEhMSExEUETkRORAVETgRORE5ETkQORE5ERQSExE5ERQRFBEUERQRExI4ETkRFBE5EDkRORE5EQAFKwABKEYVAAxfAAEpShEADQU=
+    service: switch.broadlink_send_packet_100_64_0_26
+lg55_simplink:
+  alias: Lg 55 Simplink
+  sequence:
+  - data:
+      packet:
+      - JgBYAAABKJQRFBITETkRFBEUERQRFBETEjgROREUETkQOhA5ETkROREUETkQORE5ETkRORA6EBUROBEUEhMRFBEUERQRFBE4EQAFKwABKEsQAAxgAAEpSREADQU=
+    service: switch.broadlink_send_packet_100_64_0_26
+lg55_exit:
+  alias: Lg 55 exit
+  sequence:
+  - data:
+      packet:
+      - JgBQAAABKJQRFBITEjgRFBEUERQRFBEUETgROREUETkRORA5ETkRORE5ETkQFRE4ETkRFBE5EBURFBEUEDkSExITETkRFBE5EAAFKwABKEsQAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26

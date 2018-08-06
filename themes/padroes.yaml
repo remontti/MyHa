@@ -1,0 +1,38 @@
+    red:
+      primary-color: "#f44336"
+    pink:
+      primary-color: "#e91e63"
+    purple:
+      primary-color: "#9c27b0"
+    deep-purple:
+      primary-color: "#673ab7"
+    indigo:
+      primary-color: "#3f51b5"
+    blue:
+      primary-color: "#2196f3"
+    light-blue:
+      primary-color: "#03a9f4"
+    cyan:
+      primary-color: "#00bcd4"
+    teal:
+      primary-color: "#009688"
+    green:
+      primary-color: "#4caf50"
+    light-green:
+      primary-color: "#8bc34a"
+    lime:
+      primary-color: "#cddc39"
+    yellow:
+      primary-color: "#ffeb3b"
+    amber:
+      primary-color: "#ffc107"
+    orange:
+      primary-color: "#ff9800"
+    deep-orange:
+      primary-color: "#ff5722"
+    brown:
+      primary-color: "#795548"
+    grey:
+      primary-color: "#9e9e9e"
+    blue-grey:
+      primary-color: "#607d8b"
