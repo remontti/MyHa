@@ -1,0 +1,316 @@
+  - platform: yeelight
+    devices:
+      100.64.0.70:
+        name: Abajur da Suite
+  - platform: flux_led
+    devices:
+      100.64.0.46:
+        name: Fita Led
+  - platform: mqtt
+    name: "Garagem"
+    state_topic: "stat/sonoff13/POWER"
+    command_topic: "cmnd/sonoff13/POWER"
+    availability_topic: "tele/sonoff13/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Cozinha Pia"
+    state_topic: "stat/sonoff15/POWER"
+    command_topic: "cmnd/sonoff15/POWER"
+    availability_topic: "tele/sonoff15/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Cozinha Bancada"
+    state_topic: "stat/sonoff21/POWER"
+    command_topic: "cmnd/sonoff21/POWER"
+    availability_topic: "tele/sonoff21/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Porta de Entrada"
+    state_topic: "stat/sonoff28/POWER"
+    command_topic: "cmnd/sonoff28/POWER"
+    availability_topic: "tele/sonoff28/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Jantar Ent Frente"
+    state_topic: "stat/sonoff11/POWER"
+    command_topic: "cmnd/sonoff11/POWER"
+    availability_topic: "tele/sonoff11/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Jantar Ent Garagem"
+    state_topic: "stat/sonoff20/POWER"
+    command_topic: "cmnd/sonoff20/POWER"
+    availability_topic: "tele/sonoff20/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Sala Game Central"
+    state_topic: "stat/sonoff14/POWER"
+    command_topic: "cmnd/sonoff14/POWER"
+    availability_topic: "tele/sonoff14/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Sala Game Spots"
+    state_topic: "stat/sonoff07/POWER"
+    command_topic: "cmnd/sonoff07/POWER"
+    availability_topic: "tele/sonoff07/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Sala Game Trilhos"
+    state_topic: "stat/sonoff19/POWER"
+    command_topic: "cmnd/sonoff19/POWER"
+    availability_topic: "tele/sonoff19/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Jantar"
+    state_topic: "stat/sonoff29/POWER"
+    command_topic: "cmnd/sonoff29/POWER"
+    availability_topic: "tele/sonoff29/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Refletores Piscina"
+    state_topic: "stat/sonoff23/POWER"
+    command_topic: "cmnd/sonoff23/POWER"
+    availability_topic: "tele/sonoff23/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Cozinha Pendentes"
+    state_topic: "stat/sonoff16/POWER"
+    command_topic: "cmnd/sonoff16/POWER"
+    availability_topic: "tele/sonoff16/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Cozinha Central"
+    state_topic: "stat/sonoff05/POWER"
+    command_topic: "cmnd/sonoff05/POWER"
+    availability_topic: "tele/sonoff05/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Lavanderia"
+    state_topic: "stat/sonoff22/POWER"
+    command_topic: "cmnd/sonoff22/POWER"
+    availability_topic: "tele/sonoff22/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Lavabo"
+    state_topic: "stat/sonoff01/POWER"
+    command_topic: "cmnd/sonoff01/POWER"
+    availability_topic: "tele/sonoff01/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Sala Estar Lustre"
+    state_topic: "stat/sonoff12/POWER"
+    command_topic: "cmnd/sonoff12/POWER"
+    availability_topic: "tele/sonoff12/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Sala Estar Spots"
+    state_topic: "stat/sonoff31/POWER"
+    command_topic: "cmnd/sonoff31/POWER"
+    availability_topic: "tele/sonoff31/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Corredor"
+    state_topic: "stat/sonoff08/POWER"
+    command_topic: "cmnd/sonoff08/POWER"
+    availability_topic: "tele/sonoff08/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Quarto Frente"
+    state_topic: "stat/sonoff04/POWER"
+    command_topic: "cmnd/sonoff04/POWER"
+    availability_topic: "tele/sonoff04/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Quarto Meio"
+    state_topic: "stat/sonoff06/POWER"
+    command_topic: "cmnd/sonoff06/POWER"
+    availability_topic: "tele/sonoff06/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Banheiro Social"
+    state_topic: "stat/sonoff24/POWER"
+    command_topic: "cmnd/sonoff24/POWER"
+    availability_topic: "tele/sonoff24/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Suite"
+    state_topic: "stat/sonoff26/POWER"
+    command_topic: "cmnd/sonoff26/POWER"
+    availability_topic: "tele/sonoff26/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Banheiro Suite"
+    state_topic: "stat/sonoff09/POWER"
+    command_topic: "cmnd/sonoff09/POWER"
+    availability_topic: "tele/sonoff09/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Closet"
+    state_topic: "stat/sonoff30/POWER"
+    command_topic: "cmnd/sonoff30/POWER"
+    availability_topic: "tele/sonoff30/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Area Piscina"
+    state_topic: "stat/sonoff10/POWER"
+    command_topic: "cmnd/sonoff10/POWER"
+    availability_topic: "tele/sonoff10/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Varanda Suite"
+    state_topic: "stat/sonoff03/POWER"
+    command_topic: "cmnd/sonoff03/POWER"
+    availability_topic: "tele/sonoff03/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Arandela Varanda Suite"
+    state_topic: "stat/sonoff17/POWER"
+    command_topic: "cmnd/sonoff17/POWER"
+    availability_topic: "tele/sonoff17/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Arandelas"
+    state_topic: "stat/sonoff25/POWER"
+    command_topic: "cmnd/sonoff25/POWER"
+    availability_topic: "tele/sonoff25/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true

@@ -1,3 +1,85 @@
+binary_sensor.floorplan:
+  custom_ui_state_card: state-card-floorplan
+  config:
+    name: Demo Floorplan
+    image: /local/custom_ui/floorplan/planta.svg
+    stylesheet: /local/custom_ui/floorplan/floorplan.css
+    last_motion_entity: sensor.template_last_motion
+    last_motion_class: last-motion
+    groups:
+    - name: Sensors
+      entities:
+      - sensor.dark_sky_temperature
+      text_template: '${entity.state ? Math.ceil(entity.state) : "undefined"}'
+      class_template: ' var temp = parseFloat(entity.state.replace("°", "")); if (temp
+        < 10) return "temp-low"; else if (temp < 30) return "temp-medium"; else return
+        "temp-high"; '
+    - name: Lights
+      entities:
+      - switch.sonoff
+      - light.flux_led
+      states:
+      - state: 'on'
+        class: light-on
+      - state: 'off'
+        class: light-off
+      action:
+        domain: homeassistant
+        service: toggle
+    - name: Switches
+      entities:
+      - switch.sonoff1
+      states:
+      - state: 'on'
+        class: doorbell-on
+      - state: 'off'
+        class: doorbell-off
+    - name: Doors
+      entities:
+      - binary_sensor.porta
+      - binary_sensor.presenca
+      states:
+      - state: 'off'
+        class: door_closed
+      - state: 'on'
+        class: door_open
+    - name: Alarm Panel
+      entities:
+      - alarm_control_panel.alarme_da_casa
+      states:
+      - state: armed_away
+        class: alarm-armed
+      - state: armed_home
+        class: alarm-armed
+      - state: disarmed
+        class: alarm-disarmed
+    - name: Binary sensors
+      entities:
+      - binary_sensor.chrome_cast_quarto
+      - binary_sensor.unifi_ap
+      - binary_sensor.broadlink_ir_quarto
+      - binary_sensor.broadlink_ir_sala
+      - binary_sensor.chrome_cast_sala
+      - binary_sensor.google_home_quarto
+      - binary_sensor.google_home_sala
+      - binary_sensor.sonoff_rf_bridge_433
+      - binary_sensor.internet
+      states:
+      - state: 'off'
+        class: info-background
+      - state: 'on'
+        class: warning-background
+      state_transitions:
+      - name: On to off
+        from_state: 'on'
+        to_state: 'off'
+        duration: 10
+    - name: Cameras
+      entities:
+      - camera.wanscam
+      states:
+      - state: idle
+        class: camera-idle
 sun.sun:
   friendly_name: Sol
 sensor.yr_symbol:
@@ -22,7 +104,7 @@ binary_sensor.tv_lg_sala:
   icon: mdi:television-classic
 binary_sensor.internet:
   icon: mdi:earth
-binary_sensor.chrome_cast_sala:
+binary_sensor.chrome_cast_game:
   icon: mdi:google-chrome
 binary_sensor.chrome_cast_quarto:
   icon: mdi:google-chrome
@@ -41,6 +123,7 @@ binary_sensor.sonoff_abajur:
   icon: mdi:flash-circle
 group.home_room_tv: {}
 switch.tv_quarto:
+  hidden: true
   icon: mdi:television-classic
 script.tv_quarto_vol_down:
   icon: mdi:arrow-down-bold-box
@@ -50,8 +133,6 @@ script.tv_quarto_mute:
   icon: mdi:volume-off
 script.tv_quarto_sleep:
   icon: mdi:sleep
-binary_sensor.broadlink_rm_mini:
-  icon: mdi:remote
 binary_sensor.sonoff:
   icon: mdi:flash-circle
 script.parabolica_up:
@@ -67,10 +148,12 @@ script.parabolica_ok:
 script.parabolica_sleep:
   icon: mdi:sleep
 switch.parabolica:
+  hidden: true
   icon: mdi:satellite-uplink
 script.tv_quarto_input:
   icon: mdi:video-input-hdmi
 switch.ar_quarto:
+  hidden: true
   icon: mdi:air-conditioner
 script.air_quarto_led:
   icon: mdi:led-variant-on
@@ -102,8 +185,6 @@ script.air_quarto_25:
   icon: mdi:temperature-celsius
 script.parabolica_down:
   icon: mdi:arrow-down-bold-box
-input_boolean.alarm_clock_status:
-  friendly_name: Alarm Status
 sensor.alarm_clock_time:
   friendly_name: Alarms set to
   icon: mdi:alarm-bell
@@ -118,6 +199,7 @@ sensor.alarm_clock_minutes:
 sensor.alarm_clock_time_long:
   hidden: true
 switch.xboom_som:
+  hidden: true
   icon: mdi:speaker-wireless
 script.xboom_vol_down:
   icon: mdi:arrow-down-bold-box
@@ -130,6 +212,7 @@ script.xboom_input:
 script.xboom_equalizer:
   icon: mdi:tune-vertical
 switch.tv_lg_55:
+  hidden: true
   icon: mdi:television
 switch.home_theater:
   icon: mdi:theater
@@ -147,6 +230,10 @@ script.lg55_simplink:
   icon: mdi:link-variant
 script.lg55_exit:
   icon: mdi:exit-to-app
+device_tracker.google_maps_106566341309199592438:
+  friendly_name: Rudimar
+device_tracker.google_maps_118429201781082195315:
+  friendly_name: Flávia
 sensor.dark_sky_uv_index:
   friendly_name: Índice de UV
 sensor.dark_sky_cloud_coverage:
@@ -163,3 +250,100 @@ sensor.dark_sky_hourly_summary:
   friendly_name: Resumo 24h
 sensor.dark_sky_daily_summary:
   friendly_name: Resumo da semana
+script.proj_b:
+  icon: mdi:arrow-down-thick
+script.proj_c:
+  icon: mdi:arrow-up-thick
+script.proj_mute:
+  icon: mdi:volume-mute
+script.proj_t:
+  icon: mdi:arrow-left-thick
+script.proj_f:
+  icon: mdi:arrow-right-thick
+script.proj_ok:
+  icon: mdi:camera-metering-center
+script.proj_vup:
+  icon: mdi:volume-plus
+script.proj_vdown:
+  icon: mdi:volume-minus
+script.proj_esc:
+  icon: mdi:exit-to-app
+script.proj_input:
+  icon: mdi:video-input-hdmi
+group.projetor_gp:
+  icon: mdi:projector
+switch.projetor:
+  hidden: true
+  icon: mdi:projector
+script.proj_menu:
+  icon: mdi:settings-outline
+binary_sensor.sonoff_rf_bridge:
+  icon: mdi:radar
+binary_sensor.broadlink_ir_quarto:
+  icon: mdi:remote
+binary_sensor.broadlink_ir_sala:
+  icon: mdi:remote
+binary_sensor.camera_digoo:
+  icon: mdi:cctv
+group.all_automations:
+  friendly_name: Automações
+group.all_scripts:
+  hidden: true
+group.all_lights:
+  friendly_name: Todas as Luzes
+group.all_switches:
+  friendly_name: Interruptores
+light.yeelight_rgb_7c49eb15924b:
+  hidden: true
+switch.sirenes:
+  icon: mdi:alarm-light
+input_boolean.zona_ext_garagem:
+  icon: mdi:transit-transfer
+input_boolean.zona_ext_piscina:
+  icon: mdi:transit-transfer
+input_boolean.zona_sala_social:
+  icon: mdi:transit-transfer
+input_boolean.zona_sala_jantar:
+  icon: mdi:transit-transfer
+input_boolean.zona_corredor:
+  icon: mdi:transit-transfer
+input_boolean.zona_porta_varanda:
+  icon: mdi:door-open
+input_boolean.zona_porta_entrada:
+  icon: mdi:door-open
+input_boolean.zona_porta_area:
+  icon: mdi:door-open
+input_boolean.zona_janela_closet:
+  icon: mdi:window-open
+input_boolean.zona_janela_cozinha:
+  icon: mdi:window-open
+input_boolean.zona_janela_suite:
+  icon: mdi:window-open
+input_boolean.zona_janela_quarto_f:
+  icon: mdi:window-open
+input_boolean.zona_janela_quarto_m:
+  icon: mdi:window-open
+script.reseta_sensores:
+  icon: mdi:reload
+binary_sensor.wcam360:
+  icon: mdi:cctv
+switch.ventilador:
+  icon: mdi:fan
+binary_sensor.google_home_quarto:
+  icon: mdi:google-home
+binary_sensor.google_home_sala:
+  icon: mdi:google-home
+binary_sensor.tv_lg_game:
+  icon: mdi:television
+zone.home:
+  radius: 250
+script.on_todas_luzes_amarelas:
+  icon: mdi:candle
+script.on_todas_luzes:
+  icon: mdi:light-switch
+script.off_todas_luzes:
+  icon: mdi:light-switch
+script.off_todas_luzes_amarelas:
+  icon: mdi:candle
+script.loop_luzes_auxiliar:
+  icon: mdi:emoticon-tongue

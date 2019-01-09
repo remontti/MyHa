@@ -1,31 +1,82 @@
-title: Lovelace
+title: Casa do Remontti
 views:
-  - title: Home
+  - id: 0  # Automatically created id
+    title: Home
     icon: mdi:home-assistant
     cards:
-      - type: markdown
-        title: Lovelace
-        content: >
-          Welcome to your **Lovelace UI**.
-      - type: glance
-        title: Glance card
+#       - type: alarm-panel
+#         name: House Alarm
+#         entity: alarm_control_panel.alarme_da_casa
+#      - type: markdown
+#        title: Lovelace
+#        content: >
+#          Welcome to your **Lovelace UI**.
+#      - type: glance
+#        title: Glance card
+#        entities:
+#          - sensor.dark_sky_temperature
+#          - sensor.dark_sky_wind_speed
+#          - sensor.dark_sky_humidity
+      - id: 5190ced3ff404b8794711dd505219375  # Automatically created id
+        type: glance
+        title: Luzes
+#        show_name: false
+#        show_state: false
         entities:
-          - sensor.dark_sky_temperature
-          - sensor.dark_sky_wind_speed
-          - sensor.dark_sky_humidity
-  - title: Tempo
+          - entity: light.abajur_da_suite
+            name: Abajur
+            icon: mdi:desk-lamp
+            tap_action: toggle
+          - light.garagem
+          - light.arandelas
+          - light.arandela_varanda_suite
+          - light.area_piscina
+          - light.refretores_piscina
+          - light.porta_de_entrada
+          - light.varanda_suite
+          - light.refletores_piscina
+          - light.lavanderia
+          - light.banheiro_suite
+          - light.banheiro_social
+          - light.lavabo
+          - light.cozinha_central
+          - light.cozinha_pia
+          - light.cozinha_bancada
+          - light.cozinha_pendentes
+          - light.sala_game_central
+          - light.sala_game_spots
+          - light.sala_game_trilhos
+          - light.fita_led
+          - light.jantar_ent_frente
+          - light.jantar_ent_garagem
+          - light.jantar
+          - light.sala_estar_lustre
+          - light.sala_estar_spots
+          - light.quarto_frente
+          - light.quarto_meio
+          - light.corredor
+          - light.suite
+          - light.closet
+
+
+  - id: 1  # Automatically created id
+    title: Tempo
     icon: mdi:weather-partlycloudy
     cards:
-      - type: iframe
+      - id: 9fd443d4b6e94e7eb7c90e98c0400848  # Automatically created id
+        type: iframe
         title: Chuva
         url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=rain&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
         aspect_ratio: 100%
-      - type: iframe
+      - id: c5514e12bb4b40b7904772298ef5eb5d  # Automatically created id
+        type: iframe
         title: Vento
         url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=wind&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
-      - type: iframe
+      - id: 962104c841c045429dc92913062624a3  # Automatically created id
+        type: iframe
         title: Temperatura
         url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=temp&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
-      - type: iframe
+      - id: b10fc276ca05401ea78ad10f0c0b4f89  # Automatically created id
+        type: iframe
         title: Nuvens
         url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=clouds&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1

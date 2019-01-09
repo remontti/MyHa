@@ -1,0 +1,84 @@
+  - platform: broadlink
+    host: 100.64.0.26
+    mac: '34:EA:34:8E:EC:47'
+    timeout: 300
+    switches:
+      tv_quarto:
+        friendly_name: "TV"
+        command_on: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
+        command_off: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
+      parabolica:
+        friendly_name: "Parabolica"
+        command_on: 'JgBIAAABJZETNhMSEhITERMSEhITEhISEzYSEhM2EzYSNxI2EzYTNhISExISNhM2EzYTERM2EzYTNhI2ExITERMSEjYTEhISEwANBQ=='
+        command_off: 'JgBIAAABJZETNhMSEhITERMSEhITEhISEzYSEhM2EzYSNxI2EzYTNhISExISNhM2EzYTERM2EzYTNhI2ExITERMSEjYTEhISEwANBQ=='
+      ar_quarto:
+        friendly_name: "Ar Condicionado do Quarto"
+        command_on: 'JgDKAJCNEzQTERI0EzQTERIREzQTERIREzQTERIREzQTNBMREjUSERMREhETNBM0EzQSNRI0EzQTNBM0ExESERMREhETERISEjQTNBM0EzQSERMRExESNBMRExESERMREjQTNBM0EKuQjhI0ExETNBM0EhETERI1EhETERM0EhETERM0EjUSERM0ExESERMREjUSNBM0EzQTNBM0EzQSNRIRExESERMREhETERM0EjUSNRI0ExESERMREzQSERMRExESERM0EjUSNRAADQUAAAAAAAAAAAAAAAAAAA=='
+        command_off: 'JgDKAIyQETYREhE2ETYREhETETURExESETYREhISETYRNRETETYREhE2ETURNhE2ERIRNhE2ETUSEhESERMREhE2ERISEhE2ETURNhETERIREhISERIRExESERMRNhE1ETYRNBM1EKyOjxE1ERMRNRE2ERISEhE2ERIRExE1EhIREhE2ETYREhE2ERMRNRE2ETYQNhETETURNhE2ERIRExESERMRNRETERISNRE0EzYREhETERIREhETERISEhESETYRNhE1ETYRNhAADQUAAAAAAAAAAAAAAAAAAA=='
+      projetor:
+        friendly_name: Projetor
+        command_on: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
+        command_off: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
+  - platform: broadlink
+    host: 100.64.0.53
+    mac: '78:0F:77:18:39:F8'
+    timeout: 300
+    switches:
+      xboom_som:
+        friendly_name: "Xboom"
+        command_on: 'JgBeAJOUEhMSExMSExIROBITERQRFBETEhMRFBEUETgSExEUERQRExI4EjcSOBI4ERMSExITETkRExITEhMRFBE4EjgSNxIABpWUlRI4EgAMVZKVEjgSAAxVk5UROBIADQUAAAAAAAAAAAAA'
+        command_off: 'JgBeAJOUEhMSExMSExIROBITERQRFBETEhMRFBEUETgSExEUERQRExI4EjcSOBI4ERMSExITETkRExITEhMRFBE4EjgSNxIABpWUlRI4EgAMVZKVEjgSAAxVk5UROBIADQUAAAAAAAAAAAAA'
+      tv_lg_55:
+        friendly_name: "Tv Sala"
+        command_on: 'JgBQAAABKZQQFRETEjgRFBEUERQRFBEUETgROREUETkRORA6EDkROREUERQRFBE5EBURExITEhMSOBE5EDoQFRE4ETkRORE5EAAFLAABKUoRAA0FAAAAAAAAAAA='
+        command_off: 'JgBQAAABKZQQFRETEjgRFBEUERQRFBEUETgROREUETkRORA6EDkROREUERQRFBE5EBURExITEhMSOBE5EDoQFRE4ETkRORE5EAAFLAABKUoRAA0FAAAAAAAAAAA='
+#      home_theater:
+#        friendly_name: "Home Theater"
+#        command_on: 'JgBeAJKUEhMSExE4EjgSEhI4EhMRExITExIROBI4ERMSOBITERMSExE4EjgSNxI4ERMTEhEUEzYSExEUERMSExM2EjgSNxIABf+SlRI4EgAMTZKVEjgSAAxNkZYSOBEADQUAAAAAAAAAAAAA'
+#        command_off: 'JgBeAJKUEhMSExE4EjgSEhI4EhMRExITExIROBI4ERMSOBITERMSExE4EjgSNxI4ERMTEhEUEzYSExEUERMSExM2EjgSNxIABf+SlRI4EgAMTZKVEjgSAAxNkZYSOBEADQUAAAAAAAAAAAAA'
+      ar_consul:
+        friendly_name: "Ar Consul"
+        command_on: 'JgBgAQABKZgVNhU2FRETExQSFBISFRM4FRATORM4FBISFBQSEhQSFBITEhQSORQSFBIUEhQTEhMUEhQ3FBISFBIUFBISOhMSEhQSFBITEhQSFBQSFRISFBQRFBIUEhMSExMTFBIUFBESAAELFREUEhITEhQUEhIUFBMSORQSEhMUEhQSFBISFBIUEhQUEhITEhQSFBQSEhQUExITEhQSFBITEhQSFBIUEhUUEhITFBISFBITFBISFBQTEhQSExQSEhMTExIUFBMSFBQSEhMSFBIUEhMSFBQSFBMUEhITFDcUNxQSEhQSFBI6FDYUAAEJFBIUEhMSEhQSFBQSFBMTExM3FBIUEhIUFBIUEhQSFBIUEhITFBISFBQSFBIUEhQSEhQSExIUFBIUEhIUEhQUEhIUExISFBQSFBISFBQSFBISFBQRFBISFBQSFBIUEhIUFDcUEhQRFBISFBIUFBMTEhQADQUAAAAAAAAAAA=='
+        command_off: 'JgBgAQABK5cVNhM4FRETExMTExMTExM4ExMTOBU2ExMTExMTExMUEhMTExIUOBMTExMTExMTExMTEhM4ExMTExMTExMTORMTExITExMTExIUEhQTExMTExMSExMTExMTExIUExMTExITAAEKFRETEhMTExMTExMTExMTOBQSExMTEhQSFBIUEhQTExMTEhMTExMTEhQSFBIUExMTExITExMTExIUEhQSFBMTExMSExMTExMSFBIUExMTExMTEhMTExMTExMTExMTExMTExIUEhMTExMTExMTExMTExMTEzcTORQSExMTExM4FTYTAAEKFRETEhMTExMTExMTExMTExM4ExMTEhQSExMTExQTExMTEhMTExIUEhMTExMUExMTExITExMTExIUEhQTExMTExMSExMTExMTExMTExMTExMTEhMTExMTExMTExMTExMTEzgUERQSExMTExMTExMUEhMADQUAAAAAAAAAAA=='
+
+  - platform: mqtt
+    name: "Sirenes"
+    state_topic: "stat/sonoff02/POWER"
+    command_topic: "cmnd/sonoff02/power"
+    availability_topic: "tele/sonoff02/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Ventilador"
+    state_topic: "stat/sonoff32/POWER"
+    command_topic: "cmnd/sonoff32/power"
+    availability_topic: "tele/sonoff32/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+#  - platform: command_line
+#    switches:
+#      camwascam_dir:
+#        friendly_name: WS.Direita
+#        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=right&-speed=45&-usr=admin&-pwd=senha"'
+#        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
+#      camwascam_esq:
+#        friendly_name: WS.Esquerda
+#        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=left&-speed=45&-usr=admin&-pwd=senha"'
+#        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
+#      camwascam_up:
+#        friendly_name: WS.Cima
+#        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=up&-speed=45&-usr=admin&-pwd=senha"'
+#        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
+#      camwascam_down:
+#        friendly_name: WS.Baixo
+#        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=down&-speed=45&-usr=admin&-pwd=senha"'
+#        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'

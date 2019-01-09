@@ -1,0 +1,203 @@
+  - platform: mqtt
+    state_topic: dummy/floorplan/sensor
+    name: Floorplan
+
+  - platform: mqtt
+    name: Janela Quarto M
+    payload_on: "996D46"
+    payload_off: "996D46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Janela Quarto F
+    payload_on: "CD5B46"
+    payload_off: "CD5B46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Janela Suite
+    payload_on: "B92D46"
+    payload_off: "B92D46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Janela Cozinha
+    payload_on: "C41B46"
+    payload_off: "C41B46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Porta Varanda
+    payload_on: "5E6B46"
+    payload_off: "5E6B46off"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: "Porta Entrada"
+    payload_on: "2E9D46"
+    payload_off: "2E9D46off"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Corredor
+    payload_on: "82C186"
+    payload_off: "82C186off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Sala Social
+    payload_on: "9B5086"
+    payload_off: "9B5086off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Ext Piscina
+    payload_on: "EE4986"
+    payload_off: "EE4986off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Ext Garagem
+    payload_on: "AAC186"
+    payload_off: "AAC186off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Sala Jantar
+    payload_on: "55A486"
+    payload_off: "55A486off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Porta Area
+    payload_on: "09D8C6"
+    payload_off: "09D8C6off"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Janela Closet
+    payload_on: "7F7D46"
+    payload_off: "7F7D46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+
+  - platform: ping
+    host: 100.64.0.1
+    name: Internet
+  - platform: ping
+    host: 100.64.0.15
+    name: Tv LG Game
+  - platform: ping
+    host: 100.64.0.2
+    name: UniFi
+  - platform: ping
+    host: 100.64.0.4
+    name: AP Router E
+  - platform: ping
+    host: 100.64.0.254
+    name: Tp Link
+  - platform: ping
+    host: 100.64.0.20
+    name: Chrome Cast Quarto
+  - platform: ping
+    host: 100.64.0.21
+    name: Chrome Cast Game
+  - platform: ping
+    host: 100.64.0.22
+    name: Google Home Quarto
+  - platform: ping
+    host: 100.64.0.19
+    name: Google Home Sala
+  - platform: ping
+    host: 100.64.0.26
+    name: Broadlink IR Quarto
+  - platform: ping
+    host: 100.64.0.53
+    name: Broadlink IR Sala
+  - platform: ping
+    host: 100.64.0.47
+    name: Sonoff RF Bridge
+  - platform: ping
+    host: 100.64.0.52
+    name: Camera Digoo
+  - platform: ping
+    host: 100.64.0.60
+    name: WCam360
+#    count: 5
+#    scan_interval: 240
+  - platform: mqtt
+    name: C1 Alarme
+    payload_on: "2970D1"
+    payload_off: "2970D2"
+    device_class: power
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: C2 Alarme
+    payload_on: "921051"
+    payload_off: "921052"
+    device_class: power
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: C3 Alarme
+    payload_on: "77B0D1"
+    payload_off: "77B0D2"
+    device_class: power
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: C1 Home
+    payload_on: "2970D4"
+    payload_off: "2970D4off"
+    device_class: occupancy
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: C2 Home
+    payload_on: "921054"
+    payload_off: "921054off"
+    device_class: occupancy
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: C3 Home
+    payload_on: "77B0D4"
+    payload_off: "77B0D4off"
+    device_class: occupancy
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: C1 SOS
+    payload_on: "2970D8"
+    payload_off: "2970D8off"
+    device_class: vibration
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: C2 SOS
+    payload_on: "921058"
+    payload_off: "921058off"
+    device_class: vibration
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: C3 SOS
+    payload_on: "77B0D8"
+    payload_off: "77B0D8off"
+    device_class: vibration
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'

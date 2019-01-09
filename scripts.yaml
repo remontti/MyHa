@@ -1,3 +1,148 @@
+foto_cam:
+  alias: "Cap. Cam 360 Envia Telegram"
+  sequence:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.wanscam_360
+      filename: '/tmp/snapshot.jpg'
+  - service: notify.telegramrudi
+    data:
+      message: Capturado!
+      data:
+        photo:
+          - file: "/tmp/snapshot.jpg"
+            capture: Snapshoot
+
+off_todas_luzes:
+  alias: "Desliga todas luzes"
+  sequence:
+  - service: light.turn_off
+    data:
+      entity_id: group.all_lights
+
+on_todas_luzes:
+  alias: "Liga todas luzes"
+  sequence:
+  - service: light.turn_on
+    data:
+      entity_id: group.all_lights
+
+off_todas_luzes_amarelas:
+  alias: "Desliga luzes amarelas - Interna"
+  sequence:
+  - service: light.turn_off
+    data:
+      entity_id:
+        - light.Cozinha_Pendentes
+        - light.Sala_Game_Trilhos
+        - light.Jantar
+        - light.Sala_Estar_Lustre
+
+on_todas_luzes_amarelas:
+  alias: "Liga luzes amarelas - Interna"
+  sequence:
+  - service: light.turn_on
+    data:
+      entity_id:
+        - light.Cozinha_Pendentes
+        - light.Sala_Game_Trilhos
+        - light.Jantar
+        - light.Sala_Estar_Lustre
+
+reseta_sensores:
+  alias: "Reseta sensores"
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"9B5086off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"55A486off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"82C186off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"AAC186off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"EE4986off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"5E6B46off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"2E9D46off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"09D8C6off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"7F7D46off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"C41B46off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"B92D46off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"CD5B46off"}} '
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"996D46off"}} '
+
+#ptz_tilt_up:
+#  alias: UP
+#  sequence:
+#    - service: camera.onvif_ptz
+#      data:
+#        entity_id: 'camera.ptz'
+#        tilt: 'UP'
+#ptz_tilt_down:
+#  alias: Down
+#  sequence:
+#    - service: camera.onvif_ptz
+#      data:
+#        entity_id: 'camera.ptz'
+#        tilt: 'DOWN'
+#ptz_pan_left:
+#  alias: Left
+#  sequence:
+#    - service: camera.onvif_ptz
+#      data:
+#        entity_id: 'camera.ptz'
+#        pan: 'LEFT'
+#ptz_pan_right:
+#  alias: Right
+#  sequence:
+#    - service: camera.onvif_ptz
+#      data:
+#        entity_id: 'camera.ptz'
+#        pan: 'RIGHT'
+
+#radio538:
+#  alias: Radio Chromecast
+#  sequence:
+#  - service: media_player.play_media
+#    data:
+#      entity_id: media_player.tv_do_quarto
+#      media_content_id: http://0.0.0.0:8000/comunitaria
+#      media_content_type: channel
+
 spotify_music:
   alias: Play selected spotify playlist
   sequence:
@@ -5,7 +150,7 @@ spotify_music:
     data_template:
       entity_id: media_player.spotify
       media_content_type: playlist
-      media_content_id: 
+      media_content_id:
         '{% if is_state("input_select.spotify_playlist", "Classicas da Zona") %} spotify:user:rudiremontti:playlist:4YOoZ4EqhINjxVYStoo8xh
         {% elif is_state("input_select.spotify_playlist", "Gauderias") %} spotify:user:jackson.antunes.93:playlist:6YJNp1P7UhzHAUaIWOqHZI
         {% elif is_state("input_select.spotify_playlist", "50+ Brasil") %} spotify:user:spotifycharts:playlist:37i9dQZEVXbMXbN3EUUhlg
@@ -55,135 +200,362 @@ tv_quarto_input:
       packet:
         - "JgBYAAABJZMSExETERQRExEUERMROBISEjgSNxI3EjgROBI4ERMRORE4EjcSOBE3ExISEhITEhISExISEhMSEhI4ETgSNxI4EgAFFQABJUoRAAxAAAElSRMADQU="
 parabolica_vol_up:
-  alias: "Parabolic Volume Up"
+  alias: "Parabolica Volume Up"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgBgAAABI5QRNxITERMRExITEBQRFBETETgRExE4ETgROBE3EjcROBE2ExMRExEUERMRExI3ETgRExE4ETgROBE3EjcRFBETEAAFGQABI0oTAAwxAAEjShIADDIAASNLEQANBQAAAAAAAAAA"
 parabolica_vol_down:
-  alias: "Parabolic Volume Down"
+  alias: "Parabolica Volume Down"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgBgAAABI5MSNxITERMRExITERMRFBETETgRExE4ETgRNxI3ETgRNxI3EhMRExE4ETgRExEUETcSExE4ETcRFBETETgROBETEQAFGAABI0oRAAwzAAEjShIADDIAASNKEgANBQAAAAAAAAAA"
 parabolica_up:
-  alias: "Parabolic Up"
+  alias: "Parabolica Up"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgBgAAABI5MROBETERQRExETEhMRExETEjcSExE3EjYSOBE4ETgRNxITETgRExE4ERMRExI3ETgROBETETgRExI3ETgRExEUEQAFFwABJEoRAAwzAAEjSxEADDMAASNKEQANBQAAAAAAAAAA"
 parabolica_down:
-  alias: "Parabolic Down"
+  alias: "Parabolica Down"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgBgAAABJJIQORAUERQQFBAUERQQFBEUEDgRFBA4ETgROBA5EDkQOBEUEDkQFBAUETgQFBE4EDkQORAUEDkQORAUEDkQFBAVEAAFGAABJUkSAAwyAAElSRAADDMAASZIEAANBQAAAAAAAAAA"
 parabolica_sleep:
-  alias: "Parabolic Sleep"
+  alias: "Parabolica Sleep"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgBoAAABJZETNhMSEhITEhISExETEhISEzYTERM2EzYTNhI2EzYTNhM2EjcSEhMRExISEhMSEjYTEhISEzYTNhI2EzYTNhMREwAFFgABJkgTAAwxAAEmSBMADDEAASZIEwAMMQABJUgTAA0F"
 parabolica_ok:
-  alias: "Parabolic OK"
+  alias: "Parabolica OK"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgBoAAABI5MROBETERQRExEUERMRExITETcSExE4ETcSNxE4ETgRNxITETgRNxI3ERMSExE4ETcSNxEUERMRExI3ETgRExEUEQAFFwABJEoRAAwzAAEjShIADDIAASNLEQAMMwABI0kSAA0F"
 air_quarto_swing:
-  alias: "Air Swing"
+  alias: "Ar Swing"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgDKAI6PETURExE1ETYRExESETYREhETETYREhESETYRNhESETYRExE1ETYREhE2ERMRNRI1ETYRExESETYREhE2ERIRExE2ETURNhETERIREhISERISEhESEhIRNhE1EjURNBM1EauOjhI1ERMRNRE2ERMREhE2ERIRExE2ERIREhI1ETYREhE2ERMRNRE2ERISNRETETYRNRE2ERMREhE2ERIRNhESERMRNhE1EjURExESERMREhETERIRExESETYRNRI1ETYRNhAADQUAAAAAAAAAAAAAAAAAAA=="
 air_quarto_led:
-  alias: "Air Led"
+  alias: "Ar Led"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgDKAI6QEjQTERI1EjQTERI0ExESNRIREzQSERMREjQTERI1EhETNBI1EjQTNBISEjQTERI1EhETERIREhISNBMREjUSERM0EhETNBMREhETNBIREzQSEhI0EhISNBM0EhISNBMREKuPjRM0ExESNBM0EhETNBMREjQTERI1EhESEhI0ExESNBMREjUSNBM0EjUSERI1EhETNBMREhETERIREzQSERM0ExESNBMREjUSERMREjQTERI1EhESNRIREzQSNRIREjUSERAADQUAAAAAAAAAAAAAAAAAAA=="
 xboom_vol_up:
-  alias: Xboom Vol Up
+  alias: "Xboom Volume +"
   sequence:
   - data:
       packet:
       - JgBOAJKVExISExEUERQROBITERQRExITEhMRFBEUETgTEhEUERQROBI4ETgSExE5ERMSExITERQRFBETEjgSExE4EjgSNxIABpeSlRI4EQANBQAAAAAAAAAAAAA=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 xboom_vol_down:
-  alias: Xboom Vol Down
+  alias: "Xboom Volume -"
   sequence:
   - data:
       packet:
       - JgBWAJGWEhMTERITEhMROBITEhMSExEUExIRExITETkRExITEhMRFBE4EjgSExM2EhMRFBEUETgSExEUETgSExM3EjcSOBIABpaTlRE4EgAMVpKVEjcSAA0FAAA=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 xboom_mute:
   alias: Xboom Mute
   sequence:
   - data:
       packet:
       - JgBWAJOUEhMSExMSERQSNxITERQRFBETEhMSExMSETgSExMSExITNhI4EjcSOBI3EhMSExEUERQRExITEhMRFBE4EjgSOBEABpeSlRI4EgAMVZKWEjcSAA0FAAA=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 xboom_input:
   alias: Xboom Input
   sequence:
   - data:
       packet:
       - JgBOAJGWFBEQFRAUERQRORQREBQRFBEUERQQFBITETkTEhAUERQSOBQ1ExMRExEUERMSExITEhMQFRE4EzcUNRQ2FDUSOBQABpSVkxQ1EwANBQAAAAAAAAAAAAA=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 xboom_equalizer:
   alias: Xboom Equalizer
   sequence:
   - data:
       packet:
       - JgBWAJOUEhMSExEUERQROBITERQRFBETEhMSExEUETgSExEUERQRExITEhMRFBEUERMSOBITETgSOBI3EjgSNxI4EhMROBIABpaSlRI4EgAMVJOVETgSAA0FAAA=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 lg55_input:
   alias: Lg 55 Input
   sequence:
   - data:
       packet:
       - JgBYAAABKpIRFBEUETkQFREUERQRExEUEjgROREUETkQORE5ETkRORE5EDkRFBI4ERQRFBEUERQRFBEUETgRFBI4ETkRORA5EQAFKwABKkkQAAxgAAEpSREADQU=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 lg55_vol_up:
   alias: Lg 55 Vol Up
   sequence:
   - data:
       packet:
       - JgBQAAABKZMRFBEUETkRFBEUERQQFRAVEDkROREUETkQOhA5ETkROREUEDoQFRAUERQRFBITERQROREUEDkRORE5ETkRORA5EQAFKwABKUoQAA0FAAAAAAAAAAA=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 lg55_vol_down:
   alias: Lg 55 Vol Don
   sequence:
   - data:
       packet:
       - JgBYAAABJ5UQFREUETgRFBITERQRFBEUETkQOREUEjgRORE5EDoQORE5ETkRFBEUERQRFBETEhMSExITETkRORA6EDkRORE5EQAFKwABKEoRAAxfAAEoSxAADQU=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 lg55_mute:
   alias: Lg 55 Mute
   sequence:
   - data:
       packet:
       - JgBYAAABJ5URFBEUETgRFBITEhMSExEUETkRORAVETgRORE5ETkQORE5ERQSExE5ERQRFBEUERQRExI4ETkRFBE5EDkRORE5EQAFKwABKEYVAAxfAAEpShEADQU=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 lg55_simplink:
   alias: Lg 55 Simplink
   sequence:
   - data:
       packet:
       - JgBYAAABKJQRFBITETkRFBEUERQRFBETEjgROREUETkQOhA5ETkROREUETkQORE5ETkRORA6EBUROBEUEhMRFBEUERQRFBE4EQAFKwABKEsQAAxgAAEpSREADQU=
-    service: switch.broadlink_send_packet_100_64_0_26
+    service: switch.broadlink_send_packet_100_64_0_53
 lg55_exit:
   alias: Lg 55 exit
   sequence:
   - data:
       packet:
       - JgBQAAABKJQRFBITEjgRFBEUERQRFBEUETgROREUETkRORA5ETkRORE5ETkQFRE4ETkRFBE5EBURFBEUEDkSExITETkRFBE5EAAFKwABKEsQAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_53
+proj_mute:
+  alias: Proj. Mute
+  sequence:
+  - data:
+      packet:
+      - JgBQAAABJJMSExA5EhMQFBITEhIRFBETETkRExI4ETgQORE5ETgQOREUEDkSExAVERMSExAUEhMROBISEjgSNxE4EjgROBE4EgAFFwABI0oQAA0FAAAAAAAAAAA=
     service: switch.broadlink_send_packet_100_64_0_26
+proj_input:
+  alias: Proj. Input
+  sequence:
+  - data:
+      packet:
+      - JgBQAAABJZEUERM2FBETEhISExITERMRFDUUERQ2EzYTNhM2EzYTNhQ2EzYTNhQ2EjcTEhISExETEhMRFBESExMREzcSNxM1FAAFEwABJUkTAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+proj_vup:
+  alias: Proj. V+
+  sequence:
+  - data:
+      packet:
+      - JgBYAAABI5MRFBA5ERQQFRAUERMRFBAUETkQFBE4ETgROBI4ETgQNRY4EBQROBE4EBURExEUEBUQFBI3ERMRFBA5ETkQORA4EgAFFQABIksQAAw8AAEkSREADQU=
+    service: switch.broadlink_send_packet_100_64_0_26
+proj_vdown:
+  alias: Proj. V-
+  sequence:
+  - data:
+      packet:
+      - JgBYAAABIpQSExA4EhMQFRETEhMQFRAUEjcRExE5EDkQORE5ETcROBE5EBQRFBAVEDgRFBETEhMQFRA4ETkSNxISEzcROBA4EwAFFAABI0oQAAw9AAEiSBMADQU=
+    service: switch.broadlink_send_packet_100_64_0_26
+proj_c:
+  alias: Proj. Cima
+  sequence:
+  - data:
+      packet:
+      - JgBIAAABJJMSExA5ERQQFBEUERMRFBETETkQFBI4ETgQORE5EDkQORE5EBQSEhE5EhIRFBETERQQFRA5EDkRFBA5EjgROBA5EgANBQ==
+    service: switch.broadlink_send_packet_100_64_0_26
+proj_b:
+  alias: Proj. Baixo
+  sequence:
+  - data:
+      packet:
+      - JgBIAAABJJQSExA5FBESExEUDhYPFhAUEDkRFBE4ETgQOhA5EjcQORI4ExEVEA4ZDxQQFBAVEBUQFA46EjgROBU0FTUQORE5EAANBQ==
+    service: switch.broadlink_send_packet_100_64_0_26
+proj_t:
+  alias: Proj. Tras
+  sequence:
+  - data:
+      packet:
+      - JgBQAAABIJYSEhI3EhIRFRETEhIRFBYPEDoRExE4EDoQORI4ETcROhETDzkRFg46EBURFBAUEBUQOBMSETgRExA6EzcQOBA7FAAFEwABJEoRAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+proj_f:
+  alias: Proj. Frente
+  sequence:
+  - data:
+      packet:
+      - JgBQAAABJJQTERE4EBUSExEUEBQQFRETFDYQFRE4EDkSNxE5ETgQORAVEBQPFhE4ERQQFA8WEBUQORI3DzsSExI3ETgROBI4EAAFGAABI0oRAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+proj_ok:
+  alias: Proj. OK
+  sequence:
+  - data:
+      packet:
+      - JgBYAAABIZUQFBI3ERMRFBAVEBQSExAUEjcRFBE4EDkRORE4EDkROBE4EDkRFBA5ERQQFBETERQQFRETETkRExM2ETgQORI4EAAFFgABIkoSAAw8AAEiShEADQU=
+    service: switch.broadlink_send_packet_100_64_0_26
+proj_esc:
+  alias: Proj. ESC
+  sequence:
+  - data:
+      packet:
+      - JgBYAAABIpIUExA5EhMQFBETERQQFRAUETkQFBI3ETgROBE5ETgQORETETgRORA5EBURExITEBQSNxEUERMRFBA5ETgROBE4EgAFFAABI0sQAAw6AAEkSxAADQU=
+    service: switch.broadlink_send_packet_100_64_0_26
+proj_menu:
+  alias: Proj. Menu
+  sequence:
+  - data:
+      packet:
+      - JgBQAAABJJMRFBA5EhMQFRETERQQFRAUETkRExE5ETgQORA6ETgQORITEDkRORA5EDkRFBAVERMSOBETERQQFRETETkROBA5EgAFGAABI0sQAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_100_64_0_26
+
+xbom_bluetooth:
+  alias: "Xboom - Bluetooth"
+  sequence:
+  - service: script.xboom_input
+  - delay:
+      milliseconds: 500
+  - service: script.xboom_input
+
+xbom_auxiliar:
+  alias: "Xboom - Auxiliar"
+  sequence:
+  - service: script.xboom_input
+  - delay:
+      milliseconds: 500
+  - service: script.xboom_input
+  - delay:
+      milliseconds: 500
+  - service: script.xboom_input
+  - delay:
+      milliseconds: 500
+  - service: script.xboom_input
+  - delay:
+      milliseconds: 500
+  - service: script.xboom_input
+  - delay:
+      milliseconds: 500
+  - service: script.xboom_input
+
+loop_luzes_auxiliar:
+  alias: "Loop Luzes"
+  sequence:
+  - service: light.turn_on
+    data:
+      entity_id: light.arandelas
+  - service: light.turn_off
+    data:
+      entity_id: light.arandelas
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.arandela_varanda_suite
+  - service: light.turn_off
+    data:
+      entity_id: light.arandela_varanda_suite
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.varanda_suite
+  - service: light.turn_off
+    data:
+      entity_id: light.varanda_suite
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.area_piscina
+  - service: light.turn_off
+    data:
+      entity_id: light.area_piscina
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.garagem
+  - service: light.turn_off
+    data:
+      entity_id: light.garagem
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.lavanderia
+  - service: light.turn_off
+    data:
+      entity_id: light.lavanderia
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.cozinha_pia
+  - service: light.turn_off
+    data:
+      entity_id: light.cozinha_pia
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.cozinha_bancada
+  - service: light.turn_off
+    data:
+      entity_id: light.cozinha_bancada
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.cozinha_pendentes
+  - service: light.turn_off
+    data:
+      entity_id: light.cozinha_pendentes
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.sala_game_trilhos
+  - service: light.turn_off
+    data:
+      entity_id: light.sala_game_trilhos
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.sala_game_spots
+  - service: light.turn_off
+    data:
+      entity_id: light.sala_game_spots
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.sala_estar_lustre
+  - service: light.turn_off
+    data:
+      entity_id: light.sala_estar_lustre
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.sala_game_central
+  - service: light.turn_off
+    data:
+      entity_id: light.sala_game_central
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.sala_estar_spots
+  - service: light.turn_off
+    data:
+      entity_id: light.sala_estar_spots
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.cozinha_central
+  - service: light.turn_off
+    data:
+      entity_id: light.cozinha_central
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.jantar
+  - service: light.turn_off
+    data:
+      entity_id: light.jantar
+#
+  - service: light.turn_on
+    data:
+      entity_id: light.jantar_ent_frente
+  - service: light.turn_off
+    data:
+      entity_id: light.jantar_ent_frente
