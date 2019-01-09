@@ -11,11 +11,11 @@
 </i> Conversor para fazer a troca so firmware do Sonoff Basic/Bridge
 Firmware utilizado Tasmota: https://github.com/arendst/Sonoff-Tasmota/wiki</i>
 
+<b>Sensor Dht11</b> <i>(Soldado no Sonoff basic para Temperatura/Humidade)</i> https://goo.gl/ERyPvJ
+
 <h3>CHINA</h3>
 
 <b>Sonoff Basic </b>https://goo.gl/RzAaGK
-
-<b>Sensor Dht11</b> <i>(Soldado no Sonoff basic para Temperatura/Humidade)</i> https://goo.gl/ERyPvJ
 
 <b>Broadlink Rm Mini 3</b> <i>(Sem Fonte. Pode usar fonte de carregador de celular 5v 1A)</i> https://goo.gl/YNLqXZ
 
