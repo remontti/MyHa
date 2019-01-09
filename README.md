@@ -1,4 +1,6 @@
-# MyHa
+# Projeto Home Assistant by Rudimar Remontti
+http://home-assistant.io
+
 <h3>BRASIL</h3>
 
 <b>Google Home min </b>https://goo.gl/8owfdc
