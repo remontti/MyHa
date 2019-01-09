@@ -3,6 +3,8 @@
 
 <b>Google Home min </b>https://goo.gl/8owfdc
 
+<b>Google Chromecast 2 </b> https://goo.gl/mnPxqm
+
 <b>Kit Rasberry +Case + SD + Fonte</b> https://goo.gl/ywGofg
 
 <b>Sirenes Residencial	3</b> https://goo.gl/8zxd59
