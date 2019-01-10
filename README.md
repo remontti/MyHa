@@ -42,6 +42,17 @@ Firmware utilizado Tasmota: https://github.com/arendst/Sonoff-Tasmota/wiki</i>
 <b>WANSCAM HW0054 Outdoor</b> https://goo.gl/U19sor
 
 <b>Xiaomi 9W RGBW LED Bulb</b> https://goo.gl/Avs2Wo
+
+<h3>PARAGUAI</h3>
+<b>RB750G3</b> https://goo.gl/YHGA8W
+<i>Mas vc pode comprar modelos mais em conta como: <b>RB750G2</b> https://goo.gl/KXBYDd ou <b>RB941-2ND-TC</b> (HAP.LITE) https://goo.gl/5mqB27 Esse modelo RB941 já tem wifi (Mas é BEM fraco, pois não tem antena)</i>
+
+<b>Roteador Wi-fi Tp-link Tl-wr941hp</b> https://goo.gl/dBqZZv <i>(Modo Bridge)</i>
+
+<b>UBNT UAP-BR UNIFI</b> https://goo.gl/ouqmTp (Esse já tinha que ganhei em um forum quando eles lançaram)<br/>
+Hoje é mais viável comprar o <b>UAP-AC-LITE-BR UNIFI AP AC LITE 2.4/5.0GHZ</b> https://goo.gl/Vqqvt8
+
+Para gerenciar a rede usei um RouterOS (Mikrotik) e como tive mais de 50 dispositivos conectado, precisei de 3 roteadores espalhado pela casa para ficar bom, sendo um roteador ficando apenas só para os sonoff.
   
 <h2>Screeshots (08/01/2018)</h2>
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/Screenshots/1.png">
