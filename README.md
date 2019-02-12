@@ -54,10 +54,18 @@ Hoje é mais viável comprar o <b>UAP-AC-LITE-BR UNIFI AP AC LITE 2.4/5.0GHZ</b>
 
 Para gerenciar a rede usei um RouterOS (Mikrotik) e como tive mais de 50 dispositivos conectado, precisei de 3 roteadores espalhado pela casa para ficar bom, sendo um roteador ficando apenas só para os sonoff.
   
-<h2>Screeshots (08/01/2018)</h2>
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/Screenshots/1.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/Screenshots/2.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/Screenshots/3.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/Screenshots/4.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/Screenshots/5.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/Screenshots/6.png">
+<h2>Screeshots HA 0.87.1 (11/02/2018)</h2>
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/1.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/2.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/3.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/4.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/5.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/6.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/7.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/8.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/9.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/add-on-1.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/add-on-2.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/add-on-3.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/add-on-4.png">
+
