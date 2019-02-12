@@ -117,7 +117,7 @@
     payload_off: "OFF"
     retain: true
   - platform: mqtt
-    name: "Refletores Piscina"
+    name: "Postes"
     state_topic: "stat/sonoff23/POWER"
     command_topic: "cmnd/sonoff23/POWER"
     availability_topic: "tele/sonoff23/LWT"

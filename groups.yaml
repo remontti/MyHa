@@ -1,348 +1,361 @@
-view_controle_ir:
-  view: yes
-  icon: mdi:remote
-  entities:
-    - group.home_room_tv
-    - group.home_conditioner
-    - group.xboom_control
-    - group.lg55_grupo
-    - group.projetor_gp
-    - group.home_parabolic
-    - group.ar_consul
-#    - group.sala_tv
+#view_controle_ir:
+#  view: yes
+#  icon: mdi:remote
+#  entities:
+#    - group.ar_quarto_suite
+#    - group.home_room_tv
+#    - group.xboom_control
+#    - group.lg55_grupo
+#    - group.projetor_gp
+##    - group.home_parabolic
+##    - group.ar_consul
 
-view_seguranca:
-  view: yes
-  icon: mdi:security-lock
-  entities:
-    - group.alarmecasa
-    - group.rastreamento
-    - group.planta
-    - group.sensores_seguraca
-    - group.sensores_controles
-    - camera.camera_interna
-    - camera.wanscam_360
+#view_luzes:
+#  view: yes
+#  icon: mdi:lightbulb-on-outline
+#  entities:
+#    - group.luzes_rapido
+#    - group.ventiladores
+#    - group.luzes_quartos
+#    - group.luzes_externas
+#    - group.luzes_banheiro
+#    - group.luzes_cozinha
+#    - group.luzes_game
+#    - group.luzes_jantar
+#    - group.luzes_estar
 
-view_luzes:
-  view: yes
-  icon: mdi:lightbulb-on-outline
-  entities:
-    - group.luzes_rapido
-    - group.ventiladores
-    - group.luzes_externas
-    - group.luzes_quartos
-    - group.luzes_banheiro
-    - group.luzes_cozinha
-    - group.luzes_game
-    - group.luzes_jantar
-    - group.luzes_estar
+#view_seguranca:
+#  view: yes
+#  icon: mdi:security-lock
+#  entities:
+#    - group.alarmecasa
+#    - group.rastreamento
+#    - group.planta
+#    - group.sensores_seguraca
+#    - group.sensores_controles
+#    - camera.camera_interna
+#    - camera.wanscam_360
 
-view_multimidia:
-  view: yes
-  icon: mdi:play-speed
-  entities:
-    - media_player.casa
-    - media_player.googlehome0411
-    - media_player.tv_do_quarto
-    - media_player.tv_da_sala
-    - media_player.LG_Smart_TV
-    - media_player.spotify
-    - group.home_spotify_controls
+#view_multimidia:
+#  view: yes
+#  icon: mdi:play-speed
+#  entities:
+#    - media_player.google_home
+#    - media_player.google_home_sala
+#    - media_player.tv_do_quarto
+#    - media_player.lg_smart_tv
+##    - media_player.spotify
+##    - group.home_spotify_controls
 
-view_alarmes:
-  view: yes
-  icon: mdi:alarm
-  entities:
-    - group.alarm_clock
-    - group.horacerta
+#view_alarmes:
+#  view: yes
+#  icon: mdi:alarm
+#  entities:
+#    - group.alarm_clock
+#    - group.horacerta
 
-view_systema:
-  view: yes
-  icon: mdi:engine
-  entities:
-    - group.sysinfo
-    - group.dispositivos_rede
+#view_clima:
+#  view: yes
+#  icon: mdi:weather-partlycloudy
+#  entities:
+#    - group.previsao
+#    - group.clima
+#    - group.temperaturas_sonoff
 
-alarmecasa:
-  name: Alarme Casa
-  entities:
-    - alarm_control_panel.alarme_da_casa
+##view_estatisticas:
+##  view: yes
+##  icon: mdi:finance
+##  entities:
+##    - group.luzes_cliques
+##    - group.luzes_tempo
 
-rastreamento:
-  name: Localização
-  entities:
-    - device_tracker.google_maps_100000000000000000000
-    - device_tracker.google_maps_100000000000000000000
+#view_systema:
+#  view: yes
+#  icon: mdi:engine
+#  entities:
+#    - group.sysinfo
+#    - group.dispositivos_rede
 
-ventiladores:
-  name: Ventiladores
-  entities:
-    - switch.ventilador
+#view_automation:
+#  name: Automation
+#  icon: mdi:auto-fix
+#  view: true
+#  entities:
+#    - group.all_automations
+#    - group.all_scripts
 
-interruptores:
-  name: Temperaturas / Humidade
-  entities:
-    - sensor.Suite_Temperatura
-    - sensor.Suite_Humidade
-    - sensor.Cozinha_Temperatura
-    - sensor.Cozinha_Humidade
-    - sensor.Banheiro_Social_Temperatura
-    - sensor.Banheiro_Social_Humidade
+#alarmecasa:
+#  name: Alarme Casa
+#  entities:
+#    - alarm_control_panel.alarme_da_casa
 
-clima:
-  name: 'Clima'
-  entities:
-    - weather.dark_sky
-    - sun.sun
-    - sensor.dark_sky_temperature
-    - sensor.dark_sky_daytime_high_temperature
-    - sensor.dark_sky_overnight_low_temperature
-    - sensor.dark_sky_cloud_coverage
-    - sensor.dark_sky_wind_speed
-    - sensor.dark_sky_humidity
-    - sensor.dark_sky_uv_index
-    - sensor.dark_sky_visibility
-    - sensor.dark_sky_pressure
+#rastreamento:
+#  name: Localização
+#  entities:
+#    - device_tracker.google_maps_000000000000000000000
+#    - device_tracker.google_maps_111111111111111111111
 
-previsao:
-  name: 'Previsão do Tempo'
-  entities:
-    - sensor.dark_sky_hourly_summary
-    - sensor.dark_sky_daily_summary
+#ventiladores:
+#  name: Ventiladores
+#  entities:
+#    - switch.ventilador
 
-luzes_rapido:
-  name: Atalhos Rápidos
-  entities:
-    - script.on_todas_luzes
-    - script.off_todas_luzes
-    - script.on_todas_luzes_amarelas
-    - script.off_todas_luzes_amarelas
-    - script.loop_luzes_auxiliar
+#temperaturas_sonoff:
+#  name: Temperaturas / Humidade
+#  entities:
+#    - sensor.suite_temperatura
+#    - sensor.suite_humidade
+#    - sensor.cozinha_temperatura
+#    - sensor.cozinha_humidade
+#    - sensor.banheiro_social_temperatura
+#    - sensor.banheiro_social_humidade
+
+#clima:
+#  name: 'Clima'
+#  entities:
+#    - sun.sun
+#    - sensor.moon
+#    - sensor.dark_sky_temperature
+#    - sensor.dark_sky_cloud_coverage
+#    - sensor.dark_sky_wind_speed
+#    - sensor.dark_sky_humidity
+#    - sensor.dark_sky_uv_index
+#    - sensor.dark_sky_visibility
+#    - sensor.dark_sky_pressure
+
+#previsao:
+#  name: 'Previsão do Tempo'
+#  entities:
+#    - sensor.dark_sky_hourly_summary
+#    - sensor.dark_sky_daily_summary
+
+#luzes_rapido:
+#  name: Atalhos Rápidos
+#  entities:
+#    - script.off_todas_luzes
+#    - script.on_todas_luzes
+#    - script.off_todas_luzes_amarelas
+#    - script.on_todas_luzes_amarelas
+#    - script.loop_luzes_auxiliar
 
 luzes_externas:
   name: Externas
   entities:
-    - light.Garagem
-    - light.Arandelas
-    - light.Arandela_Varanda_Suite
-    - light.Area_Piscina
-    - light.Refretores_Piscina
-    - light.Porta_de_Entrada
-    - light.Varanda_Suite
-    - light.Refletores_Piscina
-    - light.Lavanderia
+    - light.garagem
+    - light.arandelas
+    - light.arandela_varanda_suite
+    - light.area_piscina    
+    - light.postes
+    - light.porta_de_entrada
+    - light.varanda_suite
+    - light.postes
+
 luzes_banheiro:
   name: Banheiros
   entities:
-    - light.Banheiro_Suite
-    - light.Banheiro_Social
-    - light.Lavabo
+    - light.banheiro_suite
+    - light.banheiro_social
+    - light.lavabo
 luzes_cozinha:
   name: Cozinha
   entities:
-    - light.Cozinha_Central
-    - light.Cozinha_Pia
-    - light.Cozinha_Bancada
-    - light.Cozinha_Pendentes
+    - light.cozinha_central
+    - light.cozinha_pia
+    - light.cozinha_bancada
+    - light.cozinha_pendentes
+    - light.fita_led
 luzes_game:
   name: Sala Game
   entities:
-    - light.Sala_Game_Central
-    - light.Sala_Game_Spots
-    - light.Sala_Game_Trilhos
-    - light.Fita_Led
+    - light.sala_game_central
+    - light.sala_game_spots
+    - light.sala_game_trilhos
 luzes_jantar:
   name: Jantar
   entities:
-    - light.Jantar_Ent_Frente
-    - light.Jantar_Ent_Garagem
-    - light.Jantar
+    - light.jantar_ent_frente
+    - light.jantar_ent_garagem
+    - light.jantar
 luzes_estar:
   name: Estar
   entities:
-    - light.Sala_Estar_Lustre
-    - light.Sala_Estar_Spots
+    - light.sala_estar_lustre
+    - light.sala_estar_spots
 luzes_quartos:
   name: Quartos / Corredor
   entities:
-    - light.Quarto_Frente
-    - light.Quarto_Meio
-    - light.Corredor
-    - light.Suite
-    - light.Abajur_da_Suite
-    - light.Closet
+    - light.quarto_frente
+    - light.quarto_meio
+    - light.corredor
+    - light.suite
+    - light.abajur_da_suite
+    - light.closet
 
-dispositivos_rede:
-  name: Dispositivos na Rede
-  entities:
-    - binary_sensor.internet
-    - binary_sensor.ap_router_e
-    - binary_sensor.tp_link
-    - binary_sensor.unifi
-    - binary_sensor.tv_lg_game
-    - binary_sensor.chrome_cast_quarto
-    - binary_sensor.chrome_cast_game
-    - binary_sensor.google_home_quarto
-    - binary_sensor.google_home_sala
-    - binary_sensor.broadlink_ir_quarto
-    - binary_sensor.broadlink_ir_sala
-    - binary_sensor.camera_digoo
-    - binary_sensor.wcam360
-    - binary_sensor.sonoff_rf_bridge
+#dispositivos_rede:
+#  name: Dispositivos na Rede
+#  entities:
+#    - binary_sensor.internet
+#    - binary_sensor.ap_router_e
+#    - binary_sensor.tp_link
+#    - binary_sensor.unifi
+#    - binary_sensor.tv_lg_game
+#    - binary_sensor.chrome_cast_quarto
+#    - binary_sensor.chrome_cast_game
+#    - binary_sensor.google_home_quarto
+#    - binary_sensor.google_home_sala
+#    - binary_sensor.broadlink_ir_quarto
+#    - binary_sensor.broadlink_ir_sala
+#    - binary_sensor.camera_digoo
+#    - binary_sensor.wcam360
+#    - binary_sensor.sonoff_rf_bridge
 
-sysinfo:
-  name: Raspberry System Info
-  entities:
-    - sensor.cpu_temperatura
-    - sensor.disk_use_
-    - sensor.disk_free_
-    - sensor.disk_use_percent_
-    - sensor.memory_use
-    - sensor.memory_free
-    - sensor.memory_use_percent
-    - sensor.processor_use
-    - sensor.last_boot
-    - sensor.uptime
-    - sensor.versao
+#sysinfo:
+#  name: Raspberry
+#  entities:
+#    - sensor.cpu_temperatura
+#    - sensor.disk_use
+#    - sensor.disk_free
+#    - sensor.disk_use_percent
+#    - sensor.memory_use
+#    - sensor.memory_free
+#    - sensor.memory_use_percent
+#    - sensor.processor_use
+#    - sensor.last_boot
+#    - sensor.uptime
+#    - sensor.versao
 
-sensores_seguraca:
-  name: Sensores de Seguraça
-  entities:
-    - switch.sirenes
-    - binary_sensor.sala_social
-    - binary_sensor.sala_jantar
-    - binary_sensor.corredor
-    - binary_sensor.ext_garagem
-    - binary_sensor.ext_piscina
-    - binary_sensor.porta_varanda
-    - binary_sensor.porta_entrada
-    - binary_sensor.porta_area
-    - binary_sensor.janela_closet
-    - binary_sensor.janela_cozinha
-    - binary_sensor.janela_suite
-    - binary_sensor.janela_quarto_f
-    - binary_sensor.janela_quarto_m
-    - script.reseta_sensores
+#sensores_seguraca:
+#  name: Sensores de Seguraça
+#  entities:
+#    - switch.sirenes
+#    - binary_sensor.sala_social
+#    - binary_sensor.sala_jantar
+#    - binary_sensor.corredor
+#    - binary_sensor.ext_garagem
+#    - binary_sensor.ext_piscina
+#    - binary_sensor.porta_varanda
+#    - binary_sensor.porta_entrada
+#    - binary_sensor.porta_area
+#    - binary_sensor.janela_closet
+#    - binary_sensor.janela_cozinha
+#    - binary_sensor.janela_suite
+#    - binary_sensor.janela_quarto_f
+#    - binary_sensor.janela_quarto_m
+#    - script.reseta_sensores
 
-sensores_controles:
-  name: Controles Digoo
-  entities:
-    - binary_sensor.c1_alarme
-    - binary_sensor.c1_home
-    - binary_sensor.c1_sos
-    - binary_sensor.c2_alarme
-    - binary_sensor.c2_home
-    - binary_sensor.c2_sos
-    - binary_sensor.c3_alarme
-    - binary_sensor.c3_home
-    - binary_sensor.c3_sos
+#sensores_controles:
+#  name: Controles Digoo
+#  entities:
+#    - binary_sensor.c1_alarme
+#    - binary_sensor.c1_home
+#    - binary_sensor.c1_sos
+#    - binary_sensor.c2_alarme
+#    - binary_sensor.c2_home
+#    - binary_sensor.c2_sos
+#    - binary_sensor.c3_alarme
+#    - binary_sensor.c3_home
+#    - binary_sensor.c3_sos
 
-horacerta:
-  name: Data Hora
-  entities:
-    - sensor.time
-    - sensor.date
-    - sensor.time_utc
+#horacerta:
+#  name: Data Hora
+#  entities:
+#    - sensor.time
+#    - sensor.date
 
-home_spotify_player:
-  name: Spotify Player
-  entities:
-    - media_player.spotify
+##home_spotify_player:
+##  name: Spotify Player
+##  entities:
+##    - media_player.spotify
 
-home_spotify_controls:
-  name: Spotify
-  control: hidden
-  entities:
-    - input_select.spotify_playlist
-    - script.spotify_music
-    - input_number.spotify_volume
-    - input_boolean.spotify_shuffle
+##home_spotify_controls:
+##  name: Spotify
+##  control: hidden
+##  entities:
+##    - input_select.spotify_playlist
+##    - script.spotify_music
+##    - input_number.spotify_volume
+##    - input_boolean.spotify_shuffle
 
-home_room_tv:
-  name: TV do Quarto
-  entities:
-    - script.tv_quarto_vol_up
-    - script.tv_quarto_vol_down
-    - script.tv_quarto_mute
-    - script.tv_quarto_sleep
-    - script.tv_quarto_input
-    - switch.tv_quarto
+#home_room_tv:
+#  name: TV do Quarto
+#  entities:
+#    - script.tv_quarto_vol_up
+#    - script.tv_quarto_vol_down
+#    - script.tv_quarto_mute
+#    - script.tv_quarto_sleep
+#    - script.tv_quarto_input
+#    - switch.tv_quarto
 
-home_parabolic:
-  name: Parabolica
-  entities:
-    - script.parabolica_vol_up
-    - script.parabolica_vol_down
-    - script.parabolica_up
-    - script.parabolica_down
-    - script.parabolica_ok
-    - switch.parabolica
-    - script.parabolica_sleep
+##home_parabolic:
+##  name: Parabolica
+##  entities:
+##    - script.parabolica_vol_up
+##    - script.parabolica_vol_down
+##    - script.parabolica_up
+##    - script.parabolica_down
+##    - script.parabolica_ok
+##    - switch.parabolica
+##    - script.parabolica_sleep
 
-home_conditioner:
-  name: Ar Condicionado do Quarto
-  entities:
-    - input_number.temperatura_ar
-    - script.air_quarto_led
-    - script.air_quarto_swing
-    - switch.ar_quarto
+#ar_quarto_suite:
+#  name: Ar Condicionado do Quarto
+#  entities:
+#    - input_number.temperatura_ar
+#    - script.air_quarto_led
+#    - script.air_quarto_swing
+#    - switch.ar_quarto
 
-alarm_clock:
-  name: Despertador
-  entities:
-    - sensor.alarm_clock_time
-    - input_number.alarm_clock_hour
-    - input_number.alarm_clock_minutes
-    - input_text.text_clock
-    - input_text.text_url_youtube
-    - input_number.alarm_clock_volume
-    - input_boolean.alarm_clock_status
+#alarm_clock:
+#  name: Despertador
+#  entities:
+#    - sensor.alarm_clock_time
+#    - input_number.alarm_clock_hour
+#    - input_number.alarm_clock_minutes
+#    - input_text.text_clock
+#    - input_text.text_url_youtube
+#    - input_number.alarm_clock_volume
+#    - input_boolean.alarm_clock_status
 
-xboom_control:
-  name: Xboom
-  entities:
-    - script.xboom_vol_up
-    - script.xboom_vol_down
-    - script.xboom_mute
-    - script.xboom_input
-    - script.xboom_equalizer
-    - script.xbom_auxiliar
-    - script.xbom_bluetooth
-    - switch.xboom_som
+##sala_tv:
+##  name: Sala de Estar
+##  entities:
+##    - switch.home_theater
 
-lg55_grupo:
-  name: Tv LG55
-  entities:
-    - script.lg55_vol_up
-    - script.lg55_vol_down
-    - script.lg55_mute
-    - script.lg55_simplink
-    - script.lg55_exit
-    - script.lg55_input
-    - switch.tv_lg_55
+#xboom_control:
+#  name: Xboom
+#  entities:
+#    - script.xboom_vol_up
+#    - script.xboom_vol_down
+#    - script.xboom_mute
+#    - script.xboom_input
+#    - script.xboom_equalizer
+#    - script.xbom_auxiliar
+#    - script.xbom_bluetooth
+#    - switch.xboom_som
 
-projetor_gp:
-  name: Projetor
-  entities:
-    - switch.projetor
-    - script.proj_menu
-    - script.proj_mute
-    - script.proj_input
-    - script.proj_vup
-    - script.proj_vdown
-    - script.proj_c
-    - script.proj_b
-    - script.proj_f
-    - script.proj_t
-    - script.proj_ok
-    - script.proj_esc
+#lg55_grupo:
+#  name: Tv LG55
+#  entities:
+#    - script.lg55_vol_up
+#    - script.lg55_vol_down
+#    - script.lg55_mute
+#    - script.lg55_simplink
+#    - script.lg55_exit
+#    - script.lg55_input
+#    - switch.tv_lg_55
 
-ar_consul:
-  name: Ar Consul
-  entities:
-    - switch.ar_consul
-
-planta:
-  name: Planta
-  entities:
-    - binary_sensor.floorplan
+#projetor_gp:
+#  name: Projetor
+#  entities:
+#    - switch.projetor
+#    - script.proj_menu
+#    - script.proj_mute
+#    - script.proj_input
+#    - script.proj_vup
+#    - script.proj_vdown
+#    - script.proj_c
+#    - script.proj_b
+#    - script.proj_f
+#    - script.proj_t
+#    - script.proj_ok
+#    - script.proj_esc

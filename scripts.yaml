@@ -1,3 +1,56 @@
+cade_a_flavia:
+  alias: "Cade a Flávia"
+  sequence:
+    - service: notify.telegramrudi
+      data_template:
+        message: >
+          {% if is_state('device_tracker.google_maps_111111111111111111111', 'home') %}
+            A Flávia está em casa! Celular: {{ states.sensor.bateria_status_flavia.state }}
+          {% else %}
+            Flávia está com a bateria em {{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_111111111111111111111.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
+          {% endif %}
+
+cade_o_rudi:
+  alias: "Cade o Rudi"
+  sequence:
+    - service: notify.telegramrudi
+      data_template:
+        message: >
+          {% if is_state('device_tracker.google_maps_000000000000000000000', 'home') %}
+          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}   
+          {% else %}
+           Rudi está com a bateria em {{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_000000000000000000000.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
+          {% endif %}
+    - service: notify.telegramflavia
+      data_template:
+        message: >
+          {% if is_state('device_tracker.google_maps_000000000000000000000', 'home') %}
+          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}   
+          {% else %}
+           Rudi está com a bateria em {{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_000000000000000000000.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
+          {% endif %}
+
+teste_script:
+  alias: "Teste Script Bateria"
+  sequence:
+    - service: notify.telegramrudi
+      data_template:
+        message: >
+          {% if is_state('sensor.bateria_flavia_st', "False") %}
+          Descarregando / {{ states.sensor.bateria_status_flavia.state }} / {{ states.sensor.bateria_flavia_st.state }}
+          {% else %}
+          Carregando / {{ states.sensor.bateria_status_flavia.state }} / {{ states.sensor.bateria_flavia_st.state }}
+          {% endif %}
+    - service: notify.telegramflavia
+      data_template:
+        message: >
+          {% if is_state('sensor.bateria_flavia_st', "False") %}
+          Descarregando / {{ states.sensor.bateria_status_flavia.state }} / {{ states.sensor.bateria_flavia_st.state }}
+          {% else %}
+          Carregando / {{ states.sensor.bateria_status_flavia.state }} / {{ states.sensor.bateria_flavia_st.state }}
+          {% endif %}
+        
+          
 foto_cam:
   alias: "Cap. Cam 360 Envia Telegram"
   sequence:
@@ -105,62 +158,6 @@ reseta_sensores:
       topic: "tele/sonoffBr1/RESULT"
       payload: ' {"RfReceived":{"Data":"996D46off"}} '
 
-#ptz_tilt_up:
-#  alias: UP
-#  sequence:
-#    - service: camera.onvif_ptz
-#      data:
-#        entity_id: 'camera.ptz'
-#        tilt: 'UP'
-#ptz_tilt_down:
-#  alias: Down
-#  sequence:
-#    - service: camera.onvif_ptz
-#      data:
-#        entity_id: 'camera.ptz'
-#        tilt: 'DOWN'
-#ptz_pan_left:
-#  alias: Left
-#  sequence:
-#    - service: camera.onvif_ptz
-#      data:
-#        entity_id: 'camera.ptz'
-#        pan: 'LEFT'
-#ptz_pan_right:
-#  alias: Right
-#  sequence:
-#    - service: camera.onvif_ptz
-#      data:
-#        entity_id: 'camera.ptz'
-#        pan: 'RIGHT'
-
-#radio538:
-#  alias: Radio Chromecast
-#  sequence:
-#  - service: media_player.play_media
-#    data:
-#      entity_id: media_player.tv_do_quarto
-#      media_content_id: http://0.0.0.0:8000/comunitaria
-#      media_content_type: channel
-
-spotify_music:
-  alias: Play selected spotify playlist
-  sequence:
-  - service: media_player.play_media
-    data_template:
-      entity_id: media_player.spotify
-      media_content_type: playlist
-      media_content_id:
-        '{% if is_state("input_select.spotify_playlist", "Classicas da Zona") %} spotify:user:rudiremontti:playlist:4YOoZ4EqhINjxVYStoo8xh
-        {% elif is_state("input_select.spotify_playlist", "Gauderias") %} spotify:user:jackson.antunes.93:playlist:6YJNp1P7UhzHAUaIWOqHZI
-        {% elif is_state("input_select.spotify_playlist", "50+ Brasil") %} spotify:user:spotifycharts:playlist:37i9dQZEVXbMXbN3EUUhlg
-        {% elif is_state("input_select.spotify_playlist", "Bandinhas") %} spotify:user:rudiremontti:playlist:55vLjLWFN9IyG1TjxqkRJ5
-        {% elif is_state("input_select.spotify_playlist", "Sertanejo Mais Tocado") %} spotify:user:redmusiccompany:playlist:68kJ4ASW7AWdDKMiC3C7mC
-        {% elif is_state("input_select.spotify_playlist", "Rock Sussa") %} spotify:user:rudiremontti:playlist:38fZXSVa5cOhIB7If211jJ
-        {% elif is_state("input_select.spotify_playlist", "Classic Rock") %} spotify:user:rudiremontti:playlist:3S33x7DEWFSD9vXC9NGAVP
-        {% elif is_state("input_select.spotify_playlist", "Rock Nacional") %} spotify:user:12125731248:playlist:6yxboZCApBt9U6srFv0Xz4
-        {% elif is_state("input_select.spotify_playlist", "Metallica Tops") %} spotify:user:rudiremontti:playlist:4UmJ20IrEc3Zw2bd2VXidh
-        {% endif %}'
 
 tv_quarto_vol_up:
   alias: TV Volume Up
@@ -199,48 +196,6 @@ tv_quarto_input:
     data:
       packet:
         - "JgBYAAABJZMSExETERQRExEUERMROBISEjgSNxI3EjgROBI4ERMRORE4EjcSOBE3ExISEhITEhISExISEhMSEhI4ETgSNxI4EgAFFQABJUoRAAxAAAElSRMADQU="
-parabolica_vol_up:
-  alias: "Parabolica Volume Up"
-  sequence:
-  - service: switch.broadlink_send_packet_100_64_0_26
-    data:
-      packet:
-        - "JgBgAAABI5QRNxITERMRExITEBQRFBETETgRExE4ETgROBE3EjcROBE2ExMRExEUERMRExI3ETgRExE4ETgROBE3EjcRFBETEAAFGQABI0oTAAwxAAEjShIADDIAASNLEQANBQAAAAAAAAAA"
-parabolica_vol_down:
-  alias: "Parabolica Volume Down"
-  sequence:
-  - service: switch.broadlink_send_packet_100_64_0_26
-    data:
-      packet:
-        - "JgBgAAABI5MSNxITERMRExITERMRFBETETgRExE4ETgRNxI3ETgRNxI3EhMRExE4ETgRExEUETcSExE4ETcRFBETETgROBETEQAFGAABI0oRAAwzAAEjShIADDIAASNKEgANBQAAAAAAAAAA"
-parabolica_up:
-  alias: "Parabolica Up"
-  sequence:
-  - service: switch.broadlink_send_packet_100_64_0_26
-    data:
-      packet:
-        - "JgBgAAABI5MROBETERQRExETEhMRExETEjcSExE3EjYSOBE4ETgRNxITETgRExE4ERMRExI3ETgROBETETgRExI3ETgRExEUEQAFFwABJEoRAAwzAAEjSxEADDMAASNKEQANBQAAAAAAAAAA"
-parabolica_down:
-  alias: "Parabolica Down"
-  sequence:
-  - service: switch.broadlink_send_packet_100_64_0_26
-    data:
-      packet:
-        - "JgBgAAABJJIQORAUERQQFBAUERQQFBEUEDgRFBA4ETgROBA5EDkQOBEUEDkQFBAUETgQFBE4EDkQORAUEDkQORAUEDkQFBAVEAAFGAABJUkSAAwyAAElSRAADDMAASZIEAANBQAAAAAAAAAA"
-parabolica_sleep:
-  alias: "Parabolica Sleep"
-  sequence:
-  - service: switch.broadlink_send_packet_100_64_0_26
-    data:
-      packet:
-        - "JgBoAAABJZETNhMSEhITEhISExETEhISEzYTERM2EzYTNhI2EzYTNhM2EjcSEhMRExISEhMSEjYTEhISEzYTNhI2EzYTNhMREwAFFgABJkgTAAwxAAEmSBMADDEAASZIEwAMMQABJUgTAA0F"
-parabolica_ok:
-  alias: "Parabolica OK"
-  sequence:
-  - service: switch.broadlink_send_packet_100_64_0_26
-    data:
-      packet:
-        - "JgBoAAABI5MROBETERQRExEUERMRExITETcSExE4ETcSNxE4ETgRNxITETgRNxI3ERMSExE4ETcSNxEUERMRExI3ETgRExEUEQAFFwABJEoRAAwzAAEjShIADDIAASNLEQAMMwABI0kSAA0F"
 air_quarto_swing:
   alias: "Ar Swing"
   sequence:
@@ -255,6 +210,23 @@ air_quarto_led:
     data:
       packet:
         - "JgDKAI6QEjQTERI1EjQTERI0ExESNRIREzQSERMREjQTERI1EhETNBI1EjQTNBISEjQTERI1EhETERIREhISNBMREjUSERM0EhETNBMREhETNBIREzQSEhI0EhISNBM0EhISNBMREKuPjRM0ExESNBM0EhETNBMREjQTERI1EhESEhI0ExESNBMREjUSNBM0EjUSERI1EhETNBMREhETERIREzQSERM0ExESNBMREjUSERMREjQTERI1EhESNRIREzQSNRIREjUSERAADQUAAAAAAAAAAAAAAAAAAA=="
+
+air_quarto_vent_max:
+  alias: "Ar Só Vento Max"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgDKAI2QEzQTEBM0EzQTEBMREjQTERMREjQTERIREzQTNBMQEzQTERMQEzQTNBM0EjQTNBM0EzQTNBMQEhISERMRExATERM0EzMTNBMRExATNBMQExETERIREhITMxM0ExESNBM0EKyPjhM0EhESNRM0ExATERMzFBATERI0FBASEhMzEzQTEBQzExETEBQzEzQTNBM0EzMTNBM0EzQTEBMRExATERMQExETNBMzFDMTERMQEzQTEBMREhITEBMREzMTNBMREzMUMxAADQUAAAAAAAAAAAAAAAAAAA=="
+
+air_quarto_vent_med:
+  alias: "Ar Só Vento Med"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgDKAJGNEzQSERI1EjUSERISEjQTERISEjQTERIREzQSNRMREjUSERI1ExASNRM0EjUTMxM0EzQSEhI1EhESEhIREhISERI1EjUTNBIREhISNBISEhETERISEhESNRM0EhESNRI1EKyQjRM0EhESNRI1EhESEhI0ExESEhI1EhESEhI0EjUSEhI1EhESNRIREzQTNBI1EjQTNBI1EhISNRMQEhISERISEhESNRI1EjUTEBISEjQSEhIRExESEhIREjUTNBMQEjUSNRAADQUAAAAAAAAAAAAAAAAAAA=="
+
 xboom_vol_up:
   alias: "Xboom Volume +"
   sequence:

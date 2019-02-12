@@ -1,41 +1,36 @@
 homeassistant:
+  # Name of the location where Home Assistant is running
   name: Home
-  latitude: -00.000000
+  # Location required to calculate the time the sun rises and sets
+  latitude: -00.00000
   longitude: -00.000000
+  # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 0
+  # metric for Metric, imperial for Imperial
   unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Sao_Paulo
+  # Customization file
   customize: !include customize.yaml
 
   auth_providers:
     - type: homeassistant
   whitelist_external_dirs:
     - /tmp
-
+    - /config
 zone:
-  - name: "SpeedRS Casa"
-    latitude: -00.000000
-    longitude: -00.000000
+  - name: "Trabalho"
+    latitude: -00.00000
+    longitude: -00.00000
     radius: 100
     icon: mdi:briefcase
 
-  - name: "SpeedRS Torre"
-    latitude: -00.000000
-    longitude: -00.000000
+  - name: "Backbone"
+    latitude: -00.00000
+    longitude: -00.00000
     radius: 100
     icon: mdi:briefcase
 
-  - name: "Maria João"
-    latitude: -00.000000
-    longitude: -00.000000
-    radius: 100
-    icon: mdi:briefcase
-
-  - name: "Casa Pai"
-    latitude: -00.000000
-    longitude: -00.000000
-    radius: 400
-    icon: mdi:home-variant
 
 scene:
   - name: "Suíte Romantica"
@@ -48,27 +43,22 @@ scene:
 # Show links to resources in log and frontend
 #introduction:
 
+# Enables the frontend
 frontend:
   themes: !include themes.yaml
-  extra_html_url:
-    - /local/custom_ui/state-card-floorplan.html
 
-panel_custom:
-  - name: floorplan
-    sidebar_title: Planta Baixa
-    sidebar_icon: mdi:floor-plan
-    url_path: floorplan
-    config: !include floorplan.yaml
-
+# Enables configuration UI
 config:
 
+# Historico 7 Dias
 recorder:
-  purge_keep_days: 2
+  purge_keep_days: 7
 
 http:
-  base_url: https://xxxxxx.xxxxx.com.br:8123
+  base_url: https://minhacasa.meudominio.com.br:8123
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
+
 
 updater:
   # Optional, allows Home Assistant developers to focus on popular components.
@@ -114,18 +104,18 @@ sensor: !include sensor.yaml
 
 binary_sensor: !include binary_sensor.yaml
 
+logger:
+  default: error
+  logs:
+    homeassistant.components.mqtt: critical
 
-#logger:
-#  default: debug
 
 # Text to speech
 tts:
-# http://www.voicerss.org/personel/statistic.aspx
   - platform: voicerss
-    api_key: a0000000000000000000000000000000000b
+    api_key: !secret voicerss_key
     language: 'pt-br'
     format: '44khz_16bit_stereo'
-# Google (google_say)
   - platform: google
     language: 'pt-br'
     cache: true
@@ -134,17 +124,6 @@ tts:
 
 # Cloud
 cloud:
-
-# Editor
-#panel_iframe:
-#  tasmotaadm:
-#    title: Tasmota ADM
-#    url: http://100.100.0.2:9541
-#    icon: mdi:pulse
-#  configurator:
-#    title: Editor
-#    icon: mdi:wrench
-#    url: http://100.100.0.2:3218
 
 # Localizador
 device_tracker:
@@ -162,8 +141,9 @@ media_player:
   - platform: lg_netcast
     name: "LG Smart TV"
     host: 100.64.0.15
-    access_token: 431855
+    access_token: 123456
 
+# Googles home e chromecast
 cast:
   media_player:
   - host: 100.64.0.20
@@ -178,8 +158,10 @@ mqtt:
    username: !secret mqtt_username
    password: !secret mqtt_password
 
+# Luzes
 light: !include light.yaml
 
+# Interruptores
 switch: !include switch.yaml
 
 # Inputs text
@@ -189,17 +171,33 @@ input_text:
     initial: Bom dia! São 7 horas
   text_url_youtube:
     name: URL Youtube
-    initial: https://www.youtube.com/watch?v=wuLKvcn-c7A
+    initial: https://www.youtube.com/watch?v=fvrogxMHmlg
+
+
+input_datetime:
+  poste_on:
+    name: "Ligar poste às"
+    has_date: false
+    has_time: true
+    initial: "19:30"
+  poste_off:
+    name: "Desligar poste às"
+    has_date: false
+    has_time: true
+    initial: "23:00"
+  arandelas_on:
+    name: "Ligar arandelas às"
+    has_date: false
+    has_time: true
+    initial: "19:30"
+  arandelas_off:
+    name: "Desligar arandelas às"
+    has_date: false
+    has_time: true
+    initial: "23:00"
 
 # Inputs number
 input_number:
-  spotify_volume:
-    name: Volume
-    icon: mdi:volume-high
-    initial: 100
-    min: 0
-    max: 100
-    step: 1
   alarm_clock_hour:
     name: Hora
     icon: mdi:timer
@@ -233,49 +231,30 @@ input_number:
     step: 1
     mode: slider
 
-# Inputs select
-input_select:
-  spotify_playlist:
-    name: 'Playlist:'
-    options:
-      - Classicas da Zona
-      - Gauderias
-      - 50+ Brasil
-      - Bandinhas
-      - Sertanejo
-      - Rock Sussa
-      - Classic Rock
-      - Rock Nacional
-      - Metallica Tops
-    icon: mdi:spotify
 
 # Inputs boolean
 input_boolean:
-  spotify_shuffle:
-    name: Shuffle
-    icon: mdi:shuffle-variant
   alarm_clock_status:
     name: Status
     initial: on
 
 ffmpeg:
-#  run_test: false
 
 camera:
   - platform: ffmpeg
     name: Camera Interna
-    input: rtsp://admin:senha@100.64.0.100/onvif2
+    input: rtsp://admin:senha@100.64.0.52/onvif2
   - platform: ffmpeg
-    input: rtsp://admin:senha@100.64.0.101/2
+    input: rtsp://admin:senha@100.64.0.60/2
     name: "Wanscam 360"
 
+
 google_assistant:
-  project_id: !secret gg_project_id
-  api_key: !secret gg_api_key
+  project_id: !secret google_project
+  api_key: !secret google_key
   exposed_domains:
     - switch
     - light
-    - group
     - script
 
 notify:
@@ -288,7 +267,7 @@ notify:
 
 telegram_bot:
   platform: polling
-  api_key: !secret tg_api_key
+  api_key: !secret tg_api
   allowed_chat_ids:
     - !secret tg_chat_idr
     - !secret tg_chat_idf
@@ -308,9 +287,9 @@ alarm_control_panel:
 
 shopping_list:
 
-#weather:
-#  - platform: darksky
-#    api_key: !secret api_darksky
+weather:
+  - platform: darksky
+    api_key: !secret api_darksky
 
 group: !include groups.yaml
 automation: !include automations.yaml

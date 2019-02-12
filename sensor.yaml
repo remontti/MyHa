@@ -4,36 +4,42 @@
     state_topic: "tele/sonoff26/SENSOR"
     value_template: "{{ value_json['DHT11'].Temperature }}"
     unit_of_measurement: "°C"
+
   - platform: mqtt
     name: "Suite Humidade"
     device_class: humidity
     state_topic: "tele/sonoff26/SENSOR"
     value_template: "{{ value_json['DHT11'].Humidity }}"
     unit_of_measurement: "%"
+
   - platform: mqtt
     name: "Cozinha Temperatura"
     device_class: temperature
     state_topic: "tele/sonoff23/SENSOR"
     value_template: "{{ value_json['DHT11'].Temperature }}"
     unit_of_measurement: "°C"
+
   - platform: mqtt
     name: "Cozinha Humidade"
     device_class: humidity
     state_topic: "tele/sonoff23/SENSOR"
     value_template: "{{ value_json['DHT11'].Humidity }}"
     unit_of_measurement: "%"
+
   - platform: mqtt
     name: "Banheiro Social Temperatura"
     device_class: temperature
     state_topic: "tele/sonoff24/SENSOR"
     value_template: "{{ value_json['DHT11'].Temperature }}"
     unit_of_measurement: "°C"
+
   - platform: mqtt
     name: "Banheiro Social Humidade"
     device_class: humidity
     state_topic: "tele/sonoff24/SENSOR"
     value_template: "{{ value_json['DHT11'].Humidity }}"
     unit_of_measurement: "%"
+
   - platform: darksky
     api_key: !secret api_darksky
     language: 'pt'
@@ -45,12 +51,10 @@
       - humidity
       - pressure
       - visibility
-#      - minutely_summary
       - hourly_summary
       - daily_summary
-      - temperature_high
-      - temperature_low
       - uv_index
+  - platform: moon
   - platform: time_date
     display_options:
       - 'time'
@@ -68,6 +72,9 @@
       - type: memory_use_percent
       - type: processor_use
       - type: last_boot
+  - platform: filesize
+    file_paths:
+      - /config/home-assistant_v2.db
   - platform: uptime
     name: Uptime
   - platform: version
@@ -80,12 +87,6 @@
 
   - platform: template
     sensors:
-      spotify_volume:
-        friendly_name: "Spotify Volume"
-        value_template: "{{ states.media_player.spotify.attributes.volume_level }}"
-      spotify_shuffle:
-        friendly_name: "Spotify Shuffle"
-        value_template: "{{ states.media_player.spotify.attributes.shuffle }}"
       alarm_clock_hour:
         value_template: '{{ states.input_number.alarm_clock_hour.state | int }}'
       alarm_clock_minutes:
@@ -108,15 +109,70 @@
           {%- endif -%}
             {{ states.sensor.alarm_clock_minutes.state }}
 
-#  - platform: snmp
-#    name: Upload
-#    host: 100.100.0.1
-#    community: public
-#    baseoid: 1.3.6.1.2.1.31.1.1.1.10.1
-#    unit_of_measurement: 'bps'
-#  - platform: snmp
-#    name: Download
-#    host: 100.100.0.1
-#    community: public
-#    baseoid: 1.3.6.1.2.1.31.1.1.1.6.1
-#    unit_of_measurement: 'bps'
+  - platform: template
+    sensors:
+      bateria_rudi:
+        friendly_name: Bateria Rudi
+        unit_of_measurement: '%'
+        value_template:  '{{ states.device_tracker.google_maps_106566341309199592438.attributes.battery_level|int }}'
+        device_class: battery
+
+      bateria_rudi_st:
+        value_template:  '{{ states.device_tracker.google_maps_106566341309199592438.attributes.battery_charging }}'
+        device_class: battery
+
+      bateria_flavia:
+        friendly_name: Bateria Flavia
+        unit_of_measurement: "%"
+        value_template:  '{{ states.device_tracker.google_maps_118429201781082195315.attributes.battery_level|int }}'
+        device_class: battery
+
+      bateria_flavia_st:
+        value_template:  '{{ states.device_tracker.google_maps_118429201781082195315.attributes.battery_charging }}'
+        device_class: battery
+
+
+      bateria_status_rudi:
+        friendly_name: Status Bateria Rudi
+        value_template: >-
+          {% if is_state('sensor.bateria_rudi_st', "False") %}
+            Descarregando
+          {% else %}
+            Carregando
+          {% endif %}
+        icon_template: >-
+          {% if is_state('sensor.bateria_rudi_st', "False") %}
+            mdi:battery-outline
+          {% else %}
+            mdi:battery-charging
+          {% endif %}
+
+      bateria_status_flavia:
+        friendly_name: Status Bateria Flavia
+        value_template: >-
+          {% if is_state('sensor.bateria_flavia_st', "False") %}
+            Descarregando
+          {% else %}
+            Carregando
+          {% endif %}
+        icon_template: >-
+          {% if is_state('sensor.bateria_flavia_st', "False") %}
+            mdi:battery-outline
+          {% else %}
+            mdi:battery-charging
+          {% endif %}
+
+      precisa_trabalhar:
+        friendly_name: Precisa Trabalhar Hoje
+        value_template: >-
+          {% if is_state('binary_sensor.trabalhando', 'on') %}
+            Sim
+          {% else %}
+            Não
+          {% endif %}
+        icon_template: >-
+          {% if is_state('binary_sensor.trabalhando', 'on') %}
+            mdi:thumb-up-outline
+          {% else %}
+            mdi:thumb-down-outline
+          {% endif %}

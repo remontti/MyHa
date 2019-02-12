@@ -1,82 +1,1283 @@
-title: Casa do Remontti
+resources:
+  - type: module
+    url: /local/mini-media-player-bundle.js?v=0.9.8
+  - type: module
+    url: /local/button-card.js
+  - type: js
+    url: /local/vertical-stack-in-card.js?v=0.0.9
+  - type: js
+    url: /local/bignumber-card.js
+  - type: module
+    url: /local/mini-graph-card-bundle.js?v=0.2.1
+title: My Home
 views:
-  - id: 0  # Automatically created id
+  - badges: []
+    cards:
+      - cards:
+          - cards:
+              - elements:
+                  - entity: device_tracker.google_maps_000000000000000000000
+                    style:
+                      color: white
+                      font-size: 1.4em
+                      left: 25%
+                      top: 90%
+                    type: state-label
+                  - entity: sensor.bateria_rudi
+                    style:
+                      color: white
+                      left: 83%
+                      top: 87%
+                    type: state-label
+                  - entity: sensor.bateria_status_rudi
+                    style:
+                      left: 69%
+                      top: 86%
+                    type: state-icon
+                  - entity: sensor.bateria_status_rudi
+                    style:
+                      color: white
+                      font-size: 11px
+                      left: 78%
+                      top: 96%
+                    type: state-label
+                image: /local/imgs/rudi2.jpg
+                type: picture-elements
+              - elements:
+                  - entity: device_tracker.google_maps_111111111111111111111
+                    style:
+                      color: white
+                      font-size: 1.4em
+                      left: 25%
+                      top: 90%
+                    type: state-label
+                  - entity: sensor.bateria_flavia
+                    style:
+                      color: white
+                      left: 82%
+                      top: 87%
+                    type: state-label
+                  - entity: sensor.bateria_flavia
+                    style:
+                      left: 69%
+                      top: 86%
+                    type: state-icon
+                  - entity: sensor.bateria_status_flavia
+                    style:
+                      color: white
+                      font-size: 11px
+                      left: 80%
+                      top: 96%
+                    type: state-label
+                image: /local/imgs/flavia3.jpg
+                type: picture-elements
+            type: horizontal-stack
+          - entities:
+              - entity: sensor.precisa_trabalhar
+            show_header_toggle: false
+            type: entities
+        type: vertical-stack
+      - entity: weather.dark_sky
+        type: weather-forecast
+      - cards:
+          - cards:
+              - entity: sensor.cpu_temperatura
+                max: 80
+                min: -5
+                name: CPU  Temp
+                severity:
+                  green: 0
+                  red: 60
+                  yellow: 50
+                type: gauge
+              - entity: sensor.processor_use
+                name: CPU
+                type: gauge
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.disk_use_percent
+                name: SD
+                type: gauge
+              - entity: sensor.memory_use_percent
+                name: RAM
+                type: gauge
+            type: horizontal-stack
+        type: vertical-stack
+      - elements:
+          - entity: sensor.disk_use
+            style:
+              left: 5%
+              text-shadow: '0.1em 0.08em #000000'
+              top: 7%
+              transform: none
+            type: state-badge
+          - entity: sensor.disk_free
+            style:
+              left: 24%
+              text-shadow: '0.1em 0.08em #000000'
+              top: 7%
+              transform: none
+            type: state-badge
+          - entity: sensor.memory_use
+            style:
+              left: 40%
+              text-shadow: '0.1em 0.08em #000000'
+              top: 7%
+              transform: none
+            type: state-badge
+          - entity: sensor.memory_free
+            style:
+              left: 57%
+              text-shadow: '0.1em 0.08em #000000'
+              top: 7%
+              transform: none
+            type: state-badge
+          - entity: sensor.versao
+            prefix: 'V. '
+            style:
+              font-size: 25px
+              left: 88%
+              text-shadow: '0.1em 0.08em #000000'
+              top: 87%
+            type: state-label
+          - entity: sensor.home_assistant_v2_db
+            prefix: 'Data Base: '
+            style:
+              font-size: 20px
+              left: 26%
+              text-shadow: '0.1em 0.08em #000000'
+              top: 87%
+            type: state-label
+        image: /local/imgs/bg.jpg
+        type: picture-elements
+      - entities:
+          - entity: sensor.last_boot
+            name: Última inicialização
+          - entity: sensor.uptime
+        type: entities
+      - cards:
+          - cards:
+              - entities: sensor.suite_temperatura
+                line_color: '#FFA000'
+                name: Suíte
+                type: 'custom:mini-graph-card'
+              - entities: sensor.banheiro_social_temperatura
+                line_color: '#FFA000'
+                name: Banheiro Social
+                type: 'custom:mini-graph-card'
+              - entities: sensor.cozinha_temperatura
+                line_color: '#FFA000'
+                name: Cozinha
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entities: sensor.suite_humidade
+                line_color: '#1DE9B6'
+                name: Suíte
+                type: 'custom:mini-graph-card'
+              - entities: sensor.cozinha_humidade
+                line_color: '#1DE9B6'
+                name: Banheiro Social
+                type: 'custom:mini-graph-card'
+              - entities: sensor.banheiro_social_humidade
+                line_color: '#1DE9B6'
+                name: Cozinha
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - columns: 3
+            entities:
+              - entity: binary_sensor.internet
+              - binary_sensor.ap_router_e
+              - binary_sensor.tp_link
+              - binary_sensor.unifi
+              - binary_sensor.tv_lg_game
+              - binary_sensor.sonoff_rf_bridge
+              - binary_sensor.chrome_cast_quarto
+              - binary_sensor.chrome_cast_game
+              - binary_sensor.google_home_quarto
+              - binary_sensor.google_home_sala
+              - binary_sensor.camera_digoo
+              - binary_sensor.wcam360
+              - binary_sensor.broadlink_ir_quarto
+              - binary_sensor.broadlink_ir_sala
+            show_state: false
+            type: glance
+        type: vertical-stack
+      - entity: sensor.bateria_rudi
+        from: left
+        max: 100
+        min: 0
+        scale: 20px
+        severity:
+          - style: '#DD2C00'
+            value: 15
+          - style: '#FFEB3B'
+            value: 30
+          - style: '#9CCC65'
+            value: 50
+          - style: '#43A047'
+            value: 100
+        title: Bateria Rudi
+        type: 'custom:bignumber-card'
+      - entity: sensor.bateria_flavia
+        from: left
+        max: 100
+        min: 0
+        scale: 20px
+        severity:
+          - style: '#DD2C00'
+            value: 15
+          - style: '#FFEB3B'
+            value: 30
+          - style: '#9CCC65'
+            value: 50
+          - style: '#43A047'
+            value: 100
+        title: Bateria Flávia
+        type: 'custom:bignumber-card'
+    icon: 'mdi:home-assistant'
+    path: default_view
     title: Home
-    icon: mdi:home-assistant
+  - badges: []
     cards:
-#       - type: alarm-panel
-#         name: House Alarm
-#         entity: alarm_control_panel.alarme_da_casa
-#      - type: markdown
-#        title: Lovelace
-#        content: >
-#          Welcome to your **Lovelace UI**.
-#      - type: glance
-#        title: Glance card
-#        entities:
-#          - sensor.dark_sky_temperature
-#          - sensor.dark_sky_wind_speed
-#          - sensor.dark_sky_humidity
-      - id: 5190ced3ff404b8794711dd505219375  # Automatically created id
-        type: glance
-        title: Luzes
-#        show_name: false
-#        show_state: false
+      - entities:
+          - entity: switch.ar_quarto
+          - entity: input_number.temperatura_ar
+          - entity: script.air_quarto_led
+          - entity: script.air_quarto_swing
+          - entity: script.air_quarto_vent_max
+            icon: 'mdi:fan'
+          - entity: script.air_quarto_vent_med
+            icon: 'mdi:fan'
+        show_header_toggle: false
+        title: Ar Condicionado do Quarto
+        type: entities
+      - entity: switch.ventilador
+        hold_action:
+          action: more-info
+        tap_action:
+          action: toggle
+        type: entity-button
+      - columns: 3
         entities:
-          - entity: light.abajur_da_suite
-            name: Abajur
-            icon: mdi:desk-lamp
-            tap_action: toggle
-          - light.garagem
-          - light.arandelas
-          - light.arandela_varanda_suite
-          - light.area_piscina
-          - light.refretores_piscina
-          - light.porta_de_entrada
-          - light.varanda_suite
-          - light.refletores_piscina
-          - light.lavanderia
-          - light.banheiro_suite
-          - light.banheiro_social
-          - light.lavabo
-          - light.cozinha_central
-          - light.cozinha_pia
-          - light.cozinha_bancada
-          - light.cozinha_pendentes
-          - light.sala_game_central
-          - light.sala_game_spots
-          - light.sala_game_trilhos
-          - light.fita_led
-          - light.jantar_ent_frente
-          - light.jantar_ent_garagem
-          - light.jantar
-          - light.sala_estar_lustre
-          - light.sala_estar_spots
-          - light.quarto_frente
-          - light.quarto_meio
-          - light.corredor
-          - light.suite
-          - light.closet
-
-
-  - id: 1  # Automatically created id
-    title: Tempo
-    icon: mdi:weather-partlycloudy
+          - entity: switch.tv_quarto
+            name: Tv Quarto
+            tap_action:
+              action: toggle
+          - entity: switch.tv_lg_55
+            tap_action:
+              action: toggle
+          - entity: switch.xboom_som
+            tap_action:
+              action: toggle
+        type: glance
+      - entities:
+          - switch.tv_quarto
+          - script.tv_quarto_vol_up
+          - script.tv_quarto_vol_down
+          - script.tv_quarto_mute
+          - script.tv_quarto_sleep
+          - script.tv_quarto_input
+        show_header_toggle: false
+        title: TV do Quarto
+        type: entities
+      - entities:
+          - switch.tv_lg_55
+          - script.lg55_vol_up
+          - script.lg55_vol_down
+          - script.lg55_mute
+          - script.lg55_simplink
+          - script.lg55_exit
+          - script.lg55_input
+        show_header_toggle: false
+        title: Tv  Sala Game
+        type: entities
+      - entities:
+          - switch.xboom_som
+          - script.xboom_vol_up
+          - script.xboom_vol_down
+          - script.xboom_mute
+          - script.xboom_input
+          - script.xboom_equalizer
+          - script.xbom_auxiliar
+          - script.xbom_bluetooth
+        show_header_toggle: false
+        title: Xboom
+        type: entities
+      - entities:
+          - switch.projetor
+          - script.proj_menu
+          - script.proj_mute
+          - script.proj_input
+          - script.proj_vup
+          - script.proj_vdown
+          - script.proj_c
+          - script.proj_b
+          - script.proj_f
+          - script.proj_t
+          - script.proj_ok
+          - script.proj_esc
+        show_header_toggle: false
+        title: Projetor
+        type: entities
+      - cards:
+          - color: '#000'
+            color_type: label-card
+            name: TV DO QUARTO
+            type: 'custom:button-card'
+          - entities:
+              - entity: switch.tv_quarto
+                name: Tv do Quarto
+            type: entities
+          - cards:
+              - action: service
+                icon: 'mdi:power'
+                name: Power
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: switch.tv_quarto
+                  domain: switch
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:volume-plus'
+                name: Volume +
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.tv_quarto_vol_up
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:volume-minus'
+                name: Volume -
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.tv_quarto_vol_down
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - action: service
+                icon: 'mdi:volume-mute'
+                name: Mute
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.tv_quarto_mute
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:video-input-component'
+                name: Input
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.tv_quarto_input
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:power-sleep'
+                name: Sleep
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.tv_quarto_sleep
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:exit-run'
+                name: Sair
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+    icon: 'mdi:remote'
+    path: ''
+    title: Controles IR
+  - badges: []
     cards:
-      - id: 9fd443d4b6e94e7eb7c90e98c0400848  # Automatically created id
-        type: iframe
+      - entities:
+          - entity: script.off_todas_luzes
+          - entity: script.on_todas_luzes
+          - entity: script.off_todas_luzes_amarelas
+          - entity: script.on_todas_luzes_amarelas
+          - entity: script.loop_luzes_auxiliar
+        show_header_toggle: false
+        title: Atalhos Rápidos
+        type: entities
+      - columns: 3
+        entities:
+          - entity: light.suite
+            icon: 'mdi:hotel'
+            name: Suíte
+            tap_action:
+              action: toggle
+          - entity: light.abajur_da_suite
+            icon: 'mdi:floor-lamp'
+            name: Abajur Suíte
+          - entity: light.closet
+            icon: 'mdi:tshirt-crew'
+            name: Closet
+            tap_action:
+              action: toggle
+          - entity: light.quarto_meio
+            icon: 'mdi:hotel'
+            name: Quarto Lívia
+            tap_action:
+              action: toggle
+          - entity: light.quarto_frente
+            icon: 'mdi:hotel'
+            name: Quarto Visitas
+            tap_action:
+              action: toggle
+          - entity: light.corredor
+            icon: 'mdi:wall-sconce-flat'
+            name: Corredor
+            tap_action:
+              action: toggle
+        show_state: false
+        title: Quartos / Corredor
+        type: glance
+      - entity: light.abajur_da_suite
+        name: Abajur
+        type: light
+      - columns: 4
+        entities:
+          - entity: light.garagem
+            icon: 'mdi:garage'
+            name: Garagem
+            tap_action:
+              action: toggle
+          - entity: light.area_piscina
+            icon: 'mdi:spotlight'
+            name: Área Piscina
+            tap_action:
+              action: toggle
+          - entity: light.varanda_suite
+            icon: 'mdi:spotlight'
+            name: Varanda Suite
+            tap_action:
+              action: toggle
+          - entity: light.postes
+            icon: 'mdi:lighthouse-on'
+            name: Postes
+            tap_action:
+              action: toggle
+          - entity: light.porta_de_entrada
+            icon: 'mdi:door-closed'
+            name: Entrada
+            tap_action:
+              action: toggle
+          - entity: light.arandelas
+            icon: 'mdi:wall-sconce-variant'
+            name: Arandelas
+            tap_action:
+              action: toggle
+          - entity: light.arandela_varanda_suite
+            icon: 'mdi:wall-sconce-variant'
+            name: Arandelas Suíte
+            tap_action:
+              action: toggle
+          - entity: light.lavanderia
+            icon: 'mdi:washing-machine'
+            name: Lavanderia
+            tap_action:
+              action: toggle
+        show_state: false
+        title: Externas
+        type: glance
+      - columns: 3
+        entities:
+          - entity: light.cozinha_central
+            icon: 'mdi:white-balance-iridescent'
+            name: Central
+            tap_action:
+              action: toggle
+          - entity: light.cozinha_pia
+            icon: 'mdi:wall-sconce-flat'
+            name: Pia
+            tap_action:
+              action: toggle
+          - entity: light.cozinha_bancada
+            icon: 'mdi:wall-sconce-flat'
+            name: Bancada
+            tap_action:
+              action: toggle
+          - entity: light.cozinha_pendentes
+            icon: 'mdi:ceiling-light'
+            name: Pendentes
+            tap_action:
+              action: toggle
+          - entity: light.fita_led
+            icon: 'mdi:led-on'
+            name: LED Bancada
+        show_state: false
+        title: Cozinha
+        type: glance
+      - columns: 3
+        entities:
+          - entity: light.sala_game_central
+            icon: 'mdi:white-balance-iridescent'
+            name: Central
+            tap_action:
+              action: toggle
+          - entity: light.sala_game_spots
+            icon: 'mdi:wall-sconce-flat'
+            name: Spots
+            tap_action:
+              action: toggle
+          - entity: light.sala_game_trilhos
+            icon: 'mdi:track-light'
+            name: Trilhos
+            tap_action:
+              action: toggle
+        show_state: false
+        title: Sala Game
+        type: glance
+      - columns: 3
+        entities:
+          - entity: light.jantar
+            icon: 'mdi:ceiling-light'
+            name: Mesa Jantar
+            tap_action:
+              action: toggle
+          - entity: light.jantar_ent_frente
+            icon: 'mdi:wall-sconce-flat'
+            name: Ent. Frente
+            tap_action:
+              action: toggle
+          - entity: light.jantar_ent_garagem
+            icon: 'mdi:wall-sconce-flat'
+            name: Ent. Garagem
+            tap_action:
+              action: toggle
+        show_state: false
+        title: Sala Jantar
+        type: glance
+      - columns: 2
+        entities:
+          - entity: light.sala_estar_lustre
+            icon: 'mdi:ceiling-light'
+            name: Lustre
+            tap_action:
+              action: toggle
+          - entity: light.sala_estar_spots
+            icon: 'mdi:wall-sconce-flat'
+            name: Spots
+            tap_action:
+              action: toggle
+        show_state: false
+        title: Sala Estar
+        type: glance
+      - columns: 3
+        entities:
+          - entity: light.banheiro_suite
+            icon: 'mdi:toilet'
+            name: Suíte
+            tap_action:
+              action: toggle
+          - entity: light.banheiro_social
+            icon: 'mdi:toilet'
+            name: Social
+            tap_action:
+              action: toggle
+          - entity: light.lavabo
+            icon: 'mdi:toilet'
+            name: Lavabo
+            tap_action:
+              action: toggle
+        show_state: false
+        title: Banheiros
+        type: glance
+      - columns: 3
+        entities:
+          - entity: group.luzes_externas
+            tap_action:
+              action: toggle
+          - entity: group.luzes_cozinha
+            tap_action:
+              action: toggle
+          - entity: group.luzes_game
+            tap_action:
+              action: toggle
+          - entity: group.luzes_estar
+            tap_action:
+              action: toggle
+          - entity: group.luzes_banheiro
+            tap_action:
+              action: toggle
+          - entity: group.luzes_quartos
+            name: Quartos
+            tap_action:
+              action: toggle
+        show_state: true
+        title: Ligar Grupo
+        type: glance
+    icon: 'mdi:lightbulb-on-outline'
+    path: ''
+    title: Iluminação
+  - badges: []
+    cards:
+      - entity: alarm_control_panel.alarme_da_casa
+        type: alarm-panel
+      - entity: camera.wanscam_360
+        type: picture-entity
+      - entity: camera.camera_interna
+        type: picture-entity
+      - entities:
+          - binary_sensor.c1_alarme
+          - binary_sensor.c1_home
+          - binary_sensor.c1_sos
+          - binary_sensor.c2_alarme
+          - binary_sensor.c2_home
+          - binary_sensor.c2_sos
+          - binary_sensor.c3_alarme
+          - binary_sensor.c3_home
+          - binary_sensor.c3_sos
+        show_header_toggle: false
+        title: Controles Digoo
+        type: entities
+      - entities:
+          - entity: switch.sirenes
+          - label: Sensores
+            type: section
+          - entity: binary_sensor.sala_social
+            secondary_info: last-changed
+          - entity: binary_sensor.sala_jantar
+            secondary_info: last-changed
+          - entity: binary_sensor.corredor
+            secondary_info: last-changed
+          - entity: binary_sensor.ext_garagem
+            secondary_info: last-changed
+          - entity: binary_sensor.ext_piscina
+            secondary_info: last-changed
+          - entity: binary_sensor.porta_varanda
+            secondary_info: last-changed
+          - entity: binary_sensor.porta_entrada
+            secondary_info: last-changed
+          - entity: binary_sensor.porta_area
+            secondary_info: last-changed
+          - entity: binary_sensor.janela_closet
+            secondary_info: last-changed
+          - entity: binary_sensor.janela_cozinha
+            secondary_info: last-changed
+          - entity: binary_sensor.janela_suite
+            secondary_info: last-changed
+          - entity: binary_sensor.janela_quarto_f
+            secondary_info: last-changed
+          - entity: binary_sensor.janela_quarto_m
+            secondary_info: last-changed
+          - type: section
+          - entity: script.reseta_sensores
+        show_header_toggle: false
+        title: Alarme Monitorameto
+        type: entities
+    icon: 'mdi:security'
+    path: ''
+    title: Segurança
+  - badges: []
+    cards:
+      - artwork: cover
+        entity: media_player.spotify
+        media_buttons:
+          - name: 200v Rock
+            type: playlist
+            url: 'spotify:user:rudiremontti:playlist:4lf4pDfRANpfpQyrIqsqrg'
+          - name: Gauchesca
+            type: playlist
+            url: 'spotify:user:jackson.antunes.93:playlist:6YJNp1P7UhzHAUaIWOqHZI'
+          - name: Rock Sul
+            type: playlist
+            url: 'spotify:user:rudiremontti:playlist:0HTcOvTlKnVNDvLJh6lVti'
+          - name: Top 100 Sertanejo
+            type: playlist
+            url: 'spotify:user:redmusiccompany:playlist:68kJ4ASW7AWdDKMiC3C7mC'
+          - name: Metallica Tops
+            type: playlist
+            url: 'spotify:user:rudiremontti:playlist:4UmJ20IrEc3Zw2bd2VXidh'
+          - name: Classic Rock
+            type: playlist
+            url: 'spotify:user:rudiremontti:playlist:3S33x7DEWFSD9vXC9NGAVP'
+          - name: Programando Hard
+            type: playlist
+            url: 'spotify:user:rudiremontti:playlist:0oPJxHOua5hOn4asGU19yC'
+          - name: Classic Zona
+            type: playlist
+            url: 'spotify:user:rudiremontti:playlist:4YOoZ4EqhINjxVYStoo8xh'
+        name: Spotify Player
+        show_shuffle: true
+        show_source: full
+        type: 'custom:mini-media-player'
+      - entity: media_player.spotify
+        type: media-control
+      - entity: media_player.google_home
+        type: media-control
+      - entity: media_player.google_home_sala
+        type: media-control
+    icon: 'mdi:music'
+    title: Audio
+  - badges: []
+    cards:
+      - entity: media_player.tv_do_quarto
+        type: media-control
+      - entity: media_player.tv_da_sala
+        type: media-control
+      - entity: media_player.lg_smart_tv
+        type: media-control
+      - artwork_border: true
+        entity: media_player.tv_do_quarto
+        show_source: true
+        type: 'custom:mini-media-player'
+      - artwork_border: true
+        entity: media_player.tv_da_sala
+        show_source: true
+        type: 'custom:mini-media-player'
+    icon: 'mdi:filmstrip'
+    path: view_multimidia
+    title: Video
+  - badges: []
+    cards:
+      - entities:
+          - sensor.alarm_clock_time
+          - input_number.alarm_clock_hour
+          - input_number.alarm_clock_minutes
+          - input_text.text_clock
+          - input_text.text_url_youtube
+          - input_number.alarm_clock_volume
+          - input_boolean.alarm_clock_status
+        show_header_toggle: false
+        title: Despertador
+        type: entities
+      - entities:
+          - entity: sensor.time
+          - entity: sensor.date
+        show_header_toggle: false
+        title: Data Hora
+        type: entities
+    icon: 'mdi:alarm'
+    path: ''
+    title: Despertadores
+  - badges: []
+    cards:
+      - cards:
+          - cards:
+              - entity: sensor.suite_humidade
+                graph: line
+                name: Suíte
+                type: sensor
+              - entity: sensor.suite_temperatura
+                graph: line
+                name: Suíte
+                type: sensor
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.cozinha_humidade
+                graph: line
+                name: Cozinha
+                type: sensor
+              - entity: sensor.cozinha_temperatura
+                graph: line
+                name: Cozinha
+                type: sensor
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.banheiro_social_humidade
+                graph: line
+                name: Banheiro Social
+                type: sensor
+              - entity: sensor.banheiro_social_temperatura
+                graph: line
+                name: Banheiro Social
+                type: sensor
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entities:
+              - sun.sun
+              - sensor.moon
+              - sensor.dark_sky_pressure
+            type: entities
+          - cards:
+              - entity: sensor.dark_sky_temperature
+                max: 60
+                min: -5
+                severity:
+                  green: 0
+                  red: 35
+                  yellow: 20
+                type: gauge
+              - entity: sensor.dark_sky_cloud_coverage
+                type: gauge
+              - entity: sensor.dark_sky_wind_speed
+                type: gauge
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.dark_sky_humidity
+                type: gauge
+              - entity: sensor.dark_sky_uv_index
+                name: UV
+                type: gauge
+              - entity: sensor.dark_sky_visibility
+                type: gauge
+            type: horizontal-stack
+          - entities:
+              - sensor.dark_sky_hourly_summary
+              - sensor.dark_sky_daily_summary
+            type: entities
+        type: vertical-stack
+      - cards:
+          - entities:
+              - sensor.suite_temperatura
+              - sensor.temperature_passage
+              - sensor.cozinha_temperatura
+              - sensor.banheiro_social_temperatura
+            hours_to_show: 48
+            title: Temperaturas 48h
+            type: history-graph
+        type: vertical-stack
+      - cards:
+          - entities:
+              - sensor.suite_humidade
+              - sensor.cozinha_humidade
+              - sensor.banheiro_social_humidade
+            hours_to_show: 48
+            title: Humidades 48h
+            type: history-graph
+        type: vertical-stack
+      - aspect_ratio: 70%
         title: Chuva
-        url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=rain&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
-        aspect_ratio: 100%
-      - id: c5514e12bb4b40b7904772298ef5eb5d  # Automatically created id
         type: iframe
-        title: Vento
-        url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=wind&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
-      - id: 962104c841c045429dc92913062624a3  # Automatically created id
-        type: iframe
+        url: >-
+          https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=rain&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
+      - aspect_ratio: 70%
         title: Temperatura
-        url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=temp&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
-      - id: b10fc276ca05401ea78ad10f0c0b4f89  # Automatically created id
         type: iframe
-        title: Nuvens
-        url: https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=clouds&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
+        url: >-
+          https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=4&level=surface&overlay=temp&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
+    icon: 'mdi:weather-partlycloudy'
+    path: ''
+    title: Clima
+  - badges: []
+    cards:
+      - entities:
+          - label: Postes
+            type: section
+          - entity: input_datetime.poste_on
+            name: Ligar
+          - entity: input_datetime.poste_off
+            name: Desligar
+          - label: Arandelas
+            type: section
+          - entity: input_datetime.arandelas_on
+            name: Ligar
+          - entity: input_datetime.arandelas_off
+            name: Desligar
+        show_header_toggle: false
+        title: Horários luzes externas
+        type: entities
+      - entities:
+          - automation.movimento_alarme_on_garagem
+          - automation.movimento_alarme_on_piscina
+          - automation.movimento_alarme_off_piscina
+          - automation.movimento_alarme_off_garagem
+        show_header_toggle: false
+        title: Movimentos
+        type: entities
+      - entities:
+          - entity: automation.alarme_notif_quando_for_ativado
+          - entity: automation.alarme_aviso_ativando_em_10s
+          - entity: automation.alarme_aviso_desativado
+          - entity: automation.alarme_disparar_armado_em_casa
+          - entity: automation.alarme_disparar_sem_ninguem
+          - entity: automation.alarme_desliga_sirene_ao_desativar
+          - entity: automation.alarme_testar_sensores
+        show_header_toggle: false
+        title: Alarme
+        type: entities
+      - entities:
+          - entity: automation.luz_corredor_liga_20h_as_07_30_movimento
+          - entity: automation.luz_corredor_desliga_s_movimento_2min
+          - entity: automation.luz_sem_desligar_banheiro_suite
+          - entity: automation.luz_sem_desligar_banheiro_social
+          - entity: automation.luz_sem_desligar_lavabo
+          - entity: automation.luz_arandelas_ligar
+          - entity: automation.luz_arandelas_desligar
+          - entity: automation.luz_postes_ligar
+          - entity: automation.luz_postes_desligar
+        show_header_toggle: false
+        title: Luzes
+        type: entities
+      - entities:
+          - automation.aviso_sonoro_falar_temperatura_do_ar
+          - automation.aviso_sonoro_porta_entrada_aberta
+          - automation.notificacao_luzez_on_off
+        show_header_toggle: false
+        title: Avisos / Alertas
+        type: entities
+      - entities:
+          - entity: script.foto_cam
+          - entity: script.cade_a_flavia
+          - entity: script.cade_o_rudi
+          - entity: script.teste_script
+        show_header_toggle: false
+        title: Script
+        type: entities
+      - entities:
+          - scene.suite_romantica
+        show_header_toggle: false
+        title: Cena
+        type: entities
+      - entities:
+          - entity: automation.renova_let_s_encrypt
+        title: Sistema
+        type: entities
+    icon: 'mdi:home-automation'
+    title: Automações
+  - badges: []
+    cards:
+      - entity: sensor.precisa_trabalhar
+        hold_action:
+          action: none
+        tap_action:
+          action: more-info
+        type: entity-button
+      - entities:
+          - entity: media_player.google_home
+            group: true
+            hide_controls: true
+            name: Google Home Quarto
+            show_tts: google
+            type: 'custom:mini-media-player'
+          - entity: media_player.google_home_sala
+            group: true
+            hide_controls: true
+            show_tts: google
+            type: 'custom:mini-media-player'
+        show_header_toggle: false
+        title: Google Home
+        type: entities
+      - cards:
+          - color: 'rgb(44, 109, 214)'
+            color_type: label-card
+            name: Ventilador
+            type: 'custom:button-card'
+          - cards:
+              - color: 'rgb(66, 134, 244)'
+                color_type: card
+                entity: switch.ventilador
+                icon: 'mdi:numeric-1-box-outline'
+                type: 'custom:button-card'
+              - entity: switch.ventilador
+                show_state: true
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - color: '#F00'
+            color_type: label-card
+            name: Controle Remoto
+            type: 'custom:button-card'
+          - cards:
+              - action: service
+                icon: 'mdi:power'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:volume-plus'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:volume-minus'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - action: service
+                icon: 'mdi:volume-mute'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:video-input-component'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:bluetooth'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:power-sleep'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:exit-run'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - action: service
+                icon: 'mdi:arrow-left-bold'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:arrow-right-bold'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:arrow-down-bold'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:arrow-up-bold'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entities:
+              - group.luzes_externas
+              - sensor.cozinha_temperatura
+              - sensor.banheiro_social_temperatura
+            type: glance
+          - entities:
+              - light.garagem
+              - entity: script.tv_quarto_vol_up
+                name: Receiver
+              - switch.tv_quarto
+            type: entities
+        title: My Card
+        type: 'custom:vertical-stack-in-card'
+      - entity: switch.ventilador
+        show_state: true
+        type: 'custom:button-card'
+      - cards:
+          - cards:
+              - action: service
+                icon: 'mdi:power'
+                name: Power
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:volume-plus'
+                name: Volume +
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:volume-minus'
+                name: Volume -
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - action: service
+                icon: 'mdi:volume-mute'
+                name: Mute
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:video-input-component'
+                name: Input
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:bluetooth'
+                name: Bluetooth
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:power-sleep'
+                name: Sleep
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:exit-run'
+                name: Sair
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                style:
+                  - text-transform: none
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - action: service
+                icon: 'mdi:arrow-left-bold'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:arrow-down-bold'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:arrow-up-bold'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+              - action: service
+                icon: 'mdi:arrow-right-bold'
+                service:
+                  action: turn_on
+                  data:
+                    entity_id: script.null
+                  domain: script
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - animate: true
+            entities: sensor.suite_temperatura
+            line_color: '#0000FF'
+            name: Suíte
+            type: 'custom:mini-graph-card'
+          - entities: sensor.banheiro_social_temperatura
+            line_color: '#e74c3c'
+            name: Banheiro Social
+            type: 'custom:mini-graph-card'
+          - entities: sensor.cozinha_temperatura
+            line_color: var(--accent-color)
+            name: Cozinha
+            type: 'custom:mini-graph-card'
+        type: horizontal-stack
+    icon: 'mdi:bug'
+    title: Lab
+  - badges: []
+    cards:
+      - elements:
+          - entity: light.abajur_da_suite
+            style:
+              left: 90%
+              top: 30%
+            type: state-icon
+          - entity: light.suite
+            style:
+              left: 85%
+              top: 35%
+            type: state-icon
+        image: /local/imgs/planta-limpa.svg
+        type: picture-elements
+    icon: 'mdi:floor-plan'
+    title: Planta

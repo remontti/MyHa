@@ -1,85 +1,3 @@
-binary_sensor.floorplan:
-  custom_ui_state_card: state-card-floorplan
-  config:
-    name: Demo Floorplan
-    image: /local/custom_ui/floorplan/planta.svg
-    stylesheet: /local/custom_ui/floorplan/floorplan.css
-    last_motion_entity: sensor.template_last_motion
-    last_motion_class: last-motion
-    groups:
-    - name: Sensors
-      entities:
-      - sensor.dark_sky_temperature
-      text_template: '${entity.state ? Math.ceil(entity.state) : "undefined"}'
-      class_template: ' var temp = parseFloat(entity.state.replace("°", "")); if (temp
-        < 10) return "temp-low"; else if (temp < 30) return "temp-medium"; else return
-        "temp-high"; '
-    - name: Lights
-      entities:
-      - switch.sonoff
-      - light.flux_led
-      states:
-      - state: 'on'
-        class: light-on
-      - state: 'off'
-        class: light-off
-      action:
-        domain: homeassistant
-        service: toggle
-    - name: Switches
-      entities:
-      - switch.sonoff1
-      states:
-      - state: 'on'
-        class: doorbell-on
-      - state: 'off'
-        class: doorbell-off
-    - name: Doors
-      entities:
-      - binary_sensor.porta
-      - binary_sensor.presenca
-      states:
-      - state: 'off'
-        class: door_closed
-      - state: 'on'
-        class: door_open
-    - name: Alarm Panel
-      entities:
-      - alarm_control_panel.alarme_da_casa
-      states:
-      - state: armed_away
-        class: alarm-armed
-      - state: armed_home
-        class: alarm-armed
-      - state: disarmed
-        class: alarm-disarmed
-    - name: Binary sensors
-      entities:
-      - binary_sensor.chrome_cast_quarto
-      - binary_sensor.unifi_ap
-      - binary_sensor.broadlink_ir_quarto
-      - binary_sensor.broadlink_ir_sala
-      - binary_sensor.chrome_cast_sala
-      - binary_sensor.google_home_quarto
-      - binary_sensor.google_home_sala
-      - binary_sensor.sonoff_rf_bridge_433
-      - binary_sensor.internet
-      states:
-      - state: 'off'
-        class: info-background
-      - state: 'on'
-        class: warning-background
-      state_transitions:
-      - name: On to off
-        from_state: 'on'
-        to_state: 'off'
-        duration: 10
-    - name: Cameras
-      entities:
-      - camera.wanscam
-      states:
-      - state: idle
-        class: camera-idle
 sun.sun:
   friendly_name: Sol
 sensor.yr_symbol:
@@ -230,9 +148,9 @@ script.lg55_simplink:
   icon: mdi:link-variant
 script.lg55_exit:
   icon: mdi:exit-to-app
-device_tracker.google_maps_106566341309199592438:
+device_tracker.google_maps_000000000000000000000:
   friendly_name: Rudimar
-device_tracker.google_maps_118429201781082195315:
+device_tracker.google_maps_111111111111111111111:
   friendly_name: Flávia
 sensor.dark_sky_uv_index:
   friendly_name: Índice de UV
@@ -285,10 +203,6 @@ binary_sensor.broadlink_ir_sala:
   icon: mdi:remote
 binary_sensor.camera_digoo:
   icon: mdi:cctv
-group.all_automations:
-  friendly_name: Automações
-group.all_scripts:
-  hidden: true
 group.all_lights:
   friendly_name: Todas as Luzes
 group.all_switches:
@@ -336,7 +250,7 @@ binary_sensor.google_home_sala:
 binary_sensor.tv_lg_game:
   icon: mdi:television
 zone.home:
-  radius: 250
+  radius: 150
 script.on_todas_luzes_amarelas:
   icon: mdi:candle
 script.on_todas_luzes:
@@ -347,3 +261,11 @@ script.off_todas_luzes_amarelas:
   icon: mdi:candle
 script.loop_luzes_auxiliar:
   icon: mdi:emoticon-tongue
+sensor.bateria_flavia:
+  icon: mdi:battery
+sensor.bateria_rudi:
+  icon: mdi:battery
+light.abajur_da_suite:
+  icon: mdi:mdi:floor-lamp
+sensor.home_assistant_v2_db:
+  friendly_name: Banco Dados
