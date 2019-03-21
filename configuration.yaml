@@ -1,46 +1,69 @@
 homeassistant:
-  # Name of the location where Home Assistant is running
+  # Nome do local onde o Home Assistant está sendo executado
   name: Home
-  # Location required to calculate the time the sun rises and sets
-  latitude: -00.00000
+  # Localização necessária para calcular a hora em que o sol nasce e se põe
+  latitude: -00.000000
   longitude: -00.000000
-  # Impacts weather/sunrise data (altitude above sea level in meters)
+  # Impactos meteorológicos / dados do nascer do sol (altitude acima do nível do mar em metros)
   elevation: 0
-  # metric for Metric, imperial for Imperial
+  # metric para Metric, imperial para Imperial
   unit_system: metric
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  # Escolha o seu aqui: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Sao_Paulo
-  # Customization file
+  # Arquivo de customização
   customize: !include customize.yaml
-
+  # Metodo de autenticação
   auth_providers:
     - type: homeassistant
+  # Lista de pastas que podem ser usadas como fontes para o envio de arquivos.
   whitelist_external_dirs:
     - /tmp
     - /config
+
+# Pessoa
+person:
+  - name: Rudi
+    id: 3nfr8CXF
+    device_trackers:
+      - device_tracker.google_maps_xxx
+  - name: Flavia
+    id: nucnTHSG
+    device_trackers:
+      - device_tracker.google_maps_yyy
+
+# Zonas de localização
 zone:
-  - name: "Trabalho"
-    latitude: -00.00000
-    longitude: -00.00000
+  - name: "SpeedRS"
+    latitude: -00.000000
+    longitude: -00.000000
     radius: 100
     icon: mdi:briefcase
-
   - name: "Backbone"
-    latitude: -00.00000
-    longitude: -00.00000
+    latitude: -00.000000
+    longitude: -00.000000
     radius: 100
     icon: mdi:briefcase
+  - name: "Maria João"
+    latitude: -00.000000
+    longitude: -00.000000
+    radius: 100
+    icon: mdi:briefcase
+  - name: Castelinho
+    latitude: -00.000000
+    longitude: -00.000000
+    radius: 400
+    icon: mdi:home-variant
 
-
+# Cenas
 scene:
   - name: "Suíte Romantica"
     entities:
-      light.abajur_da_suite:
+      light.yeelight_rgb_7c49eb15924b:
         state: true
         rgb_color: [255, 0, 255]
         brightness: 255
 
-# Show links to resources in log and frontend
+# Mostrar links para recursos no log e frontend
 #introduction:
 
 # Enables the frontend
@@ -50,27 +73,35 @@ frontend:
 # Enables configuration UI
 config:
 
-# Historico 7 Dias
+# Armazenamento do Banco de dados
 recorder:
-  purge_keep_days: 7
+  purge_keep_days: 15
+  db_url: !secret maria_db
+#  purge_keep_days: 7
 
+# Segredos são definidos no arquivo secrets.yaml
 http:
-  base_url: https://minhacasa.meudominio.com.br:8123
+  #server_port: 55123
+  base_url: !secret url_base
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
 
-
 updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
+  # Opcional, permite que os desenvolvedores do Home Assistant se concentrem em componentes populares.
   # include_used_components: true
 
-# Discover some devices automatically
+# Custom updater (https://github.com/custom-components/custom_updater/wiki/Installation)
+#custom_updater:
+#  component_urls:
+#    - https://raw.githubusercontent.com/vpnmaster/homeassistant-custom-components/master/custom_components.json
+
+# Descubra alguns dispositivos automaticamente
 discovery:
 
-# Allows you to issue voice commands from the frontend in enabled browsers
+# Permite que você emita comandos de voz do frontend em navegadores ativados
 conversation:
 
-# Enables support for tracking state changes over time
+# Suporte para rastrear mudanças de estado ao longo do tempo
 history:
   exclude:
     domains:
@@ -81,7 +112,7 @@ history:
       - sensor.last_boot
       - sensor.date
 
-# View all events in a logbook
+# Ver todos os eventos em um diário de bordo
 logbook:
   include:
     domains:
@@ -92,35 +123,32 @@ logbook:
     entities:
       - sensor.last_boot
       - sensor.date
-# Enables a map showing the location of tracked devices
-map:
 
-# Track the sun
-sun:
-
-
-# Sensores
-sensor: !include sensor.yaml
-
-binary_sensor: !include binary_sensor.yaml
-
+# Nível de registro de atividades
 logger:
-  default: error
-  logs:
-    homeassistant.components.mqtt: critical
+  default: warning
+#  logs:
+#    asyncio: debug
 
+#logger:
+#  default: error
+#  logs:
+#    homeassistant.components.mqtt: critical
+#    #critical#fatal#error#warning#warn#info#debug#notset
 
 # Text to speech
 tts:
-  - platform: voicerss
-    api_key: !secret voicerss_key
-    language: 'pt-br'
-    format: '44khz_16bit_stereo'
   - platform: google
     language: 'pt-br'
     cache: true
     cache_dir: /tmp/tts
     time_memory: 300
+    #base_url: !secret url_base
+  - platform: voicerss
+    api_key: !secret voicerss_key
+    language: 'pt-br'
+    format: '44khz_16bit_stereo'
+    # http://www.voicerss.org/personel/statistic.aspx
 
 # Cloud
 cloud:
@@ -134,6 +162,7 @@ device_tracker:
 # Player
 media_extractor:
 
+# Media Players
 media_player:
   - platform: spotify
     client_id: !secret spotify_client_id
@@ -142,8 +171,14 @@ media_player:
     name: "LG Smart TV"
     host: 100.64.0.15
     access_token: 123456
+#  - platform: smartir
+#    name: TV do Quarto
+#    device_code: 9000
+#    controller_send_service: switch.broadlink_send_packet_100_64_0_26
+#    power_sensor: binary_sensor.chrome_cast_quarto
 
-# Googles home e chromecast
+
+# Casts
 cast:
   media_player:
   - host: 100.64.0.20
@@ -151,57 +186,901 @@ cast:
   - host: 100.64.0.22
   - host: 100.64.0.19
 
-
 # Mosquito
 mqtt:
    broker: core-mosquitto
    username: !secret mqtt_username
    password: !secret mqtt_password
+#  discovery: true
+#  discovery_prefix: homeassistant
+
+# Mostrando a localização de dispositivos rastreados no mapa
+map:
+
+# Acompanhe o sol
+sun:
+
+# Sensores
+sensor:
+  - platform: mqtt
+    name: "Suite Temperatura"
+    device_class: temperature
+    state_topic: "tele/sonoff26/SENSOR"
+    value_template: "{{ value_json['DHT11'].Temperature }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Suite Umidade"
+    device_class: humidity
+    state_topic: "tele/sonoff26/SENSOR"
+    value_template: "{{ value_json['DHT11'].Humidity }}"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "Cozinha Temperatura"
+    device_class: temperature
+    state_topic: "tele/sonoff23/SENSOR"
+    value_template: "{{ value_json['DHT11'].Temperature }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Cozinha Umidade"
+    device_class: humidity
+    state_topic: "tele/sonoff23/SENSOR"
+    value_template: "{{ value_json['DHT11'].Humidity }}"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: "Banheiro Social Temperatura"
+    device_class: temperature
+    state_topic: "tele/sonoff24/SENSOR"
+    value_template: "{{ value_json['DHT11'].Temperature }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Banheiro Social Umidade"
+    device_class: humidity
+    state_topic: "tele/sonoff24/SENSOR"
+    value_template: "{{ value_json['DHT11'].Humidity }}"
+    unit_of_measurement: "%"
+  - platform: darksky
+    api_key: !secret api_darksky
+    language: 'pt'
+    units: ca
+    monitored_conditions:
+      - temperature
+      - wind_speed
+      - cloud_cover
+      - humidity
+      - pressure
+      - visibility
+      - hourly_summary
+      - daily_summary
+      - uv_index
+  - platform: moon
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+  - platform: systemmonitor
+    resources:
+      - type: disk_free
+        arg: /
+      - type: disk_use
+        arg: /
+      - type: disk_use_percent
+        arg: /
+      - type: memory_free
+      - type: memory_use
+      - type: memory_use_percent
+      - type: processor_use
+      - type: last_boot
+  - platform: sql
+    db_url: !secret maria_db
+    queries:
+      - name: DB size
+        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 1) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
+        column: 'value'
+        unit_of_measurement: MB
+  - platform: uptime
+    name: Uptime
+  - platform: version
+    name: Versao
+  - platform: command_line
+    name: CPU Temperatura
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+  - platform: template
+    sensors:
+      alarm_clock_hour:
+        value_template: '{{ states.input_number.alarm_clock_hour.state | int }}'
+      alarm_clock_minutes:
+        value_template: '{{ states.input_number.alarm_clock_minutes.state | int }}'
+      alarm_clock_time:
+        value_template: >-
+          {{ states.sensor.alarm_clock_hour.state }}:
+          {%- if states.sensor.alarm_clock_minutes.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.alarm_clock_minutes.state }}
+      alarm_clock_time_long:
+        value_template: >-
+          {% if states.sensor.alarm_clock_hour.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.alarm_clock_hour.state }}:
+          {%- if states.sensor.alarm_clock_minutes.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.alarm_clock_minutes.state }}
+  - platform: template
+    sensors:
+      pordosol:
+        friendly_name: Por do sol
+        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}'
+      nascerdosol:
+        friendly_name: Nascer do sol
+        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") }}'
+      anoiteceu:
+        friendly_name: Anoiteceu
+        value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_setting) | int + (float(states.input_number.anoitecer.state) * 60)) | timestamp_custom("%H:%M")) }}'
+      bateria_rudi:
+        friendly_name: Bateria Rudi
+        unit_of_measurement: '%'
+        value_template:  '{{ states.device_tracker.google_maps_106566341309199592438.attributes.battery_level|int }}'
+        device_class: battery
+      bateria_rudi_st:
+        value_template:  '{{ states.device_tracker.google_maps_106566341309199592438.attributes.battery_charging }}'
+        device_class: battery
+      bateria_flavia:
+        friendly_name: Bateria Flavia
+        unit_of_measurement: "%"
+        value_template:  '{{ states.device_tracker.google_maps_118429201781082195315.attributes.battery_level|int }}'
+        device_class: battery
+      bateria_flavia_st:
+        value_template:  '{{ states.device_tracker.google_maps_118429201781082195315.attributes.battery_charging }}'
+        device_class: battery
+      bateria_status_rudi:
+        friendly_name: Status Bateria Rudi
+        value_template: >-
+          {% if is_state('sensor.bateria_rudi_st', "False") %}
+            Descarregando
+          {% else %}
+            Carregando
+          {% endif %}
+        icon_template: >-
+          {% if is_state('sensor.bateria_rudi_st', "False") %}
+            mdi:battery-50
+          {% else %}
+            mdi:battery-charging
+          {% endif %}
+      bateria_status_flavia:
+        friendly_name: Status Bateria Flavia
+        value_template: >-
+          {% if is_state('sensor.bateria_flavia_st', "False") %}
+            Descarregando
+          {% else %}
+            Carregando
+          {% endif %}
+        icon_template: >-
+          {% if is_state('sensor.bateria_flavia_st', "False") %}
+            mdi:battery-50
+          {% else %}
+            mdi:battery-charging
+          {% endif %}
+      precisa_trabalhar:
+        friendly_name: Precisa Trabalhar Hoje
+        value_template: >-
+          {% if is_state('binary_sensor.trabalhando', 'on') %}
+            Sim
+          {% else %}
+            Não
+          {% endif %}
+        icon_template: >-
+          {% if is_state('binary_sensor.trabalhando', 'on') %}
+            mdi:thumb-up-outline
+          {% else %}
+            mdi:thumb-down-outline
+          {% endif %}
+
+
+# Binary Sensor
+binary_sensor:
+  # DIA DE TRABALHO
+  - platform: workday
+    country: BR
+    name: Trabalhando
+
+  # CONTROLE DIGOO 1
+  - platform: mqtt
+    name: C1 Alarme
+    payload_on: "2970D1"
+    payload_off: "2970D2"
+    device_class: power
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: C1 Home
+    payload_on: "2970D4"
+    payload_off: "2970D4off"
+    device_class: occupancy
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: C1 SOS
+    payload_on: "2970D8"
+    payload_off: "2970D8off"
+    device_class: vibration
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  # CONTROLE DIGOO 2
+  - platform: mqtt
+    name: C2 Alarme
+    payload_on: "921051"
+    payload_off: "921052"
+    device_class: power
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: C2 Home
+    payload_on: "921054"
+    payload_off: "921054off"
+    device_class: occupancy
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: C2 SOS
+    payload_on: "921058"
+    payload_off: "921058off"
+    device_class: vibration
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  # CONTROLE DIGOO 3
+  - platform: mqtt
+    name: C3 Alarme
+    payload_on: "77B0D1"
+    payload_off: "77B0D2"
+    device_class: power
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: C3 Home
+    payload_on: "77B0D4"
+    payload_off: "77B0D4off"
+    device_class: occupancy
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: C3 SOS
+    payload_on: "77B0D8"
+    payload_off: "77B0D8off"
+    device_class: vibration
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  # SENSORES DIGOO ABRE FECHA
+  - platform: mqtt
+    name: Janela Quarto M
+    payload_on: "996D46"
+    payload_off: "996D46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Janela Quarto F
+    payload_on: "CD5B46"
+    payload_off: "CD5B46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Janela Suite
+    payload_on: "B92D46"
+    payload_off: "B92D46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Janela Cozinha
+    payload_on: "C41B46"
+    payload_off: "C41B46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Porta Varanda
+    payload_on: "5E6B46"
+    payload_off: "5E6B46off"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: "Porta Entrada"
+    payload_on: "2E9D46"
+    payload_off: "2E9D46off"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Porta Area
+    payload_on: "09D8C6"
+    payload_off: "09D8C6off"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Janela Closet
+    payload_on: "7F7D46"
+    payload_off: "7F7D46off"
+    device_class: window
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  # SENSORES DIGOO PRESENCA
+  - platform: mqtt
+    name: Corredor
+    payload_on: "82C186"
+    payload_off: "82C186off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Sala Jantar
+    payload_on: "55A486"
+    payload_off: "55A486off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Sala Social
+    payload_on: "9B5086"
+    payload_off: "9B5086off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Ext Piscina
+    payload_on: "EE4986"
+    payload_off: "EE4986off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: Ext Garagem
+    payload_on: "AAC186"
+    payload_off: "AAC186off"
+    device_class: motion
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+
+  # PINGs
+  - platform: ping
+    host: 100.64.0.1
+    name: Internet
+  - platform: ping
+    host: 100.64.0.15
+    name: Tv LG Game
+  - platform: ping
+    host: 100.64.0.2
+    name: UniFi
+  - platform: ping
+    host: 100.64.0.4
+    name: AP Router E
+  - platform: ping
+    host: 100.64.0.254
+    name: Tp Link
+  - platform: ping
+    host: 100.64.0.20
+    name: Chrome Cast Quarto
+  - platform: ping
+    host: 100.64.0.21
+    name: Chrome Cast Game
+  - platform: ping
+    host: 100.64.0.22
+    name: Google Home Quarto
+  - platform: ping
+    host: 100.64.0.19
+    name: Google Home Sala
+  - platform: ping
+    host: 100.64.0.26
+    name: Broadlink IR Quarto
+  - platform: ping
+    host: 100.64.0.53
+    name: Broadlink IR Sala
+  - platform: ping
+    host: 100.64.0.47
+    name: Sonoff RF Bridge
+  - platform: ping
+    host: 100.64.0.52
+    name: Camera Digoo
+  - platform: ping
+    host: 100.64.0.60
+    name: WCam360
+#    count: 5
+#    scan_interval: 240
 
 # Luzes
-light: !include light.yaml
+light:
+#  - platform: yeelight
+#    devices:
+#      100.64.0.70:
+#        name: "Luz do Abajur"
+  - platform: flux_led
+    devices:
+      100.64.0.46:
+        name: "Bancada"
+  - platform: mqtt
+    name: "Garagem"
+    state_topic: "stat/sonoff13/POWER"
+    command_topic: "cmnd/sonoff13/POWER"
+    availability_topic: "tele/sonoff13/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Pia"
+    state_topic: "stat/sonoff15/POWER"
+    command_topic: "cmnd/sonoff15/POWER"
+    availability_topic: "tele/sonoff15/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Bebedor"
+    state_topic: "stat/sonoff21/POWER"
+    command_topic: "cmnd/sonoff21/POWER"
+    availability_topic: "tele/sonoff21/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Entrada"
+    state_topic: "stat/sonoff28/POWER"
+    command_topic: "cmnd/sonoff28/POWER"
+    availability_topic: "tele/sonoff28/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "JF"
+    state_topic: "stat/sonoff11/POWER"
+    command_topic: "cmnd/sonoff11/POWER"
+    availability_topic: "tele/sonoff11/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "JG"
+    state_topic: "stat/sonoff20/POWER"
+    command_topic: "cmnd/sonoff20/POWER"
+    availability_topic: "tele/sonoff20/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Sala Game"
+    state_topic: "stat/sonoff14/POWER"
+    command_topic: "cmnd/sonoff14/POWER"
+    availability_topic: "tele/sonoff14/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Central"
+    state_topic: "stat/sonoff07/POWER"
+    command_topic: "cmnd/sonoff07/POWER"
+    availability_topic: "tele/sonoff07/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Trilhos"
+    state_topic: "stat/sonoff19/POWER"
+    command_topic: "cmnd/sonoff19/POWER"
+    availability_topic: "tele/sonoff19/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Mesa de Jantar"
+    state_topic: "stat/sonoff29/POWER"
+    command_topic: "cmnd/sonoff29/POWER"
+    availability_topic: "tele/sonoff29/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Postes"
+    state_topic: "stat/sonoff23/POWER"
+    command_topic: "cmnd/sonoff23/POWER"
+    availability_topic: "tele/sonoff23/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Pendentes"
+    state_topic: "stat/sonoff16/POWER"
+    command_topic: "cmnd/sonoff16/POWER"
+    availability_topic: "tele/sonoff16/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Cozinha"
+    state_topic: "stat/sonoff05/POWER"
+    command_topic: "cmnd/sonoff05/POWER"
+    availability_topic: "tele/sonoff05/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Lavanderia"
+    state_topic: "stat/sonoff22/POWER"
+    command_topic: "cmnd/sonoff22/POWER"
+    availability_topic: "tele/sonoff22/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Lavabo"
+    state_topic: "stat/sonoff01/POWER"
+    command_topic: "cmnd/sonoff01/POWER"
+    availability_topic: "tele/sonoff01/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Lustre"
+    state_topic: "stat/sonoff12/POWER"
+    command_topic: "cmnd/sonoff12/POWER"
+    availability_topic: "tele/sonoff12/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Sala de Estar"
+    state_topic: "stat/sonoff31/POWER"
+    command_topic: "cmnd/sonoff31/POWER"
+    availability_topic: "tele/sonoff31/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Corredor"
+    state_topic: "stat/sonoff08/POWER"
+    command_topic: "cmnd/sonoff08/POWER"
+    availability_topic: "tele/sonoff08/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Quarto da Frente"
+    state_topic: "stat/sonoff04/POWER"
+    command_topic: "cmnd/sonoff04/POWER"
+    availability_topic: "tele/sonoff04/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Quarto do Meio"
+    state_topic: "stat/sonoff06/POWER"
+    command_topic: "cmnd/sonoff06/POWER"
+    availability_topic: "tele/sonoff06/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Banheiro Social"
+    state_topic: "stat/sonoff24/POWER"
+    command_topic: "cmnd/sonoff24/POWER"
+    availability_topic: "tele/sonoff24/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Quarto da Suite"
+    state_topic: "stat/sonoff26/POWER"
+    command_topic: "cmnd/sonoff26/POWER"
+    availability_topic: "tele/sonoff26/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Banheiro da Suite"
+    command_topic: "cmnd/sonoff09/POWER"
+    state_topic: "stat/sonoff09/POWER"
+    availability_topic: "tele/sonoff09/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Closet"
+    state_topic: "stat/sonoff30/POWER"
+    command_topic: "cmnd/sonoff30/POWER"
+    availability_topic: "tele/sonoff30/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Area da Piscina"
+    state_topic: "stat/sonoff10/POWER"
+    command_topic: "cmnd/sonoff10/POWER"
+    availability_topic: "tele/sonoff10/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Varanda Fundo"
+    state_topic: "stat/sonoff03/POWER"
+    command_topic: "cmnd/sonoff03/POWER"
+    availability_topic: "tele/sonoff03/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Arandelas da Varanda"
+    state_topic: "stat/sonoff17/POWER"
+    command_topic: "cmnd/sonoff17/POWER"
+    availability_topic: "tele/sonoff17/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Arandelas"
+    state_topic: "stat/sonoff25/POWER"
+    command_topic: "cmnd/sonoff25/POWER"
+    availability_topic: "tele/sonoff25/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
 
 # Interruptores
-switch: !include switch.yaml
+switch:
+  - platform: template
+    switches:
+      seguranca_casa:
+        value_template: '{{ states("input_boolean.seguranca_casa") }}'
+        friendly_name: 'Segurança da Casa'
+        turn_on:
+          - service: input_boolean.turn_on
+            entity_id: input_boolean.seguranca_casa
+          - service: alarm_control_panel.alarm_arm_away
+            data:
+              entity_id: alarm_control_panel.alarme_da_casa
+              code: 123
+        turn_off:
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.seguranca_casa
+          - service: alarm_control_panel.alarm_disarm
+            data:
+              entity_id: alarm_control_panel.alarme_da_casa
+              code: 123
+  - platform: broadlink
+    host: 100.64.0.26
+    mac: '99:99:99:99:99:99'
+    timeout: 300
+    switches:
+      tv_quarto:
+        friendly_name: "TV do Quarto"
+        command_on: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
+        command_off: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
+  - platform: broadlink
+    host: 100.64.0.53
+    mac: '88:88:88:88:88:88'
+    timeout: 300
+    switches:
+      xboom_som:
+        friendly_name: "Sonzeira"
+        command_on: 'JgBeAJOUEhMSExMSExIROBITERQRFBETEhMRFBEUETgSExEUERQRExI4EjcSOBI4ERMSExITETkRExITEhMRFBE4EjgSNxIABpWUlRI4EgAMVZKVEjgSAAxVk5UROBIADQUAAAAAAAAAAAAA'
+        command_off: 'JgBeAJOUEhMSExMSExIROBITERQRFBETEhMRFBEUETgSExEUERQRExI4EjcSOBI4ERMSExITETkRExITEhMRFBE4EjgSNxIABpWUlRI4EgAMVZKVEjgSAAxVk5UROBIADQUAAAAAAAAAAAAA'
+      tv_lg_55:
+        friendly_name: "Tv da Sala"
+        command_on: 'JgBQAAABKZQQFRETEjgRFBEUERQRFBEUETgROREUETkRORA6EDkROREUERQRFBE5EBURExITEhMSOBE5EDoQFRE4ETkRORE5EAAFLAABKUoRAA0FAAAAAAAAAAA='
+        command_off: 'JgBQAAABKZQQFRETEjgRFBEUERQRFBEUETgROREUETkRORA6EDkROREUERQRFBE5EBURExITEhMSOBE5EDoQFRE4ETkRORE5EAAFLAABKUoRAA0FAAAAAAAAAAA='
+      projetor:
+        friendly_name: Projetor
+        command_on: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
+        command_off: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
+  - platform: mqtt
+    name: "Sirenes"
+    state_topic: "stat/sonoff02/POWER"
+    command_topic: "cmnd/sonoff02/power"
+    availability_topic: "tele/sonoff02/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Ventilador"
+    state_topic: "stat/sonoff32/POWER"
+    command_topic: "cmnd/sonoff32/power"
+    availability_topic: "tele/sonoff32/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
 
-# Inputs text
+  - platform: command_line
+    switches:
+      camwascam_dir:
+        friendly_name: WS.Direita
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=right&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+      camwascam_esq:
+        friendly_name: WS.Esquerda
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=left&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+      camwascam_up:
+        friendly_name: WS.Cima
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=up&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+      camwascam_down:
+        friendly_name: WS.Baixo
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=down&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+      camwascam_centralizar:
+        friendly_name: WS.Centralizar
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=home&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=home&-usr=admin&-pwd=xxxxxxxxxx"'
+      camwascam_p1:
+        friendly_name: WS.P1
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=0"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=0"'
+      camwascam_p2:
+        friendly_name: WS.P2
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=1"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=1"'
+      camwascam_p3:
+        friendly_name: WS.P3
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=2"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=2"'
+      camwascam_p4:
+        friendly_name: WS.P4
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=3"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=3"'
+
+
+# Inputs de texto
 input_text:
   text_clock:
     name: Mensagem
-    initial: Bom dia! São 7 horas
+    initial: "Bom dia! São 6 e 50, vamos a previsão do tempo:"
   text_url_youtube:
     name: URL Youtube
     initial: https://www.youtube.com/watch?v=fvrogxMHmlg
 
 
+# Inputs de data/hora
 input_datetime:
-  poste_on:
-    name: "Ligar poste às"
-    has_date: false
-    has_time: true
-    initial: "19:30"
   poste_off:
     name: "Desligar poste às"
     has_date: false
     has_time: true
-    initial: "23:00"
-  arandelas_on:
-    name: "Ligar arandelas às"
-    has_date: false
-    has_time: true
-    initial: "19:30"
+    initial: "23:30"
   arandelas_off:
     name: "Desligar arandelas às"
     has_date: false
     has_time: true
-    initial: "23:00"
+    initial: "23:30"
 
-# Inputs number
+# Inputs numéricos
 input_number:
+  anoitecer:
+    name: Anoitecer após Minutos
+    icon: mdi:timer
+    initial: 20
+    min: 0
+    max: 90
+    step: 1
+    mode: slider
   alarm_clock_hour:
     name: Hora
     icon: mdi:timer
-    initial: 7
+    initial: 6
     min: 0
     max: 23
     step: 1
@@ -209,7 +1088,7 @@ input_number:
   alarm_clock_minutes:
     name: Minuto
     icon: mdi:timer
-    initial: 0
+    initial: 50
     min: 0
     max: 59
     step: 1
@@ -222,33 +1101,32 @@ input_number:
     max: 0.99
     step: 0.10
     mode: slider
-  temperatura_ar:
-    name: 'Temperatura (On)'
-    icon: mdi:temperature-celsius
-    initial: 22
-    min: 17
-    max: 30
-    step: 1
-    mode: slider
 
-
-# Inputs boolean
+# Inputs boolean (on/off)
 input_boolean:
   alarm_clock_status:
     name: Status
     initial: on
+  seguranca_casa:
+    name: "Segurança"
 
+# Permite que outros componentes do Home Assistant processem fluxos de vídeo e áudio.
 ffmpeg:
 
+# Cameras
 camera:
   - platform: ffmpeg
     name: Camera Interna
-    input: rtsp://admin:senha@100.64.0.52/onvif2
-  - platform: ffmpeg
-    input: rtsp://admin:senha@100.64.0.60/2
+    input: !secret input_camera_interna
+#  - platform: ffmpeg
+#    input: !secret input_camera_garagem
+#    name: "Wanscam 360"
+  - platform: generic
     name: "Wanscam 360"
+    still_image_url: !secret input_camera_garagem
 
 
+# Google Assistant
 google_assistant:
   project_id: !secret google_project
   api_key: !secret google_key
@@ -256,15 +1134,12 @@ google_assistant:
     - switch
     - light
     - script
+    - climate
+    - media_player
+    - scene
+#   - group
 
-notify:
-  - name: telegramrudi
-    platform: telegram
-    chat_id: !secret tg_chat_idr
-  - name: telegramflavia
-    platform: telegram
-    chat_id: !secret tg_chat_idf
-
+# Telegram BOT
 telegram_bot:
   platform: polling
   api_key: !secret tg_api
@@ -272,10 +1147,25 @@ telegram_bot:
     - !secret tg_chat_idr
     - !secret tg_chat_idf
 
+# Notificações
+notify:
+  - name: telegramrudi
+    platform: telegram
+    chat_id: !secret tg_chat_idr
+  - name: telegramflavia
+    platform: telegram
+    chat_id: !secret tg_chat_idf
+  - name: telegramtodos
+    platform: group
+    services:
+      - service: telegramrudi
+      - service: telegramflavia
+
+# Alarme da casa
 alarm_control_panel:
   - platform: manual
     name: Alarme da Casa
-    code: 123
+    code: 1234
     pending_time: 10
     delay_time: 20
     trigger_time: 4
@@ -285,12 +1175,82 @@ alarm_control_panel:
       pending_time: 0
       delay_time: 0
 
-shopping_list:
-
+# Previsao do tempo
 weather:
   - platform: darksky
     api_key: !secret api_darksky
 
+# Custom componente para Broadlink
+smartir:
+
+# Climatização
+climate:
+  - platform: smartir
+    name: Climatizador
+    device_code: 1360
+    controller_send_service: switch.broadlink_send_packet_100_64_0_26
+    temperature_sensor: sensor.suite_temperatura
+    humidity_sensor: sensor.suite_umidade
+    #power_sensor: switch.climatizador
+
+
+dialogflow:
+
+intent_script:
+  Temperaturasuite:
+    speech:
+      text: A temperatura na suíte é {{ states('sensor.suite_temperatura') }} graus. Quer ligar o climatizador?
+  LocalizacaoFlavia:
+    speech:
+      text: >
+          {% if is_state('device_tracker.google_maps_118429201781082195315', 'home') %}
+            A Flávia está em casa! Celular: {{ states.sensor.bateria_status_flavia.state }}
+          {% else %}
+            Flávia está com a bateria em {{ states.device_tracker.google_maps_118429201781082195315.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_118429201781082195315.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
+          {% endif %}
+  LocalizacaoRudi:
+    speech:
+      text: >
+          {% if is_state('device_tracker.google_maps_106566341309199592438', 'home') %}
+          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}
+          {% else %}
+           Rudi está com a bateria em {{ states.device_tracker.google_maps_106566341309199592438.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_106566341309199592438.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
+          {% endif %}
+  MaisVolumeQuarto:
+    speech:
+      text: aumentando
+    action:
+      - service: script.tv_quarto_vol_up
+      - service: script.tv_quarto_vol_up
+  MenosVolumeQuarto:
+    speech:
+      text: diminuindo
+    action:
+      - service: script.tv_quarto_vol_down
+      - service: script.tv_quarto_vol_down
+  LigarClimatizador:
+    speech:
+      text: OK, Ligando em modo auto!
+    action:
+      - service: climate.set_operation_mode
+        data:
+          entity_id: climate.climatizador
+          operation_mode: auto
+
+# Streaming (camera.play_stream)
+stream:
+
+# Lista de Compras
+shopping_list:
+
+# Informações sobre o sistema e seus componentes. Também permite executar ferramentas de diagnóstico para diagnosticar problemas.
+system_health:
+
+# Grupos
 group: !include groups.yaml
+
+# Automações
 automation: !include automations.yaml
+
+# Scripts
 script: !include scripts.yaml

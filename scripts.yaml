@@ -1,106 +1,139 @@
 cade_a_flavia:
   alias: "Cade a Flávia"
   sequence:
-    - service: notify.telegramrudi
+    - service: notify.telegramtodos
       data_template:
         message: >
-          {% if is_state('device_tracker.google_maps_111111111111111111111', 'home') %}
+          {% if is_state('device_tracker.google_maps_xxx', 'home') %}
             A Flávia está em casa! Celular: {{ states.sensor.bateria_status_flavia.state }}
           {% else %}
-            Flávia está com a bateria em {{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_111111111111111111111.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
+            Flávia está com a bateria em {{ states.device_tracker.google_maps_xxx.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_xxx.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
           {% endif %}
 
 cade_o_rudi:
   alias: "Cade o Rudi"
   sequence:
-    - service: notify.telegramrudi
+    - service: notify.telegramtodos
       data_template:
         message: >
-          {% if is_state('device_tracker.google_maps_000000000000000000000', 'home') %}
-          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}   
+          {% if is_state('device_tracker.google_maps_yyy', 'home') %}
+          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}
           {% else %}
-           Rudi está com a bateria em {{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_000000000000000000000.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
+           Rudi está com a bateria em {{ states.device_tracker.google_maps_yyy.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_yyy.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
           {% endif %}
     - service: notify.telegramflavia
       data_template:
         message: >
-          {% if is_state('device_tracker.google_maps_000000000000000000000', 'home') %}
-          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}   
+          {% if is_state('device_tracker.google_maps_yyy', 'home') %}
+          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}
           {% else %}
-           Rudi está com a bateria em {{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_000000000000000000000.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
+           Rudi está com a bateria em {{ states.device_tracker.google_maps_yyy.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_yyy.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
           {% endif %}
 
-teste_script:
-  alias: "Teste Script Bateria"
-  sequence:
-    - service: notify.telegramrudi
-      data_template:
-        message: >
-          {% if is_state('sensor.bateria_flavia_st', "False") %}
-          Descarregando / {{ states.sensor.bateria_status_flavia.state }} / {{ states.sensor.bateria_flavia_st.state }}
-          {% else %}
-          Carregando / {{ states.sensor.bateria_status_flavia.state }} / {{ states.sensor.bateria_flavia_st.state }}
-          {% endif %}
-    - service: notify.telegramflavia
-      data_template:
-        message: >
-          {% if is_state('sensor.bateria_flavia_st', "False") %}
-          Descarregando / {{ states.sensor.bateria_status_flavia.state }} / {{ states.sensor.bateria_flavia_st.state }}
-          {% else %}
-          Carregando / {{ states.sensor.bateria_status_flavia.state }} / {{ states.sensor.bateria_flavia_st.state }}
-          {% endif %}
-        
-          
 foto_cam:
-  alias: "Cap. Cam 360 Envia Telegram"
+  alias: "Cap. Camera Garagem Multiplas Posições"
   sequence:
   - service: camera.snapshot
     data:
       entity_id: camera.wanscam_360
       filename: '/tmp/snapshot.jpg'
-  - service: notify.telegramrudi
+  - service: switch.turn_off
     data:
-      message: Capturado!
+      entity_id: switch.camwascam_p1
+  - service: notify.telegramtodos
+    data:
+      message: ""
       data:
         photo:
-          - file: "/tmp/snapshot.jpg"
-            capture: Snapshoot
+          - url: http://100.64.0.60/tmpfs/auto.jpg?&-usr=admin&-pwd=xxxxxxxxxx
+            caption: Garagem Interna
+  - service: switch.turn_off
+    data:
+      entity_id: switch.camwascam_p2
+  - delay:
+      seconds: 2
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - url: http://100.64.0.60/tmpfs/auto.jpg?&-usr=admin&-pwd=xxxxxxxxxx
+            caption: Garagem Externa
+
+  - delay:
+      seconds: 3
+  - service: switch.turn_off
+    data:
+      entity_id: switch.camwascam_p1
+
 
 off_todas_luzes:
-  alias: "Desliga todas luzes"
+  alias: "(Off) Todas as luzes"
   sequence:
   - service: light.turn_off
     data:
       entity_id: group.all_lights
 
 on_todas_luzes:
-  alias: "Liga todas luzes"
+  alias: "(On) Todas as luzes"
   sequence:
   - service: light.turn_on
     data:
       entity_id: group.all_lights
 
 off_todas_luzes_amarelas:
-  alias: "Desliga luzes amarelas - Interna"
+  alias: "(Off) Luzes Quentes"
   sequence:
   - service: light.turn_off
     data:
       entity_id:
-        - light.Cozinha_Pendentes
-        - light.Sala_Game_Trilhos
-        - light.Jantar
-        - light.Sala_Estar_Lustre
+        - light.pendentes
+        - light.trilhos
+        - light.mesa_de_antar
+        - light.lustre
+        - light.bancada
 
 on_todas_luzes_amarelas:
-  alias: "Liga luzes amarelas - Interna"
+  alias: "(On) Luzes Quentes"
   sequence:
   - service: light.turn_on
     data:
       entity_id:
-        - light.Cozinha_Pendentes
-        - light.Sala_Game_Trilhos
-        - light.Jantar
-        - light.Sala_Estar_Lustre
+        - light.pendentes
+        - light.trilhos
+        - light.mesa_de_antar
+        - light.lustre
+        - light.bancada
+
+off_todas_luzes_brancas:
+  alias: "(Off) Luzes Brancas"
+  sequence:
+  - service: light.turn_off
+    data:
+      entity_id:
+        - llight.cozinha
+        - light.pia
+        - light.bebedor
+        - light.sala_game
+        - light.central
+        - light.jf
+        - light.entrada_garagem
+        - light.sala_de_estar
+
+on_todas_luzes_brancas:
+  alias: "(On) Luzes Brancas - Social"
+  sequence:
+  - service: light.turn_on
+    data:
+      entity_id:
+        - llight.cozinha
+        - light.pia
+        - light.bebedor
+        - light.sala_game
+        - light.central
+        - light.jf
+        - light.entrada_garagem
+        - light.sala_de_estar
 
 reseta_sensores:
   alias: "Reseta sensores"
@@ -160,7 +193,7 @@ reseta_sensores:
 
 
 tv_quarto_vol_up:
-  alias: TV Volume Up
+  alias: "TV Quarto Volume +"
   sequence:
   - data:
       packet:
@@ -168,7 +201,7 @@ tv_quarto_vol_up:
       - JgBQAAABJJURExITERMSExETEhMSNxISEjcTNhQ2EjcTNxI3EhISOBISEjgRExI4EjcTEhISEhMRNxQREzYUEBMSEzYTNxM1EwAFFwABJ0gTAA0FAAAAAAAAAAA=
     service: switch.broadlink_send_packet_100_64_0_26
 tv_quarto_vol_down:
-  alias: TV Volume Down
+  alias: "TV Quarto Volume -"
   sequence:
   - data:
       packet:
@@ -176,26 +209,27 @@ tv_quarto_vol_down:
       - JgBQAAABJ5EUERMRFBETERQRExEUNhMRFDUTNxM2EzYTNhQ2ExEUNRQRFDUUNhM2FDYTERMSExETNxISExISEhMSEjYUNRQ2EwAFFgABJ0gTAA0FAAAAAAAAAAA=
     service: switch.broadlink_send_packet_100_64_0_26
 tv_quarto_mute:
-  alias: TV Mute
+  alias: "TV Quarto Mute"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
       - JgBYAAABJZIUEBQRFBAUERQQFBEUNRQREzYUNhM2EzYTNxM2ExISNhQRExEUERMRFDYTERQRExEUNhM2FDUUNRQREzcSNxM3EgAFFwABJUgUAAw9AAEnSBMADQU=
 tv_quarto_sleep:
-  alias: TV Sleep
+  alias: "TV Quarto Sleep"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
       - JgBQAAABJZMSExETERQRExEUERMRORETETgROBI0FTgSNxI4ERMROBE5EhIRORETETkRExEUERMRFBE3ExISNxITEzQUNxI4EwAFFQABJkgTAA0FAAAAAAAAAAA=
 tv_quarto_input:
-  alias: "TV Input"
+  alias: "TV Quarto Entrada"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgBYAAABJZMSExETERQRExEUERMROBISEjgSNxI3EjgROBI4ERMRORE4EjcSOBE3ExISEhITEhISExISEhMSEhI4ETgSNxI4EgAFFQABJUoRAAxAAAElSRMADQU="
+
 air_quarto_swing:
   alias: "Ar Swing"
   sequence:
@@ -204,7 +238,7 @@ air_quarto_swing:
       packet:
         - "JgDKAI6PETURExE1ETYRExESETYREhETETYREhESETYRNhESETYRExE1ETYREhE2ERMRNRI1ETYRExESETYREhE2ERIRExE2ETURNhETERIREhISERISEhESEhIRNhE1EjURNBM1EauOjhI1ERMRNRE2ERMREhE2ERIRExE2ERIREhI1ETYREhE2ERMRNRE2ERISNRETETYRNRE2ERMREhE2ERIRNhESERMRNhE1EjURExESERMREhETERIRExESETYRNRI1ETYRNhAADQUAAAAAAAAAAAAAAAAAAA=="
 air_quarto_led:
-  alias: "Ar Led"
+  alias: "Ar LED"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
@@ -212,7 +246,7 @@ air_quarto_led:
         - "JgDKAI6QEjQTERI1EjQTERI0ExESNRIREzQSERMREjQTERI1EhETNBI1EjQTNBISEjQTERI1EhETERIREhISNBMREjUSERM0EhETNBMREhETNBIREzQSEhI0EhISNBM0EhISNBMREKuPjRM0ExESNBM0EhETNBMREjQTERI1EhESEhI0ExESNBMREjUSNBM0EjUSERI1EhETNBMREhETERIREzQSERM0ExESNBMREjUSERMREjQTERI1EhESNRIREzQSNRIREjUSERAADQUAAAAAAAAAAAAAAAAAAA=="
 
 air_quarto_vent_max:
-  alias: "Ar Só Vento Max"
+  alias: "Só Vento Máximo"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
@@ -220,12 +254,20 @@ air_quarto_vent_max:
         - "JgDKAI2QEzQTEBM0EzQTEBMREjQTERMREjQTERIREzQTNBMQEzQTERMQEzQTNBM0EjQTNBM0EzQTNBMQEhISERMRExATERM0EzMTNBMRExATNBMQExETERIREhITMxM0ExESNBM0EKyPjhM0EhESNRM0ExATERMzFBATERI0FBASEhMzEzQTEBQzExETEBQzEzQTNBM0EzMTNBM0EzQTEBMRExATERMQExETNBMzFDMTERMQEzQTEBMREhITEBMREzMTNBMREzMUMxAADQUAAAAAAAAAAAAAAAAAAA=="
 
 air_quarto_vent_med:
-  alias: "Ar Só Vento Med"
+  alias: "Só Vento Médio"
   sequence:
   - service: switch.broadlink_send_packet_100_64_0_26
     data:
       packet:
         - "JgDKAJGNEzQSERI1EjUSERISEjQTERISEjQTERIREzQSNRMREjUSERI1ExASNRM0EjUTMxM0EzQSEhI1EhESEhIREhISERI1EjUTNBIREhISNBISEhETERISEhESNRM0EhESNRI1EKyQjRM0EhESNRI1EhESEhI0ExESEhI1EhESEhI0EjUSEhI1EhESNRIREzQTNBI1EjQTNBI1EhISNRMQEhISERISEhESNRI1EjUTEBISEjQSEhIRExESEhIREjUTNBMQEjUSNRAADQUAAAAAAAAAAAAAAAAAAA=="
+
+air_quarto_vent_min:
+  alias: "Só Vento Minimo"
+  sequence:
+  - service: switch.broadlink_send_packet_100_64_0_26
+    data:
+      packet:
+        - "JgDKAJCOEjQTERI1EjUSERISEjQTERISEjUSERISEjQTNBISEjUSNRIREhISNRI0EzQSNRI1EhETNBI1EhETERISEhESEhI1EjQTNBISEhESNRISEhESEhIREhISNRI0ExESNRI1E6aRjhI1EhETNBM0EhISERI1EhISERI1EhISERI1EjUSERM0EzQTERIREzQSNRI1EjUSNBMREjUSNRIREhISERISEhETNBI1EjUSERISEjUSERISEhETERIREzQSNRISEjQTNBQADQUAAAAAAAAAAAAAAAAAAA=="
 
 xboom_vol_up:
   alias: "Xboom Volume +"
@@ -242,68 +284,71 @@ xboom_vol_down:
       - JgBWAJGWEhMTERITEhMROBITEhMSExEUExIRExITETkRExITEhMRFBE4EjgSExM2EhMRFBEUETgSExEUETgSExM3EjcSOBIABpaTlRE4EgAMVpKVEjcSAA0FAAA=
     service: switch.broadlink_send_packet_100_64_0_53
 xboom_mute:
-  alias: Xboom Mute
+  alias: "Xboom Mute"
   sequence:
   - data:
       packet:
       - JgBWAJOUEhMSExMSERQSNxITERQRFBETEhMSExMSETgSExMSExITNhI4EjcSOBI3EhMSExEUERQRExITEhMRFBE4EjgSOBEABpeSlRI4EgAMVZKWEjcSAA0FAAA=
     service: switch.broadlink_send_packet_100_64_0_53
 xboom_input:
-  alias: Xboom Input
+  alias: "Xboom Entrada"
   sequence:
   - data:
       packet:
       - JgBOAJGWFBEQFRAUERQRORQREBQRFBEUERQQFBITETkTEhAUERQSOBQ1ExMRExEUERMSExITEhMQFRE4EzcUNRQ2FDUSOBQABpSVkxQ1EwANBQAAAAAAAAAAAAA=
     service: switch.broadlink_send_packet_100_64_0_53
 xboom_equalizer:
-  alias: Xboom Equalizer
+  alias: "Xboom Equalizar"
   sequence:
   - data:
       packet:
       - JgBWAJOUEhMSExEUERQROBITERQRFBETEhMSExEUETgSExEUERQRExITEhMRFBEUERMSOBITETgSOBI3EjgSNxI4EhMROBIABpaSlRI4EgAMVJOVETgSAA0FAAA=
     service: switch.broadlink_send_packet_100_64_0_53
+
+
 lg55_input:
-  alias: Lg 55 Input
+  alias: "TV Lg Entrada"
   sequence:
   - data:
       packet:
       - JgBYAAABKpIRFBEUETkQFREUERQRExEUEjgROREUETkQORE5ETkRORE5EDkRFBI4ERQRFBEUERQRFBEUETgRFBI4ETkRORA5EQAFKwABKkkQAAxgAAEpSREADQU=
     service: switch.broadlink_send_packet_100_64_0_53
 lg55_vol_up:
-  alias: Lg 55 Vol Up
+  alias: "TV Lg Volume +"
   sequence:
   - data:
       packet:
       - JgBQAAABKZMRFBEUETkRFBEUERQQFRAVEDkROREUETkQOhA5ETkROREUEDoQFRAUERQRFBITERQROREUEDkRORE5ETkRORA5EQAFKwABKUoQAA0FAAAAAAAAAAA=
     service: switch.broadlink_send_packet_100_64_0_53
 lg55_vol_down:
-  alias: Lg 55 Vol Don
+  alias: "TV Lg Volume -"
   sequence:
   - data:
       packet:
       - JgBYAAABJ5UQFREUETgRFBITERQRFBEUETkQOREUEjgRORE5EDoQORE5ETkRFBEUERQRFBETEhMSExITETkRORA6EDkRORE5EQAFKwABKEoRAAxfAAEoSxAADQU=
     service: switch.broadlink_send_packet_100_64_0_53
 lg55_mute:
-  alias: Lg 55 Mute
+  alias: "TV Lg Mute"
   sequence:
   - data:
       packet:
       - JgBYAAABJ5URFBEUETgRFBITEhMSExEUETkRORAVETgRORE5ETkQORE5ERQSExE5ERQRFBEUERQRExI4ETkRFBE5EDkRORE5EQAFKwABKEYVAAxfAAEpShEADQU=
     service: switch.broadlink_send_packet_100_64_0_53
-lg55_simplink:
-  alias: Lg 55 Simplink
-  sequence:
-  - data:
-      packet:
-      - JgBYAAABKJQRFBITETkRFBEUERQRFBETEjgROREUETkQOhA5ETkROREUETkQORE5ETkRORA6EBUROBEUEhMRFBEUERQRFBE4EQAFKwABKEsQAAxgAAEpSREADQU=
-    service: switch.broadlink_send_packet_100_64_0_53
 lg55_exit:
-  alias: Lg 55 exit
+  alias: "TV Lg Exit"
   sequence:
   - data:
       packet:
       - JgBQAAABKJQRFBITEjgRFBEUERQRFBEUETgROREUETkRORA5ETkRORE5ETkQFRE4ETkRFBE5EBURFBEUEDkSExITETkRFBE5EAAFKwABKEsQAA0FAAAAAAAAAAA=
     service: switch.broadlink_send_packet_100_64_0_53
+#lg55_simplink:
+#  alias: Lg 55 Simplink
+#  sequence:
+#  - data:
+#      packet:
+#      - JgBYAAABKJQRFBITETkRFBEUERQRFBETEjgROREUETkQOhA5ETkROREUETkQORE5ETkRORA6EBUROBEUEhMRFBEUERQRFBE4EQAFKwABKEsQAAxgAAEpSREADQU=
+#    service: switch.broadlink_send_packet_100_64_0_53
+
 proj_mute:
   alias: Proj. Mute
   sequence:
@@ -422,24 +467,24 @@ loop_luzes_auxiliar:
 #
   - service: light.turn_on
     data:
-      entity_id: light.arandela_varanda_suite
+      entity_id: light.arandelas_da_varanda
   - service: light.turn_off
     data:
-      entity_id: light.arandela_varanda_suite
+      entity_id: light.arandelas_da_varanda
 #
   - service: light.turn_on
     data:
-      entity_id: light.varanda_suite
+      entity_id: light.varanda_fundos
   - service: light.turn_off
     data:
-      entity_id: light.varanda_suite
+      entity_id: light.varanda_fundos
 #
   - service: light.turn_on
     data:
-      entity_id: light.area_piscina
+      entity_id: light.area_da_piscina
   - service: light.turn_off
     data:
-      entity_id: light.area_piscina
+      entity_id: light.area_da_piscina
 #
   - service: light.turn_on
     data:
@@ -457,77 +502,77 @@ loop_luzes_auxiliar:
 #
   - service: light.turn_on
     data:
-      entity_id: light.cozinha_pia
+      entity_id: light.garagem
   - service: light.turn_off
     data:
-      entity_id: light.cozinha_pia
+      entity_id: light.garagem
 #
   - service: light.turn_on
     data:
-      entity_id: light.cozinha_bancada
+      entity_id: light.bebedor
   - service: light.turn_off
     data:
-      entity_id: light.cozinha_bancada
+      entity_id: light.bebedor
 #
   - service: light.turn_on
     data:
-      entity_id: light.cozinha_pendentes
+      entity_id: light.pendentes
   - service: light.turn_off
     data:
-      entity_id: light.cozinha_pendentes
+      entity_id: light.pendentes
 #
   - service: light.turn_on
     data:
-      entity_id: light.sala_game_trilhos
+      entity_id: light.trilhos
   - service: light.turn_off
     data:
-      entity_id: light.sala_game_trilhos
+      entity_id: light.trilhos
 #
   - service: light.turn_on
     data:
-      entity_id: light.sala_game_spots
+      entity_id: light.central
   - service: light.turn_off
     data:
-      entity_id: light.sala_game_spots
+      entity_id: light.central
 #
   - service: light.turn_on
     data:
-      entity_id: light.sala_estar_lustre
+      entity_id: light.lustre
   - service: light.turn_off
     data:
-      entity_id: light.sala_estar_lustre
+      entity_id: light.lustre
 #
   - service: light.turn_on
     data:
-      entity_id: light.sala_game_central
+      entity_id: light.sala_game
   - service: light.turn_off
     data:
-      entity_id: light.sala_game_central
+      entity_id: light.sala_game
 #
   - service: light.turn_on
     data:
-      entity_id: light.sala_estar_spots
+      entity_id: light.sala_de_estar
   - service: light.turn_off
     data:
-      entity_id: light.sala_estar_spots
+      entity_id: light.sala_de_estar
 #
   - service: light.turn_on
     data:
-      entity_id: light.cozinha_central
+      entity_id: llight.cozinha
   - service: light.turn_off
     data:
-      entity_id: light.cozinha_central
+      entity_id: llight.cozinha
 #
   - service: light.turn_on
     data:
-      entity_id: light.jantar
+      entity_id: light.mesa_de_antar
   - service: light.turn_off
     data:
-      entity_id: light.jantar
+      entity_id: light.mesa_de_antar
 #
   - service: light.turn_on
     data:
-      entity_id: light.jantar_ent_frente
+      entity_id: light.jf
   - service: light.turn_off
     data:
-      entity_id: light.jantar_ent_frente
+      entity_id: light.jf

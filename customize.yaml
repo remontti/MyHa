@@ -28,25 +28,13 @@ binary_sensor.chrome_cast_quarto:
   icon: mdi:google-chrome
 binary_sensor.google_home_mini:
   icon: mdi:google-home
-script.spotify_music:
-  friendly_name: Play
-  icon: mdi:play
-sensor.spotify_source:
-  hidden: true
-sensor.spotify_volume:
-  hidden: true
-sensor.spotify_shuffle:
-  hidden: true
-binary_sensor.sonoff_abajur:
-  icon: mdi:flash-circle
 group.home_room_tv: {}
-switch.tv_quarto:
-  hidden: true
+switch.tv_do_quarto:
   icon: mdi:television-classic
 script.tv_quarto_vol_down:
-  icon: mdi:arrow-down-bold-box
+  icon: mdi:volume-minus
 script.tv_quarto_vol_up:
-  icon: mdi:arrow-up-bold-box
+  icon: mdi:volume-plus
 script.tv_quarto_mute:
   icon: mdi:volume-off
 script.tv_quarto_sleep:
@@ -117,12 +105,11 @@ sensor.alarm_clock_minutes:
 sensor.alarm_clock_time_long:
   hidden: true
 switch.xboom_som:
-  hidden: true
   icon: mdi:speaker-wireless
 script.xboom_vol_down:
-  icon: mdi:arrow-down-bold-box
+  icon: mdi:volume-minus
 script.xboom_vol_up:
-  icon: mdi:arrow-up-bold-box
+  icon: mdi:volume-plus
 script.xboom_mute:
   icon: mdi:volume-off
 script.xboom_input:
@@ -137,9 +124,9 @@ switch.home_theater:
 switch.sky_tv:
   icon: mdi:satellite-variant
 script.lg55_vol_down:
-  icon: mdi:arrow-down-bold-box
+  icon: mdi:volume-minus
 script.lg55_vol_up:
-  icon: mdi:arrow-up-bold-box
+  icon: mdi:volume-plus
 script.lg55_mute:
   icon: mdi:volume-off
 script.lg55_input:
@@ -148,9 +135,9 @@ script.lg55_simplink:
   icon: mdi:link-variant
 script.lg55_exit:
   icon: mdi:exit-to-app
-device_tracker.google_maps_000000000000000000000:
+device_tracker.google_maps_106566341309199592438:
   friendly_name: Rudimar
-device_tracker.google_maps_111111111111111111111:
+device_tracker.google_maps_118429201781082195315:
   friendly_name: Flávia
 sensor.dark_sky_uv_index:
   friendly_name: Índice de UV
@@ -207,8 +194,6 @@ group.all_lights:
   friendly_name: Todas as Luzes
 group.all_switches:
   friendly_name: Interruptores
-light.yeelight_rgb_7c49eb15924b:
-  hidden: true
 switch.sirenes:
   icon: mdi:alarm-light
 input_boolean.zona_ext_garagem:
@@ -251,21 +236,14 @@ binary_sensor.tv_lg_game:
   icon: mdi:television
 zone.home:
   radius: 150
-script.on_todas_luzes_amarelas:
-  icon: mdi:candle
-script.on_todas_luzes:
-  icon: mdi:light-switch
-script.off_todas_luzes:
-  icon: mdi:light-switch
-script.off_todas_luzes_amarelas:
-  icon: mdi:candle
-script.loop_luzes_auxiliar:
-  icon: mdi:emoticon-tongue
 sensor.bateria_flavia:
   icon: mdi:battery
 sensor.bateria_rudi:
   icon: mdi:battery
-light.abajur_da_suite:
+light.yeelight_rgb_7c49eb15924b:
   icon: mdi:mdi:floor-lamp
+  friendly_name: Luz do Abajur
 sensor.home_assistant_v2_db:
   friendly_name: Banco Dados
+switch.tv_quarto:
+  icon: mdi:television
