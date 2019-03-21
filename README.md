@@ -66,7 +66,7 @@ Para gerenciar a rede usei um RouterOS (Mikrotik) e como tive mais de 50 disposi
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/9.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/10.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/11.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/12.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/12a.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/13.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/14.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/15.png">
