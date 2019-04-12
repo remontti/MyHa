@@ -12,8 +12,6 @@ sensor.dark_sky_humidity:
   friendly_name: Umidade
 sensor.dark_sky_temperature:
   friendly_name: Temp
-device_tracker.remontti_rudimar:
-  friendly_name: Rudimar
 binary_sensor.ap_router_cli_tv:
   icon: mdi:router-wireless
 binary_sensor.unifi_ap:
@@ -28,7 +26,6 @@ binary_sensor.chrome_cast_quarto:
   icon: mdi:google-chrome
 binary_sensor.google_home_mini:
   icon: mdi:google-home
-group.home_room_tv: {}
 switch.tv_do_quarto:
   icon: mdi:television-classic
 script.tv_quarto_vol_down:
@@ -39,8 +36,6 @@ script.tv_quarto_mute:
   icon: mdi:volume-off
 script.tv_quarto_sleep:
   icon: mdi:sleep
-binary_sensor.sonoff:
-  icon: mdi:flash-circle
 script.parabolica_up:
   icon: mdi:arrow-up-bold-box
 script.parabolica_vol_down:
@@ -135,9 +130,9 @@ script.lg55_simplink:
   icon: mdi:link-variant
 script.lg55_exit:
   icon: mdi:exit-to-app
-device_tracker.google_maps_106566341309199592438:
+device_tracker.google_maps_123:
   friendly_name: Rudimar
-device_tracker.google_maps_118429201781082195315:
+device_tracker.google_maps_321:
   friendly_name: Flávia
 sensor.dark_sky_uv_index:
   friendly_name: Índice de UV
@@ -240,9 +235,6 @@ sensor.bateria_flavia:
   icon: mdi:battery
 sensor.bateria_rudi:
   icon: mdi:battery
-light.yeelight_rgb_7c49eb15924b:
-  icon: mdi:mdi:floor-lamp
-  friendly_name: Luz do Abajur
 sensor.home_assistant_v2_db:
   friendly_name: Banco Dados
 switch.tv_quarto:

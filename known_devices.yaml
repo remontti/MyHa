@@ -1,16 +1,16 @@
 
-google_maps_yyy:
+google_maps_123:
   hide_if_away: false
   icon:
   mac:
-  name: google maps yyy
+  name: google maps 123
   picture: https://lh6.googleusercontent.com/-5BbnhQwrj6c/AAAAAAAAAAI/AAAAAAAABhk/w-Xwy5w3RX0/photo.jpg
   track: true
 
-google_maps_xxx:
+google_maps_321:
   hide_if_away: false
   icon:
   mac:
-  name: google maps xxx
+  name: google maps 321
   picture: https://lh4.googleusercontent.com/-sU7J9Pj8vCA/AAAAAAAAAAI/AAAAAAAAABI/q3EaiOubZ70/photo.jpg
   track: true

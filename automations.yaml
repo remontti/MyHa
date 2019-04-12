@@ -1,8 +1,624 @@
+#  _____                              _          _         ______                             _
+# |  __ \                            | |        | |       |  ____|                           | |
+# | |__) |___ _ __   _____   ____ _  | |     ___| |_ ___  | |__   _ __   ___ _ __ _   _ _ __ | |_
+# |  _  // _ \ '_ \ / _ \ \ / / _` | | |    / _ \ __/ __| |  __| | '_ \ / __| '__| | | | '_ \| __|
+# | | \ \  __/ | | | (_) \ V / (_| | | |___|  __/ |_\__ \ | |____| | | | (__| |  | |_| | |_) | |_
+# |_|  \_\___|_| |_|\___/ \_/ \__,_| |______\___|\__|___/ |______|_| |_|\___|_|   \__, | .__/ \__|
+#                                                                                 |___/|_|
+- id: letsencrypt-renewal
+  alias: "Renova Let's Encrypt"
+  trigger:
+  - platform: time
+    at: '00:00:00'
+  action:
+  - service: hassio.addon_restart
+    data:
+      addon: core_letsencrypt
+
+
+#   _____            _             _            __      __
+#  / ____|          | |           | |           \ \    /_ |
+# | |     ___  _ __ | |_ _ __ ___ | | ___   _____\ \    | |
+# | |    / _ \| '_ \| __| '__/ _ \| |/ _ \ |______> >   | |
+# | |___| (_) | | | | |_| | | (_) | |  __/       / /    | |
+#  \_____\___/|_| |_|\__|_|  \___/|_|\___|      /_/     |_|
 #
-# Alertas Sonoros
+# RESET BTN ARMAR
+- alias: Controle (1) - Auto 1s Btn Desarmar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_armar
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"2970D1off"}} '
+
+# RESET BTN DESARMAR
+- alias: Controle (1) - Auto 1s Btn Desarmar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_desarmar
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"2970D2off"}} '
+
+# RESET BTN HOME
+- alias: Controle (1) - Auto 1s Btn Home
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_home
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"2970D4off"}} '
+
+# RESET BTN SOS
+- alias: Controle (1) - Auto 1s Btn SOS
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_sos
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"2970D8off"}} '
+
+# BOTAO ARMAR
+- alias: Controle (1) - Armar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_armar
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.seguranca_casa
+
+# BOTAO DESARMAR
+- alias: Controle (1) - Desarmar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_desarmar
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.seguranca_casa
+
+# HOME (Liga luz Poste se estiver off)
+- alias: Controle (1) - Bt Home (Liga Poste)
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_home
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.postes
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.postes
+
+# HOME (Desliga luz Poste se estiver on)
+- alias: Controle (1) - Bt Home (Desligar Poste)
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_home
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.postes
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.postes
+
+# SOS (Liga luz pendentes se estiver off)
+- alias: Controle (1) - Bt SOS (Liga QM)
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_sos
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.pendentes
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.pendentes
+
+# SOS (Desliga luz pendentes se estiver on)
+- alias: Controle (1) - Bt SOS (Desligar QM)
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c1_sos
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.pendentes
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.pendentes
+
+
+#   _____            _             _            __      ___
+#  / ____|          | |           | |           \ \    |__ \
+# | |     ___  _ __ | |_ _ __ ___ | | ___   _____\ \      ) |
+# | |    / _ \| '_ \| __| '__/ _ \| |/ _ \ |______> >    / /
+# | |___| (_) | | | | |_| | | (_) | |  __/       / /    / /_
+#  \_____\___/|_| |_|\__|_|  \___/|_|\___|      /_/    |____|
 #
-- alias: "Falar Temperatura ao ligar Ar"
+# RESET BTN ARMAR
+- alias: Controle (2) - Auto 1s Btn Desarmar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c2_armar
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"921051off"}} '
+
+# RESET BTN DESARMAR
+- alias: Controle (2) - Auto 1s Btn Desarmar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c2_desarmar
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"921052off"}} '
+
+# RESET HOME
+- alias: Controle (2) - Auto 1s Btn Home
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c2_home
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"921054off"}} '
+
+# RESET SOS
+- alias: Controle (2) - Auto 1s Btn SOS
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c2_sos
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"921058off"}} '
+
+# ARMAR
+- alias: Controle (2) - Armar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c2_armar
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.seguranca_casa
+
+# DESARMAR
+- alias: Controle (2) - Desarmar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c2_desarmar
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.seguranca_casa
+
+# HOME ( SEM FUNCAO)
+- alias: Controle (2) - Btn Home
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c2_home
+    from: 'off'
+    to: 'on'
+  action:
+  - service: notify.telegramrudi
+    data:
+      message: Botão Home pressinado em controle 2.
+  - service: tts.google_say
+    data_template:
+      entity_id: media_player.google_home
+      message: Botão Home pressinado em controle 2.
+
+# SOS ( SEM FUNCAO)
+- alias: Controle (2) - Btn SOS
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c2_sos
+    from: 'off'
+    to: 'on'
+  action:
+  - service: notify.telegramrudi
+    data:
+      message: Botão SOS pressinado em controle 2.
+  - service: tts.google_say
+    data_template:
+      entity_id: media_player.google_home
+      message: Botão SOS pressinado em controle 2.
+
+#   _____            _             _            __      ____
+#  / ____|          | |           | |           \ \    |___ \
+# | |     ___  _ __ | |_ _ __ ___ | | ___   _____\ \     __) |
+# | |    / _ \| '_ \| __| '__/ _ \| |/ _ \ |______> >   |__ <
+# | |___| (_) | | | | |_| | | (_) | |  __/       / /    ___) |
+#  \_____\___/|_| |_|\__|_|  \___/|_|\___|      /_/    |____/
+# (Fica na Suite)
+# RESET BTN ARMAR
+- alias: Controle (3) - Auto 1s Btn Desarmar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_armar
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"77B0D1off"}} '
+
+# RESET BTN DESARMAR
+- alias: Controle (3) - Auto 1s Btn Desarmar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_desarmar
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"77B0D2off"}} '
+
+# RESET HOME
+- alias: Controle (3) - Auto 1s Btn Home
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_home
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"77B0D4off"}} '
+
+# RESET SOS
+- alias: Controle (3) - Auto 1s Btn SOS
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_sos
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 1
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"77B0D8off"}} '
+
+# ARMAR
+- alias: Controle (3) - Armar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_armar
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.seguranca_casa
+
+# DESARMAR
+- alias: Controle (3) - Desarmar
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_desarmar
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.seguranca_casa
+
+# HOME (Liga luz do Abajur se estiver off)
+- alias: Controle (3) - Bt Home (Liga abajur)
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_home
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.yeelight_color1_7c49eb15924b
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.yeelight_color1_7c49eb15924b
+      transition: 3
+
+# HOME (Desliga luz do Abajur se estiver on)
+- alias: Controle (3) - Bt Home (Desligar abajur)
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_home
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.yeelight_color1_7c49eb15924b
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.yeelight_color1_7c49eb15924b
+      transition: 3
+
+# SOS (Liga luz do postes se estiver off)
+- alias: Controle (3) - SOS Home (Liga Postes)
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_sos
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.postes
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.postes
+      transition: 3
+
+# SOS (Desliga luz do postes se estiver on)
+- alias: Controle (3) - Bt SOS (Desligar Postes)
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.c3_sos
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.postes
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.postes
+      transition: 3
+
+
+##########################################################################
+# NOTIFICACOES DE LUZES ON/OFF SE NINGUEM ESTIVER EM CASA
+##########################################################################
+- alias: 'Notificação: Luzez On/Off'
   initial_state: on
+  trigger:
+  - entity_id:
+      - light.garagem
+      - light.arandelas
+      - light.arandelas_da_varanda
+      - light.area_da_piscina
+      - light.refretores_piscina
+      - light.entrada
+      - light.varanda_fundos
+      - light.postes
+      - light.lavanderia
+      - light.banheiro_da_suite
+      - light.banheiro_social
+      - light.lavabo
+      - light.cozinha
+      - light.pia
+      - light.bebedor
+      - light.pendentes
+      - light.sala_game
+      - light.central
+      - light.trilhos
+      - light.bancada
+      - light.jf
+      - light.entrada_garagem
+      - light.mesa_de_antar
+      - light.lustre
+      - light.sala_de_estar
+      - light.quarto_da_frente
+      - light.quarto_do_meio
+      - light.corredor
+      - light.quarto_da_suite
+      - light.yeelight_color1_7c49eb15924b
+      - light.closet
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id:
+      - light.garagem
+      - light.arandelas
+      - light.arandelas_da_varanda
+      - light.area_da_piscina
+      - light.refretores_piscina
+      - light.entrada
+      - light.varanda_fundos
+      - light.postes
+      - light.lavanderia
+      - light.banheiro_da_suite
+      - light.banheiro_social
+      - light.lavabo
+      - light.cozinha
+      - light.pia
+      - light.bebedor
+      - light.pendentes
+      - light.sala_game
+      - light.central
+      - light.trilhos
+      - light.bancada
+      - light.jf
+      - light.entrada_garagem
+      - light.mesa_de_antar
+      - light.lustre
+      - light.sala_de_estar
+      - light.quarto_da_frente
+      - light.quarto_do_meio
+      - light.corredor
+      - light.quarto_da_suite
+      - light.yeelight_color1_7c49eb15924b
+      - light.closet
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: 'group.all_devices'
+        state: 'not_home'
+      - condition: state
+        entity_id: 'group.all_devices'
+        state: 'unknown'
+  action:
+  - service: notify.telegramtodos
+    data_template:
+      message: >
+        Luz: {{ trigger.to_state.attributes.friendly_name }} {{ trigger.to_state.state }}
+
+##########################################################################
+# NOTIFICACOES ON/OFF SE NINGUEM ESTIVER EM CASA
+##########################################################################
+- alias: 'Notificação: Switch On/Off'
+  initial_state: on
+  trigger:
+  - entity_id:
+      - switch.ventilador
+      - switch.tv_do_quarto
+      - switch.ar_quarto
+      - switch.xboom_som
+      - switch.tv_lg_55
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id:
+      - switch.ventilador
+      - switch.tv_do_quarto
+      - switch.ar_quarto
+      - switch.xboom_som
+      - switch.tv_lg_55
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: 'group.all_devices'
+        state: 'not_home'
+      - condition: state
+        entity_id: 'group.all_devices'
+        state: 'unknown'
+  action:
+  - service: notify.telegramtodos
+    data_template:
+      message: >
+        {{ trigger.to_state.attributes.friendly_name }} {{ trigger.to_state.state }}
+
+##########################################################################
+# CLIMATIZADOR SUITE
+##########################################################################
+
+# Fala temperatura externa ao ligar o climatizador
+- alias: "Falar Temperatura ao ligar Ar"
   trigger:
   - platform: state
     entity_id: climate.climatizador
@@ -14,137 +630,12 @@
       entity_id: media_player.google_home
       message: 'Temperatura externa é de {{ states.sensor.dark_sky_temperature.state | int }} graus.'
 
-- alias: "Porta entrada aberta"
-  hide_entity: false
-  initial_state: off
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.porta_entrada
-    from: 'off'
-    to: 'on'
-  action:
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Seja bem vindo.
-  - delay:
-      milliseconds: 600
-  - service: camera.snapshot
-    data:
-      entity_id: camera.camera_interna
-      filename: '/tmp/snapshot.jpg'
-  - service: notify.telegramtodos
-    data:
-      message: Capturado!
-      data:
-        photo:
-          - file: "/tmp/snapshot.jpg"
-            caption: Interna
 
-
-#
-# Notificações Telegram
-#
-- alias: 'Notificação: Luzez On/Off'
-  initial_state: off
-  trigger:
-  - entity_id:
-      - light.garagem
-      - light.arandelas
-      - light.arandelas_da_varanda
-      - light.area_da_piscina
-      - light.refretores_piscina
-      - light.entrada
-      - light.varanda_fundos
-      - light.postes
-      - light.lavanderia
-      - light.banheiro_da_suite
-      - light.banheiro_social
-      - light.lavabo
-      - llight.cozinha
-      - light.pia
-      - light.bebedor
-      - light.pendentes
-      - light.sala_game
-      - light.central
-      - light.trilhos
-      - light.bancada
-      - light.jf
-      - light.entrada_garagem
-      - light.mesa_de_antar
-      - light.lustre
-      - light.sala_de_estar
-      - light.quarto_da_frente
-      - light.quarto_do_meio
-      - light.corredor
-      - light.quarto_da_suite
-      #- light.abajur
-      - light.yeelight_rgb_7c49eb15924b
-      - light.closet
-    from: 'off'
-    platform: state
-    to: 'on'
-  - entity_id:
-      - light.garagem
-      - light.arandelas
-      - light.arandelas_da_varanda
-      - light.area_da_piscina
-      - light.refretores_piscina
-      - light.entrada
-      - light.varanda_fundos
-      - light.postes
-      - light.lavanderia
-      - light.banheiro_da_suite
-      - light.banheiro_social
-      - light.lavabo
-      - llight.cozinha
-      - light.pia
-      - light.bebedor
-      - light.pendentes
-      - light.sala_game
-      - light.central
-      - light.trilhos
-      - light.bancada
-      - light.jf
-      - light.entrada_garagem
-      - light.mesa_de_antar
-      - light.lustre
-      - light.sala_de_estar
-      - light.quarto_da_frente
-      - light.quarto_do_meio
-      - light.corredor
-      - light.quarto_da_suite
-      #- light.abajur
-      - light.yeelight_rgb_7c49eb15924b
-      - light.closet
-    from: 'on'
-    platform: state
-    to: 'off'
-  action:
-  - service: notify.telegramtodos
-    data_template:
-      message: >
-        Luz: {{ trigger.to_state.attributes.friendly_name }} {{ trigger.to_state.state }}
-
-
-- id: letsencrypt-renewal
-  initial_state: 'on'
-  alias: "Renova Let's Encrypt"
-  trigger:
-  - platform: time
-    at: '00:00:00'
-  action:
-  - service: hassio.addon_restart
-    data:
-      addon: core_letsencrypt
-
-
-#
+##########################################################################
 # DESPERTADOR
-#
+##########################################################################
+
 - alias: "Conf. Despertador"
-  hide_entity: false
-  initial_state: 'on'
   trigger:
     platform: template
     value_template: '{{ states.sensor.time.state == states.sensor.alarm_clock_time_long.state }}'
@@ -160,34 +651,574 @@
   - service: tts.google_say
     entity_id: media_player.google_home
     data_template:
-      message: '{{ states.input_text.text_clock.state }}'
+      message: '{{ states.input_text.text_clock.state }} São {{ states.input_number.alarm_clock_hour.state | int }} horas e {{ states.input_number.alarm_clock_minutes.state | int }} minutos'
   - delay:
       seconds: 6
   - service: tts.google_say
     data_template:
       entity_id: media_player.google_home
-      message: 'Temperatura {{ states.sensor.dark_sky_temperature.state | int }} graus. A previsão para as próximas 24h é: {{ states.sensor.dark_sky_hourly_summary.state }} . E para os próximos dias será: {{ states.sensor.dark_sky_daily_summary.state }} '
+      message: 'Faz {{ states.sensor.dark_sky_temperature.state | int }} graus. A previsão do tempo é: {{ states.sensor.dark_sky_hourly_summary.state }} . E para os próximos dias será: {{ states.sensor.dark_sky_daily_summary.state }} '
   - delay:
-      seconds: 30
+      seconds: 25
   - service: media_extractor.play_media
     entity_id: media_player.google_home
     data_template:
       media_content_id: '{{ states.input_text.text_url_youtube.state }}'
       media_content_type: video/youtube
 
-#
-# ALARME
-#
+
+##########################################################################
+# TESTE SENSORES
+##########################################################################
+
+- alias: "Alarme - Testar Sensores"
+  initial_state: off
+  trigger:
+  - platform: state
+    entity_id:
+      - binary_sensor.sala_social
+      - binary_sensor.sala_jantar
+      - binary_sensor.corredor
+      - binary_sensor.ext_garagem
+      - binary_sensor.ext_piscina
+      - binary_sensor.porta_varanda
+      - binary_sensor.porta_entrada
+      - binary_sensor.porta_area
+      - binary_sensor.janela_closet
+      - binary_sensor.janela_cozinha
+      - binary_sensor.janela_suite
+      - binary_sensor.janela_quarto_f
+      - binary_sensor.janela_quarto_m
+    to: 'on'
+  action:
+  - service: notify.telegramrudi
+    data_template:
+      message: >
+        [OK] : {{ trigger.to_state.attributes.friendly_name }}
+
+
+##########################################################################
+# RESET DOS SENSORES DE PRESENCA E PORTAS/JANELAS
+##########################################################################
+
+# SENSOR SALA SOCIAL
+- alias: "FS.P Sala Social"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.sala_social
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"9B5086off"}} '
+
+# SENSOR CORREDOR
+- alias: "FS.P Corredor"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.corredor
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 3
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"82C186off"}} '
+
+# SENSOR PISCINA
+- alias: "FS.P Ext Piscina"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.ext_piscina
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 30
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"EE4986off"}} '
+
+# SENSOR GARAGEM
+- alias: "FS.P Ext Garagem"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.ext_garagem
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 30
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"AAC186off"}} '
+
+# SENSOR SALA JANTAR
+- alias: "FS.P Sala Jantar"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.sala_jantar
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"55A486off"}} '
+
+# JANELA QUARTO DA FRENTE
+- alias: "FS.W Quarto F"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.janela_quarto_f
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"CD5B46off"}} '
+
+# JANELA QUARTO DO MEIO
+- alias: "FS.W Quarto M"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.janela_quarto_m
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"996D46off"}} '
+
+# JANELA QUARTO SUITE
+- alias: "FS.W Suite"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.janela_suite
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"B92D46off"}} '
+
+# JANELA DA COZINHA
+- alias: "FS.W Cozinha"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.janela_cozinha
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"C41B46off"}} '
+
+# JANELA CLOSET
+- alias: "FS.W Closet"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.janela_closet
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"7F7D46off"}} '
+
+# PORTA SAIDA AREA PSCINA
+- alias: "FS.D Area"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.porta_area
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"09D8C6off"}} '
+
+# PORTA DE ENTRADA
+- alias: "FS.D Entrada"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.porta_entrada
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"2E9D46off"}} '
+
+# PORTA DA VARANDA
+- alias: "FS.D Varanda"
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.porta_varanda
+    from: 'off'
+    to: 'on'
+    for:
+      seconds: 5
+  action:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"5E6B46off"}} '
+
+##########################################################################
+# TV DO QUARTO DESLIGA SE O CHROMECAST NAO ESTIVER
+# REPRODUZINDO NADA POR 4 MIN
+##########################################################################
+
+- alias: Tv Quarto Desliga - (Sem Player 3min)
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: media_player.tv_do_quarto
+    to: 'off'
+    for:
+      minutes: 4
+  action:
+  - service: switch.turn_off
+    entity_id: switch.tv_quarto
+  - service: notify.telegramtodos
+    data:
+      message: 'Desliguei a TV do quarto! Parece que ninguém estava assistindo.'
+
+
+##########################################################################
+# MOVIMENTOS EXTERNOS COM ALARME DESATIVADO E SEM  NIGUEM EM CASA
+##########################################################################
+
+# MOVIMENTO AREA DA PISCINA
+- alias: "Piscina (Alarme OFF) - Movimento"
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.ext_piscina
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.alarme_da_casa
+        state: disarmed
+      - condition: or
+        # Não ter ninguem em casa
+        conditions:
+          - condition: state
+            entity_id: group.all_devices
+            state: 'not_home'
+          - condition: state
+            entity_id: group.all_devices
+            state: 'unknown'
+  action:
+  - service: notify.telegramtodos
+    data:
+      message: "Movimento na área da piscina"
+  - service: camera.snapshot
+    data:
+      entity_id: camera.camera_interna
+      filename: '/tmp/snapshot1a.jpg'
+  - service: camera.snapshot
+    data:
+      entity_id: camera.xiaofang
+      filename: '/tmp/xiaofang.jpg'
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - file: "/tmp/xiaofang.jpg"
+            caption: Area
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - file: "/tmp/snapshot1a.jpg"
+            caption: Interna
+  - service: script.turn_on
+    entity_id: script.foto_cam
+
+# MOVIMENTO NA GARAGEM
+- alias: "Garagem (Alarme OFF) - Movimento"
+  initial_state: on
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.ext_garagem
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.alarme_da_casa
+        state: disarmed
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: group.all_devices
+            state: 'not_home'
+          - condition: state
+            entity_id: group.all_devices
+            state: 'unknown'
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.xiaofang
+      filename: '/tmp/xiaofang.jpg'
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - file: "/tmp/xiaofang.jpg"
+            caption: Area
+  - service: notify.telegramtodos
+    data:
+      message: "Movimento na garagem"
+  - service: camera.snapshot
+    data:
+      entity_id: camera.camera_interna
+      filename: '/tmp/snapshot2b.jpg'
+  - service: script.turn_on
+    entity_id: script.foto_cam
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - file: "/tmp/snapshot2b.jpg"
+            caption: Interna
+
+
+##########################################################################
+# MOVIMENTOS EXTERNOS COM ALARME ATIVADO
+##########################################################################
+
+# MOVIMENTO SUSPEITOS AREA PISCINA
+- alias: "Piscina (Alarme ON) - Movimento"
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.ext_piscina
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: armed_away
+  action:
+  - service: notify.telegramtodos
+    data:
+      message: "Movimento na área da piscina"
+  - service: camera.snapshot
+    data:
+      entity_id: camera.xiaofang
+      filename: '/tmp/xiaofang.jpg'
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - file: "/tmp/xiaofang.jpg"
+            caption: Area
+  - service: camera.snapshot
+    data:
+      entity_id: camera.camera_interna
+      filename: '/tmp/snapshot1a.jpg'
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - file: "/tmp/snapshot1a.jpg"
+            caption: Interna
+  - service: script.turn_on
+    entity_id: script.foto_cam
+
+# LIGA LUZ AREA PISCINA E POSTES SE MOVIMENTO COM ALARME ATIVADO
+- alias: "Piscina (Alarme ON) - Luz (Movimento)"
+  trigger:
+  - entity_id: binary_sensor.ext_piscina
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: armed_away
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - service: light.turn_on
+    data:
+      entity_id:
+        - light.area_da_piscina
+        - light.postes
+
+# DESLIGA LUZ AREA PISCINA E POSTES SE NAO TIVER MAIS MOVIMENTO
+- alias: "Piscina (Alarme ON) - Luz (S/Movimento)"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.ext_piscina
+    to: 'off'
+    for:
+      minutes: 2
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: armed_away
+  action:
+    service: light.turn_off
+    data:
+      entity_id:
+        - light.area_da_piscina
+        - light.postes
+
+# MOVIMENTO SUSPEITOS GARAGEM
+- alias: "Garagem (Alarme ON) - Movimento"
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.ext_garagem
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: armed_away
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.xiaofang
+      filename: '/tmp/xiaofang.jpg'
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - file: "/tmp/xiaofang.jpg"
+            caption: Area
+  - service: notify.telegramtodos
+    data:
+      message: "Movimento Garagem"
+  - service: camera.snapshot
+    data:
+      entity_id: camera.camera_interna
+      filename: '/tmp/snapshot1a.jpg'
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - file: "/tmp/snapshot1a.jpg"
+            caption: Interna
+  - service: script.turn_on
+    entity_id: script.foto_cam
+
+# LIGA LUZ GARAGEM E POSTES SE MOVIMENTO COM ALARME ATIVADO
+- alias: "Garagem (Alarme ON) - Luz (Movimento)"
+  trigger:
+  - entity_id: binary_sensor.ext_garagem
+    from: 'off'
+    platform: state
+    to: 'on'
+
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: armed_away
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - service: light.turn_on
+    data:
+      entity_id:
+        - light.garagem
+        - light.postes
+
+# DESLIGA LUZ GARAGEM E POSTES SE NAO TIVER MAIS MOVIMENTO
+- alias: "Garagem (Alarme ON) - Luz (S/Movimento)"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.ext_garagem
+    to: 'off'
+    for:
+      minutes: 2
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: armed_away
+  action:
+    service: light.turn_off
+    data:
+      entity_id:
+        - light.garagem
+        - light.postes
+
+
+#           _
+#     /\   | |
+#    /  \  | | __ _ _ __ _ __ ___   ___
+#   / /\ \ | |/ _` | '__| '_ ` _ \ / _ \
+#  / ____ \| | (_| | |  | | | | | |  __/
+# /_/    \_\_|\__,_|_|  |_| |_| |_|\___|
+
+
 - alias: "Alarme - Notif. quando for ativado"
-  hide_entity: false
-  initial_state: 'on'
   trigger:
   - platform: state
     entity_id: alarm_control_panel.alarme_da_casa
     to: armed_away
-  - platform: state
-    entity_id: alarm_control_panel.alarme_da_casa
-    to: armed_home
+#  - platform: state
+#    entity_id: alarm_control_panel.alarme_da_casa
+#    to: armed_home
   action:
   - service: script.turn_on
     entity_id: script.reseta_sensores
@@ -200,11 +1231,11 @@
   - service: notify.telegramtodos
     data:
       message: Alarme ativado {% if is_state('alarm_control_panel.alarme_da_casa',
-        'armed_away') %}com delay de 10s.{% else %}instantaneamente.{% endif %}
-  - service: media_player.volume_set
-    data_template:
-      entity_id: media_player.google_home
-      volume_level: 0.3
+        'armed_away') %}com delay de 30s.{% else %}instantaneamente.{% endif %}
+#  - service: media_player.volume_set
+#    data_template:
+#      entity_id: media_player.google_home
+#      volume_level: 0.3
   - service: media_player.volume_set
     data_template:
       entity_id: media_player.google_home_sala
@@ -213,39 +1244,39 @@
     data_template:
       entity_id: media_player.google_home_sala
       message: Alarme ativado
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Alarme ativado
+#  - service: tts.google_say
+#    data_template:
+#      entity_id: media_player.google_home
+#      message: Alarme ativado
   # Apaga todas as luzes
   - service: light.turn_off
     data:
       entity_id: group.all_lights
 
-- alias: "Alarme - Aviso ativando em 10s"
-  hide_entity: false
-  initial_state: 'on'
+- alias: "Alarme - Aviso ativando em 30s"
+  #hide_entity: false
+  #initial_state: on
   trigger:
   - platform: state
     entity_id: alarm_control_panel.alarme_da_casa
     to: pending
   action:
-  - service: media_player.volume_set
-    data_template:
-      entity_id: media_player.google_home
-      volume_level: 0.3
+#  - service: media_player.volume_set
+#    data_template:
+#      entity_id: media_player.google_home
+#      volume_level: 0.3
   - service: media_player.volume_set
     data_template:
       entity_id: media_player.google_home_sala
       volume_level: 0.8
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Ativando alarme em 10 segundos.
+#  - service: tts.google_say
+#    data_template:
+#      entity_id: media_player.google_home
+#      message: Ativando alarme em 30 segundos.
   - service: tts.google_say
     data_template:
       entity_id: media_player.google_home_sala
-      message: Ativando alarme em 10 segundos.
+      message: Ativando alarme em 30 segundos.
   - service: switch.turn_on
     data:
       entity_id: switch.sirenes
@@ -254,8 +1285,8 @@
       entity_id: switch.sirenes
 
 - alias: "Alarme - Aviso desativado"
-  hide_entity: false
-  initial_state: 'on'
+  #hide_entity: false
+  #initial_state: on
   trigger:
   - platform: state
     entity_id: alarm_control_panel.alarme_da_casa
@@ -270,10 +1301,10 @@
   - service: notify.telegramtodos
     data:
       message: Alarme desativado!
-  - service: media_player.volume_set
-    data_template:
-      entity_id: media_player.google_home
-      volume_level: 0.3
+#  - service: media_player.volume_set
+#    data_template:
+#      entity_id: media_player.google_home
+#      volume_level: 0.3
   - service: media_player.volume_set
     data_template:
       entity_id: media_player.google_home_sala
@@ -282,92 +1313,15 @@
     data_template:
       entity_id: media_player.google_home_sala
       message: Alarme desativado!
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Alarme desativado!
+#  - service: tts.google_say
+#    data_template:
+#      entity_id: media_player.google_home
+#      message: Alarme desativado!
 
-- alias: "Alarme - Disparar (Armado em casa)"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id:
-      - binary_sensor.sala_social
-      - binary_sensor.corredor
-      - binary_sensor.porta_varanda
-      - binary_sensor.porta_entrada
-      - binary_sensor.porta_area
-      - binary_sensor.janela_closet
-      - binary_sensor.janela_cozinha
-      - binary_sensor.janela_suite
-      - binary_sensor.janela_quarto_f
-      - binary_sensor.janela_quarto_m
-    to: 'on'
-  condition:
-  - condition: state
-    entity_id: alarm_control_panel.alarme_da_casa
-    state: armed_home
-  action:
-  # Liga sirenes
-  - service: switch.turn_on
-    data:
-      entity_id: switch.sirenes
-  # Liga todas as luzes
-  - service: light.turn_on
-    data:
-      entity_id:
-        - group.all_lights
-  - service: notify.telegramtodos
-    data:
-      message: Alarme disparou! (armed_home)
-  # Envia Mensagem com ql sensor
-  - service: notify.telegramtodos
-    data_template:
-      message: >
-        Sensor: {{ trigger.to_state.attributes.friendly_name }}
-  # Mensagem de audio nos google homes
-  - service: media_player.volume_set
-    data_template:
-      entity_id: media_player.google_home
-      volume_level: 0.5
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Sensor {{ trigger.to_state.attributes.friendly_name }} violado. Pega a 12 que o filho da puta vai levar chumbo!
-  - service: media_player.volume_set
-    data_template:
-      entity_id: media_player.google_home_sala
-      volume_level: 0.8
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home_sala
-      message: Sensor {{ trigger.to_state.attributes.friendly_name }} violado. Pega a 12 que o filho da puta vai levar chumbo!
-  # Captura imagens das cameras
-  - service: camera.snapshot
-    data:
-      entity_id: camera.camera_interna
-      filename: '/tmp/snapshot1a.jpg'
-  #- service: camera.snapshot
-    #data:
-      #entity_id: camera.wanscam_360
-      #filename: '/tmp/snapshot2a.jpg'
-  # Envia imagens capturadas
-  - service: notify.telegramtodos
-    data:
-      message: ""
-      data:
-        photo:
-          - file: "/tmp/snapshot1a.jpg"
-            caption: Interna
-          #- file: "/tmp/snapshot2a.jpg"
-          #  caption: Garagem
-  - service: script.turn_on
-    entity_id: script.foto_cam
 
-- alias: "Alarme - Disparar (Sem ninguém)"
-  hide_entity: false
-  initial_state: 'on'
+- alias: "Alarme - Disparar (armed_away)"
+  hide_entity: true
+  initial_state: on
   trigger:
   - platform: state
     entity_id:
@@ -444,8 +1398,8 @@
     entity_id: script.foto_cam
 
 - alias: "Alarme - Desliga sirene ao desativar"
-  hide_entity: false
-  initial_state: 'on'
+  initial_state: on
+  hide_entity: true
   trigger:
   - platform: state
     entity_id: alarm_control_panel.alarme_da_casa
@@ -453,594 +1407,46 @@
   action:
   - service: switch.turn_off
     data:
-      entity_id: switch.Sirenes
-
-#
-# CONTROLES DIGOO
-# ACOES
-
-# Controle 1
-- alias: Controle (1) - Armar
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c1_alarme
-    from: 'off'
-    to: 'on'
-  action:
-  - service: alarm_control_panel.alarm_arm_away
-    data:
-      entity_id: alarm_control_panel.alarme_da_casa
-      code: 123
-
-- alias: Controle (1) - Desarmar
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c1_alarme
-    from: 'on'
-    to: 'off'
-  action:
-  - service: alarm_control_panel.alarm_disarm
-    data:
-      entity_id: alarm_control_panel.alarme_da_casa
-      code: 123
-#  - service: mqtt.publish
-#    data:
-#      topic: "tele/sonoffBr1/RESULT"
-#      payload: "921052"
-#  - service: mqtt.publish
-#    data:
-#      topic: "tele/sonoffBr1/RESULT"
-#      payload: "77B0D2"
-
-# Controle 2
-- alias: Controle (2) - Armar
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c2_alarme
-    from: 'off'
-    to: 'on'
-  action:
-  - service: alarm_control_panel.alarm_arm_away
-    data:
-      entity_id: alarm_control_panel.alarme_da_casa
-      code: 123
-
-- alias: Controle (2) - Desarmar
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c2_alarme
-    from: 'on'
-    to: 'off'
-  action:
-  - service: alarm_control_panel.alarm_disarm
-    data:
-      entity_id: alarm_control_panel.alarme_da_casa
-      code: 123
-#  - service: mqtt.publish
-#    data:
-#      topic: "tele/sonoffBr1/RESULT"
-#      payload: "2970D2"
-#  - service: mqtt.publish
-#    data:
-#      topic: "tele/sonoffBr1/RESULT"
-#      payload: "921052"
-
-# Controle 3
-- alias: Controle (3) - Armar
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c3_alarme
-    from: 'off'
-    to: 'on'
-  action:
-  - service: alarm_control_panel.alarm_arm_away
-    data:
-      entity_id: alarm_control_panel.alarme_da_casa
-      code: 123
-
-- alias: Controle (3) - Desarmar
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c3_alarme
-    from: 'on'
-    to: 'off'
-  action:
-  - service: alarm_control_panel.alarm_disarm
-    data:
-      entity_id: alarm_control_panel.alarme_da_casa
-      code: 123
-#  - service: mqtt.publish
-#    data:
-#      topic: "tele/sonoffBr1/RESULT"
-#      payload: "2970D2"
-#  - service: mqtt.publish
-#    data:
-#      topic: "tele/sonoffBr1/RESULT"
-#      payload: "77B0D2"
-
-
-# Reseta botões Home/SOS Controle 1
-- alias: Controle (1) - Auto 1s Btn Home
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c1_home
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 1
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"2970D4off"}} '
-
-- alias: Controle (1) - Auto 1s Btn SOS
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c1_sos
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 1
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"2970D8off"}} '
-
-# Reseta botões Home/SOS Controle 2
-- alias: Controle (2) - Auto 1s Btn Home
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c2_home
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 1
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"921054off"}} '
-
-- alias: Controle (2) - Auto 1s Btn SOS
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c2_sos
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 1
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"921058off"}} '
-
-# Reseta botões Home/SOS Controle 3
-- alias: Controle (3) - Auto 1s Btn Home
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c3_home
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 1
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"77B0D4off"}} '
-
-- alias: Controle (3) - Auto 1s Btn SOS
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c3_sos
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 1
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"77B0D8off"}} '
-
-#
-# Ações Home/SOS Controles
-#
-# SOS
-- alias: Controle (1) - Btn SOS
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c1_sos
-    from: 'off'
-    to: 'on'
-  action:
-# ... programar algo ...
-  - service: notify.telegramrudi
-    data:
-      message: SOS!! Controle 1 está em perigo.
-  - service: switch.turn_on
-    data:
-      entity_id: switch.sonoff
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home
-      message: SOS!! Controle 1 está em perigo.
-
-- alias: Controle (2) - Btn SOS
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c2_sos
-    from: 'off'
-    to: 'on'
-  action:
-# ... programar algo ...
-  - service: notify.telegramrudi
-    data:
-      message: SOS!! Controle 2 está em perigo.
-  - service: switch.turn_on
-    data:
-      entity_id: switch.sonoff
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home
-      message: SOS!! Controle 2 está em perigo.
-
-- alias: Controle (3) - Btn SOS
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c3_sos
-    from: 'off'
-    to: 'on'
-  action:
-# ... programar algo ...
-  - service: notify.telegramrudi
-    data:
-      message: SOS!! Controle 3 está em perigo.
-  - service: switch.turn_on
-    data:
-      entity_id: switch.sonoff
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home
-      message: SOS!! Controle 3 está em perigo.
-
-# HOME
-- alias: Controle (1) - Btn Home
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c1_home
-    from: 'off'
-    to: 'on'
-  action:
-# ... programar algo ...
-  - service: notify.telegramrudi
-    data:
-      message: Botão home acionado no controle 1.
-  - service: switch.turn_on
-    data:
-      entity_id: switch.Suite
-  - service: tts.google_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Botão home acionado no controle 1.
-
-# Liga luz do abajur
-- alias: Controle (2) - Btn Home
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c2_home
-    from: 'off'
-    to: 'on'
-  action:
-  - service: light.turn_on
-    data:
-      entity_id: light.yeelight_rgb_7c49eb15924b
-# ... programar algo ...
-#  - service: notify.telegramrudi
-#    data:
-#      message: Botão home acionado no controle 2.
-#  - service: switch.turn_on
-#    data:
-#      entity_id: switch.Suite
-#  - service: tts.voicerss_say
-#    data_template:
-#      entity_id: media_player.google_home
-#      message: Botão home acionado no controle 2.
-
-- alias: Controle (3) - Bt Home (Liga abajur)
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c3_home
-    from: 'off'
-    to: 'on'
-  condition:
-    condition: state
-    entity_id: light.yeelight_rgb_7c49eb15924b
-    state: 'off'
-  action:
-  - service: light.turn_on
-    data:
-      entity_id: light.yeelight_rgb_7c49eb15924b
-      transition: 3
-
-- alias: Controle (3) - Bt Home (Desligar abajur)
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.c3_home
-    from: 'off'
-    to: 'on'
-  condition:
-    condition: state
-    entity_id: light.yeelight_rgb_7c49eb15924b
-    state: 'on'
-  action:
-  - service: light.turn_off
-    data:
-      entity_id: light.yeelight_rgb_7c49eb15924b
-      transition: 3
+      entity_id: switch.sirenes
 
 
 
-# ... programar algo ...
-#  - service: notify.telegramrudi
-#    data:
-#      message: Botão home acionado no controle 3.
-#  - service: switch.turn_on
-#    data:
-#      entity_id: switch.Suite
-#  - service: tts.voicerss_say
-#    data_template:
-#      entity_id: media_player.google_home
-#      message: Botão home acionado no controle 3.
-
-#
-# SENSORES FECHAMENTO AUTOMATICO
-#
-- alias: "FS.W Quarto M"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.janela_quarto_m
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"996D46off"}} '
-- alias: "FS.W Quarto F"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.janela_quarto_f
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"CD5B46off"}} '
-- alias: "FS.W Suite"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.janela_suite
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"B92D46off"}} '
-- alias: "FS.D Varanda"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.porta_varanda
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"5E6B46off"}} '
-- alias: "FS.W Cozinha"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.janela_cozinha
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"C41B46off"}} '
-- alias: "FS.P Sala Social"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.sala_social
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"9B5086off"}} '
-- alias: "FS.P Corredor"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.corredor
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"82C186off"}} '
-
-- alias: "FS.P Ext Piscina"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.ext_piscina
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"EE4986off"}} '
-- alias: "FS.P Ext Garagem"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.ext_garagem
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"AAC186off"}} '
-- alias: "FS.W Sala Jantar"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.sala_jantar
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"55A486off"}} '
-- alias: "FS.D Entrada"
-  hide_entity: true
-  initial_state: 'on'
+##########################################################################
+# DAR BOAS VINDAS AO ABRIR PORTA DA FRENTE (Melhorar essa ideia)
+##########################################################################
+- alias: "Porta entrada aberta"
+  initial_state: off
   trigger:
   - platform: state
     entity_id: binary_sensor.porta_entrada
     from: 'off'
     to: 'on'
-    for:
-      seconds: 2
   action:
-  - service: mqtt.publish
+  - service: tts.google_say
+    data_template:
+      entity_id: media_player.google_home
+      message: Seja bem vindo.
+  - delay:
+      milliseconds: 600
+  - service: camera.snapshot
     data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"2E9D46off"}} '
-- alias: "FS.W Closet"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.janela_closet
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
+      entity_id: camera.camera_interna
+      filename: '/tmp/snapshot.jpg'
+  - service: notify.telegramtodos
     data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"7F7D46off"}} '
-- alias: "FS.D Area"
-  hide_entity: true
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.porta_area
-    from: 'off'
-    to: 'on'
-    for:
-      seconds: 2
-  action:
-  - service: mqtt.publish
-    data:
-      topic: "tele/sonoffBr1/RESULT"
-      payload: ' {"RfReceived":{"Data":"09D8C6off"}} '
+      message: Capturado!
+      data:
+        photo:
+          - file: "/tmp/snapshot.jpg"
+            caption: Interna
 
 
-#
-# LUZES
-#
+##########################################################################
+# DESLIGA LUZES DOS BANHEIROS SE FICAR MUITO TEMPO LIGADA
+##########################################################################
 
+# BANHEIRO DA SUITE
 - alias: Luz Sem desligar - Banheiro Suite
-  hide_entity: false
   initial_state: true
   trigger:
     platform: state
@@ -1061,8 +1467,8 @@
       entity_id: media_player.google_home_sala
       message: "Oops! Desliguei a luz do banheiro da suíte. Estava ligada por muito tempo. Vamos poupar luz que aqui ninguém é dono da RGE."
 
+# BANHEIRO SOCIAL
 - alias: Luz Sem desligar - Banheiro Social
-  hide_entity: false
   initial_state: true
   trigger:
     platform: state
@@ -1083,8 +1489,8 @@
       entity_id: media_player.google_home_sala
       message: "Oops! Desliguei a luz do banheiro Social. Estava ligada por muito tempo. Vamos poupar luz que aqui ninguém é dono da RGE."
 
+# BANHEIRO LAVABO
 - alias: Luz Sem desligar - Lavabo
-  hide_entity: false
   initial_state: true
   trigger:
     platform: state
@@ -1105,8 +1511,13 @@
       entity_id: media_player.google_home_sala
       message: "Oops! Desliguei a luz do lavabo. Estava ligada por muito tempo. Vamos poupar luz que aqui ninguém é dono da RGE."
 
+
+##########################################################################
+# LUZ DO CORREDOR AUTO
+##########################################################################
+
+# LIGA SE TIVER MOVIMENTO
 - alias: Luz Corredor Liga - 18:30h as 07:30 (Movimento)
-  hide_entity: false
   initial_state: true
   trigger:
     platform: state
@@ -1121,8 +1532,8 @@
     service: light.turn_on
     entity_id: light.corredor
 
+# DESLIGA SE NAO TIVER MOVIMENTO POR 2MIN
 - alias: Luz Corredor Desliga - (S/Movimento 2min)
-  hide_entity: false
   initial_state: true
   trigger:
     platform: state
@@ -1138,39 +1549,13 @@
     service: light.turn_off
     entity_id: light.corredor
 
-- alias: "Luz Arandelas - Ligar"
-  hide_entity: false
-  initial_state: 'off'
-  trigger:
-    platform: template
-    value_template: '{{ states.sensor.time.state == states.sensor.anoiteceu.state }}'
-  condition:
-  action:
-  - service: light.turn_on
-    data:
-      entity_id:
-        - light.arandelas
-        - light.arandelas_da_varanda
 
 
-- alias: "Luz Arandelas - Desligar"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-#    - platform: time
-#      at: '23:00:00'
-    platform: template
-    value_template: "{{ states('sensor.time') == (states.input_datetime.arandelas_off.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
-  action:
-  - service: light.turn_off
-    data:
-      entity_id:
-        - light.arandelas
-        - light.arandelas_da_varanda
+##########################################################################
+# LUZ POSTES E ARANDELAS LIGAM AUTO
+##########################################################################
 
 - alias: "Luz Postes - Ligar"
-  hide_entity: false
-  initial_state: 'on'
   trigger:
     platform: template
     value_template: '{{ states.sensor.time.state == states.sensor.anoiteceu.state }}'
@@ -1182,8 +1567,6 @@
         - light.postes
 
 - alias: "Luz Postes - Desligar"
-  hide_entity: false
-  initial_state: 'on'
   trigger:
     platform: template
     value_template: "{{ states('sensor.time') == (states.input_datetime.poste_off.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1193,290 +1576,143 @@
       entity_id:
         - light.postes
 
-
-# MOVIMENTO SUSPEITOS COM ALARME ATIVO
-
-- alias: "Piscina (Alarme ON) - Movimento"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.ext_piscina
-    from: 'off'
-    to: 'on'
-  condition:
-  - condition: state
-    entity_id: alarm_control_panel.alarme_da_casa
-    state: armed_away
-  action:
-  # Envia Mensagem
-  - service: notify.telegramtodos
-    data:
-      message: "Movimento na área da piscina"
-  # Captura imagens das cameras
-  - service: camera.snapshot
-    data:
-      entity_id: camera.camera_interna
-      filename: '/tmp/snapshot1a.jpg'
-  #- service: camera.snapshot
-    #data:
-      #entity_id: camera.wanscam_360
-      #filename: '/tmp/snapshot2a.jpg'
-  # Envia imagens
-  - service: notify.telegramtodos
-    data:
-      message: ""
-      data:
-        photo:
-          - file: "/tmp/snapshot1a.jpg"
-            caption: Interna
-          #- file: "/tmp/snapshot2a.jpg"
-            #caption: Garagem
-  - service: script.turn_on
-    entity_id: script.foto_cam
-
-# Liga a luz se alarme ativado a noite (Garagem)
-- alias: "Piscina (Alarme ON) - Luz (Movimento)"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-  - entity_id: binary_sensor.ext_piscina
-    from: 'off'
-    platform: state
-    to: 'on'
-  condition:
-  # Alarme ativo
-  - condition: state
-    entity_id: alarm_control_panel.alarme_da_casa
-    state: armed_away
-  - before: sunset
-    condition: sun
-  action:
-  - service: light.turn_on
-    data:
-      entity_id:
-        - light.area_da_piscina
-        - light.postes
-
-# Desliga a luz se nao tiver movimento com alarme ativo
-- alias: "Piscina (Alarme ON) - Luz (S/Movimento)"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ext_piscina
-    to: 'off'
-    for:
-      minutes: 2
-  condition:
-  - condition: state
-    entity_id: alarm_control_panel.alarme_da_casa
-    state: armed_away
-  action:
-    service: light.turn_off
-    data:
-      entity_id:
-        - light.area_da_piscina
-        - light.postes
-
-
-# Movimento Garagem
-- alias: "Garagem (Alarme ON) - Movimento"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.ext_garagem
-    from: 'off'
-    to: 'on'
-  condition:
-  - condition: state
-    entity_id: alarm_control_panel.alarme_da_casa
-    state: armed_away
-  action:
-  # Envia Mensagem
-  - service: notify.telegramtodos
-    data:
-      message: "Movimento Garagem"
-  # Captura imagens das cameras
-  - service: camera.snapshot
-    data:
-      entity_id: camera.camera_interna
-      filename: '/tmp/snapshot1a.jpg'
-  #- service: camera.snapshot
-    #data:
-      #entity_id: camera.wanscam_360
-      #filename: '/tmp/snapshot2a.jpg'
-  # Envia imagens
-  - service: notify.telegramtodos
-    data:
-      message: ""
-      data:
-        photo:
-          - file: "/tmp/snapshot1a.jpg"
-            caption: Interna
-          #- file: "/tmp/snapshot2a.jpg"
-          #  caption: Garagem
-  - service: script.turn_on
-    entity_id: script.foto_cam
-
-# Liga a luz se alarme ativado a noite (Garagem)
-- alias: "Garagem (Alarme ON) - Luz (Movimento)"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-  - entity_id: binary_sensor.ext_garagem
-    from: 'off'
-    platform: state
-    to: 'on'
-  condition:
-  # Alarme ativo
-  - condition: state
-    entity_id: alarm_control_panel.alarme_da_casa
-    state: armed_away
-  - before: sunset
-    condition: sun
-  action:
-  - service: light.turn_on
-    data:
-      entity_id:
-        - light.garagem
-        - light.postes
-
-# Desliga a luz se nao tiver movimento com alarme ativo
-- alias: "Garagem (Alarme ON) - Luz (S/Movimento)"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ext_garagem
-    to: 'off'
-    for:
-      minutes: 2
-  condition:
-  - condition: state
-    entity_id: alarm_control_panel.alarme_da_casa
-    state: armed_away
-  action:
-    service: light.turn_off
-    data:
-      entity_id:
-        - light.garagem
-        - light.postes
-
-
-# MOVIMENTOS EXTERNOS ALARME DESATIVADO/OFF.
-
-- alias: "Piscina (Alarme OFF) - Movimento"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.ext_piscina
-    from: 'off'
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: alarm_control_panel.alarme_da_casa
-        state: disarmed
-      - condition: or
-        # Não ter ninguem em casa
-        conditions:
-          - condition: state
-            entity_id: group.all_devices
-            state: 'not_home'
-          - condition: state
-            entity_id: group.all_devices
-            state: 'unknown'
-  action:
-  # Envia Mensagem
-  - service: notify.telegramtodos
-    data:
-      message: "Movimento na área da piscina"
-  # Captura imagens das cameras
-  - service: camera.snapshot
-    data:
-      entity_id: camera.camera_interna
-      filename: '/tmp/snapshot1a.jpg'
-  # Envia imagens
-  - service: notify.telegramtodos
-    data:
-      message: ""
-      data:
-        photo:
-          - file: "/tmp/snapshot1a.jpg"
-            caption: Interna
-  - service: script.turn_on
-    entity_id: script.foto_cam
-
-- alias: "Garagem (Alarme OFF) - Movimento"
-  hide_entity: false
-  initial_state: 'on'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.ext_garagem
-    from: 'off'
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: alarm_control_panel.alarme_da_casa
-        state: disarmed
-      - condition: or
-        # Não ter ninguem em casa
-        conditions:
-          - condition: state
-            entity_id: group.all_devices
-            state: 'not_home'
-          - condition: state
-            entity_id: group.all_devices
-            state: 'unknown'
-  action:
-  # Envia Mensagem
-  - service: notify.telegramtodos
-    data:
-      message: "Movimento na garagem"
-  - service: camera.snapshot
-    data:
-      entity_id: camera.camera_interna
-      filename: '/tmp/snapshot2b.jpg'
-  # Envia imagens
-  - service: script.turn_on
-    entity_id: script.foto_cam
-  - service: notify.telegramtodos
-    data:
-      message: ""
-      data:
-        photo:
-          - file: "/tmp/snapshot2b.jpg"
-            caption: Interna
-
-
-- alias: "Alarme - Testar Sensores"
-  hide_entity: false
+- alias: "Luz Arandelas - Ligar"
   initial_state: off
   trigger:
-  - platform: state
-    entity_id:
-      - binary_sensor.sala_social
-      - binary_sensor.sala_jantar
-      - binary_sensor.corredor
-      - binary_sensor.ext_garagem
-      - binary_sensor.ext_piscina
-      - binary_sensor.porta_varanda
-      - binary_sensor.porta_entrada
-      - binary_sensor.porta_area
-      - binary_sensor.janela_closet
-      - binary_sensor.janela_cozinha
-      - binary_sensor.janela_suite
-      - binary_sensor.janela_quarto_f
-      - binary_sensor.janela_quarto_m
+    platform: template
+    value_template: '{{ states.sensor.time.state == states.sensor.anoiteceu.state }}'
+  condition:
+  action:
+  - service: light.turn_on
+    data:
+      entity_id:
+        - light.arandelas
+        - light.arandelas_da_varanda
+
+- alias: "Luz Arandelas - Desligar"
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (states.input_datetime.arandelas_off.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  action:
+  - service: light.turn_off
+    data:
+      entity_id:
+        - light.arandelas
+        - light.arandelas_da_varanda
+
+
+##########################################################################
+# REGRAS QUANDO SILVIO ESTIVER EM CASA
+##########################################################################
+
+# LIGA LUZES E DESATIVA ALARME
+- alias: "Silvio - Acordar"
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (states.input_datetime.silvio_on.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+#  condition:
+#    condition: state
+#    entity_id: binary_sensor.silvio
+#    state: 'on'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id:
+        - light.quarto_da_frente
+        - light.pendentes
+        - light.postes
+  - service: switch.turn_off
+    data:
+      entity_id: switch.seguranca_casa
+
+# DESLIGA LUZES E ATIVA ALARME
+- alias: "Silvio - Saiu"
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.time') == (states.input_datetime.silvio_off.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: group.all_lights
+  - service: switch.turn_on
+    data:
+      entity_id: switch.seguranca_casa
+
+# VERIFICA SE O SILVIO ESTA CONECTADO NA REDE
+- alias: "Silvio - Desconectado"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.silvio
+    to: 'off'
+  action:
+  - service: notify.telegramtodos
+    data_template:
+      message: "Celular Silvio: [OFF]"
+- alias: "Silvio - Conectado"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.silvio
     to: 'on'
   action:
-  - service: notify.telegramrudi
+  - service: notify.telegramtodos
     data_template:
-      message: >
-        [OK] : {{ trigger.to_state.attributes.friendly_name }}
+      message: "Celular Silvio: [ON]"
+
+##########################################################################
+# TESTE CAMERA XIAOFANG
+##########################################################################
+
+- alias: 'Motion detected'
+  trigger:
+    payload: 'ON'
+    platform: mqtt
+    topic: cam/xiaofang/motion
+  action:
+    service: notify.telegramrudi
+    data:
+      title: "Motion xiaofang"
+      message: "detected xiaofang."
+
+
+
+##########################################################################
+# SALVO
+##########################################################################
+
+#- alias: "99-Liga Garagem 20:30h"
+#  initial_state: off
+#  #hide_entity: false
+#  trigger:
+#    - platform: time
+#      at: '20:30:00'
+#  condition:
+#    condition: time
+#    weekday:
+#      - mon
+#      - tue
+#      - wed
+#      - thu
+#      - fri
+#  action:
+#  - service: light.turn_on
+#    data:
+#      entity_id: light.garagem
+
+#- alias: "99-Desliga Garagem 5:30h"
+#  initial_state: off
+#  #hide_entity: false
+#  trigger:
+#    - platform: time
+#      at: '05:30:00'
+#  condition:
+#    condition: time
+#    weekday:
+#      - mon
+#      - tue
+#      - wed
+#      - thu
+#      - fri
+#  action:
+#  - service: light.turn_off
+#    data:
+#      entity_id: light.garagem

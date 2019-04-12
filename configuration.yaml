@@ -1,9 +1,16 @@
+#  _    _                                         _     _              _
+# | |  | |                          /\           (_)   | |            | |
+# | |__| | ___  _ __ ___   ___     /  \   ___ ___ _ ___| |_ __ _ _ __ | |_
+# |  __  |/ _ \| '_ ` _ \ / _ \   / /\ \ / __/ __| / __| __/ _` | '_ \| __|
+# | |  | | (_) | | | | | |  __/  / ____ \\__ \__ \ \__ \ || (_| | | | | |_
+# |_|  |_|\___/|_| |_| |_|\___| /_/    \_\___/___/_|___/\__\__,_|_| |_|\__|
+#
 homeassistant:
   # Nome do local onde o Home Assistant está sendo executado
   name: Home
   # Localização necessária para calcular a hora em que o sol nasce e se põe
-  latitude: -00.000000
-  longitude: -00.000000
+  latitude: !secret lat
+  longitude: !secret long
   # Impactos meteorológicos / dados do nascer do sol (altitude acima do nível do mar em metros)
   elevation: 0
   # metric para Metric, imperial para Imperial
@@ -20,88 +27,195 @@ homeassistant:
     - /tmp
     - /config
 
-# Pessoa
+
+#  _____
+# |  __ \
+# | |__) |__ _ __ ___  ___  _ __
+# |  ___/ _ \ '__/ __|/ _ \| '_ \
+# | |  |  __/ |  \__ \ (_) | | | |
+# |_|   \___|_|  |___/\___/|_| |_|
+#
 person:
   - name: Rudi
     id: 3nfr8CXF
     device_trackers:
-      - device_tracker.google_maps_xxx
+      - device_tracker.google_maps_123
   - name: Flavia
     id: nucnTHSG
     device_trackers:
-      - device_tracker.google_maps_yyy
+      - device_tracker.google_maps_321
 
 # Zonas de localização
+#  ______
+# |___  /
+#    / / ___  _ __   ___
+#   / / / _ \| '_ \ / _ \
+#  / /_| (_) | | | |  __/
+# /_____\___/|_| |_|\___|
+#
 zone:
   - name: "SpeedRS"
-    latitude: -00.000000
-    longitude: -00.000000
+    latitude: !secret speed_lat
+    longitude: !secret speed_long
     radius: 100
     icon: mdi:briefcase
   - name: "Backbone"
-    latitude: -00.000000
-    longitude: -00.000000
+    latitude: !secret back_latitude
+    longitude: !secret back_longitude
     radius: 100
     icon: mdi:briefcase
   - name: "Maria João"
-    latitude: -00.000000
-    longitude: -00.000000
+    latitude: !secret mj_latitude
+    longitude: !secret mj_longitude
     radius: 100
     icon: mdi:briefcase
   - name: Castelinho
-    latitude: -00.000000
-    longitude: -00.000000
+    latitude: !secret cas_latitude
+    longitude: !secret cas_longitude
     radius: 400
     icon: mdi:home-variant
 
-# Cenas
+# Cenas (teste)
+#   _____
+#  / ____|
+# | (___   ___ ___ _ __   ___
+#  \___ \ / __/ _ \ '_ \ / _ \
+#  ____) | (_|  __/ | | |  __/
+# |_____/ \___\___|_| |_|\___|
+#
 scene:
   - name: "Suíte Romantica"
     entities:
-      light.yeelight_rgb_7c49eb15924b:
+      light.yeelight_color1_7c49eb15924b:
         state: true
         rgb_color: [255, 0, 255]
         brightness: 255
 
-# Mostrar links para recursos no log e frontend
-#introduction:
-
 # Enables the frontend
+#  ______               _                 _
+# |  ____|             | |               | |
+# | |__ _ __ ___  _ __ | |_ ___ _ __   __| |
+# |  __| '__/ _ \| '_ \| __/ _ \ '_ \ / _` |
+# | |  | | | (_) | | | | ||  __/ | | | (_| |
+# |_|  |_|  \___/|_| |_|\__\___|_| |_|\__,_|
+#
 frontend:
   themes: !include themes.yaml
+#  themes: !include_dir_merge_named themes/
+
+
+#  _____                 _   _____  __
+# |  __ \               | | |_   _|/ _|
+# | |__) |_ _ _ __   ___| |   | | | |_ _ __ __ _ _ __ ___   ___
+# |  ___/ _` | '_ \ / _ \ |   | | |  _| '__/ _` | '_ ` _ \ / _ \
+# | |  | (_| | | | |  __/ |  _| |_| | | | | (_| | | | | | |  __/
+# |_|   \__,_|_| |_|\___|_| |_____|_| |_|  \__,_|_| |_| |_|\___|
+#
+#panel_iframe:
+#  tasmotaadm:
+#    title: Tasmota ADM
+#    url: http://100.64.0.5:9541
+#    icon: mdi:pulse
+#  configurator:
+#    title: Editor
+#    icon: mdi:wrench
+#    url: http://100.64.0.5:3218
 
 # Enables configuration UI
+#   _____             __ _
+#  / ____|           / _(_)
+# | |     ___  _ __ | |_ _  __ _
+# | |    / _ \| '_ \|  _| |/ _` |
+# | |___| (_) | | | | | | | (_| |
+#  \_____\___/|_| |_|_| |_|\__, |
+#                           __/ |
+#                          |___/
 config:
 
 # Armazenamento do Banco de dados
+#  _____                        _
+# |  __ \                      | |
+# | |__) |___  ___ ___  _ __ __| | ___ _ __
+# |  _  // _ \/ __/ _ \| '__/ _` |/ _ \ '__|
+# | | \ \  __/ (_| (_) | | | (_| |  __/ |
+# |_|  \_\___|\___\___/|_|  \__,_|\___|_|
+#
 recorder:
-  purge_keep_days: 15
+  purge_keep_days: 3
   db_url: !secret maria_db
 #  purge_keep_days: 7
 
-# Segredos são definidos no arquivo secrets.yaml
+#  _    _ _   _
+# | |  | | | | |
+# | |__| | |_| |_ _ __
+# |  __  | __| __| '_ \
+# | |  | | |_| |_| |_) |
+# |_|  |_|\__|\__| .__/
+#                | |
+#                |_|
 http:
   #server_port: 55123
   base_url: !secret url_base
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
+  ip_ban_enabled: true
+  login_attempts_threshold: 3
+# Segredos são definidos no arquivo secrets.yaml
 
+
+#  _    _           _       _
+# | |  | |         | |     | |
+# | |  | |_ __   __| | __ _| |_ ___ _ __
+# | |  | | '_ \ / _` |/ _` | __/ _ \ '__|
+# | |__| | |_) | (_| | (_| | ||  __/ |
+#  \____/| .__/ \__,_|\__,_|\__\___|_|
+#        | |
+#        |_|
 updater:
   # Opcional, permite que os desenvolvedores do Home Assistant se concentrem em componentes populares.
   # include_used_components: true
 
 # Custom updater (https://github.com/custom-components/custom_updater/wiki/Installation)
+#   _____          _                                    _       _
+#  / ____|        | |                                  | |     | |
+# | |    _   _ ___| |_ ___  _ __ ___    _   _ _ __   __| | __ _| |_ ___ _ __
+# | |   | | | / __| __/ _ \| '_ ` _ \  | | | | '_ \ / _` |/ _` | __/ _ \ '__|
+# | |___| |_| \__ \ || (_) | | | | | | | |_| | |_) | (_| | (_| | ||  __/ |
+#  \_____\__,_|___/\__\___/|_| |_| |_|  \__,_| .__/ \__,_|\__,_|\__\___|_|
+#                                            | |
+#                                            |_|
 #custom_updater:
 #  component_urls:
 #    - https://raw.githubusercontent.com/vpnmaster/homeassistant-custom-components/master/custom_components.json
 
 # Descubra alguns dispositivos automaticamente
+#  _____  _
+# |  __ \(_)
+# | |  | |_ ___  ___ _____   _____ _ __ _   _
+# | |  | | / __|/ __/ _ \ \ / / _ \ '__| | | |
+# | |__| | \__ \ (_| (_) \ V /  __/ |  | |_| |
+# |_____/|_|___/\___\___/ \_/ \___|_|   \__, |
+#                                        __/ |
+#                                       |___/
 discovery:
 
 # Permite que você emita comandos de voz do frontend em navegadores ativados
+#   _____                                    _   _
+#  / ____|                                  | | (_)
+# | |     ___  _ ____   _____ _ __ ___  __ _| |_ _  ___  _ __
+# | |    / _ \| '_ \ \ / / _ \ '__/ __|/ _` | __| |/ _ \| '_ \
+# | |___| (_) | | | \ V /  __/ |  \__ \ (_| | |_| | (_) | | | |
+#  \_____\___/|_| |_|\_/ \___|_|  |___/\__,_|\__|_|\___/|_| |_|
 conversation:
 
 # Suporte para rastrear mudanças de estado ao longo do tempo
+#  _    _ _     _
+# | |  | (_)   | |
+# | |__| |_ ___| |_ ___  _ __ _   _
+# |  __  | / __| __/ _ \| '__| | | |
+# | |  | | \__ \ || (_) | |  | |_| |
+# |_|  |_|_|___/\__\___/|_|   \__, |
+#                             |___/
 history:
   exclude:
     domains:
@@ -113,6 +227,12 @@ history:
       - sensor.date
 
 # Ver todos os eventos em um diário de bordo
+#  _                 _                 _
+# | |     ___   __ _| |__   ___   ___ | | __
+# | |    / _ \ / _` | '_ \ / _ \ / _ \| |/ /
+# | |___| (_) | (_| | |_) | (_) | (_) |   <
+# |______\___/ \__, |_.__/ \___/ \___/|_|\_\
+#              |___/
 logbook:
   include:
     domains:
@@ -125,6 +245,12 @@ logbook:
       - sensor.date
 
 # Nível de registro de atividades
+#  _
+# | |     ___   __ _  __ _  ___ _ __
+# | |    / _ \ / _` |/ _` |/ _ \ '__|
+# | |___| (_) | (_| | (_| |  __/ |
+# |______\___/ \__, |\__, |\___|_|
+#              |___/ |___/
 logger:
   default: warning
 #  logs:
@@ -136,33 +262,67 @@ logger:
 #    homeassistant.components.mqtt: critical
 #    #critical#fatal#error#warning#warn#info#debug#notset
 
-# Text to speech
+# Texto em voz
+#  _   _
+# | | | |
+# | |_| |_ ___
+# | __| __/ __|
+# | |_| |_\__ \
+#  \__|\__|___/
 tts:
   - platform: google
     language: 'pt-br'
     cache: true
     cache_dir: /tmp/tts
     time_memory: 300
-    #base_url: !secret url_base
   - platform: voicerss
     api_key: !secret voicerss_key
     language: 'pt-br'
     format: '44khz_16bit_stereo'
     # http://www.voicerss.org/personel/statistic.aspx
 
-# Cloud
-cloud:
+#   _____ _                 _
+#  / ____| |               | |
+# | |    | | ___  _   _  __| |
+# | |    | |/ _ \| | | |/ _` |
+# | |____| | (_) | |_| | (_| |
+#  \_____|_|\___/ \__,_|\__,_|
+#
+#cloud:
 
 # Localizador
+#  _____             _            _                  _
+# |  __ \           (_)          | |                | |
+# | |  | | _____   ___  ___ ___  | |_ _ __ __ _  ___| | _____ _ __
+# | |  | |/ _ \ \ / / |/ __/ _ \ | __| '__/ _` |/ __| |/ / _ \ '__|
+# | |__| |  __/\ V /| | (_|  __/ | |_| | | (_| | (__|   <  __/ |
+# |_____/ \___| \_/ |_|\___\___|  \__|_|  \__,_|\___|_|\_\___|_|
 device_tracker:
   - platform: google_maps
     username: !secret gmail_user
     password: !secret gmail_senha
+#  - platform: ping
+#    name: Silvio
+#    hosts:
+#      hostone: 100.64.0.14
 
-# Player
+# Extrair fluxo de audio (ex youtube)
+#  __  __          _ _         ______      _                  _
+# |  \/  |        | (_)       |  ____|    | |                | |
+# | \  / | ___  __| |_  __ _  | |__  __  _| |_ _ __ __ _  ___| |_ ___  _ __
+# | |\/| |/ _ \/ _` | |/ _` | |  __| \ \/ / __| '__/ _` |/ __| __/ _ \| '__|
+# | |  | |  __/ (_| | | (_| | | |____ >  <| |_| | | (_| | (__| || (_) | |
+# |_|  |_|\___|\__,_|_|\__,_| |______/_/\_\\__|_|  \__,_|\___|\__\___/|_|
 media_extractor:
 
 # Media Players
+#  __  __          _ _         _____  _
+# |  \/  |        | (_)       |  __ \| |
+# | \  / | ___  __| |_  __ _  | |__) | | __ _ _   _  ___ _ __
+# | |\/| |/ _ \/ _` | |/ _` | |  ___/| |/ _` | | | |/ _ \ '__|
+# | |  | |  __/ (_| | | (_| | | |    | | (_| | |_| |  __/ |
+# |_|  |_|\___|\__,_|_|\__,_| |_|    |_|\__,_|\__, |\___|_|
+#                                             |___/
 media_player:
   - platform: spotify
     client_id: !secret spotify_client_id
@@ -170,7 +330,7 @@ media_player:
   - platform: lg_netcast
     name: "LG Smart TV"
     host: 100.64.0.15
-    access_token: 123456
+    access_token: 431855
 #  - platform: smartir
 #    name: TV do Quarto
 #    device_code: 9000
@@ -178,7 +338,13 @@ media_player:
 #    power_sensor: binary_sensor.chrome_cast_quarto
 
 
-# Casts
+# Casts (google home mini/chrome cast)
+#   _____          _
+#  / ____|        | |
+# | |     __ _ ___| |_
+# | |    / _` / __| __|
+# | |___| (_| \__ \ |_
+#  \_____\__,_|___/\__|
 cast:
   media_player:
   - host: 100.64.0.20
@@ -187,20 +353,50 @@ cast:
   - host: 100.64.0.19
 
 # Mosquito
+#  __  __       _   _
+# |  \/  |     | | | |
+# | \  / | __ _| |_| |_
+# | |\/| |/ _` | __| __|
+# | |  | | (_| | |_| |_
+# |_|  |_|\__, |\__|\__|
+#            |_|
 mqtt:
-   broker: core-mosquitto
-   username: !secret mqtt_username
-   password: !secret mqtt_password
-#  discovery: true
-#  discovery_prefix: homeassistant
+  broker: 100.100.0.3
+  port: 1883
+  client_id: home-assistant-1
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  discovery: true
+  discovery_prefix: homeassistant
+
 
 # Mostrando a localização de dispositivos rastreados no mapa
+#  __  __
+# |  \/  |
+# | \  / | __ _ _ __
+# | |\/| |/ _` | '_ \
+# | |  | | (_| | |_) |
+# |_|  |_|\__,_| .__/
+#              | |
+#              |_|
 map:
 
 # Acompanhe o sol
+#   _____
+#  / ____|
+# | (___  _   _ _ __
+#  \___ \| | | | '_ \
+#  ____) | |_| | | | |
+# |_____/ \__,_|_| |_|
 sun:
 
 # Sensores
+#   _____
+#  / ____|
+# | (___   ___ _ __  ___  ___  _ __
+#  \___ \ / _ \ '_ \/ __|/ _ \| '__|
+#  ____) |  __/ | | \__ \ (_) | |
+# |_____/ \___|_| |_|___/\___/|_|
 sensor:
   - platform: mqtt
     name: "Suite Temperatura"
@@ -270,6 +466,9 @@ sensor:
       - type: memory_use_percent
       - type: processor_use
       - type: last_boot
+# - platform: filesize
+#   file_paths:
+#     - /config/home-assistant_v2.db
   - platform: sql
     db_url: !secret maria_db
     queries:
@@ -323,18 +522,18 @@ sensor:
       bateria_rudi:
         friendly_name: Bateria Rudi
         unit_of_measurement: '%'
-        value_template:  '{{ states.device_tracker.google_maps_106566341309199592438.attributes.battery_level|int }}'
+        value_template:  '{{ states.device_tracker.google_maps_123.attributes.battery_level|int }}'
         device_class: battery
       bateria_rudi_st:
-        value_template:  '{{ states.device_tracker.google_maps_106566341309199592438.attributes.battery_charging }}'
+        value_template:  '{{ states.device_tracker.google_maps_123.attributes.battery_charging }}'
         device_class: battery
       bateria_flavia:
         friendly_name: Bateria Flavia
         unit_of_measurement: "%"
-        value_template:  '{{ states.device_tracker.google_maps_118429201781082195315.attributes.battery_level|int }}'
+        value_template:  '{{ states.device_tracker.google_maps_321.attributes.battery_level|int }}'
         device_class: battery
       bateria_flavia_st:
-        value_template:  '{{ states.device_tracker.google_maps_118429201781082195315.attributes.battery_charging }}'
+        value_template:  '{{ states.device_tracker.google_maps_321.attributes.battery_charging }}'
         device_class: battery
       bateria_status_rudi:
         friendly_name: Status Bateria Rudi
@@ -378,20 +577,77 @@ sensor:
           {% else %}
             mdi:thumb-down-outline
           {% endif %}
+#  - platform: snmp
+#    name: Upload
+#    host: 100.100.0.1
+#    community: publicremontti
+#    baseoid: 1.3.6.1.2.1.31.1.1.1.10.1
+#    unit_of_measurement: 'bps'
+#  - platform: snmp
+#    name: Download
+#    host: 100.100.0.1
+#    community: publicremontti
+#    baseoid: 1.3.6.1.2.1.31.1.1.1.6.1
+#    unit_of_measurement: 'bps'
+#  - platform: template
+#    sensors:
+#      garagem_kw:
+#        friendly_name: "Garagem kWh"
+#        unit_of_measurement: 'kW/h'
+#        value_template: "{{ (((75) * float(states.sensor.garagem_on.state)) / 1000) | round(3) }}"
+#      abajur_kw:
+#        friendly_name: "Abajur kWh"
+#        unit_of_measurement: 'kW/h'
+#        value_template: "{{ (((9) * float(states.sensor.abajur_on.state)) / 1000) | round(3) }}"
+#  - platform: template
+#    sensors:
+#      garagem_rs:
+#        friendly_name: "Garagem R$"
+#        unit_of_measurement: 'R$'
+#        value_template: "{{ ((((75) * float(states.sensor.garagem_on.state)) / 1000) * float(states.input_text.text_valor_kwh.state)) | round(2) }}"
+#      abajur_rs:
+#        friendly_name: "Abajur R$"
+#        unit_of_measurement: 'kW/h'
+#        value_template: "{{ ((((9) * float(states.sensor.abajur_on.state)) / 1000) * float(states.input_text.text_valor_kwh.state)) | round(2) }}"
 
 
 # Binary Sensor
+#  ____  _                           _____
+# |  _ \(_)                         / ____
+# | |_) |_ _ __   __ _ _ __ _   _  | (___   ___ _ __  ___  ___  _ __
+# |  _ <| | '_ \ / _` | '__| | | |  \___ \ / _ \ '_ \/ __|/ _ \| '__|
+# | |_) | | | | | (_| | |  | |_| |  ____) |  __/ | | \__ \ (_) | |
+# |____/|_|_| |_|\__,_|_|   \__, | |_____/ \___|_| |_|___/\___/|_|
+#                           |___/
 binary_sensor:
   # DIA DE TRABALHO
   - platform: workday
     country: BR
     name: Trabalhando
 
+# DrZzs
+#  - platform: mqtt
+#    name: "Office Book"
+#    state_topic: "tele/RF_Bridge/RESULT"
+#    value_template: '{{value_json.RfReceived.Data}}'
+#    payload_on: "C7C2A1"
+#    payload_off: "C7C2A19off"
+#    qos: 1
+#    retain: false
+
   # CONTROLE DIGOO 1
   - platform: mqtt
-    name: C1 Alarme
+    name: C1 Armar
     payload_on: "2970D1"
-    payload_off: "2970D2"
+    payload_off: "2970D1off"
+    device_class: power
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: C1 Desarmar
+    payload_on: "2970D2"
+    payload_off: "2970D2off"
     device_class: power
     state_topic: "tele/sonoffBr1/RESULT"
     value_template: "{{ value_json.RfReceived.Data }}"
@@ -408,15 +664,23 @@ binary_sensor:
     name: C1 SOS
     payload_on: "2970D8"
     payload_off: "2970D8off"
-    device_class: vibration
+    device_class: opening
     state_topic: "tele/sonoffBr1/RESULT"
     value_template: "{{ value_json.RfReceived.Data }}"
     qos: 1
   # CONTROLE DIGOO 2
   - platform: mqtt
-    name: C2 Alarme
+    name: C2 Armar
     payload_on: "921051"
-    payload_off: "921052"
+    payload_off: "921051off"
+    device_class: power
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: C2 Desarmar
+    payload_on: "921052"
+    payload_off: "921052off"
     device_class: power
     state_topic: "tele/sonoffBr1/RESULT"
     value_template: "{{ value_json.RfReceived.Data }}"
@@ -439,9 +703,17 @@ binary_sensor:
     qos: 1
   # CONTROLE DIGOO 3
   - platform: mqtt
-    name: C3 Alarme
+    name: C3 Armar
     payload_on: "77B0D1"
-    payload_off: "77B0D2"
+    payload_off: "77B0D1off"
+    device_class: power
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: "{{ value_json.RfReceived.Data }}"
+    qos: 1
+  - platform: mqtt
+    name: C3 Desarmar
+    payload_on: "77B0D2"
+    payload_off: "77B0D2off"
     device_class: power
     state_topic: "tele/sonoffBr1/RESULT"
     value_template: "{{ value_json.RfReceived.Data }}"
@@ -568,7 +840,6 @@ binary_sensor:
     state_topic: "tele/sonoffBr1/RESULT"
     value_template: "{{ value_json.RfReceived.Data }}"
     qos: 1
-
   # PINGs
   - platform: ping
     host: 100.64.0.1
@@ -614,13 +885,19 @@ binary_sensor:
     name: WCam360
 #    count: 5
 #    scan_interval: 240
+  - platform: ping
+    host: 100.64.0.14
+    name: Silvio
 
 # Luzes
+#  _      _       _     _
+# | |    (_)     | |   | |
+# | |     _  __ _| |__ | |_
+# | |    | |/ _` | '_ \| __|
+# | |____| | (_| | | | | |_
+# |______|_|\__, |_| |_|\__|
+#           |___/
 light:
-#  - platform: yeelight
-#    devices:
-#      100.64.0.70:
-#        name: "Luz do Abajur"
   - platform: flux_led
     devices:
       100.64.0.46:
@@ -933,8 +1210,20 @@ light:
     payload_on: "ON"
     payload_off: "OFF"
     retain: true
+#  Auto detectado
+#  - platform: yeelight
+#    devices:
+#      100.64.0.70:
+#        name: "Abajur"
+
 
 # Interruptores
+#   _____         _ _       _
+#  / ____|       (_) |     | |
+# | (_____      ___| |_ ___| |__
+#  \___ \ \ /\ / / | __/ __| '_ \
+#  ____) \ V  V /| | || (__| | | |
+# |_____/ \_/\_/ |_|\__\___|_| |_|
 switch:
   - platform: template
     switches:
@@ -947,26 +1236,31 @@ switch:
           - service: alarm_control_panel.alarm_arm_away
             data:
               entity_id: alarm_control_panel.alarme_da_casa
-              code: 123
+              code: !secret senha_alarme
         turn_off:
           - service: input_boolean.turn_off
             entity_id: input_boolean.seguranca_casa
           - service: alarm_control_panel.alarm_disarm
             data:
               entity_id: alarm_control_panel.alarme_da_casa
-              code: 123
+              code: !secret senha_alarme
   - platform: broadlink
     host: 100.64.0.26
-    mac: '99:99:99:99:99:99'
+    mac: '34:EA:34:8E:EC:47'
     timeout: 300
     switches:
       tv_quarto:
         friendly_name: "TV do Quarto"
         command_on: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
         command_off: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
+      #climatizador:
+      #  friendly_name: "Climatizador"
+      #  command_on: 'JgDKAJCNEzQTERI0EzQTERIREzQTERIREzQTERIREzQTNBMREjUSERMREhETNBM0EzQSNRI0EzQTNBM0ExESERMREhETERISEjQTNBM0EzQSERMRExESNBMRExESERMREjQTNBM0EKuQjhI0ExETNBM0EhETERI1EhETERM0EhETERM0EjUSERM0ExESERMREjUSNBM0EzQTNBM0EzQSNRIRExESERMREhETERM0EjUSNRI0ExESERMREzQSERMRExESERM0EjUSNRAADQUAAAAAAAAAAAAAAAAAAA=='
+      #  command_off: 'JgDKAIyQETYREhE2ETYREhETETURExESETYREhISETYRNRETETYREhE2ETURNhE2ERIRNhE2ETUSEhESERMREhE2ERISEhE2ETURNhETERIREhISERIRExESERMRNhE1ETYRNBM1EKyOjxE1ERMRNRE2ERISEhE2ERIRExE1EhIREhE2ETYREhE2ERMRNRE2ETYQNhETETURNhE2ERIRExESERMRNRETERISNRE0EzYREhETERIREhETERISEhESETYRNhE1ETYRNhAADQUAAAAAAAAAAAAAAAAAAA=='
+
   - platform: broadlink
     host: 100.64.0.53
-    mac: '88:88:88:88:88:88'
+    mac: '78:0F:77:18:39:F8'
     timeout: 300
     switches:
       xboom_som:
@@ -981,6 +1275,10 @@ switch:
         friendly_name: Projetor
         command_on: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
         command_off: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
+#      ar_consul:
+#        friendly_name: "Ar Consul"
+#        command_on: 'JgBgAQABKZgVNhU2FRETExQSFBISFRM4FRATORM4FBISFBQSEhQSFBITEhQSORQSFBIUEhQTEhMUEhQ3FBISFBIUFBISOhMSEhQSFBITEhQSFBQSFRISFBQRFBIUEhMSExMTFBIUFBESAAELFREUEhITEhQUEhIUFBMSORQSEhMUEhQSFBISFBIUEhQUEhITEhQSFBQSEhQUExITEhQSFBITEhQSFBIUEhUUEhITFBISFBITFBISFBQTEhQSExQSEhMTExIUFBMSFBQSEhMSFBIUEhMSFBQSFBMUEhITFDcUNxQSEhQSFBI6FDYUAAEJFBIUEhMSEhQSFBQSFBMTExM3FBIUEhIUFBIUEhQSFBIUEhITFBISFBQSFBIUEhQSEhQSExIUFBIUEhIUEhQUEhIUExISFBQSFBISFBQSFBISFBQRFBISFBQSFBIUEhIUFDcUEhQRFBISFBIUFBMTEhQADQUAAAAAAAAAAA=='
+#        command_off: 'JgBgAQABK5cVNhM4FRETExMTExMTExM4ExMTOBU2ExMTExMTExMUEhMTExIUOBMTExMTExMTExMTEhM4ExMTExMTExMTORMTExITExMTExIUEhQTExMTExMSExMTExMTExIUExMTExITAAEKFRETEhMTExMTExMTExMTOBQSExMTEhQSFBIUEhQTExMTEhMTExMTEhQSFBIUExMTExITExMTExIUEhQSFBMTExMSExMTExMSFBIUExMTExMTEhMTExMTExMTExMTExMTExIUEhMTExMTExMTExMTExMTEzcTORQSExMTExM4FTYTAAEKFRETEhMTExMTExMTExMTExM4ExMTEhQSExMTExQTExMTEhMTExIUEhMTExMUExMTExITExMTExIUEhQTExMTExMSExMTExMTExMTExMTExMTEhMTExMTExMTExMTExMTEzgUERQSExMTExMTExMUEhMADQUAAAAAAAAAAA=='
   - platform: mqtt
     name: "Sirenes"
     state_topic: "stat/sonoff02/POWER"
@@ -1003,58 +1301,71 @@ switch:
     payload_on: "ON"
     payload_off: "OFF"
     retain: true
-
   - platform: command_line
     switches:
       camwascam_dir:
         friendly_name: WS.Direita
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=right&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=right&-speed=45&-usr=admin&-pwd=senha"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
       camwascam_esq:
         friendly_name: WS.Esquerda
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=left&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=left&-speed=45&-usr=admin&-pwd=senha"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
       camwascam_up:
         friendly_name: WS.Cima
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=up&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=up&-speed=45&-usr=admin&-pwd=senha"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
       camwascam_down:
         friendly_name: WS.Baixo
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=down&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=down&-speed=45&-usr=admin&-pwd=senha"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
       camwascam_centralizar:
         friendly_name: WS.Centralizar
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=home&-usr=admin&-pwd=xxxxxxxxxx"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=home&-usr=admin&-pwd=xxxxxxxxxx"'
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=home&-usr=admin&-pwd=senha"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=home&-usr=admin&-pwd=senha"'
       camwascam_p1:
         friendly_name: WS.P1
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=0"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=0"'
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=0"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=0"'
       camwascam_p2:
         friendly_name: WS.P2
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=1"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=1"'
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=1"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=1"'
       camwascam_p3:
         friendly_name: WS.P3
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=2"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=2"'
-      camwascam_p4:
-        friendly_name: WS.P4
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=3"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=xxxxxxxxxx&-number=3"'
+        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=2"'
+        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=2"'
 
 
 # Inputs de texto
+#  _____                   _    _            _
+# |_   _|                 | |  | |          | |
+#   | |  _ __  _ __  _   _| |_ | |_ _____  _| |_
+#   | | | '_ \| '_ \| | | | __|| __/ _ \ \/ / __|
+#  _| |_| | | | |_) | |_| | |_ | ||  __/>  <| |_
+# |_____|_| |_| .__/ \__,_|\__| \__\___/_/\_\\__|
+#             | |           ______
+#             |_|          |______|
 input_text:
   text_clock:
     name: Mensagem
-    initial: "Bom dia! São 6 e 50, vamos a previsão do tempo:"
+    initial: "Bom dia!"
   text_url_youtube:
     name: URL Youtube
     initial: https://www.youtube.com/watch?v=fvrogxMHmlg
-
+#  text_valor_kwh:
+#    name: "Valor kW/h"
+#    initial: "0.63"
 
 # Inputs de data/hora
+#  _____                   _        _       _       _   _
+# |_   _|                 | |      | |     | |     | | (_)
+#   | |  _ __  _ __  _   _| |_   __| | __ _| |_ ___| |_ _ _ __ ___   ___
+#   | | | '_ \| '_ \| | | | __| / _` |/ _` | __/ _ \ __| | '_ ` _ \ / _ \
+#  _| |_| | | | |_) | |_| | |_ | (_| | (_| | ||  __/ |_| | | | | | |  __/
+# |_____|_| |_| .__/ \__,_|\__| \__,_|\__,_|\__\___|\__|_|_| |_| |_|\___|
+#             | |           ______
+#             |_|          |______|
 input_datetime:
   poste_off:
     name: "Desligar poste às"
@@ -1066,8 +1377,26 @@ input_datetime:
     has_date: false
     has_time: true
     initial: "23:30"
+  silvio_on:
+    name: "Silvio acorda"
+    has_date: false
+    has_time: true
+    initial: "03:30"
+  silvio_off:
+    name: "Silvio já saiu"
+    has_date: false
+    has_time: true
+    initial: "04:00"
 
 # Inputs numéricos
+#  _____                   _                           _
+# |_   _|                 | |                         | |
+#   | |  _ __  _ __  _   _| |_   _ __  _   _ _ __ ___ | |__   ___ _ __
+#   | | | '_ \| '_ \| | | | __| | '_ \| | | | '_ ` _ \| '_ \ / _ \ '__|
+#  _| |_| | | | |_) | |_| | |_  | | | | |_| | | | | | | |_) |  __/ |
+# |_____|_| |_| .__/ \__,_|\__| |_| |_|\__,_|_| |_| |_|_.__/ \___|_|
+#             | |           ______
+#             |_|          |______|
 input_number:
   anoitecer:
     name: Anoitecer após Minutos
@@ -1080,7 +1409,7 @@ input_number:
   alarm_clock_hour:
     name: Hora
     icon: mdi:timer
-    initial: 6
+    initial: 7
     min: 0
     max: 23
     step: 1
@@ -1088,7 +1417,7 @@ input_number:
   alarm_clock_minutes:
     name: Minuto
     icon: mdi:timer
-    initial: 50
+    initial: 00
     min: 0
     max: 59
     step: 1
@@ -1103,6 +1432,14 @@ input_number:
     mode: slider
 
 # Inputs boolean (on/off)
+#  _____                   _     _                 _
+# |_   _|                 | |   | |               | |
+#   | |  _ __  _ __  _   _| |_  | |__   ___   ___ | | ___  __ _ _ __
+#   | | | '_ \| '_ \| | | | __| | '_ \ / _ \ / _ \| |/ _ \/ _` | '_ \
+#  _| |_| | | | |_) | |_| | |_  | |_) | (_) | (_) | |  __/ (_| | | | |
+# |_____|_| |_| .__/ \__,_|\__| |_.__/ \___/ \___/|_|\___|\__,_|_| |_|
+#             | |           ______
+#             |_|          |______|
 input_boolean:
   alarm_clock_status:
     name: Status
@@ -1111,22 +1448,50 @@ input_boolean:
     name: "Segurança"
 
 # Permite que outros componentes do Home Assistant processem fluxos de vídeo e áudio.
+#   __  __
+#  / _|/ _|
+# | |_| |_ _ __ ___  _ __   ___  __ _
+# |  _|  _| '_ ` _ \| '_ \ / _ \/ _` |
+# | | | | | | | | | | |_) |  __/ (_| |
+# |_| |_| |_| |_| |_| .__/ \___|\__, |
+#                   |_|         |___/
 ffmpeg:
 
 # Cameras
+#   _____
+#  / ____|
+# | |     __ _ _ __ ___   ___ _ __ __ _
+# | |    / _` | '_ ` _ \ / _ \ '__/ _` |
+# | |___| (_| | | | | | |  __/ | | (_| |
+#  \_____\__,_|_| |_| |_|\___|_|  \__,_|
 camera:
+  - platform: generic
+    name: Xiaofang
+    username: root
+    password: !secret mqtt_password
+    authentication: basic
+    still_image_url: !secret input_camera_xiaofang
+    verify_ssl: false
   - platform: ffmpeg
     name: Camera Interna
     input: !secret input_camera_interna
-#  - platform: ffmpeg
-#    input: !secret input_camera_garagem
-#    name: "Wanscam 360"
   - platform: generic
     name: "Wanscam 360"
     still_image_url: !secret input_camera_garagem
+  - platform: generic
+    name: "Wanscam Streaming"
+    still_image_url: !secret input_camera_garagem
+    stream_source: !secret input_camera_garagem_rtsp
 
-
-# Google Assistant
+# Integração Google Assistant
+#   _____                   _                         _     _              _
+#  / ____|                 | |          /\           (_)   | |            | |
+# | |  __  ___   ___   __ _| | ___     /  \   ___ ___ _ ___| |_ __ _ _ __ | |_
+# | | |_ |/ _ \ / _ \ / _` | |/ _ \   / /\ \ / __/ __| / __| __/ _` | '_ \| __|
+# | |__| | (_) | (_) | (_| | |  __/  / ____ \\__ \__ \ \__ \ || (_| | | | | |_
+#  \_____|\___/ \___/ \__, |_|\___| /_/    \_\___/___/_|___/\__\__,_|_| |_|\__|
+#                      __/ |
+#                     |___/
 google_assistant:
   project_id: !secret google_project
   api_key: !secret google_key
@@ -1139,7 +1504,16 @@ google_assistant:
     - scene
 #   - group
 
+
 # Telegram BOT
+#  _______   _                                  _           _
+# |__   __| | |                                | |         | |
+#    | | ___| | ___  __ _ _ __ __ _ _ __ ___   | |__   ___ | |_
+#    | |/ _ \ |/ _ \/ _` | '__/ _` | '_ ` _ \  | '_ \ / _ \| __|
+#    | |  __/ |  __/ (_| | | | (_| | | | | | | | |_) | (_) | |_
+#    |_|\___|_|\___|\__, |_|  \__,_|_| |_| |_| |_.__/ \___/ \__|
+#                    __/ |                 ______
+#                   |___/                 |______|
 telegram_bot:
   platform: polling
   api_key: !secret tg_api
@@ -1148,6 +1522,14 @@ telegram_bot:
     - !secret tg_chat_idf
 
 # Notificações
+#  _   _       _   _  __
+# | \ | |     | | (_)/ _|
+# |  \| | ___ | |_ _| |_ _   _
+# | . ` |/ _ \| __| |  _| | | |
+# | |\  | (_) | |_| | | | |_| |
+# |_| \_|\___/ \__|_|_|  \__, |
+#                         __/ |
+#                        |___/
 notify:
   - name: telegramrudi
     platform: telegram
@@ -1162,11 +1544,17 @@ notify:
       - service: telegramflavia
 
 # Alarme da casa
+#           _                         _____            _             _   _____                 _
+#     /\   | |                       / ____|          | |           | | |  __ \               | |
+#    /  \  | | __ _ _ __ _ __ ___   | |     ___  _ __ | |_ _ __ ___ | | | |__) |_ _ _ __   ___| |
+#   / /\ \ | |/ _` | '__| '_ ` _ \  | |    / _ \| '_ \| __| '__/ _ \| | |  ___/ _` | '_ \ / _ \ |
+#  / ____ \| | (_| | |  | | | | | | | |___| (_) | | | | |_| | | (_) | | | |  | (_| | | | |  __/ |
+# /_/    \_\_|\__,_|_|  |_| |_| |_|  \_____\___/|_| |_|\__|_|  \___/|_| |_|   \__,_|_| |_|\___|_|
 alarm_control_panel:
   - platform: manual
     name: Alarme da Casa
-    code: 1234
-    pending_time: 10
+    code: !secret senha_alarme
+    pending_time: 30
     delay_time: 20
     trigger_time: 4
     disarmed:
@@ -1176,14 +1564,33 @@ alarm_control_panel:
       delay_time: 0
 
 # Previsao do tempo
+# __          __        _   _
+# \ \        / /       | | | |
+#  \ \  /\  / /__  __ _| |_| |__   ___ _ __
+#   \ \/  \/ / _ \/ _` | __| '_ \ / _ \ '__|
+#    \  /\  /  __/ (_| | |_| | | |  __/ |
+#     \/  \/ \___|\__,_|\__|_| |_|\___|_|
 weather:
   - platform: darksky
     api_key: !secret api_darksky
 
 # Custom componente para Broadlink
+#   _____                      _   _         __              _                __
+#  / ____|                    | | (_)       / /             | |               \ \
+# | (___  _ __ ___   __ _ _ __| |_ _ _ __  | | ___ _   _ ___| |_ ___  _ __ ___ | |
+#  \___ \| '_ ` _ \ / _` | '__| __| | '__| | |/ __| | | / __| __/ _ \| '_ ` _ \| |
+#  ____) | | | | | | (_| | |  | |_| | |    | | (__| |_| \__ \ || (_) | | | | | | |
+# |_____/|_| |_| |_|\__,_|_|   \__|_|_|    | |\___|\__,_|___/\__\___/|_| |_| |_| |
+#                                           \_\                               /_/
 smartir:
 
 # Climatização
+#   _____ _ _                 _
+#  / ____| (_)               | |
+# | |    | |_ _ __ ___   __ _| |_ ___
+# | |    | | | '_ ` _ \ / _` | __/ _ \
+# | |____| | | | | | | | (_| | ||  __/
+#  \_____|_|_|_| |_| |_|\__,_|\__\___|
 climate:
   - platform: smartir
     name: Climatizador
@@ -1193,9 +1600,24 @@ climate:
     humidity_sensor: sensor.suite_umidade
     #power_sensor: switch.climatizador
 
-
+#  _____  _       _              __ _
+# |  __ \(_)     | |            / _| |
+# | |  | |_  __ _| | ___   __ _| |_| | _____      __
+# | |  | | |/ _` | |/ _ \ / _` |  _| |/ _ \ \ /\ / /
+# | |__| | | (_| | | (_) | (_| | | | | (_) \ V  V /
+# |_____/|_|\__,_|_|\___/ \__, |_| |_|\___/ \_/\_/
+#                          __/ |
+#                         |___/
 dialogflow:
 
+# O intent_scriptcomponente permite que os usuários configurem ações e respostas a intenções. As intenções podem ser acionadas por qualquer componente que suporte isso.
+#  _____       _             _      _____           _       _
+# |_   _|     | |           | |    / ____|         (_)     | |
+#   | |  _ __ | |_ ___ _ __ | |_  | (___   ___ _ __ _ _ __ | |_
+#   | | | '_ \| __/ _ \ '_ \| __|  \___ \ / __| '__| | '_ \| __|
+#  _| |_| | | | ||  __/ | | | |_   ____) | (__| |  | | |_) | |_
+# |_____|_| |_|\__\___|_| |_|\__| |_____/ \___|_|  |_| .__/ \__|
+#                                                    |_|
 intent_script:
   Temperaturasuite:
     speech:
@@ -1203,18 +1625,18 @@ intent_script:
   LocalizacaoFlavia:
     speech:
       text: >
-          {% if is_state('device_tracker.google_maps_118429201781082195315', 'home') %}
+          {% if is_state('device_tracker.google_maps_321', 'home') %}
             A Flávia está em casa! Celular: {{ states.sensor.bateria_status_flavia.state }}
           {% else %}
-            Flávia está com a bateria em {{ states.device_tracker.google_maps_118429201781082195315.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_118429201781082195315.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
+            Flávia está com a bateria em {{ states.device_tracker.google_maps_321.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_321.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
           {% endif %}
   LocalizacaoRudi:
     speech:
       text: >
-          {% if is_state('device_tracker.google_maps_106566341309199592438', 'home') %}
+          {% if is_state('device_tracker.google_maps_123', 'home') %}
           Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}
           {% else %}
-           Rudi está com a bateria em {{ states.device_tracker.google_maps_106566341309199592438.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_106566341309199592438.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
+           Rudi está com a bateria em {{ states.device_tracker.google_maps_123.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_123.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
           {% endif %}
   MaisVolumeQuarto:
     speech:
@@ -1238,19 +1660,72 @@ intent_script:
           operation_mode: auto
 
 # Streaming (camera.play_stream)
+#   _____ _
+#  / ____| |
+# | (___ | |_ _ __ ___  __ _ _ __ ___
+#  \___ \| __| '__/ _ \/ _` | '_ ` _ \
+#  ____) | |_| | |  __/ (_| | | | | | |
+# |_____/ \__|_|  \___|\__,_|_| |_| |_|
 stream:
 
 # Lista de Compras
+#   _____ _                       _               _      _     _
+#  / ____| |                     (_)             | |    (_)   | |
+# | (___ | |__   ___  _ __  _ __  _ _ __   __ _  | |     _ ___| |_
+#  \___ \| '_ \ / _ \| '_ \| '_ \| | '_ \ / _` | | |    | / __| __|
+#  ____) | | | | (_) | |_) | |_) | | | | | (_| | | |____| \__ \ |_
+# |_____/|_| |_|\___/| .__/| .__/|_|_| |_|\__, | |______|_|___/\__|
+#                    | |   | |             __/ |
+#                    |_|   |_|            |___/
 shopping_list:
 
 # Informações sobre o sistema e seus componentes. Também permite executar ferramentas de diagnóstico para diagnosticar problemas.
+#   _____           _                   _                _ _   _
+#  / ____|         | |                 | |              | | | | |
+# | (___  _   _ ___| |_ ___ _ __ ___   | |__   ___  __ _| | |_| |__
+#  \___ \| | | / __| __/ _ \ '_ ` _ \  | '_ \ / _ \/ _` | | __| '_ \
+#  ____) | |_| \__ \ ||  __/ | | | | | | | | |  __/ (_| | | |_| | | |
+# |_____/ \__, |___/\__\___|_| |_| |_| |_| |_|\___|\__,_|_|\__|_| |_|
+#          __/ |
+#         |___/
 system_health:
 
 # Grupos
+#   _____
+#  / ____|
+# | |  __ _ __ ___  _   _ _ __
+# | | |_ | '__/ _ \| | | | '_ \
+# | |__| | | | (_) | |_| | |_) |
+#  \_____|_|  \___/ \__,_| .__/
+#                        | |
+#                        |_|
 group: !include groups.yaml
 
 # Automações
+#                _                        _   _
+#     /\        | |                      | | (_)
+#    /  \  _   _| |_ ___  _ __ ___   __ _| |_ _  ___  _ __
+#   / /\ \| | | | __/ _ \| '_ ` _ \ / _` | __| |/ _ \| '_ \
+#  / ____ \ |_| | || (_) | | | | | | (_| | |_| | (_) | | | |
+# /_/    \_\__,_|\__\___/|_| |_| |_|\__,_|\__|_|\___/|_| |_|
 automation: !include automations.yaml
 
 # Scripts
+#   _____           _       _
+#  / ____|         (_)     | |
+# | (___   ___ _ __ _ _ __ | |
+#  \___ \ / __| '__| | '_ \| __|
+#  ____) | (__| |  | | |_) | |_
+# |_____/ \___|_|  |_| .__/ \__|
+#                    | |
+#                    |_|
 script: !include scripts.yaml
+
+#  _______        _     _                    _____  _____ _____ _____
+# |__   __|      | |   | |            /\    / ____|/ ____|_   _|_   _|
+#    | | _____  _| |_  | |_ ___      /  \  | (___ | |      | |   | |
+#    | |/ _ \ \/ / __| | __/ _ \    / /\ \  \___ \| |      | |   | |
+#    | |  __/>  <| |_  | || (_) |  / ____ \ ____) | |____ _| |_ _| |_
+#    |_|\___/_/\_\\__|  \__\___/  /_/    \_\_____/ \_____|_____|_____|
+#
+#   http://patorjk.com/software/taag/#p=display&f=Big&t=Meu%20Texto

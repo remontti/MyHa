@@ -4,10 +4,10 @@ cade_a_flavia:
     - service: notify.telegramtodos
       data_template:
         message: >
-          {% if is_state('device_tracker.google_maps_xxx', 'home') %}
-            A Flávia está em casa! Celular: {{ states.sensor.bateria_status_flavia.state }}
+          {% if is_state('device_tracker.google_maps_321', 'home') %}
+            A Flávia está em casa! Celular {{ states.sensor.bateria_status_flavia.state }} e bateria em {{ states.device_tracker.google_maps_321.attributes.battery_level|int }}%
           {% else %}
-            Flávia está com a bateria em {{ states.device_tracker.google_maps_xxx.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_xxx.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
+            Flávia se localiza em {{ states.device_tracker.google_maps_321.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }} e bateria em {{ states.device_tracker.google_maps_321.attributes.battery_level|int }}%
           {% endif %}
 
 cade_o_rudi:
@@ -16,19 +16,31 @@ cade_o_rudi:
     - service: notify.telegramtodos
       data_template:
         message: >
-          {% if is_state('device_tracker.google_maps_yyy', 'home') %}
-          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}
+          {% if is_state('device_tracker.google_maps_123', 'home') %}
+          Rudi está em Casa! Celular {{ states.sensor.bateria_status_rudi.state }} e bateria em {{ states.device_tracker.google_maps_123.attributes.battery_level|int }}%
           {% else %}
-           Rudi está com a bateria em {{ states.device_tracker.google_maps_yyy.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_yyy.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
+           Rudi se localiza em {{ states.device_tracker.google_maps_123.attributes.address }}. Celular {{ states.sensor.bateria_status_rudi.state }} bateria em {{ states.device_tracker.google_maps_123.attributes.battery_level|int }}%
           {% endif %}
-    - service: notify.telegramflavia
-      data_template:
-        message: >
-          {% if is_state('device_tracker.google_maps_yyy', 'home') %}
-          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}
-          {% else %}
-           Rudi está com a bateria em {{ states.device_tracker.google_maps_yyy.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_yyy.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
-          {% endif %}
+
+# Não funcionou (Testando)
+grava_video:
+  alias: "Mine video"
+  sequence:
+  - service: camera.record
+    data:
+      entity_id: camera.wanscam_streaming
+#      duration: 10
+      filename: '/tmp/video_xiaofang.mp4'
+  - delay:
+      seconds: 30
+  - service: notify.telegramrudi
+    data:
+      title: Envia video
+      message: "Video"
+      data:
+        video:
+          - file: /tmp/video_xiaofang.mp4
+            caption: Video Garagem
 
 foto_cam:
   alias: "Cap. Camera Garagem Multiplas Posições"
@@ -45,7 +57,7 @@ foto_cam:
       message: ""
       data:
         photo:
-          - url: http://100.64.0.60/tmpfs/auto.jpg?&-usr=admin&-pwd=xxxxxxxxxx
+          - url: http://100.64.0.60/tmpfs/auto.jpg?1550259117921&-usr=admin&-pwd=senha
             caption: Garagem Interna
   - service: switch.turn_off
     data:
@@ -57,7 +69,7 @@ foto_cam:
       message: ""
       data:
         photo:
-          - url: http://100.64.0.60/tmpfs/auto.jpg?&-usr=admin&-pwd=xxxxxxxxxx
+          - url: http://100.64.0.60/tmpfs/auto.jpg?1550259117921&-usr=admin&-pwd=senha
             caption: Garagem Externa
 
   - delay:
@@ -89,7 +101,7 @@ off_todas_luzes_amarelas:
       entity_id:
         - light.pendentes
         - light.trilhos
-        - light.mesa_de_antar
+        - light.mesa_de_jantar
         - light.lustre
         - light.bancada
 
@@ -101,7 +113,7 @@ on_todas_luzes_amarelas:
       entity_id:
         - light.pendentes
         - light.trilhos
-        - light.mesa_de_antar
+        - light.mesa_de_jantar
         - light.lustre
         - light.bancada
 
@@ -190,6 +202,37 @@ reseta_sensores:
     data:
       topic: "tele/sonoffBr1/RESULT"
       payload: ' {"RfReceived":{"Data":"996D46off"}} '
+
+
+#ptz_tilt_up:
+#  alias: UP
+#  sequence:
+#    - service: camera.onvif_ptz
+#      data:
+#        entity_id: 'camera.ptz'
+#        tilt: 'UP'
+#ptz_tilt_down:
+#  alias: Down
+#  sequence:
+#    - service: camera.onvif_ptz
+#      data:
+#        entity_id: 'camera.ptz'
+#        tilt: 'DOWN'
+#ptz_pan_left:
+#  alias: Left
+#  sequence:
+#    - service: camera.onvif_ptz
+#      data:
+#        entity_id: 'camera.ptz'
+#        pan: 'LEFT'
+#ptz_pan_right:
+#  alias: Right
+#  sequence:
+#    - service: camera.onvif_ptz
+#      data:
+#        entity_id: 'camera.ptz'
+#        pan: 'RIGHT'
+
 
 
 tv_quarto_vol_up:
@@ -576,3 +619,11 @@ loop_luzes_auxiliar:
   - service: light.turn_off
     data:
       entity_id: light.jf
+
+# Streaming camera na tv
+#camara_garagem_na_tv:
+#  alias: "Câmera na Tv da Sala"
+#  sequence:
+#  - service: camera.play_stream
+#    data:
+#      entity_id: media_player.tv_da_sala

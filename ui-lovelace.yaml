@@ -11,14 +11,14 @@ resources:
     url: /local/light-entity-row.js
   - type: module
     url: /local/weather-card.js
-title: My Home
+title: 'Remontti :: Casa'
 views:
   - badges: []
     cards:
       - cards:
           - cards:
               - elements:
-                  - entity: device_tracker.google_maps_106566341309199592438
+                  - entity: device_tracker.google_maps_123
                     style:
                       color: white
                       font-size: 1.4em
@@ -46,7 +46,7 @@ views:
                 image: /local/imgs/rudi2.jpg
                 type: picture-elements
               - elements:
-                  - entity: device_tracker.google_maps_118429201781082195315
+                  - entity: device_tracker.google_maps_321
                     style:
                       color: white
                       font-size: 1.4em
@@ -75,6 +75,8 @@ views:
                 type: picture-elements
             type: horizontal-stack
           - entities:
+              - entity: binary_sensor.silvio
+                icon: 'mdi:account-circle'
               - entity: sensor.precisa_trabalhar
             show_header_toggle: false
             type: entities
@@ -135,37 +137,11 @@ views:
                 type: 'custom:mini-graph-card'
             type: horizontal-stack
         type: vertical-stack
-      - entity: switch.ventilador
-        hold_action:
-          action: more-info
-        name: Ventilado Móvel
-        tap_action:
-          action: toggle
-        type: entity-button
-      - columns: 3
-        entities:
-          - entity: group.luzes_externas
-            tap_action:
-              action: toggle
-          - entity: group.luzes_cozinha
-            tap_action:
-              action: toggle
-          - entity: group.luzes_game
-            tap_action:
-              action: toggle
-          - entity: group.luzes_estar
-            tap_action:
-              action: toggle
-          - entity: group.luzes_banheiro
-            tap_action:
-              action: toggle
-          - entity: group.luzes_quartos
-            name: Quartos
-            tap_action:
-              action: toggle
-        show_state: true
-        title: Ligar Grupo
-        type: glance
+      - entities:
+          - entity: switch.ventilador
+            name: Ventilador (Portatil)
+        show_header_toggle: false
+        type: entities
       - entities:
           - sensor.alarm_clock_time
           - input_number.alarm_clock_hour
@@ -192,7 +168,7 @@ views:
             name: Suíte
             tap_action:
               action: toggle
-          - entity: light.yeelight_rgb_7c49eb15924b
+          - entity: light.yeelight_color1_7c49eb15924b
             icon: 'mdi:floor-lamp'
             name: Abajur Suíte
           - entity: light.closet
@@ -361,8 +337,8 @@ views:
         show_state: false
         title: Banheiros
         type: glance
-      - entity: light.bancada
-        name: Led Bancada
+      - entity: light.yeelight_color1_7c49eb15924b
+        name: Abajur
         type: light
       - entities:
           - label: Todas Luzes
@@ -460,26 +436,14 @@ views:
     title: Controles IR
   - badges: []
     cards:
-      - entity: alarm_control_panel.alarme_da_casa
-        states:
-          - arm_away
-        type: alarm-panel
-      - entity: camera.wanscam_360
-        type: picture-entity
-      - entity: camera.camera_interna
-        type: picture-entity
       - entities:
-          - binary_sensor.c1_alarme
-          - binary_sensor.c1_home
-          - binary_sensor.c1_sos
-          - binary_sensor.c2_alarme
-          - binary_sensor.c2_home
-          - binary_sensor.c2_sos
-          - binary_sensor.c3_alarme
-          - binary_sensor.c3_home
-          - binary_sensor.c3_sos
+          - entity: switch.seguranca_casa
+            icon: 'mdi:shield-home'
+            name: Ativa / Desativa
+          - entity: alarm_control_panel.alarme_da_casa
+            name: Status
         show_header_toggle: false
-        title: Controles Digoo
+        title: Alarme da Casa
         type: entities
       - entities:
           - entity: switch.sirenes
@@ -516,6 +480,12 @@ views:
         show_header_toggle: false
         title: Alarme Monitorameto
         type: entities
+      - entity: camera.wanscam_360
+        type: picture-entity
+      - entity: camera.xiaofang
+        type: picture-entity
+      - entity: camera.camera_interna
+        type: picture-entity
       - entities:
           - entity: switch.camwascam_dir
             icon: 'mdi:arrow-right-circle'
@@ -535,10 +505,31 @@ views:
           - entity: switch.camwascam_p1
           - entity: switch.camwascam_p2
           - entity: switch.camwascam_p3
-          - entity: switch.camwascam_p4
         show_header_toggle: false
         title: Cam Garagem
         type: entities
+      - type: entities
+        entities:
+          - entity: sensor.xiaofang_light_sensor
+          - entity: switch.xiaofang_h264_rtsp_server
+          - entity: switch.xiaofang_mjpeg_rtsp_server
+          - entity: switch.xiaofang_ir_filter
+          - entity: switch.xiaofang_ir_led
+          - entity: switch.xiaofang_night_mode
+          - entity: switch.xiaofang_night_mode_auto
+          - entity: switch.xiaofang_blue_led
+          - entity: switch.xiaofang_yellow_led
+          - entity: switch.xiaofang_motion_detection
+          - entity: switch.xiaofang_motion_tracking
+          - entity: camera.xiaofang_motion_snapshot
+          - entity: binary_sensor.xiaofang_motion_sensor
+          - entity: switch.xiaofang_motion_send_telegram
+        title: Cam Xiaofang
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: automation.motion_detected
+        title: Automacao teste xiaofang
     icon: 'mdi:security'
     path: ''
     title: Segurança
@@ -587,7 +578,7 @@ views:
     cards:
       - entity: media_player.tv_do_quarto
         type: media-control
-      - entity: media_player.tv_da_sala
+      - entity: media_player.unnamed_device
         type: media-control
       - entity: media_player.lg_smart_tv
         type: media-control
@@ -596,7 +587,7 @@ views:
         show_source: true
         type: 'custom:mini-media-player'
       - artwork_border: true
-        entity: media_player.tv_da_sala
+        entity: media_player.unnamed_device
         show_source: true
         type: 'custom:mini-media-player'
     icon: 'mdi:filmstrip'
@@ -656,7 +647,7 @@ views:
   - badges: []
     cards:
       - entities:
-          - label: 'Após (min) o sol por ligar luzes:'
+          - label: 'Após (min) o sol se por ligar luzes:'
             type: section
           - entity: input_number.anoitecer
             name: Minutos
@@ -674,73 +665,107 @@ views:
             name: Ligar
           - entity: input_datetime.arandelas_off
             name: Desligar
+          - label: 'Automação Postes / Arandelas:'
+            type: section
+          - entity: automation.luz_postes_ligar
+          - entity: automation.luz_postes_desligar
+          - entity: automation.luz_arandelas_ligar
+          - entity: automation.luz_arandelas_desligar
         show_header_toggle: false
-        title: Horários luzes externas
+        title: Regras Luzes externas
         type: entities
       - entities:
+          - label: 'Movimento com alarme desativado e ninguém em casa:'
+            type: section
           - entity: automation.garagem_alarme_off_movimento
-          - entity: automation.garagem_alarme_on_movimento
-          - entity: automation.garagem_alarme_on_luz_movimento
-          - entity: automation.garagem_alarme_on_luz_s_movimento
-          - type: section
           - entity: automation.piscina_alarme_off_movimento
+          - label: 'Movimento com alarme ativado:'
+            type: section
+          - entity: automation.garagem_alarme_on_movimento
           - entity: automation.piscina_alarme_on_movimento
+          - label: 'Movimento com alarme ativado liga luzes:'
+            type: section
+          - entity: automation.garagem_alarme_on_luz_movimento
           - entity: automation.piscina_alarme_on_luz_movimento
+          - label: 'Sem movimento com alarme ativado desliga luzes:'
+            type: section
+          - entity: automation.garagem_alarme_on_luz_s_movimento
           - entity: automation.piscina_alarme_on_luz_s_movimento
         show_header_toggle: false
         title: Alarme Movimentos
         type: entities
       - entities:
           - entity: automation.alarme_notif_quando_for_ativado
-          - entity: automation.alarme_aviso_ativando_em_10s
+          - entity: automation.alarme_aviso_ativando_em_30s
           - entity: automation.alarme_aviso_desativado
-          - entity: automation.alarme_disparar_armado_em_casa
-          - entity: automation.alarme_disparar_sem_ninguem
-          - entity: automation.alarme_desliga_sirene_ao_desativar
           - entity: automation.alarme_testar_sensores
         show_header_toggle: false
-        title: Alarme
+        title: Alarme da Casa
         type: entities
       - entities:
+          - label: 'Luz corredor liga com movimento:'
+            type: section
           - entity: automation.luz_corredor_liga_18_30h_as_07_30_movimento
+            name: 'Liga aut. entre 18:30h e 07:30h'
           - entity: automation.luz_corredor_desliga_s_movimento_2min
+            name: Deseliga se não tiver movinto (2min)
+          - label: 'Luz banheiros desligam se ligada por muito tempo:'
+            type: section
           - entity: automation.luz_sem_desligar_banheiro_suite
+            name: Banhero da suíte (30min)
           - entity: automation.luz_sem_desligar_banheiro_social
+            name: Banhero social (30min)
           - entity: automation.luz_sem_desligar_lavabo
-          - entity: automation.luz_arandelas_ligar
-          - entity: automation.luz_arandelas_desligar
-          - entity: automation.luz_postes_ligar
-          - entity: automation.luz_postes_desligar
+            name: Lavabo (10min)
         show_header_toggle: false
-        title: Luzes
+        title: Regras Luzes Internas
         type: entities
       - entities:
+          - label: 'Fala a temperatura do ar ao ligar:'
+            type: section
           - entity: automation.falar_temperatura_ao_ligar_ar
+            name: Ar quarto
+          - label: 'Da boas vindas ao abrir porta:'
+            type: section
           - entity: automation.porta_entrada_aberta
+            name: Porta de entrada
+          - label: 'Se Rudi/Flávia não estiver em casa:'
+            type: section
           - entity: automation.notificacao_luzez_on_off
+          - entity: automation.notificacao_switch_on_off
         show_header_toggle: false
         title: Avisos / Alertas
         type: entities
       - entities:
-          - entity: script.foto_cam
-          - entity: script.cade_a_flavia
-          - entity: script.cade_o_rudi
-        show_header_toggle: false
-        title: Script
-        type: entities
-      - entities:
-          - scene.suite_romantica
-        show_header_toggle: false
-        title: Cena (Teste)
-        type: entities
-      - entities:
+          - label: 'Renovar certificado automaticamente:'
+            type: section
           - entity: automation.renova_let_s_encrypt
-        title: Sistema
+          - label: 'Configuração do despertador na suíte:'
+            type: section
+          - entity: automation.conf_despertador
+          - label: 'Desliga TVs/Som quando não utilizado:'
+            type: section
+          - entity: automation.tv_quarto_desliga_sem_player_3min
+        show_header_toggle: false
+        title: Diversos
         type: entities
       - entities:
-          - entity: automation.conf_despertador
+          - entity: binary_sensor.silvio
+          - label: Liga luzes e desativa alarme
+            type: section
+          - entity: input_datetime.silvio_on
+          - entity: automation.silvio_acordar
+          - label: Desliga luzes e ativa alarme
+            type: section
+          - entity: input_datetime.silvio_off
+          - entity: automation.silvio_saiu
+          - label: Notifica que chegou ou saiu de casa
+            type: section
+          - entity: automation.silvio_conectado
+          - entity: automation.silvio_desconectado
+            type: entities
         show_header_toggle: false
-        title: Despertador
+        title: Regras Silvio em casa
         type: entities
     icon: 'mdi:home-automation'
     title: Automações
@@ -824,43 +849,83 @@ views:
             type: horizontal-stack
         type: vertical-stack
       - entities:
+          - label: Roteadores
+            type: section
+          - entity: binary_sensor.internet
+            name: RB2011 (RouterOS)
+          - entity: binary_sensor.ap_router_e
+            name: AP-Route
+          - entity: binary_sensor.tp_link
+          - entity: binary_sensor.unifi
+          - label: Tv / Casts / G Home
+            type: section
+          - entity: binary_sensor.tv_lg_game
+          - entity: binary_sensor.chrome_cast_quarto
+          - entity: binary_sensor.chrome_cast_game
+          - entity: binary_sensor.google_home_quarto
+          - entity: binary_sensor.google_home_sala
+          - label: Cameras
+            type: section
+          - entity: binary_sensor.camera_digoo
+          - entity: binary_sensor.wcam360
+          - label: Gateway's
+            type: section
+          - entity: binary_sensor.broadlink_ir_quarto
+          - entity: binary_sensor.broadlink_ir_sala
+          - entity: binary_sensor.sonoff_rf_bridge
+        show_header_toggle: false
+        title: Monitoramento Dispositivos
+        type: entities
+      - entities:
+          - label: Controle 1
+            type: section
+          - entity: binary_sensor.c1_armar
+          - entity: binary_sensor.c1_desarmar
+          - entity: binary_sensor.c1_home
+          - entity: binary_sensor.c1_sos
+          - label: Controle 2
+            type: section
+          - entity: binary_sensor.c2_armar
+          - entity: binary_sensor.c2_desarmar
+          - entity: binary_sensor.c2_home
+          - entity: binary_sensor.c2_sos
+          - label: Controle 3
+            type: section
+          - entity: binary_sensor.c3_armar
+          - entity: binary_sensor.c3_desarmar
+          - entity: binary_sensor.c3_home
+          - entity: binary_sensor.c3_sos
+        show_header_toggle: false
+        title: Controles Digoo (433Mhz)
+        type: entities
+      - entities:
           - entity: sensor.last_boot
             name: Última inicialização
           - entity: sensor.uptime
         type: entities
-      - cards:
-          - columns: 3
-            entities:
-              - entity: binary_sensor.internet
-              - binary_sensor.ap_router_e
-              - binary_sensor.tp_link
-              - binary_sensor.unifi
-              - binary_sensor.tv_lg_game
-              - binary_sensor.sonoff_rf_bridge
-              - binary_sensor.chrome_cast_quarto
-              - binary_sensor.chrome_cast_game
-              - binary_sensor.google_home_quarto
-              - binary_sensor.google_home_sala
-              - binary_sensor.camera_digoo
-              - binary_sensor.wcam360
-              - binary_sensor.broadlink_ir_quarto
-              - binary_sensor.broadlink_ir_sala
-            show_state: false
-            type: glance
-        type: vertical-stack
       - entity: sensor.time
         name: Hora
         type: sensor
         unit: h
-      - entity: sensor.date
-        type: sensor
     icon: 'mdi:engine'
     panel: false
-    title: Hardware
+    title: Dispositivos
   - badges: []
     cards:
+      - entities:
+          - entity: script.foto_cam
+          - entity: script.cade_a_flavia
+          - entity: script.cade_o_rudi
+        show_header_toggle: false
+        title: Script
+        type: entities
+      - entities:
+          - scene.suite_romantica
+        show_header_toggle: false
+        title: Cena (Teste)
+        type: entities
       - elements:
-          - entity: light.yeelight_rgb_7c49eb15924b
+          - entity: light.yeelight_color1_7c49eb15924b
             style:
               left: 90%
               top: 30%
@@ -872,6 +937,12 @@ views:
             type: state-icon
         image: /local/imgs/planta-limpa.svg
         type: picture-elements
+      - entities:
+          - entity: script.grava_video
+          - entity: camera.wanscam_streaming
+        show_header_toggle: false
+        title: Teste
+        type: entities
     icon: 'mdi:floor-plan'
     title: Planta
   - badges: []
@@ -1007,7 +1078,7 @@ views:
                 tap_action:
                   action: toggle
                 type: entity-button
-              - entity: light.yeelight_rgb_7c49eb15924b
+              - entity: light.yeelight_color1_7c49eb15924b
                 icon: 'mdi:floor-lamp'
                 name: ' '
                 type: entity-button

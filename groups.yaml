@@ -1,3 +1,14 @@
+alarm_clock:
+  name: Despertador
+  entities:
+    - sensor.alarm_clock_time
+    - input_number.alarm_clock_hour
+    - input_number.alarm_clock_minutes
+    - input_text.text_clock
+    - input_text.text_url_youtube
+    - input_number.alarm_clock_volume
+    - input_boolean.alarm_clock_status
+
 luzes_externas:
   name: Externas
   entities:
@@ -49,16 +60,5 @@ luzes_quartos:
     - light.quarto_do_meio
     - light.corredor
     - light.quarto_da_suite
-    - light.yeelight_rgb_7c49eb15924b
+    - light.yeelight_color1_7c49eb15924b
     - light.closet
-
-alarm_clock:
-  name: Despertador
-  entities:
-    - sensor.alarm_clock_time
-    - input_number.alarm_clock_hour
-    - input_number.alarm_clock_minutes
-    - input_text.text_clock
-    - input_text.text_url_youtube
-    - input_number.alarm_clock_volume
-    - input_boolean.alarm_clock_status
