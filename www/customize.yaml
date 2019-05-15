@@ -1,0 +1,168 @@
+sun.sun:
+  friendly_name: Sol
+sensor.yr_symbol:
+  friendly_name: Clima
+sensor.dark_sky_wind_speed:
+  friendly_name: Vento
+sensor.dark_sky_humidity:
+  friendly_name: Umidade
+sensor.dark_sky_temperature:
+  friendly_name: Temp
+binary_sensor.internet:
+  icon: mdi:earth
+binary_sensor.chrome_cast_game:
+  icon: mdi:google-chrome
+binary_sensor.chrome_cast_quarto:
+  icon: mdi:google-chrome
+binary_sensor.google_home_mini:
+  icon: mdi:google-home
+switch.tv_do_quarto:
+  icon: mdi:television-classic
+script.tv_quarto_vol_down:
+  icon: mdi:volume-minus
+script.tv_quarto_vol_up:
+  icon: mdi:volume-plus
+script.tv_quarto_mute:
+  icon: mdi:volume-off
+script.tv_quarto_sleep:
+  icon: mdi:sleep
+script.tv_quarto_input:
+  icon: mdi:video-input-hdmi
+script.air_quarto_led:
+  icon: mdi:led-variant-on
+script.air_quarto_swing:
+  icon: mdi:tilde
+switch.xboom_som:
+  icon: mdi:speaker-wireless
+script.xboom_vol_down:
+  icon: mdi:volume-minus
+script.xboom_vol_up:
+  icon: mdi:volume-plus
+script.xboom_mute:
+  icon: mdi:volume-off
+script.xboom_input:
+  icon: mdi:video-input-component
+script.xboom_equalizer:
+  icon: mdi:tune-vertical
+switch.tv_lg_55:
+  icon: mdi:television
+switch.home_theater:
+  icon: mdi:theater
+switch.sky_tv:
+  icon: mdi:satellite-variant
+script.lg55_vol_down:
+  icon: mdi:volume-minus
+script.lg55_vol_up:
+  icon: mdi:volume-plus
+script.lg55_mute:
+  icon: mdi:volume-off
+script.lg55_input:
+  icon: mdi:video-input-component
+script.lg55_simplink:
+  icon: mdi:link-variant
+script.lg55_exit:
+  icon: mdi:exit-to-app
+device_tracker.google_maps_000000000000000000000:
+  friendly_name: Rudimar
+device_tracker.google_maps_111111111111111111111:
+  friendly_name: Flávia
+sensor.dark_sky_uv_index:
+  friendly_name: Índice de UV
+sensor.dark_sky_cloud_coverage:
+  friendly_name: Nuvens
+sensor.dark_sky_pressure:
+  friendly_name: Pressão
+sensor.dark_sky_visibility:
+  friendly_name: Visibilidade
+sensor.dark_sky_daytime_high_temperature:
+  friendly_name: Máxima
+sensor.dark_sky_overnight_low_temperature:
+  friendly_name: Mínima
+sensor.dark_sky_hourly_summary:
+  friendly_name: Resumo 24h
+sensor.dark_sky_daily_summary:
+  friendly_name: Resumo da semana
+script.proj_b:
+  icon: mdi:arrow-down-thick
+script.proj_c:
+  icon: mdi:arrow-up-thick
+script.proj_mute:
+  icon: mdi:volume-mute
+script.proj_t:
+  icon: mdi:arrow-left-thick
+script.proj_f:
+  icon: mdi:arrow-right-thick
+script.proj_ok:
+  icon: mdi:camera-metering-center
+script.proj_vup:
+  icon: mdi:volume-plus
+script.proj_vdown:
+  icon: mdi:volume-minus
+script.proj_esc:
+  icon: mdi:exit-to-app
+script.proj_input:
+  icon: mdi:video-input-hdmi
+group.projetor_gp:
+  icon: mdi:projector
+switch.projetor:
+  icon: mdi:projector
+script.proj_menu:
+  icon: mdi:settings-outline
+binary_sensor.sonoff_rf_bridge:
+  icon: mdi:radar
+binary_sensor.broadlink_ir_quarto:
+  icon: mdi:remote
+binary_sensor.broadlink_ir_sala:
+  icon: mdi:remote
+binary_sensor.camera_digoo:
+  icon: mdi:cctv
+group.all_lights:
+  friendly_name: Todas as Luzes
+group.all_switches:
+  friendly_name: Interruptores
+switch.sirenes:
+  icon: mdi:alarm-light
+script.reseta_sensores:
+  icon: mdi:reload
+binary_sensor.wcam360:
+  icon: mdi:cctv
+switch.ventilador:
+  icon: mdi:fan
+binary_sensor.google_home_quarto:
+  icon: mdi:google-home
+binary_sensor.google_home_sala:
+  icon: mdi:google-home
+binary_sensor.tv_lg_game:
+  icon: mdi:television
+sensor.home_assistant_v2_db:
+  friendly_name: Banco Dados
+switch.tv_quarto:
+  icon: mdi:television
+switch.camwascam_esq:
+  icon: mdi:arrow-left-circle
+switch.camwascam_dir:
+  icon: mdi:arrow-right-circle
+switch.camwascam_down:
+  icon: mdi:arrow-down-circle
+switch.camwascam_up:
+  icon: mdi:arrow-up-circle
+script.camwascam_p1:
+  icon: mdi:cctv
+script.camwascam_p2:
+  icon: mdi:cctv
+script.camwascam_p3:
+  icon: mdi:cctv
+switch.camwascam_centralizar:
+  icon: mdi:rotate-orbit
+script.video_garagem:
+  icon: mdi:record-rec
+script.video_interna:
+  icon: mdi:record-rec
+script.video_piscina:
+  icon: mdi:record-rec
+script.fotos_garagem:
+  icon: mdi:image-multiple
+script.fotos_interna:
+  icon: mdi:image
+script.fotos_piscina:
+  icon: mdi:image
