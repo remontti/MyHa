@@ -2,8 +2,6 @@ resources:
   - type: module
     url: /local/mini-media-player-bundle.js?v=0.9.8
   - type: js
-    url: /local/vertical-stack-in-card.js?v=0.0.9
-  - type: js
     url: /local/bignumber-card.js
   - type: module
     url: /local/mini-graph-card-bundle.js?v=0.2.1
@@ -11,14 +9,15 @@ resources:
     url: /local/light-entity-row.js
   - type: module
     url: /local/weather-card.js
-title: 'Remontti :: Casa'
+  - type: js
+    url: /local/fan-control-entity-row.js
 views:
   - badges: []
     cards:
       - cards:
           - cards:
               - elements:
-                  - entity: device_tracker.google_maps_123
+                  - entity: device_tracker.google_maps_000000000000000000000
                     style:
                       color: white
                       font-size: 1.4em
@@ -46,7 +45,7 @@ views:
                 image: /local/imgs/rudi2.jpg
                 type: picture-elements
               - elements:
-                  - entity: device_tracker.google_maps_321
+                  - entity: device_tracker.google_maps_111111111111111111111
                     style:
                       color: white
                       font-size: 1.4em
@@ -76,64 +75,68 @@ views:
             type: horizontal-stack
           - entities:
               - entity: binary_sensor.silvio
+                secondary_info: last-changed
                 icon: 'mdi:account-circle'
               - entity: sensor.precisa_trabalhar
             show_header_toggle: false
             type: entities
         type: vertical-stack
+      - columns: 3
+        entities:
+          - entity: switch.tv_quarto
+            name: Tv Quarto
+            tap_action:
+              action: toggle
+          - entity: switch.tv_lg_55
+            tap_action:
+              action: toggle
+          - entity: switch.xboom_som
+            name: Xboom
+            tap_action:
+              action: toggle
+        type: glance
       - cards:
           - entity: climate.climatizador
             name: Ar Suíte
             type: thermostat
           - entities:
+              - entity: sensor.suite_umidade
               - label: Funções do Ar da Suíte
                 type: section
+              - entity: fan.ventilacao_quarto
               - entity: script.air_quarto_led
                 name: Lig. / Des. Led
               - entity: script.air_quarto_swing
                 name: Swing
-              - label: Somente Vento
-                type: section
-              - entity: script.air_quarto_vent_max
-                icon: 'mdi:fan'
-                name: Máximo
-              - entity: script.air_quarto_vent_med
-                icon: 'mdi:fan'
-                name: Médio
-              - entity: script.air_quarto_vent_min
-                icon: 'mdi:fan'
-                name: Mínimo
             type: entities
-          - cards:
-              - entities: sensor.suite_temperatura
-                line_color: '#3F51B5'
-                name: Suíte
-                type: 'custom:mini-graph-card'
-              - entities: sensor.suite_umidade
-                line_color: '#00BFA5'
-                name: Suíte
-                type: 'custom:mini-graph-card'
-            type: horizontal-stack
         type: vertical-stack
       - cards:
           - cards:
+              - entities: sensor.dark_sky_temperature
+                line_color: '#58a5f0'
+                name: Externa
+                type: 'custom:mini-graph-card'
               - entities: sensor.cozinha_temperatura
-                line_color: '#3F51B5'
+                line_color: '#58a5f0'
                 name: Cozinha
+                type: 'custom:mini-graph-card'
+              - entities: sensor.banheiro_social_temperatura
+                line_color: '#58a5f0'
+                name: B.Social
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entities: sensor.dark_sky_humidity
+                line_color: '#1DE9B6'
+                name: Externa
                 type: 'custom:mini-graph-card'
               - entities: sensor.cozinha_umidade
                 line_color: '#1DE9B6'
                 name: Cozinha
                 type: 'custom:mini-graph-card'
-            type: horizontal-stack
-          - cards:
-              - entities: sensor.banheiro_social_temperatura
-                line_color: '#3F51B5'
-                name: Banheiro Social
-                type: 'custom:mini-graph-card'
               - entities: sensor.banheiro_social_umidade
                 line_color: '#1DE9B6'
-                name: Banheiro Social
+                name: B.Social
                 type: 'custom:mini-graph-card'
             type: horizontal-stack
         type: vertical-stack
@@ -142,20 +145,14 @@ views:
             name: Ventilador (Portatil)
         show_header_toggle: false
         type: entities
-      - entities:
-          - sensor.alarm_clock_time
-          - input_number.alarm_clock_hour
-          - input_number.alarm_clock_minutes
-          - input_text.text_clock
-          - input_text.text_url_youtube
-          - input_number.alarm_clock_volume
-          - input_boolean.alarm_clock_status
-        show_header_toggle: false
-        title: Despertador
-        type: entities
       - entity: weather.dark_sky
         icons: /local/icons/
         type: 'custom:weather-card'
+      - customIsOffColor: '#F00000'
+        customIsOffSpdColor: '#444444'
+        customTheme: true
+        entity: fan.ventilacao_quarto
+        type: 'custom:fan-control-entity-row'
     icon: 'mdi:home-assistant'
     path: default_view
     title: Home
@@ -370,19 +367,6 @@ views:
     title: Iluminação
   - badges: []
     cards:
-      - columns: 3
-        entities:
-          - entity: switch.tv_quarto
-            name: Tv Quarto
-            tap_action:
-              action: toggle
-          - entity: switch.tv_lg_55
-            tap_action:
-              action: toggle
-          - entity: switch.xboom_som
-            tap_action:
-              action: toggle
-        type: glance
       - entities:
           - entity: switch.tv_quarto
           - entity: script.tv_quarto_vol_up
@@ -442,13 +426,14 @@ views:
             name: Ativa / Desativa
           - entity: alarm_control_panel.alarme_da_casa
             name: Status
+          - label: Sirenes
+            type: section
+          - entity: switch.sirenes
+            name: Sirene Externa
         show_header_toggle: false
         title: Alarme da Casa
         type: entities
       - entities:
-          - entity: switch.sirenes
-          - label: Sensores
-            type: section
           - entity: binary_sensor.sala_social
             secondary_info: last-changed
           - entity: binary_sensor.sala_jantar
@@ -478,63 +463,60 @@ views:
           - type: section
           - entity: script.reseta_sensores
         show_header_toggle: false
-        title: Alarme Monitorameto
+        title: Sensores
         type: entities
-      - entity: camera.wanscam_360
-        type: picture-entity
-      - entity: camera.xiaofang
-        type: picture-entity
-      - entity: camera.camera_interna
-        type: picture-entity
+      - camera_image: camera.wanscam_360
+        entities:
+          - switch.camwascam_esq
+          - switch.camwascam_dir
+          - switch.camwascam_up
+          - switch.camwascam_down
+          - switch.camwascam_centralizar
+          - script.camwascam_p1
+          - script.camwascam_p2
+          - script.fotos_garagem
+          - script.video_garagem
+        type: picture-glance
+      - camera_image: camera.xiaofang
+        entities:
+          - script.fotos_piscina
+          - script.video_piscina
+        type: picture-glance
+      - camera_image: camera.camera_interna
+        entities:
+          - script.fotos_interna
+          - script.video_interna
+        type: picture-glance
       - entities:
-          - entity: switch.camwascam_dir
-            icon: 'mdi:arrow-right-circle'
-            name: Direita
-          - entity: switch.camwascam_esq
-            icon: 'mdi:arrow-left-circle'
-            name: Esquerda
-          - entity: switch.camwascam_down
-            icon: 'mdi:arrow-down-circle'
-            name: Baixo
-          - entity: switch.camwascam_up
-            icon: 'mdi:arrow-up-circle'
-            name: Cima
-          - entity: switch.camwascam_centralizar
-            icon: 'mdi:arrow-left-circle'
-            name: Centralizar
-          - entity: switch.camwascam_p1
-          - entity: switch.camwascam_p2
-          - entity: switch.camwascam_p3
+          - entity: script.cade_a_flavia
+            name: Localização Flávia
+          - entity: script.cade_o_rudi
+            name: Localização Rudimar
         show_header_toggle: false
-        title: Cam Garagem
+        title: Envia localização no Telegram
         type: entities
       - type: entities
         entities:
-          - entity: sensor.xiaofang_light_sensor
-          - entity: switch.xiaofang_h264_rtsp_server
-          - entity: switch.xiaofang_mjpeg_rtsp_server
-          - entity: switch.xiaofang_ir_filter
-          - entity: switch.xiaofang_ir_led
-          - entity: switch.xiaofang_night_mode
-          - entity: switch.xiaofang_night_mode_auto
-          - entity: switch.xiaofang_blue_led
-          - entity: switch.xiaofang_yellow_led
-          - entity: switch.xiaofang_motion_detection
-          - entity: switch.xiaofang_motion_tracking
-          - entity: camera.xiaofang_motion_snapshot
-          - entity: binary_sensor.xiaofang_motion_sensor
-          - entity: switch.xiaofang_motion_send_telegram
-        title: Cam Xiaofang
-        show_header_toggle: false
-      - type: entities
-        entities:
-          - entity: automation.motion_detected
-        title: Automacao teste xiaofang
+          - entity: camera.xiaofang_streaming
+          - entity: camera.wanscam_streaming
     icon: 'mdi:security'
     path: ''
     title: Segurança
   - badges: []
     cards:
+      - entities:
+          - entity: input_select.src_cast_audio
+          - entity: input_select.str_audio
+          - entity: script.ouvir_audio
+            icon: 'mdi:play-circle-outline'
+            name: Play
+          - entity: script.stop_audio
+            icon: 'mdi:stop-circle-outline'
+            name: Stop
+          - entity: input_number.audio_volume
+        show_header_toggle: false
+        title: Áudio Player
+        type: entities
       - artwork: cover
         entity: media_player.spotify
         media_buttons:
@@ -570,29 +552,80 @@ views:
         type: media-control
       - entity: media_player.google_home
         type: media-control
+      - entities:
+          - entity: media_player.google_home
+            group: true
+            hide_controls: true
+            name: Google Home Quarto
+            show_tts: google
+            type: 'custom:mini-media-player'
+          - entity: media_player.google_home_sala
+            group: true
+            hide_controls: true
+            show_tts: google
+            type: 'custom:mini-media-player'
+        show_header_toggle: false
+        title: Google Home
+        type: entities
       - entity: media_player.google_home_sala
         type: media-control
     icon: 'mdi:music'
     title: Audio
   - badges: []
     cards:
-      - entity: media_player.tv_do_quarto
-        type: media-control
-      - entity: media_player.unnamed_device
-        type: media-control
       - entity: media_player.lg_smart_tv
         type: media-control
-      - artwork_border: true
-        entity: media_player.tv_do_quarto
-        show_source: true
-        type: 'custom:mini-media-player'
-      - artwork_border: true
-        entity: media_player.unnamed_device
-        show_source: true
-        type: 'custom:mini-media-player'
+      - entities:
+          - entity: input_select.src_cast_video
+          - entity: input_select.str_video
+          - entity: script.ver_video
+            icon: 'mdi:play-circle-outline'
+            name: Play
+          - entity: script.stop_video
+            icon: 'mdi:stop-circle-outline'
+            name: Stop
+          - entity: input_number.video_volume
+        show_header_toggle: false
+        title: TV Player
+        type: entities
+      - entity: media_player.tv_do_quarto
+        type: media-control
+      - entity: media_player.tv_da_sala
+        type: media-control
     icon: 'mdi:filmstrip'
     path: view_multimidia
     title: Video
+  - badges: []
+    cards:
+      - entities:
+          - entity: sensor.despert1_despertar
+          - entity: input_select.despert1_src
+          - entity: input_number.despert1_hora
+          - entity: input_number.despert1_minuto
+          - entity: input_text.despert1_mensagem
+          - entity: input_select.despert1_audio_str
+          - entity: input_number.despert1_volume
+          - entity: input_boolean.despert1_status
+        show_header_toggle: false
+        title: Despertador (Rádio)
+        type: entities
+      - entities:
+          - entity: sensor.despert2_despertar
+          - entity: input_select.despert2_src
+          - entity: input_number.despert2_hora
+          - entity: input_number.despert2_minuto
+          - entity: input_text.despert2_mensagem
+          - entity: input_number.despert2_volume
+          - entity: input_boolean.despert2_status
+        show_header_toggle: false
+        title: Despertador (Simples)
+        type: entities
+      - entity: sensor.time
+        scale: 30px
+        title: Hora
+        type: 'custom:bignumber-card'
+    icon: 'mdi:alarm-multiple'
+    title: Despertadores
   - badges: []
     cards:
       - entity: weather.dark_sky
@@ -619,8 +652,8 @@ views:
           https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=6&level=surface&overlay=rain&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
       - cards:
           - entities:
-              - sensor.suite_humidade
-              - sensor.cozinha_humidade
+              - sensor.suite_umidade
+              - sensor.cozinha_umidade
               - sensor.banheiro_social_umidade
             hours_to_show: 48
             title: Humidades 48h
@@ -654,14 +687,12 @@ views:
           - label: Postes
             type: section
           - entity: sensor.anoiteceu
-            icon: 'mdi:clock'
             name: Ligar
           - entity: input_datetime.poste_off
             name: Desligar
           - label: Arandelas
             type: section
           - entity: sensor.anoiteceu
-            icon: 'mdi:clock'
             name: Ligar
           - entity: input_datetime.arandelas_off
             name: Desligar
@@ -695,28 +726,40 @@ views:
         title: Alarme Movimentos
         type: entities
       - entities:
-          - entity: automation.alarme_notif_quando_for_ativado
-          - entity: automation.alarme_aviso_ativando_em_30s
+          - entity: automation.alarme_aviso_que_sera_ativado
+          - entity: automation.alarme_notif_que_foi_ativado
+          - entity: automation.alarme_apaga_todas_as_luzes_quando_ativo
+          - entity: automation.alarme_desliga_sirene_ao_ser_desativado
           - entity: automation.alarme_aviso_desativado
+          - entity: automation.alarme_disparar_ao_ter_sensor_violado
           - entity: automation.alarme_testar_sensores
+          - entity: automation.notificacao_sensor_alarme_off_s_ninguem
         show_header_toggle: false
         title: Alarme da Casa
         type: entities
       - entities:
           - label: 'Luz corredor liga com movimento:'
             type: section
-          - entity: automation.luz_corredor_liga_18_30h_as_07_30_movimento
-            name: 'Liga aut. entre 18:30h e 07:30h'
+          - entity: automation.luz_corredor_liga_18_00h_as_07_30_movimento
+            name: 'Liga aut. entre 18:00h e 07:30h'
           - entity: automation.luz_corredor_desliga_s_movimento_2min
             name: Deseliga se não tiver movinto (2min)
           - label: 'Luz banheiros desligam se ligada por muito tempo:'
             type: section
+          - entity: input_number.tempo_banheiro_suite
+            name: Suíte
           - entity: automation.luz_sem_desligar_banheiro_suite
-            name: Banhero da suíte (30min)
+            name: Banhero da suíte
+          - type: section
+          - entity: input_number.tempo_banheiro_social
+            name: Social
           - entity: automation.luz_sem_desligar_banheiro_social
-            name: Banhero social (30min)
+            name: Banhero social
+          - type: section
+          - entity: input_number.tempo_banheiro_lavabo
+            name: Lavabo
           - entity: automation.luz_sem_desligar_lavabo
-            name: Lavabo (10min)
+            name: Lavabo
         show_header_toggle: false
         title: Regras Luzes Internas
         type: entities
@@ -740,17 +783,19 @@ views:
           - label: 'Renovar certificado automaticamente:'
             type: section
           - entity: automation.renova_let_s_encrypt
-          - label: 'Configuração do despertador na suíte:'
+          - label: 'Configuração dos despertadores:'
             type: section
-          - entity: automation.conf_despertador
+          - entity: automation.conf_despertador_1
+          - entity: automation.conf_despertador_2
           - label: 'Desliga TVs/Som quando não utilizado:'
             type: section
-          - entity: automation.tv_quarto_desliga_sem_player_3min
+          - entity: automation.tv_quarto_desliga_sem_player_5min
         show_header_toggle: false
         title: Diversos
         type: entities
       - entities:
           - entity: binary_sensor.silvio
+            secondary_info: last-changed
           - label: Liga luzes e desativa alarme
             type: section
           - entity: input_datetime.silvio_on
@@ -759,10 +804,13 @@ views:
             type: section
           - entity: input_datetime.silvio_off
           - entity: automation.silvio_saiu
-          - label: Notifica que chegou ou saiu de casa
+          - label: >-
+              Verifica se silvio esta conectado para desativar algumas
+              funções/notificações
             type: section
           - entity: automation.silvio_conectado
           - entity: automation.silvio_desconectado
+          - entity: automation.silvio_desativar_automacao_alarme
             type: entities
         show_header_toggle: false
         title: Regras Silvio em casa
@@ -880,21 +928,33 @@ views:
           - label: Controle 1
             type: section
           - entity: binary_sensor.c1_armar
+            secondary_info: last-changed
           - entity: binary_sensor.c1_desarmar
+            secondary_info: last-changed
           - entity: binary_sensor.c1_home
+            secondary_info: last-changed
           - entity: binary_sensor.c1_sos
+            secondary_info: last-changed
           - label: Controle 2
             type: section
           - entity: binary_sensor.c2_armar
+            secondary_info: last-changed
           - entity: binary_sensor.c2_desarmar
+            secondary_info: last-changed
           - entity: binary_sensor.c2_home
+            secondary_info: last-changed
           - entity: binary_sensor.c2_sos
+            secondary_info: last-changed
           - label: Controle 3
             type: section
           - entity: binary_sensor.c3_armar
+            secondary_info: last-changed
           - entity: binary_sensor.c3_desarmar
+            secondary_info: last-changed
           - entity: binary_sensor.c3_home
+            secondary_info: last-changed
           - entity: binary_sensor.c3_sos
+            secondary_info: last-changed
         show_header_toggle: false
         title: Controles Digoo (433Mhz)
         type: entities
@@ -912,18 +972,6 @@ views:
     title: Dispositivos
   - badges: []
     cards:
-      - entities:
-          - entity: script.foto_cam
-          - entity: script.cade_a_flavia
-          - entity: script.cade_o_rudi
-        show_header_toggle: false
-        title: Script
-        type: entities
-      - entities:
-          - scene.suite_romantica
-        show_header_toggle: false
-        title: Cena (Teste)
-        type: entities
       - elements:
           - entity: light.yeelight_color1_7c49eb15924b
             style:
@@ -937,51 +985,10 @@ views:
             type: state-icon
         image: /local/imgs/planta-limpa.svg
         type: picture-elements
-      - entities:
-          - entity: script.grava_video
-          - entity: camera.wanscam_streaming
-        show_header_toggle: false
-        title: Teste
-        type: entities
     icon: 'mdi:floor-plan'
     title: Planta
   - badges: []
     cards:
-      - entity: sensor.precisa_trabalhar
-        hold_action:
-          action: none
-        tap_action:
-          action: more-info
-        type: entity-button
-      - entities:
-          - entity: media_player.google_home
-            group: true
-            hide_controls: true
-            name: Google Home Quarto
-            show_tts: google
-            type: 'custom:mini-media-player'
-          - entity: media_player.google_home_sala
-            group: true
-            hide_controls: true
-            show_tts: google
-            type: 'custom:mini-media-player'
-        show_header_toggle: false
-        title: Google Home
-        type: entities
-      - cards:
-          - entities:
-              - group.luzes_externas
-              - sensor.cozinha_temperatura
-              - sensor.banheiro_social_temperatura
-            type: glance
-          - entities:
-              - light.garagem
-              - entity: script.tv_quarto_vol_up
-                name: Receiver
-              - switch.tv_quarto
-            type: entities
-        title: My Card
-        type: 'custom:vertical-stack-in-card'
       - entity: sensor.bateria_rudi
         from: left
         max: 100
@@ -1024,14 +1031,15 @@ views:
                 graph: line
                 name: Suíte
                 type: sensor
-            type: horizontal-stack
-          - cards:
               - entity: sensor.cozinha_umidade
                 graph: line
                 name: Cozinha
                 type: sensor
+            type: horizontal-stack
+          - cards:
               - entity: sensor.cozinha_temperatura
                 graph: line
+                hours_to_show: 48
                 name: Cozinha
                 type: sensor
             type: horizontal-stack
@@ -1047,32 +1055,32 @@ views:
             type: horizontal-stack
         type: vertical-stack
       - cards:
+          - content: 'Texto '
+            title: Título
+            type: markdown
           - cards:
-              - entity: switch.tv_quarto
-                name: ' '
-                tap_action:
-                  action: toggle
+              - entity: switch.camwascam_esq
+                icon: 'mdi:arrow-left-circle'
+                name: Esq.
                 type: entity-button
-              - entity: script.tv_quarto_vol_up
-                name: ' '
+              - entity: switch.camwascam_dir
+                icon: 'mdi:arrow-right-circle'
+                name: Dir.
                 type: entity-button
-              - entity: script.tv_quarto_vol_down
-                name: ' '
-                tap_action:
-                  action: toggle
+              - entity: switch.camwascam_down
+                icon: 'mdi:arrow-down-circle'
+                name: Baixo
                 type: entity-button
-              - entity: script.tv_quarto_mute
-                name: ' '
-                tap_action:
-                  action: toggle
-                type: entity-button
-              - entity: script.tv_quarto_sleep
-                name: ' '
-                tap_action:
-                  action: toggle
+              - entity: switch.camwascam_up
+                icon: 'mdi:arrow-up-circle'
+                name: Cima
                 type: entity-button
             type: horizontal-stack
           - cards:
+              - entity: switch.camwascam_centralizar
+                icon: 'mdi:rotate-orbit'
+                name: ' '
+                type: entity-button
               - entity: script.tv_quarto_input
                 name: ' '
                 tap_action:
@@ -1082,108 +1090,43 @@ views:
                 icon: 'mdi:floor-lamp'
                 name: ' '
                 type: entity-button
-              - entity: light.closet
-                icon: 'mdi:tshirt-crew'
-                name: ' '
-                tap_action:
-                  action: toggle
-                type: entity-button
-              - entity: light.quarto_do_meio
-                icon: 'mdi:hotel'
-                name: ' '
-                tap_action:
-                  action: toggle
-                type: entity-button
-              - entity: light.quarto_da_frente
-                icon: 'mdi:hotel'
-                name: ' '
-                tap_action:
-                  action: toggle
-                type: entity-button
             type: horizontal-stack
         type: vertical-stack
+      - entities:
+          - scene.suite_romantica
+        show_header_toggle: false
+        title: Cena (Teste)
+        type: entities
       - cards:
-          - entity: light.quarto_da_suite
-            icon: 'mdi:hotel'
-            name: Suíte
-            tap_action:
-              action: toggle
-            type: entity-button
-          - entity: script.off_todas_luzes
-            icon: 'mdi:light-switch'
-            name: Quarto F
-            tap_action:
-              action: toggle
-            type: entity-button
-        type: horizontal-stack
-      - cards:
-          - content: ' '
-            title: Quartos
-            type: markdown
           - cards:
-              - entity: light.quarto_da_suite
-                icon: 'mdi:hotel'
-                name: Suíte
-                tap_action:
-                  action: toggle
+              - entity: switch.camwascam_esq
+                icon: 'mdi:arrow-left-circle'
+                name: Esq.
                 type: entity-button
-              - entity: light.quarto_da_suite
-                icon: 'mdi:hotel'
-                name: Suíte
-                tap_action:
-                  action: toggle
+              - entity: switch.camwascam_dir
+                icon: 'mdi:arrow-right-circle'
+                name: Dir.
                 type: entity-button
-              - entity: script.off_todas_luzes
-                icon: 'mdi:light-switch'
-                name: Quarto F
-                tap_action:
-                  action: toggle
+              - entity: switch.camwascam_down
+                icon: 'mdi:arrow-down-circle'
+                name: Baixo
                 type: entity-button
-            type: horizontal-stack
-          - content: Cozinha
-            title: null
-            type: markdown
-          - cards:
-              - entity: light.central
-                tap_action:
-                  action: toggle
-                type: entity-button
-              - entity: light.pia
-                tap_action:
-                  action: toggle
-                type: entity-button
-              - entity: light.cozinha
-                tap_action:
-                  action: toggle
+              - entity: switch.camwascam_up
+                icon: 'mdi:arrow-up-circle'
+                name: Cima
                 type: entity-button
             type: horizontal-stack
           - cards:
-              - entity: light.pendentes
-                tap_action:
-                  action: toggle
-                type: entity-button
-              - entity: light.bancada
-                tap_action:
-                  action: toggle
-                type: entity-button
-            type: horizontal-stack
-          - content: Games
-            title: null
-            type: markdown
-          - cards:
-              - entity: light.quarto_da_suite
-                icon: 'mdi:hotel'
-                name: Suíte
-                tap_action:
-                  action: toggle
-                type: entity-button
-              - entity: script.off_todas_luzes
-                icon: 'mdi:light-switch'
-                name: Quarto F
-                tap_action:
-                  action: toggle
-                type: entity-button
-            type: horizontal-stack
+              - entities:
+                  - entity: sensor.suite_umidade
+                  - label: Funções do Ar da Suíte
+                    type: section
+                  - entity: script.air_quarto_led
+                    name: Lig. / Des. Led
+                  - entity: script.air_quarto_swing
+                    name: Swing
+                type: entities
+            type: vertical-stack
         type: vertical-stack
-    icon: 'mdi:bug'
+    icon: ''
     title: Lab

@@ -5,6 +5,7 @@
 # | |  | | (_) | | | | | |  __/  / ____ \\__ \__ \ \__ \ || (_| | | | | |_
 # |_|  |_|\___/|_| |_| |_|\___| /_/    \_\___/___/_|___/\__\__,_|_| |_|\__|
 #
+# https://www.home-assistant.io/docs/configuration/basic/
 homeassistant:
   # Nome do local onde o Home Assistant está sendo executado
   name: Home
@@ -12,7 +13,7 @@ homeassistant:
   latitude: !secret lat
   longitude: !secret long
   # Impactos meteorológicos / dados do nascer do sol (altitude acima do nível do mar em metros)
-  elevation: 0
+  elevation: 150
   # metric para Metric, imperial para Imperial
   unit_system: metric
   # Escolha o seu aqui: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -34,16 +35,16 @@ homeassistant:
 # |  ___/ _ \ '__/ __|/ _ \| '_ \
 # | |  |  __/ |  \__ \ (_) | | | |
 # |_|   \___|_|  |___/\___/|_| |_|
-#
+# https://www.home-assistant.io/components/person/
 person:
   - name: Rudi
     id: 3nfr8CXF
     device_trackers:
-      - device_tracker.google_maps_123
+      - device_tracker.google_maps_000000000000000000000
   - name: Flavia
     id: nucnTHSG
     device_trackers:
-      - device_tracker.google_maps_321
+      - device_tracker.google_maps_111111111111111111111
 
 # Zonas de localização
 #  ______
@@ -52,17 +53,12 @@ person:
 #   / / / _ \| '_ \ / _ \
 #  / /_| (_) | | | |  __/
 # /_____\___/|_| |_|\___|
-#
+# https://www.home-assistant.io/components/zone/
 zone:
   - name: "SpeedRS"
-    latitude: !secret speed_lat
-    longitude: !secret speed_long
-    radius: 100
-    icon: mdi:briefcase
-  - name: "Backbone"
     latitude: !secret back_latitude
     longitude: !secret back_longitude
-    radius: 100
+    radius: 130
     icon: mdi:briefcase
   - name: "Maria João"
     latitude: !secret mj_latitude
@@ -82,7 +78,7 @@ zone:
 #  \___ \ / __/ _ \ '_ \ / _ \
 #  ____) | (_|  __/ | | |  __/
 # |_____/ \___\___|_| |_|\___|
-#
+# https://www.home-assistant.io/components/scene/
 scene:
   - name: "Suíte Romantica"
     entities:
@@ -98,7 +94,7 @@ scene:
 # |  __| '__/ _ \| '_ \| __/ _ \ '_ \ / _` |
 # | |  | | | (_) | | | | ||  __/ | | | (_| |
 # |_|  |_|  \___/|_| |_|\__\___|_| |_|\__,_|
-#
+# https://www.home-assistant.io/components/frontend/
 frontend:
   themes: !include themes.yaml
 #  themes: !include_dir_merge_named themes/
@@ -110,16 +106,18 @@ frontend:
 # |  ___/ _` | '_ \ / _ \ |   | | |  _| '__/ _` | '_ ` _ \ / _ \
 # | |  | (_| | | | |  __/ |  _| |_| | | | | (_| | | | | | |  __/
 # |_|   \__,_|_| |_|\___|_| |_____|_| |_|  \__,_|_| |_| |_|\___|
-#
+# https://www.home-assistant.io/components/panel_iframe/
 #panel_iframe:
-#  tasmotaadm:
-#    title: Tasmota ADM
-#    url: http://100.64.0.5:9541
-#    icon: mdi:pulse
-#  configurator:
-#    title: Editor
-#    icon: mdi:wrench
-#    url: http://100.64.0.5:3218
+#  - name: hassio-main
+#    sidebar_title: Configurador
+#    sidebar_icon: hass:settings
+#    js_url: /api/hassio/app/entrypoint.js
+#    url_path: configurator
+#    embed_iframe: true
+#    require_admin: true
+#    config:
+#      ingress: core_configurator
+
 
 # Enables configuration UI
 #   _____             __ _
@@ -130,7 +128,28 @@ frontend:
 #  \_____\___/|_| |_|_| |_|\__, |
 #                           __/ |
 #                          |___/
+# https://www.home-assistant.io/components/config/
 config:
+
+#default_config:
+#[
+#    "automation",
+#    "cloud",
+#    "config",
+#    "conversation",
+#    "frontend",
+#    "history",
+#    "logbook",
+#    "map",
+#    "mobile_app",
+#    "person",
+#    "script",
+#    "sun",
+#    "system_health",
+#    "updater",
+#    "zeroconf"
+#]
+
 
 # Armazenamento do Banco de dados
 #  _____                        _
@@ -139,11 +158,10 @@ config:
 # |  _  // _ \/ __/ _ \| '__/ _` |/ _ \ '__|
 # | | \ \  __/ (_| (_) | | | (_| |  __/ |
 # |_|  \_\___|\___\___/|_|  \__,_|\___|_|
-#
+# https://www.home-assistant.io/components/recorder/
 recorder:
   purge_keep_days: 3
   db_url: !secret maria_db
-#  purge_keep_days: 7
 
 #  _    _ _   _
 # | |  | | | | |
@@ -151,8 +169,8 @@ recorder:
 # |  __  | __| __| '_ \
 # | |  | | |_| |_| |_) |
 # |_|  |_|\__|\__| .__/
-#                | |
 #                |_|
+# https://www.home-assistant.io/components/http/
 http:
   #server_port: 55123
   base_url: !secret url_base
@@ -169,24 +187,12 @@ http:
 # | |  | | '_ \ / _` |/ _` | __/ _ \ '__|
 # | |__| | |_) | (_| | (_| | ||  __/ |
 #  \____/| .__/ \__,_|\__,_|\__\___|_|
-#        | |
 #        |_|
+# https://www.home-assistant.io/components/updater/
 updater:
   # Opcional, permite que os desenvolvedores do Home Assistant se concentrem em componentes populares.
   # include_used_components: true
 
-# Custom updater (https://github.com/custom-components/custom_updater/wiki/Installation)
-#   _____          _                                    _       _
-#  / ____|        | |                                  | |     | |
-# | |    _   _ ___| |_ ___  _ __ ___    _   _ _ __   __| | __ _| |_ ___ _ __
-# | |   | | | / __| __/ _ \| '_ ` _ \  | | | | '_ \ / _` |/ _` | __/ _ \ '__|
-# | |___| |_| \__ \ || (_) | | | | | | | |_| | |_) | (_| | (_| | ||  __/ |
-#  \_____\__,_|___/\__\___/|_| |_| |_|  \__,_| .__/ \__,_|\__,_|\__\___|_|
-#                                            | |
-#                                            |_|
-#custom_updater:
-#  component_urls:
-#    - https://raw.githubusercontent.com/vpnmaster/homeassistant-custom-components/master/custom_components.json
 
 # Descubra alguns dispositivos automaticamente
 #  _____  _
@@ -197,6 +203,7 @@ updater:
 # |_____/|_|___/\___\___/ \_/ \___|_|   \__, |
 #                                        __/ |
 #                                       |___/
+# https://www.home-assistant.io/components/discovery/
 discovery:
 
 # Permite que você emita comandos de voz do frontend em navegadores ativados
@@ -206,6 +213,7 @@ discovery:
 # | |    / _ \| '_ \ \ / / _ \ '__/ __|/ _` | __| |/ _ \| '_ \
 # | |___| (_) | | | \ V /  __/ |  \__ \ (_| | |_| | (_) | | | |
 #  \_____\___/|_| |_|\_/ \___|_|  |___/\__,_|\__|_|\___/|_| |_|
+# https://www.home-assistant.io/components/conversation/
 conversation:
 
 # Suporte para rastrear mudanças de estado ao longo do tempo
@@ -216,15 +224,20 @@ conversation:
 # | |  | | \__ \ || (_) | |  | |_| |
 # |_|  |_|_|___/\__\___/|_|   \__, |
 #                             |___/
+# https://www.home-assistant.io/components/history/
 history:
-  exclude:
-    domains:
-      - automation
-      - weblink
-      - updater
-    entities:
-      - sensor.last_boot
-      - sensor.date
+#  include:
+#    domains:
+#      - sensor
+#      - switch
+#      - light
+#      - binary_sensor
+#  exclude:
+#    entities:
+#      - sensor.last_boot
+#      - sensor.date
+#      - sensor.time
+#      - binary_sensor.trabalhando
 
 # Ver todos os eventos em um diário de bordo
 #  _                 _                 _
@@ -233,16 +246,15 @@ history:
 # | |___| (_) | (_| | |_) | (_) | (_) |   <
 # |______\___/ \__, |_.__/ \___/ \___/|_|\_\
 #              |___/
+# https://www.home-assistant.io/components/logbook/
 logbook:
-  include:
-    domains:
-      - sensor
-      - switch
-      - media_player
-  exclude:
-    entities:
-      - sensor.last_boot
-      - sensor.date
+#  include:
+#    domains:
+#      - switch
+#      - light
+#      - script
+#      - automation
+
 
 # Nível de registro de atividades
 #  _
@@ -251,16 +263,12 @@ logbook:
 # | |___| (_) | (_| | (_| |  __/ |
 # |______\___/ \__, |\__, |\___|_|
 #              |___/ |___/
+# https://www.home-assistant.io/components/logger/
 logger:
-  default: warning
+#  default: warning
 #  logs:
 #    asyncio: debug
 
-#logger:
-#  default: error
-#  logs:
-#    homeassistant.components.mqtt: critical
-#    #critical#fatal#error#warning#warn#info#debug#notset
 
 # Texto em voz
 #  _   _
@@ -269,8 +277,11 @@ logger:
 # | __| __/ __|
 # | |_| |_\__ \
 #  \__|\__|___/
+# https://www.home-assistant.io/components/tts/
+# https://www.home-assistant.io/components/google_translate/
+# https://www.home-assistant.io/components/voicerss/
 tts:
-  - platform: google
+  - platform: google_translate
     language: 'pt-br'
     cache: true
     cache_dir: /tmp/tts
@@ -287,7 +298,7 @@ tts:
 # | |    | |/ _ \| | | |/ _` |
 # | |____| | (_) | |_| | (_| |
 #  \_____|_|\___/ \__,_|\__,_|
-#
+# https://www.home-assistant.io/cloud/
 #cloud:
 
 # Localizador
@@ -297,6 +308,8 @@ tts:
 # | |  | |/ _ \ \ / / |/ __/ _ \ | __| '__/ _` |/ __| |/ / _ \ '__|
 # | |__| |  __/\ V /| | (_|  __/ | |_| | | (_| | (__|   <  __/ |
 # |_____/ \___| \_/ |_|\___\___|  \__|_|  \__,_|\___|_|\_\___|_|
+# https://www.home-assistant.io/components/device_tracker/
+# https://www.home-assistant.io/components/google_maps/
 device_tracker:
   - platform: google_maps
     username: !secret gmail_user
@@ -323,6 +336,8 @@ media_extractor:
 # | |  | |  __/ (_| | | (_| | | |    | | (_| | |_| |  __/ |
 # |_|  |_|\___|\__,_|_|\__,_| |_|    |_|\__,_|\__, |\___|_|
 #                                             |___/
+# https://www.home-assistant.io/components/media_extractor/
+# https://github.com/smartHomeHub/SmartIR
 media_player:
   - platform: spotify
     client_id: !secret spotify_client_id
@@ -333,9 +348,10 @@ media_player:
     access_token: 431855
 #  - platform: smartir
 #    name: TV do Quarto
-#    device_code: 9000
-#    controller_send_service: switch.broadlink_send_packet_100_64_0_26
-#    power_sensor: binary_sensor.chrome_cast_quarto
+#    unique_id: quarto_tv
+#    device_code: 1100
+#    controller_data: 100.64.0.26
+#    power_sensor: binary_sensor.tv_power
 
 
 # Casts (google home mini/chrome cast)
@@ -345,12 +361,13 @@ media_player:
 # | |    / _` / __| __|
 # | |___| (_| \__ \ |_
 #  \_____\__,_|___/\__|
+# https://www.home-assistant.io/components/cast/
 cast:
-  media_player:
-  - host: 100.64.0.20
-  - host: 100.64.0.21
-  - host: 100.64.0.22
-  - host: 100.64.0.19
+#  media_player:
+#  - host: 100.64.0.20
+#  - host: 100.64.0.21
+#  - host: 100.64.0.22
+#  - host: 100.64.0.19
 
 # Mosquito
 #  __  __       _   _
@@ -360,14 +377,16 @@ cast:
 # | |  | | (_| | |_| |_
 # |_|  |_|\__, |\__|\__|
 #            |_|
+# https://www.home-assistant.io/components/mqtt/
+# https://www.home-assistant.io/addons/mosquitto/
 mqtt:
   broker: 100.100.0.3
   port: 1883
   client_id: home-assistant-1
   username: !secret mqtt_username
   password: !secret mqtt_password
-  discovery: true
-  discovery_prefix: homeassistant
+#  discovery: true
+#  discovery_prefix: homeassistant
 
 
 # Mostrando a localização de dispositivos rastreados no mapa
@@ -377,8 +396,8 @@ mqtt:
 # | |\/| |/ _` | '_ \
 # | |  | | (_| | |_) |
 # |_|  |_|\__,_| .__/
-#              | |
 #              |_|
+# https://www.home-assistant.io/components/map/
 map:
 
 # Acompanhe o sol
@@ -388,6 +407,7 @@ map:
 #  \___ \| | | | '_ \
 #  ____) | |_| | | | |
 # |_____/ \__,_|_| |_|
+# https://www.home-assistant.io/components/sun/
 sun:
 
 # Sensores
@@ -397,6 +417,15 @@ sun:
 #  \___ \ / _ \ '_ \/ __|/ _ \| '__|
 #  ____) |  __/ | | \__ \ (_) | |
 # |_____/ \___|_| |_|___/\___/|_|
+# https://www.home-assistant.io/components/sensor/
+# https://www.home-assistant.io/components/sensor.mqtt/
+# https://www.home-assistant.io/components/darksky/
+# https://www.home-assistant.io/components/moon/
+# https://www.home-assistant.io/components/time_date/
+# https://www.home-assistant.io/components/systemmonitor/
+# https://www.home-assistant.io/components/filesize/
+# https://www.home-assistant.io/components/sql/
+# https://www.home-assistant.io/components/template/
 sensor:
   - platform: mqtt
     name: "Suite Temperatura"
@@ -487,29 +516,52 @@ sensor:
     value_template: '{{ value | multiply(0.001) | round(1) }}'
   - platform: template
     sensors:
-      alarm_clock_hour:
-        value_template: '{{ states.input_number.alarm_clock_hour.state | int }}'
-      alarm_clock_minutes:
-        value_template: '{{ states.input_number.alarm_clock_minutes.state | int }}'
-      alarm_clock_time:
+      despert1_hora:
+        value_template: '{{ states.input_number.despert1_hora.state | int }}'
+      despert1_minuto:
+        value_template: '{{ states.input_number.despert1_minuto.state | int }}'
+      despert1_despertar:
+        friendly_name: 'Alarmes definidos para'
+        icon_template: mdi:alarm-bell
         value_template: >-
-          {{ states.sensor.alarm_clock_hour.state }}:
-          {%- if states.sensor.alarm_clock_minutes.state|length == 1 -%}
+          {{ states.sensor.despert1_hora.state }}:
+          {%- if states.sensor.despert1_minuto.state|length == 1 -%}
             0
           {%- endif -%}
-            {{ states.sensor.alarm_clock_minutes.state }}
-      alarm_clock_time_long:
+            {{ states.sensor.despert1_minuto.state }}
+      despert1_despertar_automacao:
         value_template: >-
-          {% if states.sensor.alarm_clock_hour.state|length == 1 -%}
+          {% if states.sensor.despert1_hora.state|length == 1 -%}
             0
           {%- endif -%}
-            {{ states.sensor.alarm_clock_hour.state }}:
-          {%- if states.sensor.alarm_clock_minutes.state|length == 1 -%}
+            {{ states.sensor.despert1_hora.state }}:
+          {%- if states.sensor.despert1_minuto.state|length == 1 -%}
             0
           {%- endif -%}
-            {{ states.sensor.alarm_clock_minutes.state }}
-  - platform: template
-    sensors:
+            {{ states.sensor.despert1_minuto.state }}
+      despert2_hora:
+        value_template: '{{ states.input_number.despert2_hora.state | int }}'
+      despert2_minuto:
+        value_template: '{{ states.input_number.despert2_minuto.state | int }}'
+      despert2_despertar:
+        friendly_name: 'Alarmes definidos para'
+        icon_template: mdi:alarm-bell
+        value_template: >-
+          {{ states.sensor.despert2_hora.state }}:
+          {%- if states.sensor.despert2_minuto.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.despert2_minuto.state }}
+      despert2_despertar_automacao:
+        value_template: >-
+          {% if states.sensor.despert2_hora.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.despert2_hora.state }}:
+          {%- if states.sensor.despert2_minuto.state|length == 1 -%}
+            0
+          {%- endif -%}
+            {{ states.sensor.despert2_minuto.state }}
       pordosol:
         friendly_name: Por do sol
         value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}'
@@ -518,22 +570,25 @@ sensor:
         value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") }}'
       anoiteceu:
         friendly_name: Anoiteceu
+        icon_template: 'mdi:clock'
         value_template: '{{ ((as_timestamp(states.sun.sun.attributes.next_setting) | int + (float(states.input_number.anoitecer.state) * 60)) | timestamp_custom("%H:%M")) }}'
       bateria_rudi:
         friendly_name: Bateria Rudi
+        icon_template: mdi:battery
         unit_of_measurement: '%'
-        value_template:  '{{ states.device_tracker.google_maps_123.attributes.battery_level|int }}'
+        value_template:  '{{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}'
         device_class: battery
       bateria_rudi_st:
-        value_template:  '{{ states.device_tracker.google_maps_123.attributes.battery_charging }}'
+        value_template:  '{{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_charging }}'
         device_class: battery
       bateria_flavia:
         friendly_name: Bateria Flavia
+        icon_template: mdi:battery
         unit_of_measurement: "%"
-        value_template:  '{{ states.device_tracker.google_maps_321.attributes.battery_level|int }}'
+        value_template:  '{{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_level|int }}'
         device_class: battery
       bateria_flavia_st:
-        value_template:  '{{ states.device_tracker.google_maps_321.attributes.battery_charging }}'
+        value_template:  '{{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_charging }}'
         device_class: battery
       bateria_status_rudi:
         friendly_name: Status Bateria Rudi
@@ -577,19 +632,6 @@ sensor:
           {% else %}
             mdi:thumb-down-outline
           {% endif %}
-#  - platform: snmp
-#    name: Upload
-#    host: 100.100.0.1
-#    community: publicremontti
-#    baseoid: 1.3.6.1.2.1.31.1.1.1.10.1
-#    unit_of_measurement: 'bps'
-#  - platform: snmp
-#    name: Download
-#    host: 100.100.0.1
-#    community: publicremontti
-#    baseoid: 1.3.6.1.2.1.31.1.1.1.6.1
-#    unit_of_measurement: 'bps'
-#  - platform: template
 #    sensors:
 #      garagem_kw:
 #        friendly_name: "Garagem kWh"
@@ -610,6 +652,21 @@ sensor:
 #        unit_of_measurement: 'kW/h'
 #        value_template: "{{ ((((9) * float(states.sensor.abajur_on.state)) / 1000) * float(states.input_text.text_valor_kwh.state)) | round(2) }}"
 
+#  - platform: snmp
+#    name: Upload
+#    host: 100.100.0.1
+#    community: public
+#    baseoid: 1.3.6.1.2.1.31.1.1.1.10.1
+#    unit_of_measurement: 'bps'
+#  - platform: snmp
+#    name: Download
+#    host: 100.100.0.1
+#    community: public
+#    baseoid: 1.3.6.1.2.1.31.1.1.1.6.1
+#    unit_of_measurement: 'bps'
+#  - platform: template
+
+
 
 # Binary Sensor
 #  ____  _                           _____
@@ -619,227 +676,295 @@ sensor:
 # | |_) | | | | | (_| | |  | |_| |  ____) |  __/ | | \__ \ (_) | |
 # |____/|_|_| |_|\__,_|_|   \__, | |_____/ \___|_| |_|___/\___/|_|
 #                           |___/
+# https://www.home-assistant.io/components/binary_sensor/
+# https://www.home-assistant.io/components/binary_sensor.mqtt/
+# https://www.home-assistant.io/components/ping/
+# https://community.home-assistant.io/t/sonoff-rf-bridge-strategies-for-receiving-data/108181
 binary_sensor:
   # DIA DE TRABALHO
   - platform: workday
     country: BR
     name: Trabalhando
-
-# DrZzs
-#  - platform: mqtt
-#    name: "Office Book"
-#    state_topic: "tele/RF_Bridge/RESULT"
-#    value_template: '{{value_json.RfReceived.Data}}'
-#    payload_on: "C7C2A1"
-#    payload_off: "C7C2A19off"
-#    qos: 1
-#    retain: false
-
   # CONTROLE DIGOO 1
   - platform: mqtt
     name: C1 Armar
-    payload_on: "2970D1"
-    payload_off: "2970D1off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '2970D1' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c1_armar') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: power
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: C1 Desarmar
-    payload_on: "2970D2"
-    payload_off: "2970D2off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '2970D2' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c1_desarmar') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: power
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: C1 Home
-    payload_on: "2970D4"
-    payload_off: "2970D4off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '2970D4' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c1_home') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: occupancy
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: C1 SOS
-    payload_on: "2970D8"
-    payload_off: "2970D8off"
-    device_class: opening
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '2970D8' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c1_sos') | upper}}
+      {% endif %}
+    off_delay: 2
+    device_class: vibration
   # CONTROLE DIGOO 2
   - platform: mqtt
     name: C2 Armar
-    payload_on: "921051"
-    payload_off: "921051off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '921051' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c2_armar') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: power
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: C2 Desarmar
-    payload_on: "921052"
-    payload_off: "921052off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '921052' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c2_desarmar') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: power
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: C2 Home
-    payload_on: "921054"
-    payload_off: "921054off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '921054' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c2_home') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: occupancy
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: C2 SOS
-    payload_on: "921058"
-    payload_off: "921058off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '921058' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c2_sos') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: vibration
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   # CONTROLE DIGOO 3
   - platform: mqtt
     name: C3 Armar
-    payload_on: "77B0D1"
-    payload_off: "77B0D1off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '77B0D1' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c3_armar') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: power
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: C3 Desarmar
-    payload_on: "77B0D2"
-    payload_off: "77B0D2off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '77B0D2' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c3_desarmar') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: power
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: C3 Home
-    payload_on: "77B0D4"
-    payload_off: "77B0D4off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '77B0D4' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c3_home') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: occupancy
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: C3 SOS
-    payload_on: "77B0D8"
-    payload_off: "77B0D8off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '77B0D8' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.c3_sos') | upper}}
+      {% endif %}
+    off_delay: 2
     device_class: vibration
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   # SENSORES DIGOO ABRE FECHA
   - platform: mqtt
     name: Janela Quarto M
-    payload_on: "996D46"
-    payload_off: "996D46off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '996D46' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.janela_quarto_m') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: window
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Janela Quarto F
-    payload_on: "CD5B46"
-    payload_off: "CD5B46off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'CD5B46' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.janela_quarto_f') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: window
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Janela Suite
-    payload_on: "B92D46"
-    payload_off: "B92D46off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'B92D46' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.janela_suite') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: window
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Janela Cozinha
-    payload_on: "C41B46"
-    payload_off: "C41B46off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'C41B46' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.janela_cozinha') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: window
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Porta Varanda
-    payload_on: "5E6B46"
-    payload_off: "5E6B46off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '5E6B46' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.porta_varanda') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: door
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
-    name: "Porta Entrada"
-    payload_on: "2E9D46"
-    payload_off: "2E9D46off"
+    name: Porta Entrada
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '2E9D46' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.porta_entrada') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: door
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Porta Area
-    payload_on: "09D8C6"
-    payload_off: "09D8C6off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '09D8C6' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.porta_area') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: door
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Janela Closet
-    payload_on: "7F7D46"
-    payload_off: "7F7D46off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '7F7D46' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.janela_closet') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: window
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
-  # SENSORES DIGOO PRESENCA
+#  # SENSORES DIGOO PRESENCA
   - platform: mqtt
     name: Corredor
-    payload_on: "82C186"
-    payload_off: "82C186off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '82C186' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.corredor') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: motion
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Sala Jantar
-    payload_on: "55A486"
-    payload_off: "55A486off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '55A486' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.sala_jantar') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: motion
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Sala Social
-    payload_on: "9B5086"
-    payload_off: "9B5086off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '9B5086' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.sala_social') | upper}}
+      {% endif %}
+    off_delay: 3
     device_class: motion
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Ext Piscina
-    payload_on: "EE4986"
-    payload_off: "EE4986off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'EE4986' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.ext_piscina') | upper}}
+      {% endif %}
+    off_delay: 5
     device_class: motion
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   - platform: mqtt
     name: Ext Garagem
-    payload_on: "AAC186"
-    payload_off: "AAC186off"
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'AAC186' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.ext_garagem') | upper}}
+      {% endif %}
+    off_delay: 5
     device_class: motion
-    state_topic: "tele/sonoffBr1/RESULT"
-    value_template: "{{ value_json.RfReceived.Data }}"
-    qos: 1
   # PINGs
   - platform: ping
     host: 100.64.0.1
@@ -897,6 +1022,10 @@ binary_sensor:
 # | |____| | (_| | | | | |_
 # |______|_|\__, |_| |_|\__|
 #           |___/
+# https://www.home-assistant.io/components/light/
+# https://www.home-assistant.io/components/light.group/
+# https://www.home-assistant.io/components/flux_led/
+# https://www.home-assistant.io/components/light.mqtt/
 light:
   - platform: flux_led
     devices:
@@ -1214,7 +1343,7 @@ light:
 #  - platform: yeelight
 #    devices:
 #      100.64.0.70:
-#        name: "Abajur"
+#        name: "Abajur do Quarto"
 
 
 # Interruptores
@@ -1224,6 +1353,10 @@ light:
 #  \___ \ \ /\ / / | __/ __| '_ \
 #  ____) \ V  V /| | || (__| | | |
 # |_____/ \_/\_/ |_|\__\___|_| |_|
+# https://www.home-assistant.io/components/switch/
+# https://www.home-assistant.io/components/switch.template/
+# https://www.home-assistant.io/components/switch.mqtt/
+# https://www.home-assistant.io/components/broadlink/
 switch:
   - platform: template
     switches:
@@ -1247,20 +1380,18 @@ switch:
   - platform: broadlink
     host: 100.64.0.26
     mac: '34:EA:34:8E:EC:47'
+    type: rm_mini
     timeout: 300
     switches:
       tv_quarto:
         friendly_name: "TV do Quarto"
         command_on: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
         command_off: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
-      #climatizador:
-      #  friendly_name: "Climatizador"
-      #  command_on: 'JgDKAJCNEzQTERI0EzQTERIREzQTERIREzQTERIREzQTNBMREjUSERMREhETNBM0EzQSNRI0EzQTNBM0ExESERMREhETERISEjQTNBM0EzQSERMRExESNBMRExESERMREjQTNBM0EKuQjhI0ExETNBM0EhETERI1EhETERM0EhETERM0EjUSERM0ExESERMREjUSNBM0EzQTNBM0EzQSNRIRExESERMREhETERM0EjUSNRI0ExESERMREzQSERMRExESERM0EjUSNRAADQUAAAAAAAAAAAAAAAAAAA=='
-      #  command_off: 'JgDKAIyQETYREhE2ETYREhETETURExESETYREhISETYRNRETETYREhE2ETURNhE2ERIRNhE2ETUSEhESERMREhE2ERISEhE2ETURNhETERIREhISERIRExESERMRNhE1ETYRNBM1EKyOjxE1ERMRNRE2ERISEhE2ERIRExE1EhIREhE2ETYREhE2ERMRNRE2ETYQNhETETURNhE2ERIRExESERMRNRETERISNRE0EzYREhETERIREhETERISEhESETYRNhE1ETYRNhAADQUAAAAAAAAAAAAAAAAAAA=='
 
   - platform: broadlink
     host: 100.64.0.53
     mac: '78:0F:77:18:39:F8'
+    type: rm_mini
     timeout: 300
     switches:
       xboom_som:
@@ -1275,10 +1406,7 @@ switch:
         friendly_name: Projetor
         command_on: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
         command_off: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
-#      ar_consul:
-#        friendly_name: "Ar Consul"
-#        command_on: 'JgBgAQABKZgVNhU2FRETExQSFBISFRM4FRATORM4FBISFBQSEhQSFBITEhQSORQSFBIUEhQTEhMUEhQ3FBISFBIUFBISOhMSEhQSFBITEhQSFBQSFRISFBQRFBIUEhMSExMTFBIUFBESAAELFREUEhITEhQUEhIUFBMSORQSEhMUEhQSFBISFBIUEhQUEhITEhQSFBQSEhQUExITEhQSFBITEhQSFBIUEhUUEhITFBISFBITFBISFBQTEhQSExQSEhMTExIUFBMSFBQSEhMSFBIUEhMSFBQSFBMUEhITFDcUNxQSEhQSFBI6FDYUAAEJFBIUEhMSEhQSFBQSFBMTExM3FBIUEhIUFBIUEhQSFBIUEhITFBISFBQSFBIUEhQSEhQSExIUFBIUEhIUEhQUEhIUExISFBQSFBISFBQSFBISFBQRFBISFBQSFBIUEhIUFDcUEhQRFBISFBIUFBMTEhQADQUAAAAAAAAAAA=='
-#        command_off: 'JgBgAQABK5cVNhM4FRETExMTExMTExM4ExMTOBU2ExMTExMTExMUEhMTExIUOBMTExMTExMTExMTEhM4ExMTExMTExMTORMTExITExMTExIUEhQTExMTExMSExMTExMTExIUExMTExITAAEKFRETEhMTExMTExMTExMTOBQSExMTEhQSFBIUEhQTExMTEhMTExMTEhQSFBIUExMTExITExMTExIUEhQSFBMTExMSExMTExMSFBIUExMTExMTEhMTExMTExMTExMTExMTExIUEhMTExMTExMTExMTExMTEzcTORQSExMTExM4FTYTAAEKFRETEhMTExMTExMTExMTExM4ExMTEhQSExMTExQTExMTEhMTExIUEhMTExMUExMTExITExMTExIUEhQTExMTExMSExMTExMTExMTExMTExMTEhMTExMTExMTExMTExMTEzgUERQSExMTExMTExMUEhMADQUAAAAAAAAAAA=='
+
   - platform: mqtt
     name: "Sirenes"
     state_topic: "stat/sonoff02/POWER"
@@ -1304,38 +1432,25 @@ switch:
   - platform: command_line
     switches:
       camwascam_dir:
-        friendly_name: WS.Direita
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=right&-speed=45&-usr=admin&-pwd=senha"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
+        friendly_name: 'Direita'
+        command_on:  !secret wascam_curl_direita
+        command_off: !secret wascam_curl_parar
       camwascam_esq:
-        friendly_name: WS.Esquerda
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=left&-speed=45&-usr=admin&-pwd=senha"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
+        friendly_name: 'Esquerda'
+        command_on:  !secret wascam_curl_esquerda
+        command_off: !secret wascam_curl_parar
       camwascam_up:
-        friendly_name: WS.Cima
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=up&-speed=45&-usr=admin&-pwd=senha"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
+        friendly_name: 'Cima'
+        command_on:  !secret wascam_curl_cima
+        command_off: !secret wascam_curl_parar
       camwascam_down:
-        friendly_name: WS.Baixo
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=down&-speed=45&-usr=admin&-pwd=senha"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=stop&-speed=45&-usr=admin&-pwd=senha"'
+        friendly_name: 'Baixo'
+        command_on:  !secret wascam_curl_baixo
+        command_off: !secret wascam_curl_parar
       camwascam_centralizar:
-        friendly_name: WS.Centralizar
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=home&-usr=admin&-pwd=senha"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/ptzctrl.cgi?-step=0&-act=home&-usr=admin&-pwd=senha"'
-      camwascam_p1:
-        friendly_name: WS.P1
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=0"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=0"'
-      camwascam_p2:
-        friendly_name: WS.P2
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=1"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=1"'
-      camwascam_p3:
-        friendly_name: WS.P3
-        command_on:  'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=2"'
-        command_off: 'curl -k "http://100.64.0.60/web/cgi-bin/hi3510/param.cgi?cmd=preset&-act=goto&-usr=admin&-pwd=senha&-number=2"'
-
+        friendly_name: 'Centralizar'
+        command_on:  !secret wascam_curl_centralizar
+        command_off: !secret wascam_curl_parar
 
 # Inputs de texto
 #  _____                   _    _            _
@@ -1346,13 +1461,16 @@ switch:
 # |_____|_| |_| .__/ \__,_|\__| \__\___/_/\_\\__|
 #             | |           ______
 #             |_|          |______|
+# https://www.home-assistant.io/components/input_text/
 input_text:
-  text_clock:
+  despert1_mensagem:
     name: Mensagem
     initial: "Bom dia!"
-  text_url_youtube:
-    name: URL Youtube
-    initial: https://www.youtube.com/watch?v=fvrogxMHmlg
+    icon: mdi:voice
+  despert2_mensagem:
+    name: Mensagem
+    initial: "Já está na hora de ir trabalhar!"
+    icon: mdi:voice
 #  text_valor_kwh:
 #    name: "Valor kW/h"
 #    initial: "0.63"
@@ -1366,6 +1484,7 @@ input_text:
 # |_____|_| |_| .__/ \__,_|\__| \__,_|\__,_|\__\___|\__|_|_| |_| |_|\___|
 #             | |           ______
 #             |_|          |______|
+# https://www.home-assistant.io/components/input_datetime/
 input_datetime:
   poste_off:
     name: "Desligar poste às"
@@ -1397,16 +1516,17 @@ input_datetime:
 # |_____|_| |_| .__/ \__,_|\__| |_| |_|\__,_|_| |_| |_|_.__/ \___|_|
 #             | |           ______
 #             |_|          |______|
+# https://www.home-assistant.io/components/input_number/
 input_number:
   anoitecer:
     name: Anoitecer após Minutos
     icon: mdi:timer
-    initial: 20
+    initial: 10
     min: 0
     max: 90
-    step: 1
+    step: 5
     mode: slider
-  alarm_clock_hour:
+  despert1_hora:
     name: Hora
     icon: mdi:timer
     initial: 7
@@ -1414,17 +1534,81 @@ input_number:
     max: 23
     step: 1
     mode: slider
-  alarm_clock_minutes:
+  despert1_minuto:
     name: Minuto
     icon: mdi:timer
     initial: 00
     min: 0
     max: 59
+    step: 5
+    mode: slider
+  despert1_volume:
+    name: Volume
+    icon: mdi:volume-high
+    initial: 0.40
+    min: 0
+    max: 0.99
+    step: 0.10
+    mode: slider
+  despert2_hora:
+    name: Hora
+    icon: mdi:timer
+    initial: 12
+    min: 0
+    max: 23
     step: 1
     mode: slider
-  alarm_clock_volume:
-    name: Volume
+  despert2_minuto:
+    name: Minuto
     icon: mdi:timer
+    initial: 40
+    min: 0
+    max: 59
+    step: 5
+    mode: slider
+  despert2_volume:
+    name: Volume
+    icon: mdi:volume-high
+    initial: 0.70
+    min: 0
+    max: 0.99
+    step: 0.10
+    mode: slider
+  tempo_banheiro_social:
+    name: "Tempo máx. luz banheiro social"
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 60
+    step: 5
+    mode: slider
+  tempo_banheiro_suite:
+    name: "Tempo máx. luz banheiro suíte"
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 60
+    step: 5
+    mode: slider
+  tempo_banheiro_lavabo:
+    name: "Tempo máx. luz lavabo"
+    icon: mdi:timer
+    initial: 10
+    min: 0
+    max: 30
+    step: 5
+    mode: slider
+  audio_volume:
+    name: Volume
+    icon: mdi:volume-high
+    initial: 0.40
+    min: 0
+    max: 0.99
+    step: 0.10
+    mode: slider
+  video_volume:
+    name: Volume
+    icon: mdi:volume-high
     initial: 0.40
     min: 0
     max: 0.99
@@ -1438,14 +1622,99 @@ input_number:
 #   | | | '_ \| '_ \| | | | __| | '_ \ / _ \ / _ \| |/ _ \/ _` | '_ \
 #  _| |_| | | | |_) | |_| | |_  | |_) | (_) | (_) | |  __/ (_| | | | |
 # |_____|_| |_| .__/ \__,_|\__| |_.__/ \___/ \___/|_|\___|\__,_|_| |_|
-#             | |           ______
-#             |_|          |______|
+#             |_|
+# https://www.home-assistant.io/components/input_boolean/
 input_boolean:
-  alarm_clock_status:
+  despert1_status:
+    name: Status
+    initial: on
+  despert2_status:
     name: Status
     initial: on
   seguranca_casa:
     name: "Segurança"
+
+# Inputs selects
+#  _____                   _              _           _
+# |_   _|                 | |            | |         | |
+#   | |  _ __  _ __  _   _| |_   ___  ___| | ___  ___| |_
+#   | | | '_ \| '_ \| | | | __| / __|/ _ \ |/ _ \/ __| __|
+#  _| |_| | | | |_) | |_| | |_  \__ \  __/ |  __/ (__| |_
+# |_____|_| |_| .__/ \__,_|\__| |___/\___|_|\___|\___|\__|
+#             |_|
+# https://www.home-assistant.io/components/input_select/
+input_select:
+  despert1_src:
+    name: 'Reproduzir em Googlo Home'
+    options:
+      - do Quarto
+      - da Sala
+    icon: mdi:google-home
+  despert1_audio_str:
+    name: 'Ouvir Rádio Despertador'
+    options:
+      - Não
+      - Classic Rock Florida
+      - Mix FM
+      - Kiss FM Brasil
+      - Blues
+      - Diney
+      - Coca-Cola
+      - Transamerica
+      - BBC
+      - DubBase FM
+    icon: mdi:music-note
+  despert2_src:
+    name: 'Reproduzir em Googlo Home'
+    options:
+      - da Sala
+      - do Quarto
+    icon: mdi:google-home
+  src_cast_audio:
+    name: 'Ouvir em'
+    options:
+      - Google Home Quarto
+      - Google Home Sala
+      - Chromecast Tv Sala
+      - Chromecast Tv Quarto
+    icon: mdi:google-home
+  str_audio:
+    name: 'Reproduzir'
+    options:
+      - Historinhas
+      - Sertanejo Boemia
+      - Classic Rock Florida
+      - Mix FM
+      - Kiss FM Brasil
+      - Blues
+      - Diney
+      - Coca-Cola
+      - Transamerica
+      - BBC
+      - DubBase FM
+    icon: mdi:music-note
+  src_cast_video:
+    name: 'Chrome Cast'
+    options:
+      - Quarto
+      - Sala
+    icon: mdi:google-chrome
+  str_video:
+    name: 'Reproduzir'
+    options:
+      - SBT
+      - RDC TV POA
+      - TV GAZETA
+      - TV CIDADE OESTE
+      - REDE TV SP
+      - FUTURA
+      - CAT TVE
+      - TV ITAPETININGA SP
+      - TV NOVA PARAIBA
+      - TV Faap
+      - CONECTV Osasco SP
+      - TV MAR Maceio
+    icon: mdi:library-video
 
 # Permite que outros componentes do Home Assistant processem fluxos de vídeo e áudio.
 #   __  __
@@ -1455,6 +1724,7 @@ input_boolean:
 # | | | | | | | | | | |_) |  __/ (_| |
 # |_| |_| |_| |_| |_| .__/ \___|\__, |
 #                   |_|         |___/
+# https://www.home-assistant.io/components/ffmpeg/
 ffmpeg:
 
 # Cameras
@@ -1464,6 +1734,9 @@ ffmpeg:
 # | |    / _` | '_ ` _ \ / _ \ '__/ _` |
 # | |___| (_| | | | | | |  __/ | | (_| |
 #  \_____\__,_|_| |_| |_|\___|_|  \__,_|
+# https://www.home-assistant.io/components/camera/
+# https://www.home-assistant.io/components/generic/
+# https://www.home-assistant.io/components/onvif/
 camera:
   - platform: generic
     name: Xiaofang
@@ -1472,9 +1745,14 @@ camera:
     authentication: basic
     still_image_url: !secret input_camera_xiaofang
     verify_ssl: false
-  - platform: ffmpeg
-    name: Camera Interna
-    input: !secret input_camera_interna
+  - platform: generic
+    name: "Xiaofang Streaming"
+    username: root
+    password: !secret mqtt_password
+    authentication: basic
+    still_image_url: !secret input_camera_xiaofang
+    stream_source: !secret input_camera_xiaofang_rtsp
+    verify_ssl: false
   - platform: generic
     name: "Wanscam 360"
     still_image_url: !secret input_camera_garagem
@@ -1482,6 +1760,14 @@ camera:
     name: "Wanscam Streaming"
     still_image_url: !secret input_camera_garagem
     stream_source: !secret input_camera_garagem_rtsp
+  - platform: ffmpeg
+    name: Camera Interna
+    input: !secret input_camera_interna
+#  - platform: onvif
+#    name: Camera onvif
+#    host: 100.64.0.52
+#    username: admin
+#    password: !secret mqtt_password
 
 # Integração Google Assistant
 #   _____                   _                         _     _              _
@@ -1492,6 +1778,7 @@ camera:
 #  \_____|\___/ \___/ \__, |_|\___| /_/    \_\___/___/_|___/\__\__,_|_| |_|\__|
 #                      __/ |
 #                     |___/
+# https://www.home-assistant.io/components/google_assistant/
 google_assistant:
   project_id: !secret google_project
   api_key: !secret google_key
@@ -1502,6 +1789,7 @@ google_assistant:
     - climate
     - media_player
     - scene
+    - fan
 #   - group
 
 
@@ -1514,12 +1802,22 @@ google_assistant:
 #    |_|\___|_|\___|\__, |_|  \__,_|_| |_| |_| |_.__/ \___/ \__|
 #                    __/ |                 ______
 #                   |___/                 |______|
+# https://www.home-assistant.io/components/polling/
 telegram_bot:
   platform: polling
   api_key: !secret tg_api
+  parse_mode: html
   allowed_chat_ids:
     - !secret tg_chat_idr
     - !secret tg_chat_idf
+  # Parse mode HTMN
+  # <b>bold</b>, <strong>bold</strong>
+  # <i>italic</i>, <em>italic</em>
+  # <a href="http://www.example.com/">inline URL</a>
+  # <a href="tg://user?id=123456789">inline mention of a user</a>
+  # <code>inline fixed-width code</code>
+  # <pre>pre-formatted fixed-width code block</pre>
+
 
 # Notificações
 #  _   _       _   _  __
@@ -1530,6 +1828,7 @@ telegram_bot:
 # |_| \_|\___/ \__|_|_|  \__, |
 #                         __/ |
 #                        |___/
+# https://www.home-assistant.io/components/notify/
 notify:
   - name: telegramrudi
     platform: telegram
@@ -1542,6 +1841,11 @@ notify:
     services:
       - service: telegramrudi
       - service: telegramflavia
+  - platform: html5
+    name: pushhtml5
+    vapid_pub_key: !secret vapid_pub_key
+    vapid_prv_key: !secret vapid_prv_key
+    vapid_email: !secret gmail_user
 
 # Alarme da casa
 #           _                         _____            _             _   _____                 _
@@ -1550,6 +1854,7 @@ notify:
 #   / /\ \ | |/ _` | '__| '_ ` _ \  | |    / _ \| '_ \| __| '__/ _ \| | |  ___/ _` | '_ \ / _ \ |
 #  / ____ \| | (_| | |  | | | | | | | |___| (_) | | | | |_| | | (_) | | | |  | (_| | | | |  __/ |
 # /_/    \_\_|\__,_|_|  |_| |_| |_|  \_____\___/|_| |_|\__|_|  \___/|_| |_|   \__,_|_| |_|\___|_|
+# https://www.home-assistant.io/components/alarm_control_panel/
 alarm_control_panel:
   - platform: manual
     name: Alarme da Casa
@@ -1570,6 +1875,7 @@ alarm_control_panel:
 #   \ \/  \/ / _ \/ _` | __| '_ \ / _ \ '__|
 #    \  /\  /  __/ (_| | |_| | | |  __/ |
 #     \/  \/ \___|\__,_|\__|_| |_|\___|_|
+# https://www.home-assistant.io/components/weather/
 weather:
   - platform: darksky
     api_key: !secret api_darksky
@@ -1582,6 +1888,7 @@ weather:
 #  ____) | | | | | | (_| | |  | |_| | |    | | (__| |_| \__ \ || (_) | | | | | | |
 # |_____/|_| |_| |_|\__,_|_|   \__|_|_|    | |\___|\__,_|___/\__\___/|_| |_| |_| |
 #                                           \_\                               /_/
+# # https://github.com/smartHomeHub/SmartIR
 smartir:
 
 # Climatização
@@ -1591,13 +1898,32 @@ smartir:
 # | |    | | | '_ ` _ \ / _` | __/ _ \
 # | |____| | | | | | | | (_| | ||  __/
 #  \_____|_|_|_| |_| |_|\__,_|\__\___|
+# https://www.home-assistant.io/components/climate/
 climate:
   - platform: smartir
     name: Climatizador
+    unique_id: climatizador
     device_code: 1360
-    controller_send_service: switch.broadlink_send_packet_100_64_0_26
+    controller_data: 100.64.0.26
     temperature_sensor: sensor.suite_temperatura
     humidity_sensor: sensor.suite_umidade
+    #power_sensor: switch.climatizador
+
+# Ventiladores
+#  ______
+# |  ____|
+# | |__ __ _ _ __
+# |  __/ _` | '_ \
+# | | | (_| | | | |
+# |_|  \__,_|_| |_|
+# https://www.home-assistant.io/components/fan/
+fan:
+    #Vusando para fazer uso da ventilação do "climate.climatizador"
+  - platform: smartir
+    name:  Ventilação quarto
+    unique_id: ar_do_aquirto
+    device_code: 1999
+    controller_data: 100.64.0.26
     #power_sensor: switch.climatizador
 
 #  _____  _       _              __ _
@@ -1608,6 +1934,7 @@ climate:
 # |_____/|_|\__,_|_|\___/ \__, |_| |_|\___/ \_/\_/
 #                          __/ |
 #                         |___/
+# https://www.home-assistant.io/components/dialogflow/
 dialogflow:
 
 # O intent_scriptcomponente permite que os usuários configurem ações e respostas a intenções. As intenções podem ser acionadas por qualquer componente que suporte isso.
@@ -1618,6 +1945,8 @@ dialogflow:
 #  _| |_| | | | ||  __/ | | | |_   ____) | (__| |  | | |_) | |_
 # |_____|_| |_|\__\___|_| |_|\__| |_____/ \___|_|  |_| .__/ \__|
 #                                                    |_|
+# https://www.home-assistant.io/components/intent_script/
+# https://www.home-assistant.io/components/dialogflow/
 intent_script:
   Temperaturasuite:
     speech:
@@ -1625,18 +1954,18 @@ intent_script:
   LocalizacaoFlavia:
     speech:
       text: >
-          {% if is_state('device_tracker.google_maps_321', 'home') %}
+          {% if is_state('device_tracker.google_maps_111111111111111111111', 'home') %}
             A Flávia está em casa! Celular: {{ states.sensor.bateria_status_flavia.state }}
           {% else %}
-            Flávia está com a bateria em {{ states.device_tracker.google_maps_321.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_321.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
+            Flávia está com a bateria em {{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_111111111111111111111.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
           {% endif %}
   LocalizacaoRudi:
     speech:
       text: >
-          {% if is_state('device_tracker.google_maps_123', 'home') %}
+          {% if is_state('device_tracker.google_maps_000000000000000000000', 'home') %}
           Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}
           {% else %}
-           Rudi está com a bateria em {{ states.device_tracker.google_maps_123.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_123.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
+           Rudi está com a bateria em {{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_000000000000000000000.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
           {% endif %}
   MaisVolumeQuarto:
     speech:
@@ -1659,6 +1988,19 @@ intent_script:
           entity_id: climate.climatizador
           operation_mode: auto
 
+# Shell Commands
+#   _____ _          _ _    _____                                          _
+#  / ____| |        | | |  / ____|                                        | |
+# | (___ | |__   ___| | | | |     ___  _ __ ___  _ __ ___   __ _ _ __   __| |___
+#  \___ \| '_ \ / _ \ | | | |    / _ \| '_ ` _ \| '_ ` _ \ / _` | '_ \ / _` / __|
+#  ____) | | | |  __/ | | | |___| (_) | | | | | | | | | | | (_| | | | | (_| \__ \
+# |_____/|_| |_|\___|_|_|  \_____\___/|_| |_| |_|_| |_| |_|\__,_|_| |_|\__,_|___/
+# https://www.home-assistant.io/components/shell_command/
+shell_command:
+  wascam_posicao_1: !secret shell_wascam_posicao_1
+  wascam_posicao_2: !secret shell_wascam_posicao_2
+  wascam_posicao_3: !secret shell_wascam_posicao_3
+
 # Streaming (camera.play_stream)
 #   _____ _
 #  / ____| |
@@ -1666,6 +2008,7 @@ intent_script:
 #  \___ \| __| '__/ _ \/ _` | '_ ` _ \
 #  ____) | |_| | |  __/ (_| | | | | | |
 # |_____/ \__|_|  \___|\__,_|_| |_| |_|
+# https://www.home-assistant.io/components/stream/
 stream:
 
 # Lista de Compras
@@ -1677,6 +2020,7 @@ stream:
 # |_____/|_| |_|\___/| .__/| .__/|_|_| |_|\__, | |______|_|___/\__|
 #                    | |   | |             __/ |
 #                    |_|   |_|            |___/
+# https://www.home-assistant.io/components/shopping_list/
 shopping_list:
 
 # Informações sobre o sistema e seus componentes. Também permite executar ferramentas de diagnóstico para diagnosticar problemas.
@@ -1688,6 +2032,7 @@ shopping_list:
 # |_____/ \__, |___/\__\___|_| |_| |_| |_| |_|\___|\__,_|_|\__|_| |_|
 #          __/ |
 #         |___/
+# https://www.home-assistant.io/components/system_health/
 system_health:
 
 # Grupos
@@ -1699,6 +2044,7 @@ system_health:
 #  \_____|_|  \___/ \__,_| .__/
 #                        | |
 #                        |_|
+# https://www.home-assistant.io/components/group/
 group: !include groups.yaml
 
 # Automações
@@ -1708,6 +2054,9 @@ group: !include groups.yaml
 #   / /\ \| | | | __/ _ \| '_ ` _ \ / _` | __| |/ _ \| '_ \
 #  / ____ \ |_| | || (_) | | | | | | (_| | |_| | (_) | | | |
 # /_/    \_\__,_|\__\___/|_| |_| |_|\__,_|\__|_|\___/|_| |_|
+# https://www.home-assistant.io/components/automation/
+# https://www.home-assistant.io/docs/automation/examples/
+# https://www.home-assistant.io/cookbook/
 automation: !include automations.yaml
 
 # Scripts
@@ -1717,8 +2066,9 @@ automation: !include automations.yaml
 #  \___ \ / __| '__| | '_ \| __|
 #  ____) | (__| |  | | |_) | |_
 # |_____/ \___|_|  |_| .__/ \__|
-#                    | |
 #                    |_|
+# https://www.home-assistant.io/components/script/
+# https://www.home-assistant.io/docs/scripts/
 script: !include scripts.yaml
 
 #  _______        _     _                    _____  _____ _____ _____
@@ -1728,4 +2078,4 @@ script: !include scripts.yaml
 #    | |  __/>  <| |_  | || (_) |  / ____ \ ____) | |____ _| |_ _| |_
 #    |_|\___/_/\_\\__|  \__\___/  /_/    \_\_____/ \_____|_____|_____|
 #
-#   http://patorjk.com/software/taag/#p=display&f=Big&t=Meu%20Texto
+#   http://patorjk.com/software/taag/#p=display&f=Big&t=Home-Assistant
