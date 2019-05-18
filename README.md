@@ -54,7 +54,7 @@ Hoje é mais viável comprar o <b>UAP-AC-LITE-BR UNIFI AP AC LITE 2.4/5.0GHZ</b>
 
 Para gerenciar a rede usei um RouterOS (Mikrotik) e como tive mais de 50 dispositivos conectado, precisei de 3 roteadores espalhado pela casa para ficar bom, sendo um roteador ficando apenas só para os sonoff.
   
-<h2>Screeshots HA 0.91.3 (12/04/2019)</h2>
+<h2>Screeshots HA 0.93.1 (18/05/2019)</h2>
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/1.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/2.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/3.png">
