@@ -10,7 +10,7 @@ resources:
   - type: module
     url: /local/weather-card.js
   - type: js
-    url: /local/fan-control-entity-row.js
+    url: /local/custom-fan-card.js
 views:
   - badges: []
     cards:
@@ -75,8 +75,8 @@ views:
             type: horizontal-stack
           - entities:
               - entity: binary_sensor.silvio
-                secondary_info: last-changed
                 icon: 'mdi:account-circle'
+                secondary_info: last-changed
               - entity: sensor.precisa_trabalhar
             show_header_toggle: false
             type: entities
@@ -104,6 +104,7 @@ views:
               - label: Funções do Ar da Suíte
                 type: section
               - entity: fan.ventilacao_quarto
+                type: 'custom:custom-fan-card'
               - entity: script.air_quarto_led
                 name: Lig. / Des. Led
               - entity: script.air_quarto_swing
@@ -141,6 +142,8 @@ views:
             type: horizontal-stack
         type: vertical-stack
       - entities:
+          - entity: switch.pressurizador
+            icon: 'mdi:water-pump'
           - entity: switch.ventilador
             name: Ventilador (Portatil)
         show_header_toggle: false
@@ -148,11 +151,6 @@ views:
       - entity: weather.dark_sky
         icons: /local/icons/
         type: 'custom:weather-card'
-      - customIsOffColor: '#F00000'
-        customIsOffSpdColor: '#444444'
-        customTheme: true
-        entity: fan.ventilacao_quarto
-        type: 'custom:fan-control-entity-row'
     icon: 'mdi:home-assistant'
     path: default_view
     title: Home
@@ -271,21 +269,6 @@ views:
             name: Mesa de Jantar
             tap_action:
               action: toggle
-          - entity: light.jf
-            icon: 'mdi:wall-sconce-flat'
-            name: Ent. Frente
-            tap_action:
-              action: toggle
-          - entity: light.jg
-            icon: 'mdi:wall-sconce-flat'
-            name: Ent. Garagem
-            tap_action:
-              action: toggle
-        show_state: false
-        title: Sala Jantar
-        type: glance
-      - columns: 3
-        entities:
           - entity: light.sala_game
             icon: 'mdi:white-balance-iridescent'
             name: Sala Game
@@ -311,8 +294,18 @@ views:
             name: Sala Estar (Spots)
             tap_action:
               action: toggle
+          - entity: light.jf
+            icon: 'mdi:wall-sconce-flat'
+            name: Ent. Frente
+            tap_action:
+              action: toggle
+          - entity: light.jg
+            icon: 'mdi:wall-sconce-flat'
+            name: Ent. Garagem
+            tap_action:
+              action: toggle
         show_state: false
-        title: Sala Estar
+        title: Sala de Estar & Jantar
         type: glance
       - columns: 3
         entities:
@@ -495,10 +488,10 @@ views:
         show_header_toggle: false
         title: Envia localização no Telegram
         type: entities
-      - type: entities
-        entities:
+      - entities:
           - entity: camera.xiaofang_streaming
           - entity: camera.wanscam_streaming
+        type: entities
     icon: 'mdi:security'
     path: ''
     title: Segurança
@@ -592,6 +585,19 @@ views:
         type: media-control
       - entity: media_player.tv_da_sala
         type: media-control
+      - entities:
+          - entity: input_select.src_cast_teste_video
+          - entity: input_text.url_teste_video
+          - entity: script.ver_teste_video
+            icon: 'mdi:play-circle-outline'
+            name: Play
+          - entity: script.stop_teste_video
+            icon: 'mdi:stop-circle-outline'
+            name: Stop
+          - entity: input_number.video_teste_volume
+        show_header_toggle: false
+        title: Streaming Player
+        type: entities
     icon: 'mdi:filmstrip'
     path: view_multimidia
     title: Video

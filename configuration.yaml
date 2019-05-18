@@ -1429,6 +1429,17 @@ switch:
     payload_on: "ON"
     payload_off: "OFF"
     retain: true
+  - platform: mqtt
+    name: "Pressurizador"
+    state_topic: "stat/sonoff18/POWER"
+    command_topic: "cmnd/sonoff18/power"
+    availability_topic: "tele/sonoff18/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
   - platform: command_line
     switches:
       camwascam_dir:
@@ -1471,6 +1482,10 @@ input_text:
     name: Mensagem
     initial: "Já está na hora de ir trabalhar!"
     icon: mdi:voice
+  url_teste_video:
+    name: URL
+    initial: "Insira a URL"
+    icon: mdi:link-variant
 #  text_valor_kwh:
 #    name: "Valor kW/h"
 #    initial: "0.63"
@@ -1603,15 +1618,23 @@ input_number:
     icon: mdi:volume-high
     initial: 0.40
     min: 0
-    max: 0.99
+    max: 1
     step: 0.10
     mode: slider
   video_volume:
     name: Volume
     icon: mdi:volume-high
-    initial: 0.40
+    initial: 1
     min: 0
-    max: 0.99
+    max: 1
+    step: 0.10
+    mode: slider
+  video_teste_volume:
+    name: Volume
+    icon: mdi:volume-high
+    initial: 1
+    min: 0
+    max: 1
     step: 0.10
     mode: slider
 
@@ -1715,7 +1738,12 @@ input_select:
       - CONECTV Osasco SP
       - TV MAR Maceio
     icon: mdi:library-video
-
+  src_cast_teste_video:
+    name: 'Chrome Cast'
+    options:
+      - Quarto
+      - Sala
+    icon: mdi:google-chrome
 # Permite que outros componentes do Home Assistant processem fluxos de vídeo e áudio.
 #   __  __
 #  / _|/ _|
