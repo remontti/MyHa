@@ -28,7 +28,6 @@ homeassistant:
     - /tmp
     - /config
 
-
 #  _____
 # |  __ \
 # | |__) |__ _ __ ___  ___  _ __
@@ -280,6 +279,8 @@ logger:
 # https://www.home-assistant.io/components/tts/
 # https://www.home-assistant.io/components/google_translate/
 # https://www.home-assistant.io/components/voicerss/
+# http://www.voicerss.org/personel/statistic.aspx
+# https://www.home-assistant.io/components/watson_tts/
 tts:
   - platform: google_translate
     language: 'pt-br'
@@ -290,7 +291,9 @@ tts:
     api_key: !secret voicerss_key
     language: 'pt-br'
     format: '44khz_16bit_stereo'
-    # http://www.voicerss.org/personel/statistic.aspx
+  - platform: watson_tts
+    watson_apikey: !secret watson_tts
+    voice: pt-BR_IsabelaVoice
 
 #   _____ _                 _
 #  / ____| |               | |
@@ -314,10 +317,6 @@ device_tracker:
   - platform: google_maps
     username: !secret gmail_user
     password: !secret gmail_senha
-#  - platform: ping
-#    name: Silvio
-#    hosts:
-#      hostone: 100.64.0.14
 
 # Extrair fluxo de audio (ex youtube)
 #  __  __          _ _         ______      _                  _
@@ -1010,9 +1009,7 @@ binary_sensor:
     name: WCam360
 #    count: 5
 #    scan_interval: 240
-  - platform: ping
-    host: 100.64.0.14
-    name: Silvio
+
 
 # Luzes
 #  _      _       _     _
@@ -1511,16 +1508,16 @@ input_datetime:
     has_date: false
     has_time: true
     initial: "23:30"
-  silvio_on:
-    name: "Silvio acorda"
-    has_date: false
-    has_time: true
-    initial: "03:30"
-  silvio_off:
-    name: "Silvio já saiu"
-    has_date: false
-    has_time: true
-    initial: "04:00"
+#  silvio_on:
+#    name: "Silvio acorda"
+#    has_date: false
+#    has_time: true
+#    initial: "03:25"
+#  silvio_off:
+#    name: "Silvio já saiu"
+#    has_date: false
+#    has_time: true
+#    initial: "04:00"
 
 # Inputs numéricos
 #  _____                   _                           _
@@ -1568,7 +1565,7 @@ input_number:
   despert2_hora:
     name: Hora
     icon: mdi:timer
-    initial: 12
+    initial: 13
     min: 0
     max: 23
     step: 1
@@ -1576,7 +1573,7 @@ input_number:
   despert2_minuto:
     name: Minuto
     icon: mdi:timer
-    initial: 40
+    initial: 15
     min: 0
     max: 59
     step: 5

@@ -1,16 +1,14 @@
 resources:
-  - type: module
-    url: /local/mini-media-player-bundle.js?v=0.9.8
-  - type: js
-    url: /local/bignumber-card.js
-  - type: module
-    url: /local/mini-graph-card-bundle.js?v=0.2.1
-  - type: js
-    url: /local/light-entity-row.js
-  - type: module
-    url: /local/weather-card.js
-  - type: js
-    url: /local/custom-fan-card.js
+  - url: /local/mini-media-player-bundle.js?v=0.9.8
+    type: module
+  - url: /local/mini-graph-card-bundle.js?v=0.4.3
+    type: module
+  - url: /local/weather-card.js
+    type: module
+  - url: /local/custom-fan-card.js
+    type: js
+  - url: /local/button-card.js
+    type: module
 views:
   - badges: []
     cards:
@@ -42,7 +40,7 @@ views:
                       left: 78%
                       top: 96%
                     type: state-label
-                image: /local/imgs/rudi2.jpg
+                image: /local/imgs/rudi_simp.jpg
                 type: picture-elements
               - elements:
                   - entity: device_tracker.google_maps_111111111111111111111
@@ -70,37 +68,142 @@ views:
                       left: 80%
                       top: 96%
                     type: state-label
-                image: /local/imgs/flavia3.jpg
+                image: /local/imgs/flavia_simp.jpg
                 type: picture-elements
             type: horizontal-stack
           - entities:
-              - entity: binary_sensor.silvio
-                icon: 'mdi:account-circle'
-                secondary_info: last-changed
-              - entity: sensor.precisa_trabalhar
+              - entity: switch.seguranca_casa
+                icon: 'mdi:shield-home'
+                name: Alarme da Casa
+              - entity: alarm_control_panel.alarme_da_casa
+                name: Status Alarme
+                icon: 'mdi:shield-lock'
             show_header_toggle: false
             type: entities
         type: vertical-stack
-      - columns: 3
-        entities:
-          - entity: switch.tv_quarto
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.pressurizador
+            icon: 'mdi:engine-outline'
+            color: '#4DD0E1'
+            show_state: true
+            styles:
+              card:
+                - height: 75px
+              name:
+                - font-weight: 500
+                - font-size: 14px
+              state:
+                - font-size: 12px
+            state:
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(85%)
+                  state:
+                    - color: '#616161'
+              - value: unavailable
+                styles:
+                  card:
+                    - filter: opacity(40%)
+                    - color: '#5D4037'
+              - value: 'on'
+                styles:
+                  state:
+                    - color: '#4DD0E1'
+          - type: 'custom:button-card'
+            entity: switch.tv_quarto
             name: Tv Quarto
-            tap_action:
-              action: toggle
-          - entity: switch.tv_lg_55
-            tap_action:
-              action: toggle
-          - entity: switch.xboom_som
+            icon: 'mdi:television-classic'
+            show_state: true
+            styles:
+              card:
+                - height: 75px
+              name:
+                - font-weight: 500
+                - font-size: 14px
+              state:
+                - font-size: 12px
+            state:
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(85%)
+                  state:
+                    - color: '#616161'
+              - value: unavailable
+                styles:
+                  card:
+                    - filter: opacity(40%)
+                    - color: '#5D4037'
+              - value: 'on'
+                styles:
+                  state:
+                    - color: var(--secondary-text-color)
+          - type: 'custom:button-card'
+            entity: switch.tv_lg_55
+            name: Tv Sala
+            icon: 'mdi:television-classic'
+            show_state: true
+            styles:
+              card:
+                - height: 75px
+              name:
+                - font-weight: 500
+                - font-size: 14px
+              state:
+                - font-size: 12px
+            state:
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(85%)
+                  state:
+                    - color: '#616161'
+              - value: unavailable
+                styles:
+                  card:
+                    - filter: opacity(40%)
+                    - color: '#5D4037'
+              - value: 'on'
+                styles:
+                  state:
+                    - color: var(--secondary-text-color)
+          - type: 'custom:button-card'
+            entity: switch.xboom_som
             name: Xboom
-            tap_action:
-              action: toggle
-        type: glance
+            icon: 'mdi:speaker'
+            show_state: true
+            styles:
+              card:
+                - height: 75px
+              name:
+                - font-weight: 500
+                - font-size: 14px
+              state:
+                - font-size: 12px
+            state:
+              - value: 'off'
+                styles:
+                  card:
+                    - filter: opacity(85%)
+                  state:
+                    - color: '#616161'
+              - value: unavailable
+                styles:
+                  card:
+                    - filter: opacity(40%)
+                    - color: '#5D4037'
+              - value: 'on'
+                styles:
+                  state:
+                    - color: var(--secondary-text-color)
       - cards:
           - entity: climate.climatizador
             name: Ar Suíte
             type: thermostat
           - entities:
-              - entity: sensor.suite_umidade
               - label: Funções do Ar da Suíte
                 type: section
               - entity: fan.ventilacao_quarto
@@ -109,257 +212,1118 @@ views:
                 name: Lig. / Des. Led
               - entity: script.air_quarto_swing
                 name: Swing
+              - label: Ventiladores
+                type: section
+              - entity: switch.ventilador
+                name: Ventilador (Mondial)
             type: entities
         type: vertical-stack
       - cards:
           - cards:
-              - entities: sensor.dark_sky_temperature
-                line_color: '#58a5f0'
+              - type: 'custom:mini-graph-card'
                 name: Externa
-                type: 'custom:mini-graph-card'
-              - entities: sensor.cozinha_temperatura
-                line_color: '#58a5f0'
-                name: Cozinha
-                type: 'custom:mini-graph-card'
-              - entities: sensor.banheiro_social_temperatura
-                line_color: '#58a5f0'
-                name: B.Social
-                type: 'custom:mini-graph-card'
+                hours_to_show: 48
+                entities:
+                  - sensor.dark_sky_temperature
+                color_thresholds:
+                  - value: 13
+                    color: '#03A9F4'
+                  - value: 16
+                    color: '#66BB6A'
+                  - value: 25
+                    color: '#E65100'
+              - type: 'custom:mini-graph-card'
+                name: Externa
+                hours_to_show: 48
+                entities:
+                  - sensor.dark_sky_humidity
+                color_thresholds:
+                  - value: 50
+                    color: '#FFAB00'
+                  - value: 70
+                    color: '#FFEB3B'
+                  - value: 80
+                    color: '#2196F3'
             type: horizontal-stack
           - cards:
-              - entities: sensor.dark_sky_humidity
-                line_color: '#1DE9B6'
-                name: Externa
-                type: 'custom:mini-graph-card'
-              - entities: sensor.cozinha_umidade
-                line_color: '#1DE9B6'
+              - type: 'custom:mini-graph-card'
+                name: Suíte
+                hours_to_show: 48
+                entities:
+                  - sensor.suite_temperatura
+                color_thresholds:
+                  - value: 13
+                    color: '#03A9F4'
+                  - value: 16
+                    color: '#66BB6A'
+                  - value: 25
+                    color: '#E65100'
+              - type: 'custom:mini-graph-card'
+                name: Suíte
+                hours_to_show: 48
+                entities:
+                  - sensor.suite_umidade
+                color_thresholds:
+                  - value: 50
+                    color: '#FFAB00'
+                  - value: 70
+                    color: '#FFEB3B'
+                  - value: 80
+                    color: '#2196F3'
+            type: horizontal-stack
+          - cards:
+              - type: 'custom:mini-graph-card'
                 name: Cozinha
-                type: 'custom:mini-graph-card'
-              - entities: sensor.banheiro_social_umidade
-                line_color: '#1DE9B6'
+                hours_to_show: 48
+                entities:
+                  - sensor.cozinha_temperatura
+                color_thresholds:
+                  - value: 13
+                    color: '#03A9F4'
+                  - value: 16
+                    color: '#66BB6A'
+                  - value: 25
+                    color: '#E65100'
+              - type: 'custom:mini-graph-card'
+                name: Cozinha
+                hours_to_show: 48
+                entities:
+                  - sensor.cozinha_umidade
+                color_thresholds:
+                  - value: 50
+                    color: '#FFAB00'
+                  - value: 70
+                    color: '#FFEB3B'
+                  - value: 80
+                    color: '#2196F3'
+            type: horizontal-stack
+          - cards:
+              - type: 'custom:mini-graph-card'
                 name: B.Social
-                type: 'custom:mini-graph-card'
+                hours_to_show: 48
+                entities:
+                  - sensor.banheiro_social_temperatura
+                color_thresholds:
+                  - value: 13
+                    color: '#03A9F4'
+                  - value: 16
+                    color: '#66BB6A'
+                  - value: 25
+                    color: '#E65100'
+              - type: 'custom:mini-graph-card'
+                name: B.Social
+                hours_to_show: 48
+                entities:
+                  - sensor.banheiro_social_umidade
+                color_thresholds:
+                  - value: 50
+                    color: '#FFAB00'
+                  - value: 70
+                    color: '#FFEB3B'
+                  - value: 80
+                    color: '#2196F3'
             type: horizontal-stack
         type: vertical-stack
-      - entities:
-          - entity: switch.pressurizador
-            icon: 'mdi:water-pump'
-          - entity: switch.ventilador
-            name: Ventilador (Portatil)
-        show_header_toggle: false
-        type: entities
       - entity: weather.dark_sky
         icons: /local/icons/
         type: 'custom:weather-card'
     icon: 'mdi:home-assistant'
+    panel: false
     path: default_view
-    title: Home
+    title: Home Inicial
   - badges: []
     cards:
-      - columns: 3
-        entities:
-          - entity: light.quarto_da_suite
-            icon: 'mdi:hotel'
-            name: Suíte
-            tap_action:
-              action: toggle
-          - entity: light.yeelight_color1_7c49eb15924b
-            icon: 'mdi:floor-lamp'
-            name: Abajur Suíte
-          - entity: light.closet
-            icon: 'mdi:tshirt-crew'
-            name: Closet
-            tap_action:
-              action: toggle
-          - entity: light.quarto_do_meio
-            icon: 'mdi:hotel'
-            name: Quarto Meio
-            tap_action:
-              action: toggle
-          - entity: light.quarto_da_frente
-            icon: 'mdi:hotel'
-            name: Quarto Frente
-            tap_action:
-              action: toggle
-          - entity: light.corredor
-            icon: 'mdi:wall-sconce-flat'
-            name: Corredor
-            tap_action:
-              action: toggle
-        show_state: false
-        title: Quartos / Corredor
-        type: glance
-      - columns: 4
-        entities:
-          - entity: light.garagem
-            icon: 'mdi:garage'
-            name: Garagem
-            tap_action:
-              action: toggle
-          - entity: light.area_da_piscina
-            icon: 'mdi:spotlight'
-            name: Área Piscina
-            tap_action:
-              action: toggle
-          - entity: light.varanda_fundo
-            icon: 'mdi:spotlight'
-            name: Varanda
-            tap_action:
-              action: toggle
-          - entity: light.postes
-            icon: 'mdi:lighthouse-on'
-            name: Postes
-            tap_action:
-              action: toggle
-          - entity: light.entrada
-            icon: 'mdi:door-closed'
-            name: Entrada
-            tap_action:
-              action: toggle
-          - entity: light.arandelas
-            icon: 'mdi:wall-sconce-variant'
-            name: Arandelas
-            tap_action:
-              action: toggle
-          - entity: light.arandelas_da_varanda
-            icon: 'mdi:wall-sconce-variant'
-            name: Arandelas V.
-            tap_action:
-              action: toggle
-          - entity: light.lavanderia
-            icon: 'mdi:washing-machine'
-            name: Lavanderia
-            tap_action:
-              action: toggle
-        show_state: false
-        title: Externas
-        type: glance
-      - columns: 3
-        entities:
-          - entity: light.cozinha
-            icon: 'mdi:white-balance-iridescent'
-            name: Central
-            tap_action:
-              action: toggle
-          - entity: light.pia
-            icon: 'mdi:wall-sconce-flat'
-            name: Pia
-            tap_action:
-              action: toggle
-          - entity: light.bebedor
-            icon: 'mdi:wall-sconce-flat'
-            name: Bebedor
-            tap_action:
-              action: toggle
-          - entity: light.pendentes
-            icon: 'mdi:ceiling-light'
-            name: Pendentes
-            tap_action:
-              action: toggle
-          - entity: light.bancada
-            icon: 'mdi:led-on'
-            name: LED Bancada
-        show_state: false
-        title: Cozinha
-        type: glance
-      - columns: 3
-        entities:
-          - entity: light.mesa_de_jantar
-            icon: 'mdi:ceiling-light'
-            name: Mesa de Jantar
-            tap_action:
-              action: toggle
-          - entity: light.sala_game
-            icon: 'mdi:white-balance-iridescent'
-            name: Sala Game
-            tap_action:
-              action: toggle
-          - entity: light.central
-            icon: 'mdi:wall-sconce-flat'
-            name: Central (Spots)
-            tap_action:
-              action: toggle
-          - entity: light.trilhos
-            icon: 'mdi:track-light'
-            name: Trilhos
-            tap_action:
-              action: toggle
-          - entity: light.lustre
-            icon: 'mdi:ceiling-light'
-            name: Lustre
-            tap_action:
-              action: toggle
-          - entity: light.sala_de_estar
-            icon: 'mdi:wall-sconce-flat'
-            name: Sala Estar (Spots)
-            tap_action:
-              action: toggle
-          - entity: light.jf
-            icon: 'mdi:wall-sconce-flat'
-            name: Ent. Frente
-            tap_action:
-              action: toggle
-          - entity: light.jg
-            icon: 'mdi:wall-sconce-flat'
-            name: Ent. Garagem
-            tap_action:
-              action: toggle
-        show_state: false
-        title: Sala de Estar & Jantar
-        type: glance
-      - columns: 3
-        entities:
-          - entity: light.banheiro_da_suite
-            icon: 'mdi:toilet'
-            name: Suíte
-            tap_action:
-              action: toggle
-          - entity: light.banheiro_social
-            icon: 'mdi:toilet'
-            name: Social
-            tap_action:
-              action: toggle
-          - entity: light.lavabo
-            icon: 'mdi:toilet'
-            name: Lavabo
-            tap_action:
-              action: toggle
-        show_state: false
-        title: Banheiros
-        type: glance
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.quarto_da_suite
+                icon: 'mdi:hotel'
+                name: Suíte
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 11px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.yeelight_color1_7c49eb15924b
+                name: Abajur
+                icon: 'mdi:floor-lamp'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.closet
+                name: Closet
+                icon: 'mdi:tshirt-crew'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.cozinha
+                icon: 'mdi:fridge-outline'
+                name: Cozinha
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.pia
+                name: Pia
+                icon: 'mdi:silverware-fork-knife'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.bebedor
+                name: Bebedor
+                icon: 'mdi:cup-water'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.banheiro_da_suite
+                icon: 'mdi:toilet'
+                name: Suíte
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.banheiro_social
+                name: Social
+                icon: 'mdi:toilet'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.lavabo
+                name: Lavabo
+                icon: 'mdi:toilet'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.pendentes
+                icon: 'mdi:ceiling-light'
+                name: Pendentes
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.trilhos
+                name: Trilhos
+                icon: 'mdi:track-light'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.mesa_de_jantar
+                name: Jantar
+                icon: 'mdi:ceiling-light'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.lustre
+                icon: 'mdi:ceiling-light'
+                name: Lustre
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.sala_game
+                name: Social
+                icon: 'mdi:sofa'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.corredor
+                name: Corredor
+                icon: 'mdi:wall-sconce-flat'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.sala_de_estar
+                icon: 'mdi:wall-sconce-flat'
+                name: Spots Estar
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.central
+                name: Spots Social
+                icon: 'mdi:wall-sconce-flat'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.jf
+                name: J. Frente
+                icon: 'mdi:car-parking-lights'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.quarto_do_meio
+                icon: 'mdi:hotel'
+                name: Quarto Meio
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.quarto_da_frente
+                name: Quarto Frente
+                icon: 'mdi:hotel'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.jg
+                name: J. Garagem
+                icon: 'mdi:car-parking-lights'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.garagem
+                icon: 'mdi:car'
+                name: Garagem
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.postes
+                name: Postes
+                icon: 'mdi:lighthouse-on'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.area_da_piscina
+                name: A.Piscina
+                icon: 'mdi:pool'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.arandelas
+                name: Arandelas
+                icon: 'mdi:wall-sconce-variant'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.varanda_fundo
+                icon: 'mdi:spotlight'
+                name: Varanda
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.entrada
+                name: Entrada
+                icon: 'mdi:door-closed'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.arandelas_da_varanda
+                icon: 'mdi:wall-sconce-variant'
+                name: Arandelas V.
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.lavanderia
+                name: Lavanderia
+                icon: 'mdi:washing-machine'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
+              - type: 'custom:button-card'
+                entity: light.bancada
+                name: Bancada
+                icon: 'mdi:led-on'
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                state:
+                  - value: 'off'
+                    styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                  - value: unavailable
+                    styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                  - value: 'on'
+                    styles:
+                      state:
+                        - color: var(--secondary-text-color)
       - entity: light.yeelight_color1_7c49eb15924b
         name: Abajur
         type: light
-      - entities:
-          - label: Todas Luzes
-            type: section
-          - entity: script.on_todas_luzes
-            icon: 'mdi:light-switch'
-          - entity: script.off_todas_luzes
-            icon: 'mdi:light-switch'
-          - label: Quentes
-            type: section
-          - entity: script.on_todas_luzes_amarelas
-            icon: 'mdi:lightbulb-on'
-          - entity: script.off_todas_luzes_amarelas
-            icon: 'mdi:lightbulb'
-          - label: Frias
-            type: section
-          - entity: script.on_todas_luzes_brancas
-            icon: 'mdi:lightbulb-on-outline'
-          - entity: script.off_todas_luzes_brancas
-            icon: 'mdi:lightbulb-outline'
-          - label: Loucuras
-            type: section
-          - entity: script.loop_luzes_auxiliar
-        show_header_toggle: false
-        title: Atalhos Rápidos
-        type: entities
+      - type: vertical-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: label-card
+            color: var(--primary-color)
+            name: Todas as Luzes
+            styles:
+              card:
+                - font-size: 13px
+                - height: 37px
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: script.on_todas_luzes
+                icon: 'mdi:lightbulb-on'
+                name: Ligar Todas
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-size: 14px
+                  icon:
+                    - color: '#4CAF50'
+              - type: 'custom:button-card'
+                entity: script.off_todas_luzes
+                icon: 'mdi:lightbulb'
+                name: Desligar Todas
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-size: 14px
+                  icon:
+                    - color: '#4E342E'
+          - type: 'custom:button-card'
+            color_type: label-card
+            color: '#37474F'
+            name: Luzes Quentes / Frias
+            styles:
+              card:
+                - font-size: 13px
+                - height: 37px
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: script.on_todas_luzes_amarelas
+                icon: 'mdi:lightbulb-on-outline'
+                name: On Quentes
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 14px
+                  icon:
+                    - color: '#F9A825'
+              - type: 'custom:button-card'
+                entity: script.off_todas_luzes_amarelas
+                icon: 'mdi:lightbulb-outline'
+                name: Off Quentes
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 14px
+                  icon:
+                    - color: '#4E342E'
+              - type: 'custom:button-card'
+                entity: script.on_todas_luzes_brancas
+                icon: 'mdi:lightbulb-on-outline'
+                name: On Frias
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 14px
+                  icon:
+                    - color: '#B3E5FC'
+              - type: 'custom:button-card'
+                entity: script.off_todas_luzes_brancas
+                icon: 'mdi:lightbulb-outline'
+                name: Off Frias
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 14px
+                  icon:
+                    - color: '#4E342E'
     icon: 'mdi:lightbulb-on-outline'
     path: ''
     title: Iluminação
-  - badges: []
-    cards:
+  - cards:
       - entities:
           - entity: switch.tv_quarto
           - entity: script.tv_quarto_vol_up
@@ -408,25 +1372,14 @@ views:
         show_header_toggle: false
         title: Projetor
         type: entities
+    badges: []
     icon: 'mdi:remote'
     path: ''
     title: Controles IR
-  - badges: []
-    cards:
+  - cards:
       - entities:
-          - entity: switch.seguranca_casa
-            icon: 'mdi:shield-home'
-            name: Ativa / Desativa
-          - entity: alarm_control_panel.alarme_da_casa
-            name: Status
-          - label: Sirenes
-            type: section
           - entity: switch.sirenes
-            name: Sirene Externa
-        show_header_toggle: false
-        title: Alarme da Casa
-        type: entities
-      - entities:
+            name: Sirenes
           - entity: binary_sensor.sala_social
             secondary_info: last-changed
           - entity: binary_sensor.sala_jantar
@@ -492,7 +1445,8 @@ views:
           - entity: camera.xiaofang_streaming
           - entity: camera.wanscam_streaming
         type: entities
-    icon: 'mdi:security'
+    badges: []
+    icon: 'mdi:shield-home'
     path: ''
     title: Segurança
   - badges: []
@@ -627,9 +1581,9 @@ views:
         title: Despertador (Simples)
         type: entities
       - entity: sensor.time
-        scale: 30px
-        title: Hora
-        type: 'custom:bignumber-card'
+        name: Hora
+        type: sensor
+        unit: h
     icon: 'mdi:alarm-multiple'
     title: Despertadores
   - badges: []
@@ -799,32 +1753,9 @@ views:
         show_header_toggle: false
         title: Diversos
         type: entities
-      - entities:
-          - entity: binary_sensor.silvio
-            secondary_info: last-changed
-          - label: Liga luzes e desativa alarme
-            type: section
-          - entity: input_datetime.silvio_on
-          - entity: automation.silvio_acordar
-          - label: Desliga luzes e ativa alarme
-            type: section
-          - entity: input_datetime.silvio_off
-          - entity: automation.silvio_saiu
-          - label: >-
-              Verifica se silvio esta conectado para desativar algumas
-              funções/notificações
-            type: section
-          - entity: automation.silvio_conectado
-          - entity: automation.silvio_desconectado
-          - entity: automation.silvio_desativar_automacao_alarme
-            type: entities
-        show_header_toggle: false
-        title: Regras Silvio em casa
-        type: entities
     icon: 'mdi:home-automation'
     title: Automações
-  - badges: []
-    cards:
+  - cards:
       - elements:
           - entity: sensor.disk_use
             style:
@@ -880,15 +1811,20 @@ views:
         type: picture-elements
       - cards:
           - cards:
-              - entity: sensor.cpu_temperatura
-                max: 80
-                min: -5
-                name: CPU  Temp
-                severity:
-                  green: 0
-                  red: 60
-                  yellow: 50
-                type: gauge
+              - type: 'custom:mini-graph-card'
+                name: CPU Temperatura
+                hours_to_show: 48
+                entities:
+                  - sensor.cpu_temperatura
+                color_thresholds:
+                  - value: 40
+                    color: '#03A9F4'
+                  - value: 45
+                    color: '#66BB6A'
+                  - value: 50
+                    color: '#E65100'
+            type: horizontal-stack
+          - cards:
               - entity: sensor.processor_use
                 name: CPU
                 type: gauge
@@ -969,170 +1905,10 @@ views:
             name: Última inicialização
           - entity: sensor.uptime
         type: entities
-      - entity: sensor.time
-        name: Hora
-        type: sensor
-        unit: h
-    icon: 'mdi:engine'
+      - type: entities
+        entities:
+          - entity: script.loop_luzes_auxiliar
+    badges: []
+    icon: 'mdi:raspberry-pi'
     panel: false
     title: Dispositivos
-  - badges: []
-    cards:
-      - elements:
-          - entity: light.yeelight_color1_7c49eb15924b
-            style:
-              left: 90%
-              top: 30%
-            type: state-icon
-          - entity: light.quarto_da_suite
-            style:
-              left: 85%
-              top: 35%
-            type: state-icon
-        image: /local/imgs/planta-limpa.svg
-        type: picture-elements
-    icon: 'mdi:floor-plan'
-    title: Planta
-  - badges: []
-    cards:
-      - entity: sensor.bateria_rudi
-        from: left
-        max: 100
-        min: 0
-        scale: 20px
-        severity:
-          - style: '#DD2C00'
-            value: 15
-          - style: '#FFEB3B'
-            value: 30
-          - style: '#9CCC65'
-            value: 50
-          - style: '#43A047'
-            value: 100
-        title: Bateria Rudi
-        type: 'custom:bignumber-card'
-      - entity: sensor.bateria_flavia
-        from: left
-        max: 100
-        min: 0
-        scale: 20px
-        severity:
-          - style: '#DD2C00'
-            value: 15
-          - style: '#FFEB3B'
-            value: 30
-          - style: '#9CCC65'
-            value: 50
-          - style: '#43A047'
-            value: 100
-        title: Bateria Flávia
-        type: 'custom:bignumber-card'
-      - cards:
-          - cards:
-              - entity: sensor.suite_umidade
-                graph: line
-                name: Suíte
-                type: sensor
-              - entity: sensor.suite_temperatura
-                graph: line
-                name: Suíte
-                type: sensor
-              - entity: sensor.cozinha_umidade
-                graph: line
-                name: Cozinha
-                type: sensor
-            type: horizontal-stack
-          - cards:
-              - entity: sensor.cozinha_temperatura
-                graph: line
-                hours_to_show: 48
-                name: Cozinha
-                type: sensor
-            type: horizontal-stack
-          - cards:
-              - entity: sensor.banheiro_social_umidade
-                graph: line
-                name: Banheiro Social
-                type: sensor
-              - entity: sensor.banheiro_social_temperatura
-                graph: line
-                name: Banheiro Social
-                type: sensor
-            type: horizontal-stack
-        type: vertical-stack
-      - cards:
-          - content: 'Texto '
-            title: Título
-            type: markdown
-          - cards:
-              - entity: switch.camwascam_esq
-                icon: 'mdi:arrow-left-circle'
-                name: Esq.
-                type: entity-button
-              - entity: switch.camwascam_dir
-                icon: 'mdi:arrow-right-circle'
-                name: Dir.
-                type: entity-button
-              - entity: switch.camwascam_down
-                icon: 'mdi:arrow-down-circle'
-                name: Baixo
-                type: entity-button
-              - entity: switch.camwascam_up
-                icon: 'mdi:arrow-up-circle'
-                name: Cima
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: switch.camwascam_centralizar
-                icon: 'mdi:rotate-orbit'
-                name: ' '
-                type: entity-button
-              - entity: script.tv_quarto_input
-                name: ' '
-                tap_action:
-                  action: toggle
-                type: entity-button
-              - entity: light.yeelight_color1_7c49eb15924b
-                icon: 'mdi:floor-lamp'
-                name: ' '
-                type: entity-button
-            type: horizontal-stack
-        type: vertical-stack
-      - entities:
-          - scene.suite_romantica
-        show_header_toggle: false
-        title: Cena (Teste)
-        type: entities
-      - cards:
-          - cards:
-              - entity: switch.camwascam_esq
-                icon: 'mdi:arrow-left-circle'
-                name: Esq.
-                type: entity-button
-              - entity: switch.camwascam_dir
-                icon: 'mdi:arrow-right-circle'
-                name: Dir.
-                type: entity-button
-              - entity: switch.camwascam_down
-                icon: 'mdi:arrow-down-circle'
-                name: Baixo
-                type: entity-button
-              - entity: switch.camwascam_up
-                icon: 'mdi:arrow-up-circle'
-                name: Cima
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entities:
-                  - entity: sensor.suite_umidade
-                  - label: Funções do Ar da Suíte
-                    type: section
-                  - entity: script.air_quarto_led
-                    name: Lig. / Des. Led
-                  - entity: script.air_quarto_swing
-                    name: Swing
-                type: entities
-            type: vertical-stack
-        type: vertical-stack
-    icon: ''
-    title: Lab

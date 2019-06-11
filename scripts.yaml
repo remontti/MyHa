@@ -89,7 +89,7 @@ ver_video:
           {% endif %}
          media_content_id: >
           {% if is_state("input_select.str_video", "SBT") %} https://59e4b6c1beddc.streamlock.net/pioneira-tv3/pioneira-tv3/chunklist_w899378795.m3u8
-          {% elif is_state("input_select.str_video", "RDC TV POA") %}  https://5a7d54e35f9d2.streamlock.net/rdctv/smil:rdctv.smil/chunklist_w891027107_b1000000.m3u8
+          {% elif is_state("input_select.str_video", "RDC TV POA") %} https://5a7d54e35f9d2.streamlock.net/rdctv/smil:rdctv.smil/chunklist_w891027107_b1000000.m3u8
           {% elif is_state("input_select.str_video", "TV GAZETA") %} http://api.new.livestream.com/accounts/5381476/events/2395418/live.m3u8
           {% elif is_state("input_select.str_video", "TV CIDADE OESTE") %} http://hls.cadena.com.br/live/df9e135c-df44-4fbc-8e95-d128ab1db00c/index.m3u8
           {% elif is_state("input_select.str_video", "REDE TV SP") %} https://evpp.mm.uol.com.br/redetv1/redetv1/chunklist_w1956210905.m3u8
@@ -112,6 +112,38 @@ stop_video:
           {% if is_state("input_select.src_cast_video", "Quarto") %} media_player.tv_do_quarto
           {% elif is_state("input_select.src_cast_video", "Sala") %} media_player.tv_da_sala
           {% endif %}
+
+
+ver_teste_video:
+  alias: Play Vídeo Streaming
+  sequence:
+    - service: media_player.volume_set
+      data_template:
+        entity_id: >
+          {% if is_state("input_select.src_cast_teste_video", "Quarto") %} media_player.tv_do_quarto
+          {% elif is_state("input_select.src_cast_teste_video", "Sala") %} media_player.tv_da_sala
+          {% endif %}
+        volume_level: '{{  states.input_number.video_teste_volume.state  }}'
+    -  service: media_player.play_media
+       data_template:
+         entity_id: >
+          {% if is_state("input_select.src_cast_teste_video", "Quarto") %} media_player.tv_do_quarto
+          {% elif is_state("input_select.src_cast_teste_video", "Sala") %} media_player.tv_da_sala
+          {% endif %}
+         media_content_id: >
+          {{ states.input_text.url_teste_video.state }}
+         media_content_type: 'video'
+
+stop_teste_video:
+  alias: Stop Vídeo
+  sequence:
+    - service: media_player.turn_off
+      data_template:
+        entity_id: >
+          {% if is_state("input_select.src_cast_teste_video", "Quarto") %} media_player.tv_do_quarto
+          {% elif is_state("input_select.src_cast_teste_video", "Sala") %} media_player.tv_da_sala
+          {% endif %}
+
 
 #   _____          _     ___
 #  / ____|        | |   |__ \

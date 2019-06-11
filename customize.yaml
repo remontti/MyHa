@@ -2,22 +2,12 @@ sun.sun:
   friendly_name: Sol
 sensor.yr_symbol:
   friendly_name: Clima
-sensor.dark_sky_daily_high_temperature:
-  friendly_name: Temp Máx
 sensor.dark_sky_wind_speed:
   friendly_name: Vento
-sensor.dark_sky_daily_low_temperature:
-  friendly_name: Temp Min
 sensor.dark_sky_humidity:
   friendly_name: Umidade
 sensor.dark_sky_temperature:
   friendly_name: Temp
-binary_sensor.ap_router_cli_tv:
-  icon: mdi:router-wireless
-binary_sensor.unifi_ap:
-  icon: mdi:access-point
-binary_sensor.tv_lg_sala:
-  icon: mdi:television-classic
 binary_sensor.internet:
   icon: mdi:earth
 binary_sensor.chrome_cast_game:
@@ -36,69 +26,12 @@ script.tv_quarto_mute:
   icon: mdi:volume-off
 script.tv_quarto_sleep:
   icon: mdi:sleep
-script.parabolica_up:
-  icon: mdi:arrow-up-bold-box
-script.parabolica_vol_down:
-  icon: mdi:arrow-left-bold-box
-script.parabolica_mute:
-  icon: mdi:arrow-down-bold-box
-script.parabolica_vol_up:
-  icon: mdi:arrow-right-bold-box
-script.parabolica_ok:
-  icon: mdi:smoke-detector
-script.parabolica_sleep:
-  icon: mdi:sleep
-switch.parabolica:
-  hidden: true
-  icon: mdi:satellite-uplink
 script.tv_quarto_input:
   icon: mdi:video-input-hdmi
-switch.ar_quarto:
-  hidden: true
-  icon: mdi:air-conditioner
 script.air_quarto_led:
   icon: mdi:led-variant-on
-script.air_quarto_mode:
-  icon: mdi:view-module
-script.air_quarto_speed:
-  icon: mdi:fan
 script.air_quarto_swing:
   icon: mdi:tilde
-script.air_quarto_t_up:
-  icon: mdi:chevron-double-up
-script.air_quarto_t_down:
-  icon: mdi:chevron-double-down
-script.air_quarto_17:
-  icon: mdi:temperature-celsius
-script.air_quarto_19:
-  icon: mdi:temperature-celsius
-script.air_quarto_20:
-  icon: mdi:temperature-celsius
-script.air_quarto_21:
-  icon: mdi:temperature-celsius
-script.air_quarto_22:
-  icon: mdi:temperature-celsius
-script.air_quarto_23:
-  icon: mdi:temperature-celsius
-script.air_quarto_24:
-  icon: mdi:temperature-celsius
-script.air_quarto_25:
-  icon: mdi:temperature-celsius
-script.parabolica_down:
-  icon: mdi:arrow-down-bold-box
-sensor.alarm_clock_time:
-  friendly_name: Alarms set to
-  icon: mdi:alarm-bell
-input_text.text_url_youtube:
-  icon: mdi:music
-input_text.text_clock:
-  icon: mdi:voice
-sensor.alarm_clock_hour:
-  hidden: true
-sensor.alarm_clock_minutes:
-  hidden: true
-sensor.alarm_clock_time_long:
-  hidden: true
 switch.xboom_som:
   icon: mdi:speaker-wireless
 script.xboom_vol_down:
@@ -112,7 +45,6 @@ script.xboom_input:
 script.xboom_equalizer:
   icon: mdi:tune-vertical
 switch.tv_lg_55:
-  hidden: true
   icon: mdi:television
 switch.home_theater:
   icon: mdi:theater
@@ -130,9 +62,9 @@ script.lg55_simplink:
   icon: mdi:link-variant
 script.lg55_exit:
   icon: mdi:exit-to-app
-device_tracker.google_maps_123:
+device_tracker.google_maps_000000000000000000000:
   friendly_name: Rudimar
-device_tracker.google_maps_321:
+device_tracker.google_maps_111111111111111111111:
   friendly_name: Flávia
 sensor.dark_sky_uv_index:
   friendly_name: Índice de UV
@@ -173,7 +105,6 @@ script.proj_input:
 group.projetor_gp:
   icon: mdi:projector
 switch.projetor:
-  hidden: true
   icon: mdi:projector
 script.proj_menu:
   icon: mdi:settings-outline
@@ -191,32 +122,6 @@ group.all_switches:
   friendly_name: Interruptores
 switch.sirenes:
   icon: mdi:alarm-light
-input_boolean.zona_ext_garagem:
-  icon: mdi:transit-transfer
-input_boolean.zona_ext_piscina:
-  icon: mdi:transit-transfer
-input_boolean.zona_sala_social:
-  icon: mdi:transit-transfer
-input_boolean.zona_sala_jantar:
-  icon: mdi:transit-transfer
-input_boolean.zona_corredor:
-  icon: mdi:transit-transfer
-input_boolean.zona_porta_varanda:
-  icon: mdi:door-open
-input_boolean.zona_porta_entrada:
-  icon: mdi:door-open
-input_boolean.zona_porta_area:
-  icon: mdi:door-open
-input_boolean.zona_janela_closet:
-  icon: mdi:window-open
-input_boolean.zona_janela_cozinha:
-  icon: mdi:window-open
-input_boolean.zona_janela_suite:
-  icon: mdi:window-open
-input_boolean.zona_janela_quarto_f:
-  icon: mdi:window-open
-input_boolean.zona_janela_quarto_m:
-  icon: mdi:window-open
 script.reseta_sensores:
   icon: mdi:reload
 binary_sensor.wcam360:
@@ -229,13 +134,35 @@ binary_sensor.google_home_sala:
   icon: mdi:google-home
 binary_sensor.tv_lg_game:
   icon: mdi:television
-zone.home:
-  radius: 150
-sensor.bateria_flavia:
-  icon: mdi:battery
-sensor.bateria_rudi:
-  icon: mdi:battery
 sensor.home_assistant_v2_db:
   friendly_name: Banco Dados
 switch.tv_quarto:
   icon: mdi:television
+switch.camwascam_esq:
+  icon: mdi:arrow-left-circle
+switch.camwascam_dir:
+  icon: mdi:arrow-right-circle
+switch.camwascam_down:
+  icon: mdi:arrow-down-circle
+switch.camwascam_up:
+  icon: mdi:arrow-up-circle
+script.camwascam_p1:
+  icon: mdi:cctv
+script.camwascam_p2:
+  icon: mdi:cctv
+script.camwascam_p3:
+  icon: mdi:cctv
+switch.camwascam_centralizar:
+  icon: mdi:rotate-orbit
+script.video_garagem:
+  icon: mdi:record-rec
+script.video_interna:
+  icon: mdi:record-rec
+script.video_piscina:
+  icon: mdi:record-rec
+script.fotos_garagem:
+  icon: mdi:image-multiple
+script.fotos_interna:
+  icon: mdi:image
+script.fotos_piscina:
+  icon: mdi:image

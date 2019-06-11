@@ -58,6 +58,21 @@
         {% endif %}
       volume_level: '{{  states.input_number.video_volume.state  }}'
 
+- alias: Ajusta Volume do Player de Video Streaming
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: input_number.video_teste_volume
+  action:
+  - service: media_player.volume_set
+    data_template:
+      entity_id: >
+        {% if is_state("input_select.src_cast_video", "Quarto") %} media_player.tv_do_quarto
+        {% elif is_state("input_select.src_cast_video", "Sala") %} media_player.tv_da_sala
+        {% endif %}
+      volume_level: '{{  states.input_number.video_teste_volume.state  }}'
+
 #  _____                              _          _         ______                             _
 # |  __ \                            | |        | |       |  ____|                           | |
 # | |__) |___ _ __   _____   ____ _  | |     ___| |_ ___  | |__   _ __   ___ _ __ _   _ _ __ | |_
@@ -574,7 +589,7 @@
         {% elif is_state("input_select.despert1_src", "da Sala") %} media_player.google_home_sala
         {% endif %}
       volume_level: '{{  states.input_number.despert1_volume.state  }}'
-  - service: tts.google_translate_say
+  - service: tts.watson_tts_say
     data_template:
       entity_id: >
         {% if is_state("input_select.despert1_src", "do Quarto") %} media_player.google_home
@@ -583,7 +598,7 @@
       message: '{{ states.input_text.despert1_mensagem.state }} São {{ states.input_number.despert1_hora.state | int }} horas e {{ states.input_number.despert1_minuto.state | int }} minutos'
   - delay:
       seconds: 6
-  - service: tts.google_translate_say
+  - service: tts.watson_tts_say
     data_template:
       entity_id: >
         {% if is_state("input_select.despert1_src", "do Quarto") %} media_player.google_home
@@ -797,7 +812,7 @@
     data:
       message: "Movimento na Garagem"
   - service: script.turn_on
-    entity_id: script.video_garagem
+    entity_id: script.fotos_garagem
   - service: script.turn_on
     entity_id: script.fotos_piscina
 
@@ -890,8 +905,11 @@
   - service: light.turn_on
     data:
       entity_id:
-        - light.area_da_piscina
         - light.postes
+        - light.varanda_fundo
+        - light.area_da_piscina
+        - light.garagem
+        - light.arandelas
 
 # Desliga luz area piscina e postes se nao tiver mais movimento
 - alias: "Piscina (Alarme ON) - Luz (S/Movimento)"
@@ -910,8 +928,12 @@
     service: light.turn_off
     data:
       entity_id:
-        - light.area_da_piscina
         - light.postes
+        - light.varanda_fundo
+        - light.area_da_piscina
+        - light.garagem
+        - light.arandelas
+
 
 # Movimento suspeitos garagem
 - alias: "Garagem (Alarme ON) - Movimento"
@@ -930,7 +952,7 @@
     data:
       message: "Movimento na garagem"
   - service: script.turn_on
-    entity_id: script.video_garagem
+    entity_id: script.fotos_garagem
   - service: script.turn_on
     entity_id: script.fotos_piscina
 
@@ -955,8 +977,11 @@
   - service: light.turn_on
     data:
       entity_id:
-        - light.garagem
         - light.postes
+        - light.garagem
+        - light.varanda_fundo
+        - light.area_da_piscina
+        - light.arandelas
 
 # Desliga luz garagem e postes se nao tiver mais movimento
 - alias: "Garagem (Alarme ON) - Luz (S/Movimento)"
@@ -975,8 +1000,11 @@
     service: light.turn_off
     data:
       entity_id:
-        - light.garagem
         - light.postes
+        - light.garagem
+        - light.varanda_fundo
+        - light.area_da_piscina
+        - light.arandelas
 
 #           _
 #     /\   | |
@@ -1014,7 +1042,7 @@
     data_template:
       entity_id: media_player.google_home_sala
       volume_level: 0.8
-  - service: tts.google_translate_say
+  - service: tts.watson_tts_say
     data_template:
       entity_id: media_player.google_home_sala
       message: Ativando alarme em 30 segundos.
@@ -1055,7 +1083,7 @@
     data_template:
       entity_id: media_player.google_home_sala
       volume_level: 0.8
-  - service: tts.google_translate_say
+  - service: tts.watson_tts_say
     data_template:
       entity_id: media_player.google_home_sala
       message: Alarme ativado
@@ -1114,7 +1142,7 @@
     data_template:
       entity_id: media_player.google_home_sala
       volume_level: 0.8
-  - service: tts.google_translate_say
+  - service: tts.watson_tts_say
     data_template:
       entity_id: media_player.google_home_sala
       message: Alarme desativado!
@@ -1184,7 +1212,7 @@
   - service: script.turn_on
     entity_id: script.fotos_interna
   - service: script.turn_on
-    entity_id: script.video_garagem
+    entity_id: script.fotos_garagem
 
 
 #                _          _____            _ _                    _
@@ -1283,8 +1311,8 @@
     to: 'on'
   condition:
     condition: time
-    after: '18:00:00'
-    before: '07:30:00'
+    after: '17:00:00'
+    before: '08:00:00'
   action:
     service: light.turn_on
     entity_id: light.corredor
@@ -1300,8 +1328,8 @@
       minutes: 2
   condition:
     condition: time
-    after: '18:00:00'
-    before: '07:30:00'
+    after: '17:00:00'
+    before: '08:30:00'
   action:
     service: light.turn_off
     entity_id: light.corredor
@@ -1380,85 +1408,68 @@
 # Se Silvio estiver dormindo na casa
 
 # Liga luzes e desativa alarme Hora de ir trabalhar
-- alias: "Silvio - Acordar"
-  initial_state: true
-  trigger:
-    platform: template
-    value_template: "{{ states('sensor.time') == (states.input_datetime.silvio_on.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
-#  condition:
-#    condition: state
-#    entity_id: binary_sensor.silvio
-#    state: 'on'
-  action:
-  - service: light.turn_on
-    data:
-      entity_id:
-        - light.quarto_da_frente
-        - light.pendentes
-        - light.postes
-  - service: switch.turn_off
-    data:
-      entity_id: switch.seguranca_casa
+#- alias: "Silvio - Acordar"
+#  initial_state: false
+#  trigger:
+#    platform: template
+#    value_template: "{{ states('sensor.time') == (states.input_datetime.silvio_on.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+#  action:
+#  - service: light.turn_on
+#    data:
+#      entity_id:
+#        - light.quarto_da_frente
+#        - light.pendentes
+#        - light.postes
+#  - service: switch.turn_off
+#    data:
+#      entity_id: switch.seguranca_casa
 
 # Desliga luzes e ativa alarme
-- alias: "Silvio - Saiu"
-  initial_state: true
-  trigger:
-    platform: template
-    value_template: "{{ states('sensor.time') == (states.input_datetime.silvio_off.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
-  action:
-  - service: light.turn_off
-    data:
-      entity_id: group.all_lights
-  - service: switch.turn_on
-    data:
-      entity_id: switch.seguranca_casa
+#- alias: "Silvio - Saiu"
+#  initial_state: false
+#  trigger:
+#    platform: template
+#    value_template: "{{ states('sensor.time') == (states.input_datetime.silvio_off.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+#  action:
+#  - service: light.turn_off
+#    data:
+#      entity_id: group.all_lights
+#  - service: switch.turn_on
+#    data:
+#      entity_id: switch.seguranca_casa
 
 # Verifica se o silvio esta conectado na rede para desativar algumas notificacoes
-- alias: "Silvio - Conectado"
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: binary_sensor.silvio
-    to: 'on'
-  action:
-  - service: automation.turn_off
-    data:
-      entity_id: automation.notificacao_sensor_alarme_off_s_ninguem
-  - service: automation.turn_on
-    data:
-      entity_id:
-        - automation.silvio_acordar
-        - automation.silvio_saiu
-
-# Mesmo com o alarme desligado notificações dos sensores são enviadas pelo telegram
-- alias: "Silvio - Desconectado"
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: binary_sensor.silvio
-    to: 'off'
-  action:
-  - service: automation.turn_on
-    data:
-      entity_id:
-        - automation.notificacao_sensor_alarme_off_s_ninguem
+#- alias: "Silvio - Conectado"
+#  initial_state: true
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.silvio
+#    to: 'on'
+#  action:
+#  - service: automation.turn_off
+#    data:
+#      entity_id: automation.notificacao_sensor_alarme_off_s_ninguem
+#  - service: automation.turn_on
+#    data:
+#      entity_id:
+#        - automation.silvio_acordar
+#        - automation.silvio_saiu
 
 # Desativa automação q desativa o alarme as 3:30 e ativa as 4h
-- alias: "Silvio - Desativar Automação Alarme"
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: binary_sensor.silvio
-    to: 'off'
-    for:
-      hours: 9
-  action:
-  - service: automation.turn_off
-    data:
-      entity_id:
-        - automation.silvio_acordar
-        - automation.silvio_saiu
+#- alias: "Silvio - Desativar Automação Alarme"
+#  initial_state: true
+#  trigger:
+#    platform: state
+#    entity_id: binary_sensor.silvio
+#    to: 'off'
+#    for:
+#      hours: 9
+#  action:
+#  - service: automation.turn_off
+#    data:
+#      entity_id:
+#        - automation.silvio_acordar
+#        - automation.silvio_saiu
 
 
 #  _______   _                                   _____                                _
@@ -1546,7 +1557,7 @@
   action:
     - service: notify.telegramtodos
       data:
-        message: 'Já mando!'
+        message: 'Tá Bugado, mas vou tentar'
     - service: script.turn_on
       entity_id: script.video_piscina
 
@@ -1561,10 +1572,54 @@
   action:
     - service: notify.telegramtodos
       data:
-        message: 'Já mando!'
+        message: 'Tá Bugado, mas vou tentar'
     - service: script.turn_on
       entity_id: script.video_interna
 
+- alias: 'Telegram bot foto garagem'
+  initial_state: true
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/fotogaragem'
+  action:
+    - service: notify.telegramtodos
+      data:
+        message: 'Já mando!'
+    - service: script.turn_on
+      entity_id: script.fotos_garagem
+
+- alias: 'Telegram bot foto piscina'
+  initial_state: true
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/fotopiscina'
+  action:
+    - service: notify.telegramtodos
+      data:
+        message: 'Já mando!'
+    - service: script.turn_on
+      entity_id: script.fotos_piscina
+
+- alias: 'Telegram bot foto interna'
+  initial_state: true
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: '/fotointerna'
+  action:
+    - service: notify.telegramtodos
+      data:
+        message: 'Já mando!'
+    - service: script.turn_on
+      entity_id: script.fotos_interna
 #  _           _
 # | |         | |
 # | |     __ _| |__
