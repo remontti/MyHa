@@ -54,7 +54,7 @@ Hoje é mais viável comprar o <b>UAP-AC-LITE-BR UNIFI AP AC LITE 2.4/5.0GHZ</b>
 
 Para gerenciar a rede usei um RouterOS (Mikrotik) e como tive mais de 50 dispositivos conectado, precisei de 3 roteadores espalhado pela casa para ficar bom, sendo um roteador ficando apenas só para os sonoff.
   
-<h2>Screeshots HA 0.93.1 / HassOS 2.12 (18/05/2019)</h2>
+<h2>Screeshots HA 0.94.1 / HassOS 2.12 (10/06/2019)</h2>
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/1.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/2.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/3.png">
@@ -65,8 +65,6 @@ Para gerenciar a rede usei um RouterOS (Mikrotik) e como tive mais de 50 disposi
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/8.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/9.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/10.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/11.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/12.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/13.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/14.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/15.png">
