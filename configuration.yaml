@@ -28,6 +28,7 @@ homeassistant:
     - /tmp
     - /config
 
+
 #  _____
 # |  __ \
 # | |__) |__ _ __ ___  ___  _ __
@@ -59,7 +60,7 @@ zone:
     longitude: !secret back_longitude
     radius: 130
     icon: mdi:briefcase
-  - name: "Maria João"
+  - name: "5S"
     latitude: !secret mj_latitude
     longitude: !secret mj_longitude
     radius: 100
@@ -279,8 +280,6 @@ logger:
 # https://www.home-assistant.io/components/tts/
 # https://www.home-assistant.io/components/google_translate/
 # https://www.home-assistant.io/components/voicerss/
-# http://www.voicerss.org/personel/statistic.aspx
-# https://www.home-assistant.io/components/watson_tts/
 tts:
   - platform: google_translate
     language: 'pt-br'
@@ -291,8 +290,9 @@ tts:
     api_key: !secret voicerss_key
     language: 'pt-br'
     format: '44khz_16bit_stereo'
+    # http://www.voicerss.org/personel/statistic.aspx
   - platform: watson_tts
-    watson_apikey: !secret watson_tts
+    watson_apikey: 7VxSzZwRmE3G4uvhblwJR578gwLJTtIi4EfGGd74Gpmh
     voice: pt-BR_IsabelaVoice
 
 #   _____ _                 _
@@ -425,6 +425,7 @@ sun:
 # https://www.home-assistant.io/components/filesize/
 # https://www.home-assistant.io/components/sql/
 # https://www.home-assistant.io/components/template/
+# https://www.home-assistant.io/components/integration/
 sensor:
   - platform: mqtt
     name: "Suite Temperatura"
@@ -513,6 +514,83 @@ sensor:
     command: "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+  #PZEM
+  - platform: mqtt
+    name: "Watts"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:power-plug
+
+  - platform: mqtt
+    name: "Voltagem"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:flash
+
+  - platform: mqtt
+    name: "Corrente"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:current-ac
+
+  - platform: mqtt
+    name: "Frequencia"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.Frequency }}"
+    unit_of_measurement: "Hz"
+    icon: mdi:current-dc
+
+  - platform: mqtt
+    name: "Potência aparente"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.ApparentPower }}"
+    unit_of_measurement: "VA"
+    icon: mdi:square-outline
+
+  - platform: mqtt
+    name: "Potência reativa"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.ReactivePower }}"
+    unit_of_measurement: "VAr"
+    icon: mdi:square-outline
+
+  - platform: mqtt
+    name: "Fator Potência"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.Factor }}"
+    icon: mdi:percent
+
+  - platform: mqtt
+    name: "Consumo Diário"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+
+  - platform: mqtt
+    name: "Consumo dia Anterior"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+
+  - platform: mqtt
+    name: "Consumo Total"
+    state_topic: "tele/sonoff27/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+
+  - platform: integration
+    source: sensor.watts
+    name: Energia Gasta
+    unit_prefix: k
+    round: 3
+
   - platform: template
     sensors:
       despert1_hora:
@@ -631,25 +709,72 @@ sensor:
           {% else %}
             mdi:thumb-down-outline
           {% endif %}
-#    sensors:
-#      garagem_kw:
-#        friendly_name: "Garagem kWh"
-#        unit_of_measurement: 'kW/h'
-#        value_template: "{{ (((75) * float(states.sensor.garagem_on.state)) / 1000) | round(3) }}"
-#      abajur_kw:
-#        friendly_name: "Abajur kWh"
-#        unit_of_measurement: 'kW/h'
-#        value_template: "{{ (((9) * float(states.sensor.abajur_on.state)) / 1000) | round(3) }}"
-#  - platform: template
-#    sensors:
-#      garagem_rs:
-#        friendly_name: "Garagem R$"
-#        unit_of_measurement: 'R$'
-#        value_template: "{{ ((((75) * float(states.sensor.garagem_on.state)) / 1000) * float(states.input_text.text_valor_kwh.state)) | round(2) }}"
-#      abajur_rs:
-#        friendly_name: "Abajur R$"
-#        unit_of_measurement: 'kW/h'
-#        value_template: "{{ ((((9) * float(states.sensor.abajur_on.state)) / 1000) * float(states.input_text.text_valor_kwh.state)) | round(2) }}"
+
+      energia_gasta_dia:
+        friendly_name: "Gasto estimado no dia"
+        icon_template: mdi:cash-usd
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_diario.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_ontem:
+        friendly_name: "Gasto estimado ontem"
+        icon_template: mdi:cash-usd
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_dia_anterior.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_total:
+        friendly_name: "Gasto estimado total"
+        icon_template: mdi:cash-usd
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_total.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+
+
+      gasto_hoje:
+        friendly_name: "Gasto hoje"
+        icon_template: mdi:cash-usd
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_hoje.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      gasto_semanal:
+        friendly_name: "Gasto na semana"
+        icon_template: mdi:cash-usd
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_semana.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      gasto_mes:
+        friendly_name: "Gasto no mês"
+        icon_template: mdi:cash-usd
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_mes.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+
+#  _    _ _   _ _ _ _           __  __      _
+# | |  | | | (_) (_) |         |  \/  |    | |
+# | |  | | |_ _| |_| |_ _   _  | \  / | ___| |_ ___ _
+# | |  | | __| | | | __| | | | | |\/| |/ _ \ __/ _ \ '__|
+# | |__| | |_| | | | |_| |_| | | |  | |  __/ ||  __/ |
+#  \____/ \__|_|_|_|\__|\__, | |_|  |_|\___|\__\___|_|
+#                       |___/
+# https://www.home-assistant.io/components/utility_meter/
+
+utility_meter:
+  kwh_gasto_hoje:
+    source: sensor.energia_gasta
+    cycle: daily
+    offset: '00:00:00'
+#    tariffs:
+#      - verde
+#      - amarela
+#      - vermelha
+  kwh_gasto_semana:
+    source: sensor.energia_gasta
+    cycle: weekly
+#    tariffs:
+#      - verde
+#      - amarela
+#      - vermelha
+  kwh_gasto_mes:
+    source: sensor.energia_gasta
+    cycle: monthly
+#    tariffs:
+#      - verde
+#      - amarela
+#      - vermelha
 
 #  - platform: snmp
 #    name: Upload
@@ -943,6 +1068,17 @@ binary_sensor:
     off_delay: 3
     device_class: motion
   - platform: mqtt
+    name: Closet
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '175D26' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.closet') | upper}}
+      {% endif %}
+    off_delay: 5
+    device_class: motion
+  - platform: mqtt
     name: Ext Piscina
     state_topic: 'tele/sonoffBr1/RESULT'
     value_template: >-
@@ -964,6 +1100,73 @@ binary_sensor:
       {% endif %}
     off_delay: 5
     device_class: motion
+  # INTERRUPTORES 433MHZ
+  - platform: mqtt
+    name: RF1 Interruptor Coz
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '5E22A1' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1_interruptor_coz') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF2 Interruptor Coz
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '5E22A2' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf2_interruptor_coz') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF1 Interruptor BSu
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'DF88B1' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1_interruptor_bsu') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF2 Interruptor BSu
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'DF88B2' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf2_interruptor_bsu') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF1 Interruptor BSo
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'FAC381' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1_interruptor_bso') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF2 Interruptor BSo
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'FAC382' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf2_interruptor_bso') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
   # PINGs
   - platform: ping
     host: 100.64.0.1
@@ -1038,7 +1241,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Pia"
     state_topic: "stat/sonoff15/POWER"
@@ -1049,7 +1252,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Bebedor"
     state_topic: "stat/sonoff21/POWER"
@@ -1060,7 +1263,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Entrada"
     state_topic: "stat/sonoff28/POWER"
@@ -1071,7 +1274,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "JF"
     state_topic: "stat/sonoff11/POWER"
@@ -1082,7 +1285,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "JG"
     state_topic: "stat/sonoff20/POWER"
@@ -1093,7 +1296,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Sala Game"
     state_topic: "stat/sonoff14/POWER"
@@ -1104,7 +1307,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Central"
     state_topic: "stat/sonoff07/POWER"
@@ -1115,7 +1318,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Trilhos"
     state_topic: "stat/sonoff19/POWER"
@@ -1126,7 +1329,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Mesa de Jantar"
     state_topic: "stat/sonoff29/POWER"
@@ -1137,7 +1340,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Postes"
     state_topic: "stat/sonoff23/POWER"
@@ -1159,7 +1362,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Cozinha"
     state_topic: "stat/sonoff05/POWER"
@@ -1170,7 +1373,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Lavanderia"
     state_topic: "stat/sonoff22/POWER"
@@ -1181,7 +1384,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Lavabo"
     state_topic: "stat/sonoff01/POWER"
@@ -1192,7 +1395,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Lustre"
     state_topic: "stat/sonoff12/POWER"
@@ -1203,7 +1406,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Sala de Estar"
     state_topic: "stat/sonoff31/POWER"
@@ -1214,7 +1417,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Corredor"
     state_topic: "stat/sonoff08/POWER"
@@ -1225,7 +1428,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Quarto da Frente"
     state_topic: "stat/sonoff04/POWER"
@@ -1236,7 +1439,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Quarto do Meio"
     state_topic: "stat/sonoff06/POWER"
@@ -1247,7 +1450,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Banheiro Social"
     state_topic: "stat/sonoff24/POWER"
@@ -1258,7 +1461,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Quarto da Suite"
     state_topic: "stat/sonoff26/POWER"
@@ -1269,7 +1472,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Banheiro da Suite"
     command_topic: "cmnd/sonoff09/POWER"
@@ -1280,7 +1483,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Closet"
     state_topic: "stat/sonoff30/POWER"
@@ -1291,7 +1494,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Area da Piscina"
     state_topic: "stat/sonoff10/POWER"
@@ -1302,7 +1505,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Varanda Fundo"
     state_topic: "stat/sonoff03/POWER"
@@ -1313,7 +1516,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Arandelas da Varanda"
     state_topic: "stat/sonoff17/POWER"
@@ -1324,7 +1527,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Arandelas"
     state_topic: "stat/sonoff25/POWER"
@@ -1335,7 +1538,7 @@ light:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
 #  Auto detectado
 #  - platform: yeelight
 #    devices:
@@ -1406,9 +1609,9 @@ switch:
 
   - platform: mqtt
     name: "Sirenes"
-    state_topic: "stat/sonoff02/POWER"
-    command_topic: "cmnd/sonoff02/power"
-    availability_topic: "tele/sonoff02/LWT"
+    state_topic: "stat/sonoff27/POWER"
+    command_topic: "cmnd/sonoff27/power"
+    availability_topic: "tele/sonoff27/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
     qos: 1
@@ -1425,7 +1628,7 @@ switch:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Pressurizador"
     state_topic: "stat/sonoff18/POWER"
@@ -1436,7 +1639,51 @@ switch:
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
+#  - platform: mqtt
+#    name: "Sonoff Pro CH1"
+#    state_topic: "stat/sonoffPro/POWER1"
+#    command_topic: "cmnd/sonoffPro/POWER1"
+#    availability_topic: "tele/sonoffPro/LWT"
+#    payload_available: "Conectado"
+#    payload_not_available: "Desconectado"
+#    qos: 1
+#    payload_on: "ON"
+#    payload_off: "OFF"
+#    retain: true
+#  - platform: mqtt
+#    name: "Sonoff Pro CH2"
+#    state_topic: "stat/sonoffPro/POWER2"
+#    command_topic: "cmnd/sonoffPro/POWER2"
+#    availability_topic: "tele/sonoffPro/LWT"
+#    payload_available: "Conectado"
+#    payload_not_available: "Desconectado"
+#    qos: 1
+#    payload_on: "ON"
+#    payload_off: "OFF"
+#    retain: true
+#  - platform: mqtt
+#    name: "Sonoff Pro CH3"
+#    state_topic: "stat/sonoffPro/POWER3"
+#    command_topic: "cmnd/sonoffPro/POWER3"
+#    availability_topic: "tele/sonoffPro/LWT"
+#    payload_available: "Conectado"
+#    payload_not_available: "Desconectado"
+#    qos: 1
+#    payload_on: "ON"
+#    payload_off: "OFF"
+#    retain: true
+#  - platform: mqtt
+#    name: "Sonoff Pro CH4"
+#    state_topic: "stat/sonoffPro/POWER4"
+#    command_topic: "cmnd/sonoffPro/POWER4"
+#    availability_topic: "tele/sonoffPro/LWT"
+#    payload_available: "Conectado"
+#    payload_not_available: "Desconectado"
+#    qos: 1
+#    payload_on: "ON"
+#    payload_off: "OFF"
+#    retain: true
   - platform: command_line
     switches:
       camwascam_dir:
@@ -1483,9 +1730,9 @@ input_text:
     name: URL
     initial: "Insira a URL"
     icon: mdi:link-variant
-#  text_valor_kwh:
-#    name: "Valor kW/h"
-#    initial: "0.63"
+  text_valor_kwh:
+    name: "Valor kW/h"
+    initial: "0.666"
 
 # Inputs de data/hora
 #  _____                   _        _       _       _   _
@@ -1788,11 +2035,13 @@ camera:
   - platform: ffmpeg
     name: Camera Interna
     input: !secret input_camera_interna
-#  - platform: onvif
-#    name: Camera onvif
-#    host: 100.64.0.52
-#    username: admin
-#    password: !secret mqtt_password
+  - platform: ffmpeg
+    name: V380rtsp1
+    input: rtsp://100.64.0.66/live/ch00_1
+  - platform: ffmpeg
+    name: V380rtsp2
+    input: rtsp://100.64.0.67/live/ch00_1
+
 
 # Integração Google Assistant
 #   _____                   _                         _     _              _
@@ -1816,6 +2065,19 @@ google_assistant:
     - scene
     - fan
 #   - group
+
+
+#   _____                   _         _____      _                _
+#  / ____|                 | |       / ____|    | |              | | 
+# | |  __  ___   ___   __ _| | ___  | |     __ _| | ___ _ __   __| | __ _ _ __
+# | | |_ |/ _ \ / _ \ / _` | |/ _ \ | |    / _` | |/ _ \ '_ \ / _` |/ _` | '__|
+# | |__| | (_) | (_) | (_| | |  __/ | |___| (_| | |  __/ | | | (_| | (_| | |
+#  \_____|\___/ \___/ \__, |_|\___|  \_____\__,_|_|\___|_| |_|\__,_|\__,_|_|
+#                     |___/
+# https://www.home-assistant.io/components/calendar.google/
+google:
+  client_id: !secret google_client_id
+  client_secret: !secret google_client_secret
 
 
 # Telegram BOT

@@ -233,6 +233,7 @@ luzes_quartos:
 #    - binary_sensor.sala_social
 #    - binary_sensor.sala_jantar
 #    - binary_sensor.corredor
+#    - binary_sensor.closet
 #    - binary_sensor.ext_garagem
 #    - binary_sensor.ext_piscina
 #    - binary_sensor.porta_varanda

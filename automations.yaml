@@ -143,7 +143,9 @@
   action:
   - service: light.turn_on
     data:
-      entity_id: light.postes
+      entity_id: 
+        - light.postes
+        - light.area_da_piscina
 
 # HOME (Desliga luz Poste se estiver on)
 - alias: Controle (1) - Bt Home (Desligar Poste)
@@ -161,7 +163,9 @@
   action:
   - service: light.turn_off
     data:
-      entity_id: light.postes
+      entity_id: 
+        - light.postes
+        - light.area_da_piscina
 
 # SOS (Liga luz pendentes se estiver off)
 - alias: Controle (1) - Bt SOS (Liga QM)
@@ -361,8 +365,9 @@
   action:
   - service: light.turn_on
     data:
-      entity_id: light.postes
-      transition: 3
+      entity_id: 
+        - light.postes
+        - light.area_da_piscina
 
 # SOS (Desliga luz do postes se estiver on)
 - alias: Controle (3) - Bt SOS (Desligar Postes)
@@ -380,8 +385,220 @@
   action:
   - service: light.turn_off
     data:
-      entity_id: light.postes
-      transition: 3
+      entity_id: 
+        - light.postes
+        - light.area_da_piscina
+
+
+#  _____       _                             _                        _  _  ____ ____  __  __ _         
+# |_   _|     | |                           | |                      | || ||___ \___ \|  \/  | |
+#   | |  _ __ | |_ ___ _ __ _ __ _   _ _ __ | |_ ___  _ __ ___  ___  | || |_ __) |__) | \  / | |__  ____
+#   | | | '_ \| __/ _ \ '__| '__| | | | '_ \| __/ _ \| '__/ _ \/ __| |__   _|__ <|__ <| |\/| | '_ \|_  /
+#  _| |_| | | | ||  __/ |  | |  | |_| | |_) | || (_) | | |  __/\__ \    | | ___) |__) | |  | | | | |/ / 
+# |_____|_| |_|\__\___|_|  |_|   \__,_| .__/ \__\___/|_|  \___||___/    |_||____/____/|_|  |_|_| |_/___|
+#                                     |_|                                                               
+#Cozinha
+- alias: RF1 Cozinha On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_coz
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.pia
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: 
+        - light.pia
+- alias: RF1 Cozinha Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_coz
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.pia
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: 
+        - light.pia
+- alias: RF2 Cozinha On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_coz
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: switch.pressurizador
+    state: 'off'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.pressurizador
+- alias: RF2 Cozinha Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_coz
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: switch.pressurizador
+    state: 'on'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.pressurizador
+#Banheiro da Suite
+- alias: RF1 Banheiro Suite On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_bsu
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_da_suite
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: 
+        - light.banheiro_da_suite
+- alias: RF1 Banheiro Suite Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_bsu
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_da_suite
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: 
+        - light.banheiro_da_suite
+- alias: RF2 Banheiro Suite On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_bsu
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: switch.pressurizador
+    state: 'off'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.pressurizador
+- alias: RF2 Banheiro Suite Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_bsu
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: switch.pressurizador
+    state: 'on'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.pressurizador
+#Banheiro Social
+- alias: RF1 Banheiro Social On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_bso
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_social
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: 
+        - light.banheiro_social
+- alias: RF1 Banheiro Social Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_bso
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_social
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: 
+        - light.banheiro_social
+- alias: RF2 Banheiro Social On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_bso
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: switch.pressurizador
+    state: 'off'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.pressurizador
+- alias: RF2 Banheiro Social Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_bso
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: switch.pressurizador
+    state: 'on'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.pressurizador
+
 
 #  _                 _   _       _   _  __
 # | |               | \ | |     | | (_)/ _|
@@ -684,6 +901,7 @@
       - binary_sensor.sala_social
       - binary_sensor.sala_jantar
       - binary_sensor.corredor
+      - binary_sensor.closet
       - binary_sensor.ext_garagem
       - binary_sensor.ext_piscina
       - binary_sensor.porta_varanda
@@ -824,6 +1042,7 @@
       - binary_sensor.sala_social
       - binary_sensor.sala_jantar
       - binary_sensor.corredor
+      - binary_sensor.closet
       - binary_sensor.porta_varanda
       - binary_sensor.porta_entrada
       - binary_sensor.porta_area
@@ -879,6 +1098,8 @@
   - service: notify.telegramtodos
     data:
       message: "Movimento na área da piscina"
+  - delay:
+      milliseconds: 700
   - service: script.turn_on
     entity_id: script.fotos_piscina
   - service: script.turn_on
@@ -1156,6 +1377,7 @@
       - binary_sensor.sala_social
       - binary_sensor.sala_jantar
       - binary_sensor.corredor
+      - binary_sensor.closet
       - binary_sensor.porta_varanda
       - binary_sensor.porta_entrada
       - binary_sensor.porta_area
@@ -1302,7 +1524,7 @@
 # |______\__,_/___|  \_____\___/|_|  |_|  \___|\__,_|\___/|_|
 
 # Liga se tiver movimento
-- alias: Luz Corredor Liga - 18:00h as 07:30 (Movimento)
+- alias: Luz Corredor Liga - 17:00h as 07:30 (Movimento)
   initial_state: true
   trigger:
     platform: state
@@ -1334,6 +1556,45 @@
     service: light.turn_off
     entity_id: light.corredor
 
+#  _                  _____ _                _
+# | |                / ____| |              | |
+# | |    _   _ ____ | |    | | ___  ___  ___| |_
+# | |   | | | |_  / | |    | |/ _ \/ __|/ _ \ __|
+# | |___| |_| |/ /  | |____| | (_) \__ \  __/ |_
+# |______\__,_/___|  \_____|_|\___/|___/\___|\__|
+#
+# Liga se tiver movimento
+- alias: Luz Closet Liga - 17:00h as 08:00 (Movimento)
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.closet
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: time
+    after: '17:00:00'
+    before: '08:00:00'
+  action:
+    service: light.turn_on
+    entity_id: light.closet
+
+# Desliga se nao tiver movimento por 2min
+- alias: Luz Closet Desliga - (S/Movimento 3min)
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.closet
+    to: 'off'
+    for:
+      minutes: 3
+#  condition:
+#    condition: time
+#    after: '00:00:00'
+#    before: '08:00:00'
+  action:
+    service: light.turn_off
+    entity_id: light.closet
 
 
 #  _                 _____          _                                                  _      _
@@ -1394,7 +1655,18 @@
         - light.arandelas
         - light.arandelas_da_varanda
 
-
+# Desliga Pressurizador
+#- alias: Auto desligamento do Pressurizador
+#  initial_state: true
+#  trigger:
+#    platform: state
+#    entity_id: switch.turn_off
+#    to: 'on'
+#    for:
+#      hours: 2
+#  action:
+#  - service: switch.turn_off
+#    entity_id: switch.pressurizador
 
 
 #  _____                             _____ _ _       _
@@ -1620,6 +1892,7 @@
         message: 'Já mando!'
     - service: script.turn_on
       entity_id: script.fotos_interna
+
 #  _           _
 # | |         | |
 # | |     __ _| |__
