@@ -1,6 +1,13 @@
 # Projeto Home Assistant by Rudimar Remontti
 http://home-assistant.io
 
+Dúvidas
+Por favor, se você tiver dúvida entre no grupo do <a href="https://t.me/HomeAssistantbrasil">telegram</a> onde eu e várias outras pessoas compartilham conhecimentos sobre o HA e ajudam na medida do possível nas questões.
+
+Também foi criado uma página para compartilhar informações através de artigos. https://www.home-assistant.wiki.br/
+
+<h2>Lista de compras</h2>
+
 <h3>BRASIL</h3>
 
 <b>Google Home min </b>https://goo.gl/8owfdc
