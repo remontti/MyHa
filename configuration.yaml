@@ -292,7 +292,7 @@ tts:
     format: '44khz_16bit_stereo'
     # http://www.voicerss.org/personel/statistic.aspx
   - platform: watson_tts
-    watson_apikey: 7VxSzZwRmE3G4uvhblwJR578gwLJTtIi4EfGGd74Gpmh
+    watson_apikey: !secret watson_apikey
     voice: pt-BR_IsabelaVoice
 
 #   _____ _                 _
