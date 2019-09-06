@@ -58,18 +58,11 @@ Firmware utilizado Tasmota: https://github.com/arendst/Sonoff-Tasmota/wiki</i>
 
 <b>AM2302 DHT22 Temperature And Humidity Sensor</b> http://abre.ai/8ZF
 
-<h3>PARAGUAI</h3>
-<b>RB750G3</b> https://goo.gl/YHGA8W
-<i>Mas vc pode comprar modelos mais em conta como: <b>RB750G2</b> https://goo.gl/KXBYDd ou <b>RB941-2ND-TC</b> (HAP.LITE) https://goo.gl/5mqB27 Esse modelo RB941 já tem wifi (Mas é BEM fraco, pois não tem antena)</i>
-
-<b>Roteador Wi-fi Tp-link Tl-wr941hp</b> https://goo.gl/dBqZZv <i>(Modo Bridge)</i>
-
-<b>UBNT UAP-BR UNIFI</b> https://goo.gl/ouqmTp (Esse já tinha que ganhei em um forum quando eles lançaram)<br/>
-Hoje é mais viável comprar o <b>UAP-AC-LITE-BR UNIFI AP AC LITE 2.4/5.0GHZ</b> https://goo.gl/Vqqvt8
-
-Para gerenciar a rede usei um RouterOS (Mikrotik) e como tive mais de 50 dispositivos conectado, precisei de 3 roteadores espalhado pela casa para ficar bom, sendo um roteador ficando apenas só para os sonoff.
+<hr>
+Para rede wireless foi usado um kit Google Wifi com 3.
+<hr>
   
-<h2>Screeshots HA 0.96.3 / HassOS 2.12 (23/07/2019)</h2>
+<h2>Screeshots HA 0.98.3 / HassOS 2.12 (23/07/2019)</h2>
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/1.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/2.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/3.png">
@@ -83,4 +76,7 @@ Para gerenciar a rede usei um RouterOS (Mikrotik) e como tive mais de 50 disposi
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/13.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/14.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/15.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/16.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/17.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/18.png">
 
