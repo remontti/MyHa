@@ -1,16 +1,32 @@
 
-google_maps_000000000000000000000:
+#google_maps_106566341309199592438:
+#  hide_if_away: false
+#  icon:
+#  mac:
+#  name: google maps 106566341309199592438
+#  picture: https://lh6.googleusercontent.com/-5BbnhQwrj6c/AAAAAAAAAAI/AAAAAAAABhk/w-Xwy5w3RX0/photo.jpg
+#  track: true
+
+#google_maps_118429201781082195315:
+#  hide_if_away: false
+#  icon:
+#  mac:
+#  name: google maps 118429201781082195315
+#  picture: https://lh4.googleusercontent.com/-sU7J9Pj8vCA/AAAAAAAAAAI/AAAAAAAAABI/q3EaiOubZ70/photo.jpg
+#  track: true
+
+life360_rudimar_remontti:
   hide_if_away: false
   icon:
   mac:
-  name: google maps 000000000000000000000
-  picture: https://lh6.googleusercontent.com/-5BbnhQwrj6c/AAAAAAAAAAI/AAAAAAAABhk/w-Xwy5w3RX0/photo.jpg
+  name: life360 rudimar remontti
+  picture: https://www.life360.com/img/user_images/9395da21-6d6e-4b5a-9f01-6078eb0f67b1/31a6b14a-8b50-4ff0-ba36-8c047d71e102.png?fd=2
   track: true
 
-google_maps_111111111111111111111:
+life360_flavia_cristine_vendruscolo:
   hide_if_away: false
   icon:
   mac:
-  name: google maps 111111111111111111111
-  picture: https://lh4.googleusercontent.com/-sU7J9Pj8vCA/AAAAAAAAAAI/AAAAAAAAABI/q3EaiOubZ70/photo.jpg
+  name: life360 flavia cristine vendruscolo
+  picture: https://www.life360.com/img/user_images/122ce783-1a23-4bfb-9bdb-662c1a79d27c/70ff70eb-0f82-4367-bc79-b1b6efe08741.png?fd=2
   track: true

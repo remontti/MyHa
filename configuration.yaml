@@ -40,11 +40,11 @@ person:
   - name: Rudi
     id: 3nfr8CXF
     device_trackers:
-      - device_tracker.google_maps_000000000000000000000
+      - device_tracker.life360_rudimar_remontti
   - name: Flavia
     id: nucnTHSG
     device_trackers:
-      - device_tracker.google_maps_111111111111111111111
+      - device_tracker.life360_flavia_cristine_vendruscolo
 
 # Zonas de localização
 #  ______
@@ -60,7 +60,7 @@ zone:
     longitude: !secret back_longitude
     radius: 130
     icon: mdi:briefcase
-  - name: "5S"
+  - name: "B.Cerutti"
     latitude: !secret mj_latitude
     longitude: !secret mj_longitude
     radius: 100
@@ -161,7 +161,7 @@ config:
 # https://www.home-assistant.io/components/recorder/
 recorder:
   purge_keep_days: 3
-  db_url: !secret maria_db
+#  db_url: !secret maria_db
 
 #  _    _ _   _
 # | |  | | | | |
@@ -171,13 +171,13 @@ recorder:
 # |_|  |_|\__|\__| .__/
 #                |_|
 # https://www.home-assistant.io/components/http/
-http:
+#http:
   #server_port: 55123
-  base_url: !secret url_base
-  ssl_certificate: /ssl/fullchain.pem
-  ssl_key: /ssl/privkey.pem
-  ip_ban_enabled: true
-  login_attempts_threshold: 3
+  #base_url: !secret url_base
+  #ssl_certificate: /ssl/fullchain.pem
+  #ssl_key: /ssl/privkey.pem
+  #ip_ban_enabled: true
+  #login_attempts_threshold: 3
 # Segredos são definidos no arquivo secrets.yaml
 
 
@@ -292,7 +292,7 @@ tts:
     format: '44khz_16bit_stereo'
     # http://www.voicerss.org/personel/statistic.aspx
   - platform: watson_tts
-    watson_apikey: !secret watson_apikey
+    watson_apikey: !secret watson_key
     voice: pt-BR_IsabelaVoice
 
 #   _____ _                 _
@@ -314,9 +314,9 @@ tts:
 # https://www.home-assistant.io/components/device_tracker/
 # https://www.home-assistant.io/components/google_maps/
 device_tracker:
-  - platform: google_maps
-    username: !secret gmail_user
-    password: !secret gmail_senha
+#  - platform: google_maps
+#    username: !secret gmail_user
+#    password: !secret gmail_senha
 
 # Extrair fluxo de audio (ex youtube)
 #  __  __          _ _         ______      _                  _
@@ -343,13 +343,13 @@ media_player:
     client_secret: !secret spotify_client_secret
   - platform: lg_netcast
     name: "LG Smart TV"
-    host: 100.64.0.15
+    host: 192.168.87.13
     access_token: 431855
 #  - platform: smartir
 #    name: TV do Quarto
 #    unique_id: quarto_tv
 #    device_code: 1100
-#    controller_data: 100.64.0.26
+#    controller_data: 192.168.87.7
 #    power_sensor: binary_sensor.tv_power
 
 
@@ -362,11 +362,6 @@ media_player:
 #  \_____\__,_|___/\__|
 # https://www.home-assistant.io/components/cast/
 cast:
-#  media_player:
-#  - host: 100.64.0.20
-#  - host: 100.64.0.21
-#  - host: 100.64.0.22
-#  - host: 100.64.0.19
 
 # Mosquito
 #  __  __       _   _
@@ -379,7 +374,7 @@ cast:
 # https://www.home-assistant.io/components/mqtt/
 # https://www.home-assistant.io/addons/mosquitto/
 mqtt:
-  broker: 100.100.0.3
+  broker: 192.168.87.5
   port: 1883
   client_id: home-assistant-1
   username: !secret mqtt_username
@@ -463,6 +458,19 @@ sensor:
     state_topic: "tele/sonoff24/SENSOR"
     value_template: "{{ value_json['DHT11'].Humidity }}"
     unit_of_measurement: "%"
+  - platform: mqtt
+    name: "Banheiro Suíte Temperatura"
+    device_class: temperature
+    state_topic: "tele/sonoff09/SENSOR"
+    value_template: "{{ value_json['AM2301'].Temperature }}"
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Banheiro Suíte Umidade"
+    device_class: humidity
+    state_topic: "tele/sonoff09/SENSOR"
+    value_template: "{{ value_json['AM2301'].Humidity }}"
+    unit_of_measurement: "%"
+#  - platform: yr
   - platform: darksky
     api_key: !secret api_darksky
     language: 'pt'
@@ -495,16 +503,16 @@ sensor:
       - type: memory_use_percent
       - type: processor_use
       - type: last_boot
-# - platform: filesize
-#   file_paths:
-#     - /config/home-assistant_v2.db
-  - platform: sql
-    db_url: !secret maria_db
-    queries:
-      - name: DB size
-        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 1) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
-        column: 'value'
-        unit_of_measurement: MB
+#  - platform: filesize
+#    file_paths:
+#      - /config/home-assistant_v2.db
+#  - platform: sql
+#    db_url: !secret maria_db
+#    queries:
+#      - name: DB size
+#        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 1) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
+#        column: 'value'
+#        unit_of_measurement: MB
   - platform: uptime
     name: Uptime
   - platform: version
@@ -515,81 +523,314 @@ sensor:
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
 
-  #PZEM
+# PZEM
   - platform: mqtt
     name: "Watts"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.Power }}"
     unit_of_measurement: "W"
     icon: mdi:power-plug
-
   - platform: mqtt
     name: "Voltagem"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.Voltage }}"
     unit_of_measurement: "V"
     icon: mdi:flash
-
   - platform: mqtt
     name: "Corrente"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.Current }}"
     unit_of_measurement: "A"
     icon: mdi:current-ac
-
   - platform: mqtt
     name: "Frequencia"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.Frequency }}"
     unit_of_measurement: "Hz"
     icon: mdi:current-dc
-
   - platform: mqtt
     name: "Potência aparente"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.ApparentPower }}"
     unit_of_measurement: "VA"
     icon: mdi:square-outline
-
   - platform: mqtt
     name: "Potência reativa"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.ReactivePower }}"
     unit_of_measurement: "VAr"
     icon: mdi:square-outline
-
   - platform: mqtt
     name: "Fator Potência"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.Factor }}"
     icon: mdi:percent
-
   - platform: mqtt
     name: "Consumo Diário"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.Today }}"
     unit_of_measurement: "kWh"
     icon: mdi:counter
-
   - platform: mqtt
     name: "Consumo dia Anterior"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.Yesterday }}"
     unit_of_measurement: "kWh"
     icon: mdi:counter
-
   - platform: mqtt
     name: "Consumo Total"
     state_topic: "tele/sonoff27/SENSOR"
     value_template: "{{ value_json.ENERGY.Total }}"
     unit_of_measurement: "kWh"
     icon: mdi:counter
-
+#  - platform: integration
+#    source: sensor.watts
+#    name: Energia Gasta
+#    unit_prefix: k
+#    round: 3
+# SonoffPowR2 Máquina de Lavar
+  - platform: mqtt
+    name: "Watts Lava e Seca"
+    state_topic: "tele/sonoffpow/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:power-plug
+  - platform: mqtt
+    name: "Voltagem Lava e Seca"
+    state_topic: "tele/sonoffpow/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:flash
+  - platform: mqtt
+    name: "Corrente Lava e Seca"
+    state_topic: "tele/sonoffpow/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:current-ac
+  - platform: mqtt
+    name: "Consumo Diário Lava e Seca"
+    state_topic: "tele/sonoffpow/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo dia Anterior Lava e Seca"
+    state_topic: "tele/sonoffpow/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo Total Lava e Seca"
+    state_topic: "tele/sonoffpow/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+#  - platform: mqtt
+#    name: "Frequencia Lava e Seca"
+#    state_topic: "tele/sonoffpow/SENSOR"
+#    value_template: "{{ value_json.ENERGY.Frequency }}"
+#    unit_of_measurement: "Hz"
+#    icon: mdi:current-dc
+#  - platform: mqtt
+#    name: "Potência aparente Lava e Seca"
+#    state_topic: "tele/sonoffpow/SENSOR"
+#    value_template: "{{ value_json.ENERGY.ApparentPower }}"
+#    unit_of_measurement: "VA"
+#    icon: mdi:square-outline
+#  - platform: mqtt
+#    name: "Potência reativa Lava e Seca"
+#    state_topic: "tele/sonoffpow/SENSOR"
+#    value_template: "{{ value_json.ENERGY.ReactivePower }}"
+#    unit_of_measurement: "VAr"
+#    icon: mdi:square-outline
+#  - platform: mqtt
+#    name: "Fator Potência Lava e Seca"
+#    state_topic: "tele/sonoffpow/SENSOR"
+#    value_template: "{{ value_json.ENERGY.Factor }}"
+#    icon: mdi:percent
   - platform: integration
-    source: sensor.watts
-    name: Energia Gasta
+    source: sensor.watts_lava_e_seca
+    name: Energia Gasta Lava e Seca
     unit_prefix: k
     round: 3
+# powgeladeiraR2 Geladeira
+  - platform: mqtt
+    name: "Watts Geladeira"
+    state_topic: "tele/powgeladeira/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:power-plug
+  - platform: mqtt
+    name: "Voltagem Geladeira"
+    state_topic: "tele/powgeladeira/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:flash
+  - platform: mqtt
+    name: "Corrente Geladeira"
+    state_topic: "tele/powgeladeira/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:current-ac
+  - platform: mqtt
+    name: "Consumo Diário Geladeira"
+    state_topic: "tele/powgeladeira/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo dia Anterior Geladeira"
+    state_topic: "tele/powgeladeira/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo Total Geladeira"
+    state_topic: "tele/powgeladeira/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+#  - platform: mqtt
+#    name: "Frequencia Geladeira"
+#    state_topic: "tele/powgeladeira/SENSOR"
+#    value_template: "{{ value_json.ENERGY.Frequency }}"
+#    unit_of_measurement: "Hz"
+#    icon: mdi:current-dc
+#  - platform: mqtt
+#    name: "Potência aparente Geladeira"
+#    state_topic: "tele/powgeladeira/SENSOR"
+#    value_template: "{{ value_json.ENERGY.ApparentPower }}"
+#    unit_of_measurement: "VA"
+#    icon: mdi:square-outline
+#  - platform: mqtt
+#    name: "Potência reativa Geladeira"
+#    state_topic: "tele/powgeladeira/SENSOR"
+#    value_template: "{{ value_json.ENERGY.ReactivePower }}"
+#    unit_of_measurement: "VAr"
+#    icon: mdi:square-outline
+#  - platform: mqtt
+#    name: "Fator Potência Geladeira"
+#    state_topic: "tele/powgeladeira/SENSOR"
+#    value_template: "{{ value_json.ENERGY.Factor }}"
+#    icon: mdi:percent
+  - platform: integration
+    source: sensor.watts_geladeira
+    name: Energia Gasta Geladeira
+    unit_prefix: k
+    round: 3
+
+# powpiscinaR2 Piscina
+  - platform: mqtt
+    name: "Watts Piscina"
+    state_topic: "tele/powpiscina/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:power-plug
+  - platform: mqtt
+    name: "Voltagem Piscina"
+    state_topic: "tele/powpiscina/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:flash
+  - platform: mqtt
+    name: "Corrente Piscina"
+    state_topic: "tele/powpiscina/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:current-ac
+  - platform: mqtt
+    name: "Consumo Diário Piscina"
+    state_topic: "tele/powpiscina/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo dia Anterior Piscina"
+    state_topic: "tele/powpiscina/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo Total Piscina"
+    state_topic: "tele/powpiscina/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+#  - platform: mqtt
+#    name: "Frequencia Piscina"
+#    state_topic: "tele/powpiscina/SENSOR"
+#    value_template: "{{ value_json.ENERGY.Frequency }}"
+#    unit_of_measurement: "Hz"
+#    icon: mdi:current-dc
+#  - platform: mqtt
+#    name: "Potência aparente Piscina"
+#    state_topic: "tele/powpiscina/SENSOR"
+#    value_template: "{{ value_json.ENERGY.ApparentPower }}"
+#    unit_of_measurement: "VA"
+#    icon: mdi:square-outline
+#  - platform: mqtt
+#    name: "Potência reativa Piscina"
+#    state_topic: "tele/powpiscina/SENSOR"
+#    value_template: "{{ value_json.ENERGY.ReactivePower }}"
+#    unit_of_measurement: "VAr"
+#    icon: mdi:square-outline
+#  - platform: mqtt
+#    name: "Fator Potência Piscina"
+#    state_topic: "tele/powpiscina/SENSOR"
+#    value_template: "{{ value_json.ENERGY.Factor }}"
+#    icon: mdi:percent
+  - platform: integration
+    source: sensor.watts_Piscina
+    name: Energia Gasta Piscina
+    unit_prefix: k
+    round: 3
+# Contador de vezes que as luzes foram ligadas
+  - platform: history_stats
+    name: "Corredor (Contador)"
+    entity_id: light.corredor
+    state: 'on'
+    type: count
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: "Banheiro Social (Contador)"
+    entity_id: light.banheiro_social
+    state: 'on'
+    type: count
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: "Banheiro da suite (Contador)"
+    entity_id: light.banheiro_da_suite
+    state: 'on'
+    type: count
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: "Lavabo (Contador)"
+    entity_id: light.lavabo
+    state: 'on'
+    type: count
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+
+# Porta Geladeira
+  - platform: history_stats
+    name: Geladeira vezes aberta
+    entity_id: binary_sensor.porta_geladeira
+    state: 'on'
+    type: count
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+  - platform: history_stats
+    name: Geladeira tempo aberta
+    entity_id: binary_sensor.porta_geladeira
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+
+# Sensores baseado em Templates
 
   - platform: template
     sensors:
@@ -653,19 +894,19 @@ sensor:
         friendly_name: Bateria Rudi
         icon_template: mdi:battery
         unit_of_measurement: '%'
-        value_template:  '{{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}'
+        value_template:  '{{ states.device_tracker.life360_rudimar_remontti.attributes.battery|int }}'
         device_class: battery
       bateria_rudi_st:
-        value_template:  '{{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_charging }}'
+        value_template:  '{{ states.device_tracker.life360_rudimar_remontti.attributes.battery_charging }}'
         device_class: battery
       bateria_flavia:
         friendly_name: Bateria Flavia
         icon_template: mdi:battery
         unit_of_measurement: "%"
-        value_template:  '{{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_level|int }}'
+        value_template:  '{{ states.device_tracker.life360_flavia_cristine_vendruscolo.attributes.battery|int }}'
         device_class: battery
       bateria_flavia_st:
-        value_template:  '{{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_charging }}'
+        value_template:  '{{ states.device_tracker.life360_flavia_cristine_vendruscolo.attributes.battery_charging }}'
         device_class: battery
       bateria_status_rudi:
         friendly_name: Status Bateria Rudi
@@ -695,53 +936,250 @@ sensor:
           {% else %}
             mdi:battery-charging
           {% endif %}
-      precisa_trabalhar:
-        friendly_name: Precisa Trabalhar Hoje
-        value_template: >-
-          {% if is_state('binary_sensor.trabalhando', 'on') %}
-            Sim
-          {% else %}
-            Não
-          {% endif %}
-        icon_template: >-
-          {% if is_state('binary_sensor.trabalhando', 'on') %}
-            mdi:thumb-up-outline
-          {% else %}
-            mdi:thumb-down-outline
-          {% endif %}
 
+### TESTE -------------------------------------------
+      status_rudi:
+        friendly_name: "Localização Rudi"
+        value_template: >-
+           {% if is_state('device_tracker.life360_rudimar_remontti', 'driving') %}
+             Dirigindo
+           {% elif is_state('device_tracker.life360_rudimar_remontti', 'moving') %}
+             Caminhando
+           {% elif states.device_tracker.life360_rudimar_remontti.attributes.place == none %}
+             Ausente
+           {% else %}
+             {{ state_attr('device_tracker.life360_rudimar_remontti', 'place') }}
+           {% endif %}
+        entity_id: device_tracker.life360_rudimar_remontti
+      status_flavia:
+        friendly_name: "Localização Flávia"
+        value_template: >-
+           {% if is_state('device_tracker.life360_flavia_cristine_vendruscolo', 'driving') %}
+             Dirigindo
+           {% elif is_state('device_tracker.life360_flavia_cristine_vendruscolo', 'moving') %}
+             Caminhando
+           {% elif states.device_tracker.life360_flavia_cristine_vendruscolo.attributes.place == none %}
+             Ausente
+           {% else %}
+             {{ state_attr('device_tracker.life360_flavia_cristine_vendruscolo', 'place') }}
+           {% endif %}
+        entity_id: device_tracker.life360_flavia_cristine_vendruscolo
+
+      alguem_em_casa:
+        friendly_name: "Alguém em casa"
+        value_template: >-
+           {% if is_state('group.all_devices', 'not_home') %}
+             off
+           {% elif is_state('group.all_devices', 'unknown') %}
+             off
+           {% else %}
+             on
+           {% endif %}
+        icon_template: >-
+          {% if is_state('group.all_devices', 'not_home') %}
+            mdi:thumb-down-outline
+          {% elif is_state('group.all_devices', 'unknown') %}
+            mdi:thumb-down-outline
+          {% else %}
+            mdi:thumb-up-outline
+          {% endif %}
+        entity_id: group.all_devices
+### TESTE -------------------------------------------
+
+#      precisa_trabalhar:
+#        friendly_name: Precisa Trabalhar Hoje
+#        value_template: >-
+#          {% if is_state('binary_sensor.trabalhando', 'on') %}
+#            Sim
+#          {% else %}
+#            Não
+#          {% endif %}
+#        icon_template: >-
+#          {% if is_state('binary_sensor.trabalhando', 'on') %}
+#            mdi:thumb-up-outline
+#          {% else %}
+#            mdi:thumb-down-outline
+#          {% endif %}
+
+      # Consumo geral da casa (mqtt)
       energia_gasta_dia:
-        friendly_name: "Gasto estimado no dia"
-        icon_template: mdi:cash-usd
+        friendly_name: "Gasto no dia"
+        icon_template: mdi:cash-usd-outline
         unit_of_measurement: 'R$'
         value_template: "{{ ( float(states.sensor.consumo_diario.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
       energia_gasta_ontem:
-        friendly_name: "Gasto estimado ontem"
-        icon_template: mdi:cash-usd
+        friendly_name: "Gasto ontem"
+        icon_template: mdi:cash-usd-outline
         unit_of_measurement: 'R$'
         value_template: "{{ ( float(states.sensor.consumo_dia_anterior.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
       energia_gasta_total:
-        friendly_name: "Gasto estimado total"
-        icon_template: mdi:cash-usd
+        friendly_name: "Gasto total"
+        icon_template: mdi:cash-usd-outline
         unit_of_measurement: 'R$'
         value_template: "{{ ( float(states.sensor.consumo_total.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
-
-
-      gasto_hoje:
-        friendly_name: "Gasto hoje"
-        icon_template: mdi:cash-usd
-        unit_of_measurement: 'R$'
-        value_template: "{{ ( float(states.sensor.kwh_gasto_hoje.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
-      gasto_semanal:
-        friendly_name: "Gasto na semana"
-        icon_template: mdi:cash-usd
-        unit_of_measurement: 'R$'
-        value_template: "{{ ( float(states.sensor.kwh_gasto_semana.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      # Consumo geral da casa (HA)
+#      gasto_hoje:
+#        friendly_name: "Gasto hoje"
+#        icon_template: mdi:cash-usd-outline
+#        unit_of_measurement: 'R$'
+#        value_template: "{{ ( float(states.sensor.kwh_gasto_hoje.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+#      gasto_semanal:
+#        friendly_name: "Gasto na semana"
+#        icon_template: mdi:cash-usd-outline
+#        unit_of_measurement: 'R$'
+#        value_template: "{{ ( float(states.sensor.kwh_gasto_semana.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
       gasto_mes:
         friendly_name: "Gasto no mês"
-        icon_template: mdi:cash-usd
+        icon_template: mdi:cash-usd-outline
         unit_of_measurement: 'R$'
         value_template: "{{ ( float(states.sensor.kwh_gasto_mes.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      # Máquina de lavar
+      energia_gasta_dia_ml:
+        friendly_name: "Lavar e Seca gastou hoje"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_diario_lava_e_seca.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_ontem_ml:
+        friendly_name: "Lavar e Seca gastou otem"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_dia_anterior_lava_e_seca.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_semana_ml:
+        friendly_name: "Lavar e Seca Gastou na semana"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_semana_ml.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_mes_ml:
+        friendly_name: "Lavar e Seca Gastou no mês"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_mes_ml.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      # Motor da Piscina
+      energia_gasta_dia_mp:
+        friendly_name: "Piscina gastou hoje"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_diario_piscina.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_ontem_mp:
+        friendly_name: "Piscina gastou otem"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_dia_anterior_piscina.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_semana_mp:
+        friendly_name: "Piscina Gastou na semana"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_semana_mp.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_mes_mp:
+        friendly_name: "Piscina Gastou no mês"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_mes_mp.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      # Geladeira
+      energia_gasta_dia_ge:
+        friendly_name: "Geladeira gastou hoje"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_diario_geladeira.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_ontem_ge:
+        friendly_name: "Geladeira gastou otem"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_dia_anterior_geladeira.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_semana_ge:
+        friendly_name: "Geladeira Gastou na semana"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_semana_ge.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_mes_ge:
+        friendly_name: "Geladeira Gastou no mês"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_mes_ge.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+
+#      yr_previsao:
+#        friendly_name: "Clima"
+#        value_template: '{%set list2 = "0","Céu Limpo","Bom","Parcialmente Nublado","Nublado","Pancadas de Chuva","Pancadas de Chuva e Trovão","Granizo com efeito de Chuva","Chuvisco","Chuva","Chuva Pesada","Chuva Pesada e Trovão","Granizo","Neve","Neve e Trovão","Névoa","0","0","0","0","Chuvisco e Trovão","Chuvisco de Neve e Trovaão","Chuva e Trovão","Granizo e Trovão","Chuva Leve e Trovão","Chuva Forte e Trovão","Chuvisco Leve e Trovão","Chuvisco Forte e Trovão","Névoa Leve e Trovão","Névoa Pesada e Trovão","Chuva Leve e Trovão","Granizo Leve e Trovão","Granizo Forte e Trovão","Pouca Neve e Trovão","Muita Neve e Trovão","0","0","0","0","0","Chuva Leve","Chuva Forte","Chuvisco Leve","Chuvisco Forte","Nevasca Leve","Nevasca Pesada","Chuva Leve","Granizo Leve","Granizo Pesado","Neve Leve","Neve Pesada"%}{{list2[states.sensor.yr_symbol.state|int]}}'
+#        entity_picture_template: "{{ state_attr('sensor.yr_symbol','entity_picture') }}"
+      maquina_lavar_status:
+        friendly_name_template: Status Máquina de Lavar
+        value_template: >-
+          {% if states('sensor.watts_lava_e_seca')|float > 3 %}
+            Lavando
+          {% else %}
+            Desligada
+          {% endif %}
+        icon_template: >-
+          {% if states('sensor.watts_lava_e_seca')|float > 3 %}
+            mdi:dishwasher
+          {% else %}
+            mdi:washing-machine
+          {% endif %}        
+#        entity_picture_template: >-
+#          {% if states('sensor.watts_lava_e_seca')|float > 3 %}
+#            /local/icons/maquina/lavando.svg
+#          {% else %}
+#            /local/icons/maquina/desligada.svg
+#          {% endif %}
+      motor_piscina_status:
+        friendly_name_template: Status Motor Piscina
+        value_template: >-
+          {% if is_state('switch.motor_da_piscina', 'off') %}
+            Desligado
+          {% elif states('sensor.watts_piscina')|float > 2 %}
+            Ligado
+          {% else %}
+            Standby
+          {% endif %}
+        icon_template: >-
+          {% if is_state('switch.motor_da_piscina', 'off') %}
+            mdi:power-off
+          {% elif states('sensor.watts_piscina')|float > 2 %}
+            mdi:power
+          {% else %}
+            mdi:power-cycle
+          {% endif %}
+      geladeira_status:
+        friendly_name_template: Status Geladeira
+        value_template: >-
+          {% if is_state('switch.geladeira', 'off') %}
+            Desligada
+          {% elif states('sensor.watts_geladeira')|float > 4 %}
+            Ligada
+          {% else %}
+            Standby
+          {% endif %}
+        icon_template: >-
+          {% if is_state('switch.geladeira', 'off') %}
+            mdi:power-off
+          {% elif states('sensor.watts_geladeira')|float > 4 %}
+            mdi:power
+          {% else %}
+            mdi:power-cycle
+          {% endif %}
+
+# PROXIMO PROJETO 
+      nivel_real:
+        friendly_name_template: "Nível Real"
+        unit_of_measurement: 'cm'
+        icon_template: 'mdi:ruler'
+        value_template: "{{ ( float(states.input_number.nivel.state) - 11 ) }}" 
+        # desconta o espaco da tampa ate a agua
+
+      caixa_dagua:
+        friendly_name_template: "Caixa D'agua"
+        unit_of_measurement: '%'
+        icon_template: 'mdi:waves'
+        value_template: "{{ (100 - ( float(states.sensor.nivel_real.state) * 100 / 87 )) | round(2) }}" 
+        # Cm Real * 100 / 87 Total qnd vazia
+
+      caixa_dagua_litros:
+        friendly_name_template: "Caixa D'agua"
+        unit_of_measurement: 'L'
+        icon_template: 'mdi:cup-water'
+        value_template: "{{  (2000 - ( float(states.sensor.nivel_real.state) * 22.988 )) | round(0) }}" 
+        # se em 87 cm tem 2000 litros, logo 2000/87 = 22,9885
+
 
 #  _    _ _   _ _ _ _           __  __      _
 # | |  | | | (_) (_) |         |  \/  |    | |
@@ -753,28 +1191,55 @@ sensor:
 # https://www.home-assistant.io/components/utility_meter/
 
 utility_meter:
-  kwh_gasto_hoje:
-    source: sensor.energia_gasta
-    cycle: daily
-    offset: '00:00:00'
+# Energia geral  
+#  kwh_gasto_hoje:
+#    source: sensor.consumo_diario
+#    cycle: daily
+#    offset: '00:00:00'
 #    tariffs:
 #      - verde
 #      - amarela
 #      - vermelha
-  kwh_gasto_semana:
-    source: sensor.energia_gasta
-    cycle: weekly
-#    tariffs:
-#      - verde
-#      - amarela
-#      - vermelha
+#  kwh_gasto_semana:
+#    source: sensor.consumo_diario
+#    cycle: weekly
   kwh_gasto_mes:
-    source: sensor.energia_gasta
+    source: sensor.consumo_diario
     cycle: monthly
-#    tariffs:
-#      - verde
-#      - amarela
-#      - vermelha
+    offset:
+      days: 21
+      hours: 0
+      minutes: 0
+# Máquina de Lavar Samsung
+  kwh_gasto_semana_ml:
+    source: sensor.energia_gasta_lava_e_seca
+    cycle: weekly
+  kwh_gasto_mes_ml:
+    source: sensor.energia_gasta_lava_e_seca
+    cycle: monthly
+# Motor Piscina
+  kwh_gasto_semana_mp:
+    source: sensor.energia_gasta_piscina
+    cycle: weekly
+  kwh_gasto_mes_mp:
+    source: sensor.energia_gasta_piscina
+    cycle: monthly
+# Geladeira
+  kwh_gasto_semana_ge:
+    source: sensor.energia_gasta_geladeira
+    cycle: weekly
+  kwh_gasto_mes_ge:
+    source: sensor.energia_gasta_geladeira
+    cycle: monthly
+#Porta Geladeira
+  geladeira_x_aberta_mes:
+    source: sensor.geladeira_vezes_aberta
+    cycle: monthly
+  geladeira_tempo_aberta_mes:
+    source: sensor.geladeira_tempo_aberta
+    cycle: monthly
+
+
 
 #  - platform: snmp
 #    name: Upload
@@ -805,10 +1270,10 @@ utility_meter:
 # https://www.home-assistant.io/components/ping/
 # https://community.home-assistant.io/t/sonoff-rf-bridge-strategies-for-receiving-data/108181
 binary_sensor:
-  # DIA DE TRABALHO
-  - platform: workday
-    country: BR
-    name: Trabalhando
+# DIA DE TRABALHO
+#  - platform: workday
+#    country: BR
+#    name: Trabalhando
   # CONTROLE DIGOO 1
   - platform: mqtt
     name: C1 Armar
@@ -1124,6 +1589,18 @@ binary_sensor:
     off_delay: 1
     device_class: moving
   - platform: mqtt
+    name: RF1e2 Interruptor Coz
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '5E22A3' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1e2_interruptor_coz') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+
+  - platform: mqtt
     name: RF1 Interruptor BSu
     state_topic: 'tele/sonoffBr1/RESULT'
     value_template: >-
@@ -1146,6 +1623,18 @@ binary_sensor:
     off_delay: 1
     device_class: moving
   - platform: mqtt
+    name: RF1e2 Interruptor BSu
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'DF88B3' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1e2_interruptor_bsu') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+
+  - platform: mqtt
     name: RF1 Interruptor BSo
     state_topic: 'tele/sonoffBr1/RESULT'
     value_template: >-
@@ -1167,52 +1656,367 @@ binary_sensor:
       {% endif %}
     off_delay: 1
     device_class: moving
+  - platform: mqtt
+    name: RF1e2 Interruptor BSo
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'FAC383' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1e2_interruptor_bso') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  # Suite
+  - platform: mqtt
+    name: RF1 Interruptor Suite
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'BCF581' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1_interruptor_suite') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF2 Interruptor Suite
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'BCF588' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf2_interruptor_suite') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF3 Interruptor Suite
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'BCF582' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf3_interruptor_suite') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF1e2 Interruptor Suite
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'BCF589' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1e2_interruptor_suite') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF1e3 Interruptor Suite
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'BCF583' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1e3_interruptor_suite') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving   
+  - platform: mqtt
+    name: RF2e3 Interruptor Suite
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'BCF58A' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf2e3_interruptor_suite') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF123 Interruptor Suite
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'BCF58B' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf123_interruptor_suite') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+
+  # Qaurto Frente
+  - platform: mqtt
+    name: RF1 Interruptor Quarto Frente
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '08F8A1' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1_interruptor_quarto_frente') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF2 Interruptor Quarto Frente
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '08F8A8' %} 
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf2_interruptor_quarto_frente') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF3 Interruptor Quarto Frente
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '08F8A2' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf3_interruptor_quarto_frente') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF1e2 Interruptor Quarto Frente
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '08F8A9' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1e2_interruptor_quarto_frente') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF1e3 Interruptor Quarto Frente
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '08F8A3' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1e3_interruptor_quarto_frente') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF2e3 Interruptor Quarto Frente
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '08F8AA' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf2e3_interruptor_quarto_frente') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF123 Interruptor Quarto Frente
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == '08F8AB' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf123_interruptor_quarto_frente') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+
+  # Quarto Meio
+  - platform: mqtt
+    name: RF1 Interruptor Quarto Meio
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'A89981' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1_interruptor_quarto_meio') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF2 Interruptor Quarto Meio
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'A89988' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf2_interruptor_quarto_meio') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF3 Interruptor Quarto Meio
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'A89982' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf3_interruptor_quarto_meio') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF1e2 Interruptor Quarto Meio
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'A89989' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1e2_interruptor_quarto_meio') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF1e3 Interruptor Quarto Meio
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'A89983' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf1e3_interruptor_quarto_meio') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF2e3 Interruptor Quarto Meio
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'A8998A' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf2e3_interruptor_quarto_meio') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving
+  - platform: mqtt
+    name: RF123 Interruptor Quarto Meio
+    state_topic: 'tele/sonoffBr1/RESULT'
+    value_template: >-
+      {% if value_json.RfReceived.Data == 'A8998B' %}
+        {{'ON'}}
+      {% else %}
+        {{states('binary_sensor.rf123_interruptor_quarto_meio') | upper}}
+      {% endif %}
+    off_delay: 1
+    device_class: moving    
+  - platform: mqtt
+    name: Porta Geladeira
+    payload_on: "57810A"
+    payload_off: "57810E"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Porta Garagem
+    payload_on: "59840A"
+    payload_off: "59840E"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+  - platform: mqtt
+    name: Porta Lavanderia
+    payload_on: "54A00A"
+    payload_off: "54A00E"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+
+  - platform: mqtt
+    name: "Porta Teste JSON"
+    payload_on: "58960A"
+    payload_off: "58960E"
+    device_class: door
+    state_topic: "tele/sonoffBr1/RESULT"
+    value_template: '{{ value_json.RfReceived.Data }}'
+#  - platform: mqtt
+#    name: "Porta Teste RF 1"
+#    state_topic: "PortaTeste/STATE"
+#    availability_topic: "tele/sonoffBr1/LWT"
+#    qos: 1  
+#    payload_on: "Open"
+#    payload_off: "Closed"
+#    payload_available: "Online"
+#    payload_not_available: "Offline"
+#    device_class: door
+
+#  - platform: mqtt
+#    name: "Porta Teste RF 2"
+#    state_topic: "PortaTeste/STATE"
+#    availability_topic: "tele/sonoffBr1/LWT"
+#    qos: 1  
+#    payload_on: "Open"
+#    payload_off: "Closed"
+#    payload_available: "ON"
+#    payload_not_available: "OFF"
+#    device_class: door
+
+
+# ? Sonoff Bridge
+# ? SensorRetain On ?
+# ? SwitchRetain On ?
+
   # PINGs
   - platform: ping
-    host: 100.64.0.1
-    name: Internet
+    name: Internet  
+    host: 192.168.10.1
   - platform: ping
-    host: 100.64.0.15
-    name: Tv LG Game
+    name: Google WiFi
+    host: 192.168.87.1
   - platform: ping
-    host: 100.64.0.2
-    name: UniFi
+    name: PC Desktop
+    host: 192.168.87.2
   - platform: ping
-    host: 100.64.0.4
-    name: AP Router E
-  - platform: ping
-    host: 100.64.0.254
-    name: Tp Link
-  - platform: ping
-    host: 100.64.0.20
-    name: Chrome Cast Quarto
-  - platform: ping
-    host: 100.64.0.21
-    name: Chrome Cast Game
-  - platform: ping
-    host: 100.64.0.22
-    name: Google Home Quarto
-  - platform: ping
-    host: 100.64.0.19
-    name: Google Home Sala
-  - platform: ping
-    host: 100.64.0.26
-    name: Broadlink IR Quarto
-  - platform: ping
-    host: 100.64.0.53
-    name: Broadlink IR Sala
-  - platform: ping
-    host: 100.64.0.47
     name: Sonoff RF Bridge
+    host: 192.168.87.6
   - platform: ping
-    host: 100.64.0.52
+    name: Broadlink IR Sala
+    host: 192.168.87.7
+  - platform: ping
+    name: Broadlink IR Quarto
+    host: 192.168.87.8
+  - platform: ping
+    name: Google Home Sala
+    host: 192.168.87.9
+  - platform: ping
+    name: Google Home Quarto
+    host: 192.168.87.10
+  - platform: ping
+    name: Chrome Cast Quarto
+    host: 192.168.87.11
+  - platform: ping
+    name: Chrome Cast Game
+    host: 192.168.87.12
+  - platform: ping
+    name: Tv LG Game
+    host: 192.168.87.13
+  - platform: ping
     name: Camera Digoo
+    host: 192.168.87.14
   - platform: ping
-    host: 100.64.0.60
     name: WCam360
+    host: 192.168.87.15
+  - platform: ping
+    name: Xiaofang
+    host: 192.168.87.16
+  - platform: ping
+    name: V380 Piscina
+    host: 192.168.87.17
+  - platform: ping
+    name: V380 Interna
+    host: 192.168.87.18
+  - platform: ping
+    name: Fita Led Bancada
+    host: 192.168.87.19
+#  - platform: ping
+#    name: Yeelink-Ligth
+#    host: 192.168.87.20
+
 #    count: 5
 #    scan_interval: 240
-
 
 # Luzes
 #  _      _       _     _
@@ -1229,7 +2033,7 @@ binary_sensor:
 light:
   - platform: flux_led
     devices:
-      100.64.0.46:
+      192.168.87.19:
         name: "Bancada"
   - platform: mqtt
     name: "Garagem"
@@ -1238,7 +2042,7 @@ light:
     availability_topic: "tele/sonoff13/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1249,7 +2053,7 @@ light:
     availability_topic: "tele/sonoff15/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1260,7 +2064,7 @@ light:
     availability_topic: "tele/sonoff21/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1271,7 +2075,7 @@ light:
     availability_topic: "tele/sonoff28/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1282,7 +2086,7 @@ light:
     availability_topic: "tele/sonoff11/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1293,7 +2097,7 @@ light:
     availability_topic: "tele/sonoff20/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1304,7 +2108,7 @@ light:
     availability_topic: "tele/sonoff14/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1315,7 +2119,7 @@ light:
     availability_topic: "tele/sonoff07/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1326,7 +2130,7 @@ light:
     availability_topic: "tele/sonoff19/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1337,7 +2141,7 @@ light:
     availability_topic: "tele/sonoff29/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1348,10 +2152,10 @@ light:
     availability_topic: "tele/sonoff23/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Pendentes"
     state_topic: "stat/sonoff16/POWER"
@@ -1359,7 +2163,7 @@ light:
     availability_topic: "tele/sonoff16/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1370,7 +2174,7 @@ light:
     availability_topic: "tele/sonoff05/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1381,7 +2185,7 @@ light:
     availability_topic: "tele/sonoff22/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1392,7 +2196,7 @@ light:
     availability_topic: "tele/sonoff01/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1403,7 +2207,7 @@ light:
     availability_topic: "tele/sonoff12/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1414,7 +2218,7 @@ light:
     availability_topic: "tele/sonoff31/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1425,7 +2229,7 @@ light:
     availability_topic: "tele/sonoff08/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1436,7 +2240,7 @@ light:
     availability_topic: "tele/sonoff04/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1447,7 +2251,7 @@ light:
     availability_topic: "tele/sonoff06/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1458,7 +2262,7 @@ light:
     availability_topic: "tele/sonoff24/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1469,7 +2273,7 @@ light:
     availability_topic: "tele/sonoff26/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1480,7 +2284,7 @@ light:
     availability_topic: "tele/sonoff09/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1491,7 +2295,7 @@ light:
     availability_topic: "tele/sonoff30/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1502,7 +2306,7 @@ light:
     availability_topic: "tele/sonoff10/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1513,7 +2317,7 @@ light:
     availability_topic: "tele/sonoff03/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1524,7 +2328,7 @@ light:
     availability_topic: "tele/sonoff17/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
@@ -1535,14 +2339,22 @@ light:
     availability_topic: "tele/sonoff25/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
 #    retain: true
+
+# Comandos console tasmota desativar retenção mqtt
+# https://github.com/arendst/Sonoff-Tasmota/wiki/Commands
+#Tasmota Console Command: SwitchRetain Off
+#Tasmota Console Command: ButtonRetain On
+#Tasmota Console Command: ButtonRetain Off
+#Tasmota Console Command: PowerRetain On
+
 #  Auto detectado
 #  - platform: yeelight
 #    devices:
-#      100.64.0.70:
+#      192.168.87.20:
 #        name: "Abajur do Quarto"
 
 
@@ -1577,19 +2389,9 @@ switch:
             data:
               entity_id: alarm_control_panel.alarme_da_casa
               code: !secret senha_alarme
-  - platform: broadlink
-    host: 100.64.0.26
-    mac: '34:EA:34:8E:EC:47'
-    type: rm_mini
-    timeout: 300
-    switches:
-      tv_quarto:
-        friendly_name: "TV do Quarto"
-        command_on: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
-        command_off: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
 
   - platform: broadlink
-    host: 100.64.0.53
+    host: 192.168.87.7
     mac: '78:0F:77:18:39:F8'
     type: rm_mini
     timeout: 300
@@ -1606,6 +2408,21 @@ switch:
         friendly_name: Projetor
         command_on: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
         command_off: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
+      htv:
+        friendly_name: "H.TV"
+        command_on: 'JgBYAAABJ5ITExITEhMTExITEhMTExI4EjgSOBI4EjgSOBM3EjgTOBITEjgSExM3ExMRFBITExMSOBITEjgSFBI4EjgSOBI4EQAE/gABJksSAAxgAAEmTBEADQU='
+        command_off: 'JgBYAAABJ5ITExITEhMTExITEhMTExI4EjgSOBI4EjgSOBM3EjgTOBITEjgSExM3ExMRFBITExMSOBITEjgSFBI4EjgSOBI4EQAE/gABJksSAAxgAAEmTBEADQU='
+
+  - platform: broadlink
+    host: 192.168.87.8
+    mac: '34:EA:34:8E:EC:47'
+    type: rm_mini
+    timeout: 300
+    switches:
+      tv_quarto:
+        friendly_name: "TV do Quarto"
+        command_on: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
+        command_off: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
 
   - platform: mqtt
     name: "Sirenes"
@@ -1614,7 +2431,7 @@ switch:
     availability_topic: "tele/sonoff27/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
     retain: true
@@ -1625,10 +2442,10 @@ switch:
     availability_topic: "tele/sonoff32/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-#    retain: true
+    retain: true
   - platform: mqtt
     name: "Pressurizador"
     state_topic: "stat/sonoff18/POWER"
@@ -1636,10 +2453,43 @@ switch:
     availability_topic: "tele/sonoff18/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
-    qos: 1
+#    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-#    retain: true
+    retain: true
+  - platform: mqtt
+    name: "Máquina de Lavar"
+    state_topic: "stat/sonoffpow/POWER"
+    command_topic: "cmnd/sonoffpow/power"
+    availability_topic: "tele/sonoffpow/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+#    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Motor da Piscina"
+    state_topic: "stat/powpiscina/POWER"
+    command_topic: "cmnd/powpiscina/power"
+    availability_topic: "tele/powpiscina/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+#    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Geladeira"
+    state_topic: "stat/powgeladeira/POWER"
+    command_topic: "cmnd/powgeladeira/power"
+    availability_topic: "tele/powgeladeira/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+#    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
 #  - platform: mqtt
 #    name: "Sonoff Pro CH1"
 #    state_topic: "stat/sonoffPro/POWER1"
@@ -1647,7 +2497,7 @@ switch:
 #    availability_topic: "tele/sonoffPro/LWT"
 #    payload_available: "Conectado"
 #    payload_not_available: "Desconectado"
-#    qos: 1
+##    qos: 1
 #    payload_on: "ON"
 #    payload_off: "OFF"
 #    retain: true
@@ -1658,7 +2508,7 @@ switch:
 #    availability_topic: "tele/sonoffPro/LWT"
 #    payload_available: "Conectado"
 #    payload_not_available: "Desconectado"
-#    qos: 1
+##    qos: 1
 #    payload_on: "ON"
 #    payload_off: "OFF"
 #    retain: true
@@ -1669,7 +2519,7 @@ switch:
 #    availability_topic: "tele/sonoffPro/LWT"
 #    payload_available: "Conectado"
 #    payload_not_available: "Desconectado"
-#    qos: 1
+##    qos: 1
 #    payload_on: "ON"
 #    payload_off: "OFF"
 #    retain: true
@@ -1680,7 +2530,7 @@ switch:
 #    availability_topic: "tele/sonoffPro/LWT"
 #    payload_available: "Conectado"
 #    payload_not_available: "Desconectado"
-#    qos: 1
+##    qos: 1
 #    payload_on: "ON"
 #    payload_off: "OFF"
 #    retain: true
@@ -1732,7 +2582,7 @@ input_text:
     icon: mdi:link-variant
   text_valor_kwh:
     name: "Valor kW/h"
-    initial: "0.666"
+    initial: "0.756"
 
 # Inputs de data/hora
 #  _____                   _        _       _       _   _
@@ -1799,7 +2649,7 @@ input_number:
     initial: 00
     min: 0
     max: 59
-    step: 5
+    step: 1
     mode: slider
   despert1_volume:
     name: Volume
@@ -1823,7 +2673,7 @@ input_number:
     initial: 15
     min: 0
     max: 59
-    step: 5
+    step: 1
     mode: slider
   despert2_volume:
     name: Volume
@@ -1839,7 +2689,7 @@ input_number:
     initial: 30
     min: 0
     max: 60
-    step: 5
+    step: 1
     mode: slider
   tempo_banheiro_suite:
     name: "Tempo máx. luz banheiro suíte"
@@ -1847,7 +2697,7 @@ input_number:
     initial: 30
     min: 0
     max: 60
-    step: 5
+    step: 1
     mode: slider
   tempo_banheiro_lavabo:
     name: "Tempo máx. luz lavabo"
@@ -1855,7 +2705,7 @@ input_number:
     initial: 10
     min: 0
     max: 30
-    step: 5
+    step: 1
     mode: slider
   audio_volume:
     name: Volume
@@ -1863,7 +2713,7 @@ input_number:
     initial: 0.40
     min: 0
     max: 1
-    step: 0.10
+    step: 0.01
     mode: slider
   video_volume:
     name: Volume
@@ -1871,7 +2721,7 @@ input_number:
     initial: 1
     min: 0
     max: 1
-    step: 0.10
+    step: 0.01
     mode: slider
   video_teste_volume:
     name: Volume
@@ -1879,8 +2729,18 @@ input_number:
     initial: 1
     min: 0
     max: 1
-    step: 0.10
+    step: 0.01
     mode: slider
+  #fake sensor
+  nivel:
+    name: 'Ultrassônico HC-SR04'
+    icon: 'mdi:leak'
+    initial: 11
+    min: 0
+    max: 98
+    step: 1
+    mode: slider
+    # Caixa tem 87 cm, da tampa até chegar na agua tem + 11 cm
 
 # Inputs boolean (on/off)
 #  _____                   _     _                 _
@@ -1900,6 +2760,14 @@ input_boolean:
     initial: on
   seguranca_casa:
     name: "Segurança"
+    icon: mdi:shield-home
+  modo_visitante:
+    name: Modo Visitante
+    initial: off
+    icon: mdi:account-key-outline
+  boolean_fake:
+    name: Boolean Fake
+    initial: off
 
 # Inputs selects
 #  _____                   _              _           _
@@ -1988,6 +2856,7 @@ input_select:
       - Quarto
       - Sala
     icon: mdi:google-chrome
+
 # Permite que outros componentes do Home Assistant processem fluxos de vídeo e áudio.
 #   __  __
 #  / _|/ _|
@@ -2037,10 +2906,10 @@ camera:
     input: !secret input_camera_interna
   - platform: ffmpeg
     name: V380rtsp1
-    input: rtsp://100.64.0.66/live/ch00_1
+    input: rtsp://192.168.87.17/live/ch00_1
   - platform: ffmpeg
     name: V380rtsp2
-    input: rtsp://100.64.0.67/live/ch00_1
+    input: rtsp://192.168.87.18/live/ch00_1
 
 
 # Integração Google Assistant
@@ -2133,6 +3002,9 @@ notify:
     vapid_pub_key: !secret vapid_pub_key
     vapid_prv_key: !secret vapid_prv_key
     vapid_email: !secret gmail_user
+  - name: twilio
+    platform: twilio_call
+    from_number: !secret twilio_numero
 
 # Alarme da casa
 #           _                         _____            _             _   _____                 _
@@ -2191,7 +3063,7 @@ climate:
     name: Climatizador
     unique_id: climatizador
     device_code: 1360
-    controller_data: 100.64.0.26
+    controller_data: 192.168.87.23
     temperature_sensor: sensor.suite_temperatura
     humidity_sensor: sensor.suite_umidade
     #power_sensor: switch.climatizador
@@ -2210,7 +3082,7 @@ fan:
     name:  Ventilação quarto
     unique_id: ar_do_aquirto
     device_code: 1999
-    controller_data: 100.64.0.26
+    controller_data: 192.168.87.23
     #power_sensor: switch.climatizador
 
 #  _____  _       _              __ _
@@ -2235,24 +3107,40 @@ dialogflow:
 # https://www.home-assistant.io/components/intent_script/
 # https://www.home-assistant.io/components/dialogflow/
 intent_script:
+  default:
+    speech:
+      text: >
+        {{ [
+        "E aí! Qual vai ser?",
+        "Opa tudo bom guri! O que você deseja?",
+        ] | random }}
+  AteLogo:
+    speech:
+      text: >
+        {{ [
+        "OK. Se precisar é só me chamar.",
+        "Falou! Tô indo nessa!",
+        "Até logo!",
+        "Até mais!",
+        ] | random }}
   Temperaturasuite:
     speech:
-      text: A temperatura na suíte é {{ states('sensor.suite_temperatura') }} graus. Quer ligar o climatizador?
+      text: A temperatura externa é {{ states('sensor.dark_sky_temperature') }} graus. Na suíte está {{ states('sensor.suite_temperatura') }} graus. Quer ligar o climatizador no quarto?
   LocalizacaoFlavia:
     speech:
       text: >
-          {% if is_state('device_tracker.google_maps_111111111111111111111', 'home') %}
-            A Flávia está em casa! Celular: {{ states.sensor.bateria_status_flavia.state }}
+          {% if is_state('device_tracker.life360_flavia_cristine_vendruscolo', 'home') %}
+            A Flávia está em casa! Celular {{ states.sensor.bateria_status_flavia.state }} e bateria em {{ states.device_tracker.life360_flavia_cristine_vendruscolo.attributes.battery|int }}%
           {% else %}
-            Flávia está com a bateria em {{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_111111111111111111111.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }}
+            Flávia se localiza em {{ states.device_tracker.life360_flavia_cristine_vendruscolo.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }} e bateria em {{ states.device_tracker.life360_flavia_cristine_vendruscolo.attributes.battery|int }}%
           {% endif %}
   LocalizacaoRudi:
     speech:
       text: >
-          {% if is_state('device_tracker.google_maps_000000000000000000000', 'home') %}
-          Rudi está em Casa! Celular: {{ states.sensor.bateria_status_rudi.state }}
+          {% if is_state('device_tracker.life360_rudimar_remontti', 'home') %}
+          Rudi está em Casa! Celular {{ states.sensor.bateria_status_rudi.state }} e bateria em {{ states.device_tracker.life360_rudimar_remontti.attributes.battery|int }}%
           {% else %}
-           Rudi está com a bateria em {{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}% e se localiza em {{ states.device_tracker.google_maps_000000000000000000000.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
+           Rudi está com a bateria em {{ states.device_tracker.life360_rudimar_remontti.attributes.battery|int }}% e se localiza em {{ states.device_tracker.life360_rudimar_remontti.attributes.address }}. Celular: {{ states.sensor.bateria_status_rudi.state }}
           {% endif %}
   MaisVolumeQuarto:
     speech:
@@ -2274,6 +3162,34 @@ intent_script:
         data:
           entity_id: climate.climatizador
           operation_mode: auto
+  ResumoEnergia:
+    speech:
+      text: >
+        Sua tensão atual é de {{ states('sensor.voltagem') }} volts. No momento a casa está consumindo {{ states('sensor.watts') }} watts.
+        Hoje você já gastou {{ states('sensor.energia_gasta_dia') }} reais, ontém {{ states('sensor.energia_gasta_ontem') }} reais. E desde o dia primeiro seu gasto é de {{ states('sensor.gasto_mes') }} reais.
+#        {% if states('sensor.voltagem')|float > 2000 %}
+#          Prepara o dinheiro porque a conta vai ser bem salgada se manter esse consumo.
+#        {% elif states('sensor.voltagem')|float > 800 %}        
+#          Que por sinal fará sua conta chegar salgada.
+#        {% elif states('sensor.voltagem')|float > 300 %}        
+#          O que parece normal.
+#        {% elif states('sensor.voltagem')|float > 1 %}
+#          Um consumo muito bom.
+#        {%- else -%}
+#          Não desperdice energia à toa!
+#        {% endif %}
+  VoltagemAtual:
+    speech:
+      text: >
+        A tensão neste momento é de {{ states('sensor.voltagem') }} volts.
+  WattsAtual:
+    speech:
+      text: >
+        No momento você está consumindo {{ states('sensor.watts') }} watts.
+
+
+
+
 
 # Shell Commands
 #   _____ _          _ _    _____                                          _
@@ -2321,6 +3237,42 @@ shopping_list:
 #         |___/
 # https://www.home-assistant.io/components/system_health/
 system_health:
+
+#  _______       _ _ _       
+# |__   __|     (_) (_)      
+#    | |_      ___| |_  ___  
+#    | \ \ /\ / / | | |/ _ \ 
+#    | |\ V  V /| | | | (_) |
+#    |_| \_/\_/ |_|_|_|\___/ 
+# https://www.home-assistant.io/components/twilio/
+twilio:
+  account_sid: !secret twilio_account_sid
+  auth_token: !secret twilio_token
+
+#  _      _  __     ____    __   ___  
+# | |    (_)/ _|   |___ \  / /  / _ \ 
+# | |     _| |_ ___  __) |/ /_ | | | |
+# | |    | |  _/ _ \|__ <| '_ \| | | |
+# | |____| | ||  __/___) | (_) | |_| |
+# |______|_|_| \___|____/ \___/ \___/ 
+# https://www.home-assistant.io/components/life360/ 
+#
+life360:
+#  accounts:
+#    - username: !secret gmail_user
+#      password: !secret life_360_pass
+  driving_speed: 25
+  interval_seconds: 10
+  max_gps_accuracy: 200
+  max_update_wait:
+    minutes: 45
+  show_as_state:
+    - driving
+    - moving
+  warning_threshold: 2
+  error_threshold: 3
+
+
 
 # Grupos
 #   _____

@@ -160,10 +160,10 @@ cade_a_flavia:
     - service: notify.telegramtodos
       data_template:
         message: >
-          {% if is_state('device_tracker.google_maps_111111111111111111111', 'home') %}
-            A Flávia está em casa! Celular {{ states.sensor.bateria_status_flavia.state }} e bateria em {{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_level|int }}%
+          {% if is_state('device_tracker.life360_flavia_cristine_vendruscolo', 'home') %}
+            A Flávia está em casa! Celular {{ states.sensor.bateria_status_flavia.state }} e bateria em {{ states.device_tracker.life360_flavia_cristine_vendruscolo.attributes.battery|int }}%
           {% else %}
-            Flávia se localiza em {{ states.device_tracker.google_maps_111111111111111111111.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }} e bateria em {{ states.device_tracker.google_maps_111111111111111111111.attributes.battery_level|int }}%
+            Flávia se localiza em {{ states.device_tracker.life360_flavia_cristine_vendruscolo.attributes.address }}. Celular: {{ states.sensor.bateria_status_flavia.state }} e bateria em {{ states.device_tracker.life360_flavia_cristine_vendruscolo.attributes.battery|int }}%
           {% endif %}
 
 cade_o_rudi:
@@ -172,10 +172,10 @@ cade_o_rudi:
     - service: notify.telegramtodos
       data_template:
         message: >
-          {% if is_state('device_tracker.google_maps_000000000000000000000', 'home') %}
-          Rudi está em Casa! Celular {{ states.sensor.bateria_status_rudi.state }} e bateria em {{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}%
+          {% if is_state('device_tracker.life360_rudimar_remontti', 'home') %}
+          Rudi está em Casa! Celular {{ states.sensor.bateria_status_rudi.state }} e bateria em {{ states.device_tracker.life360_rudimar_remontti.attributes.battery|int }}%
           {% else %}
-           Rudi se localiza em {{ states.device_tracker.google_maps_000000000000000000000.attributes.address }}. Celular {{ states.sensor.bateria_status_rudi.state }} bateria em {{ states.device_tracker.google_maps_000000000000000000000.attributes.battery_level|int }}%
+           Rudi se localiza em {{ states.device_tracker.life360_rudimar_remontti.attributes.address }}. Celular {{ states.sensor.bateria_status_rudi.state }} bateria em {{ states.device_tracker.life360_rudimar_remontti.attributes.battery|int }}%
           {% endif %}
 
 #  _____  _        __          __
@@ -311,6 +311,22 @@ video_interna:
 # https://www.home-assistant.io/components/notify.group/
 # https://www.home-assistant.io/components/telegram/
 fotos_garagem:
+  alias: "Cap. Garagem"
+  sequence:
+#  - service: camera.snapshot
+#    data:
+#      entity_id: camera.wanscam_360
+#      filename: '/tmp/garagem.jpg'
+#  - service: shell_command.wascam_posicao_1
+  - service: notify.telegramtodos
+    data:
+      message: ""
+      data:
+        photo:
+          - url: !secret wascam_url_snapshot
+            caption: Garagem Interna
+
+fotos_garagem_dupla:
   alias: "Cap. Garagem Multiplas Posições"
   sequence:
   - service: camera.snapshot
@@ -602,7 +618,7 @@ tv_quarto_vol_up:
   alias: "TV Quarto Volume +"
   sequence:
   - data:
-      host: 100.64.0.26
+      host: 192.168.87.8
       packet:
       - JgBQAAABJJURExITERMSExETEhMSNxISEjcTNhQ2EjcTNxI3EhISOBISEjgRExI4EjcTEhISEhMRNxQREzYUEBMSEzYTNxM1EwAFFwABJ0gTAA0FAAAAAAAAAAA=
       - JgBQAAABJJURExITERMSExETEhMSNxISEjcTNhQ2EjcTNxI3EhISOBISEjgRExI4EjcTEhISEhMRNxQREzYUEBMSEzYTNxM1EwAFFwABJ0gTAA0FAAAAAAAAAAA=
@@ -611,7 +627,7 @@ tv_quarto_vol_down:
   alias: "TV Quarto Volume -"
   sequence:
   - data:
-      host: 100.64.0.26
+      host: 192.168.87.8
       packet:
       - JgBQAAABJ5EUERMRFBETERQRExEUNhMRFDUTNxM2EzYTNhQ2ExEUNRQRFDUUNhM2FDYTERMSExETNxISExISEhMSEjYUNRQ2EwAFFgABJ0gTAA0FAAAAAAAAAAA=
       - JgBQAAABJ5EUERMRFBETERQRExEUNhMRFDUTNxM2EzYTNhQ2ExEUNRQRFDUUNhM2FDYTERMSExETNxISExISEhMSEjYUNRQ2EwAFFgABJ0gTAA0FAAAAAAAAAAA=
@@ -620,7 +636,7 @@ tv_quarto_mute:
   alias: "TV Quarto Mute"
   sequence:
   - data:
-      host: 100.64.0.26
+      host: 192.168.87.8
       packet:
       - JgBYAAABJZIUEBQRFBAUERQQFBEUNRQREzYUNhM2EzYTNxM2ExISNhQRExEUERMRFDYTERQRExEUNhM2FDUUNRQREzcSNxM3EgAFFwABJUgUAAw9AAEnSBMADQU=
     service: broadlink.send
@@ -628,7 +644,7 @@ tv_quarto_sleep:
   alias: "TV Quarto Sleep"
   sequence:
   - data:
-      host: 100.64.0.26
+      host: 192.168.87.8
       packet:
       - JgBQAAABJZMSExETERQRExEUERMRORETETgROBI0FTgSNxI4ERMROBE5EhIRORETETkRExEUERMRFBE3ExISNxITEzQUNxI4EwAFFQABJkgTAA0FAAAAAAAAAAA=
     service: broadlink.send
@@ -636,7 +652,7 @@ tv_quarto_input:
   alias: "TV Quarto Entrada"
   sequence:
   - data:
-      host: 100.64.0.26
+      host: 192.168.87.8
       packet:
         - "JgBYAAABJZMSExETERQRExEUERMROBISEjgSNxI3EjgROBI4ERMRORE4EjcSOBE3ExISEhITEhISExISEhMSEhI4ETgSNxI4EgAFFQABJUoRAAxAAAElSRMADQU="
     service: broadlink.send
@@ -646,7 +662,7 @@ air_quarto_swing:
   alias: "Ar Swing"
   sequence:
   - data:
-      host: 100.64.0.26
+      host: 192.168.87.8
       packet:
         - "JgDKAI6PETURExE1ETYRExESETYREhETETYREhESETYRNhESETYRExE1ETYREhE2ERMRNRI1ETYRExESETYREhE2ERIRExE2ETURNhETERIREhISERISEhESEhIRNhE1EjURNBM1EauOjhI1ERMRNRE2ERMREhE2ERIRExE2ERIREhI1ETYREhE2ERMRNRE2ERISNRETETYRNRE2ERMREhE2ERIRNhESERMRNhE1EjURExESERMREhETERIRExESETYRNRI1ETYRNhAADQUAAAAAAAAAAAAAAAAAAA=="
     service: broadlink.send
@@ -654,7 +670,7 @@ air_quarto_led:
   alias: "Ar LED"
   sequence:
   - data:
-      host: 100.64.0.26
+      host: 192.168.87.8
       packet:
         - "JgDKAI6QEjQTERI1EjQTERI0ExESNRIREzQSERMREjQTERI1EhETNBI1EjQTNBISEjQTERI1EhETERIREhISNBMREjUSERM0EhETNBMREhETNBIREzQSEhI0EhISNBM0EhISNBMREKuPjRM0ExESNBM0EhETNBMREjQTERI1EhESEhI0ExESNBMREjUSNBM0EjUSERI1EhETNBMREhETERIREzQSERM0ExESNBMREjUSERMREjQTERI1EhESNRIREzQSNRIREjUSERAADQUAAAAAAAAAAAAAAAAAAA=="
     service: broadlink.send
@@ -665,14 +681,14 @@ xboom_vol_up:
   sequence:
   - service: broadlink.send
     data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBOAJKVExISExEUERQROBITERQRExITEhMRFBEUETgTEhEUERQROBI4ETgSExE5ERMSExITERQRFBETEjgSExE4EjgSNxIABpeSlRI4EQANBQAAAAAAAAAAAAA=
 xboom_vol_down:
   alias: "Xboom Volume -"
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBWAJGWEhMTERITEhMROBITEhMSExEUExIRExITETkRExITEhMRFBE4EjgSExM2EhMRFBEUETgSExEUETgSExM3EjcSOBIABpaTlRE4EgAMVpKVEjcSAA0FAAA=
     service: broadlink.send
@@ -680,7 +696,7 @@ xboom_mute:
   alias: "Xboom Mute"
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBWAJOUEhMSExMSERQSNxITERQRFBETEhMSExMSETgSExMSExITNhI4EjcSOBI3EhMSExEUERQRExITEhMRFBE4EjgSOBEABpeSlRI4EgAMVZKWEjcSAA0FAAA=
     service: broadlink.send
@@ -688,7 +704,7 @@ xboom_input:
   alias: "Xboom Entrada"
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBOAJGWFBEQFRAUERQRORQREBQRFBEUERQQFBITETkTEhAUERQSOBQ1ExMRExEUERMSExITEhMQFRE4EzcUNRQ2FDUSOBQABpSVkxQ1EwANBQAAAAAAAAAAAAA=
     service: broadlink.send
@@ -696,7 +712,7 @@ xboom_equalizer:
   alias: "Xboom Equalizar"
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBWAJOUEhMSExEUERQROBITERQRFBETEhMSExEUETgSExEUERQRExITEhMRFBEUERMSOBITETgSOBI3EjgSNxI4EhMROBIABpaSlRI4EgAMVJOVETgSAA0FAAA=
     service: broadlink.send
@@ -732,7 +748,7 @@ lg55_input:
   alias: "TV Lg Entrada"
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBYAAABKpIRFBEUETkQFREUERQRExEUEjgROREUETkQORE5ETkRORE5EDkRFBI4ERQRFBEUERQRFBEUETgRFBI4ETkRORA5EQAFKwABKkkQAAxgAAEpSREADQU=
     service: broadlink.send
@@ -740,7 +756,7 @@ lg55_vol_up:
   alias: "TV Lg Volume +"
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBQAAABKZMRFBEUETkRFBEUERQQFRAVEDkROREUETkQOhA5ETkROREUEDoQFRAUERQRFBITERQROREUEDkRORE5ETkRORA5EQAFKwABKUoQAA0FAAAAAAAAAAA=
     service: broadlink.send
@@ -748,7 +764,7 @@ lg55_vol_down:
   alias: "TV Lg Volume -"
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBYAAABJ5UQFREUETgRFBITERQRFBEUETkQOREUEjgRORE5EDoQORE5ETkRFBEUERQRFBETEhMSExITETkRORA6EDkRORE5EQAFKwABKEoRAAxfAAEoSxAADQU=
     service: broadlink.send
@@ -756,7 +772,7 @@ lg55_mute:
   alias: "TV Lg Mute"
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBYAAABJ5URFBEUETgRFBITEhMSExEUETkRORAVETgRORE5ETkQORE5ERQSExE5ERQRFBEUERQRExI4ETkRFBE5EDkRORE5EQAFKwABKEYVAAxfAAEpShEADQU=
     service: broadlink.send
@@ -764,9 +780,81 @@ lg55_exit:
   alias: "TV Lg Exit"
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBQAAABKJQRFBITEjgRFBEUERQRFBEUETgROREUETkRORA5ETkRORE5ETkQFRE4ETkRFBE5EBURFBEUEDkSExITETkRFBE5EAAFKwABKEsQAA0FAAAAAAAAAAA=
+    service: broadlink.send
+lg55_voltar:
+  alias: "TV Lg Voltar"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABK5IQFREUETkQFRETEhMSExITEjgROREUETkQOhA6EDkROREUEhMRFBE5ERQRORAVERQRORA5ETkRFBI4ERQRORE5EAAFLQABKkkQAAxkAAEqSBEADQU=
+    service: broadlink.send
+lg55_esq:
+  alias: "TV Lg Esquerda"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABKZQQFREUETgRFBITEhMSExEUETkRORAVETkQORE5ETkRORE5ETkQOhAVERQRExITEhMSExITERQRORE5ETkQOhA5EQAFLQABKUkRAA0FAAAAAAAAAAA=
+    service: broadlink.send
+lg55_dir:
+  alias: "TV Lg Direita"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABKZQQFREUETgSExITEhMRFBEUETkRORAVETkQORE5ETkROREUETkQOhAVERQRFBETEhMSOBEUERQRORE5EDoQOhA4EgAFLAABKkkRAAxiAAEqSREADQU=
+    service: broadlink.send
+lg55_cima:
+  alias: "TV Lg Cima"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABKpIRFBEUETkRFBEUERQRFBEUETkQOREUEjgRORE3EzkRORAVERQRFBEUERMSExI4ERQRORE5ETkQOhA5ETkRFBI4EQAFLAABKkkRAAxiAAErSBEADQU=
+    service: broadlink.send
+lg55_baixo:
+  alias: "TV Lg Baixo"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABKZMRFBITEjgRFBEUERQRFBEUETkQOREUEjgRORE5ETkRORA6EBURFBETEhMSExI4ERQRFBE5ETkQOhA5ETkRFBI4EQAFLAABKUoQAA0FAAAAAAAAAAA=
+    service: broadlink.send
+lg55_play:
+  alias: "TV Lg Play"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABKpMRFBEUETkQFREUERQRExITEjgROREUETkRORA6EDkROREUEhMSExITETkROREUETkQOhA5ETkROREUERQROREUEQAFLAABKUoQAAxjAAEpShAADQU=
+    service: broadlink.send
+lg55_pause:
+  alias: "TV Lg Pause"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABKZMSExITEjgRFBEUERQRFBEUETkQOhAVETgRORI4ETkROREUETkQFRE5EDkROREUETkROREUETkQFREUERQROBEUEgAFLAABKUkRAAxjAAEpSREADQU=
+    service: broadlink.send
+lg55_ok:
+  alias: "TV Lg OK"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABKZMRFBITEjgRFBITERQRFBEUETkRORAVETkQORE5ETkROREUERQRORAVERQRFBE5EBUROBE5ERQSOBE5ETkRFBE5EAAFLQABKEsRAA0FAAAAAAAAAAA=
+    service: broadlink.send
+lg55_settings:
+  alias: "TV Lg Settings"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABKZMRFBEUETkRFBEUERQRFBEUETkQOREUEjgRORE5ETkRORA6EDoQFRETEhMSExI4ERQRFBEUETkQOhA6EDkRFBI4EQAFLQABJ0sRAAxjAAEnTBEADQU=
     service: broadlink.send
 #lg55_simplink:
 #  alias: Lg 55 Simplink
@@ -781,7 +869,7 @@ proj_mute:
   alias: Proj. Mute
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBQAAABJJMSExA5EhMQFBITEhIRFBETETkRExI4ETgQORE5ETgQOREUEDkSExAVERMSExAUEhMROBISEjgSNxE4EjgROBE4EgAFFwABI0oQAA0FAAAAAAAAAAA=
     service: broadlink.send
@@ -789,7 +877,7 @@ proj_input:
   alias: Proj. Input
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBQAAABJZEUERM2FBETEhISExITERMRFDUUERQ2EzYTNhM2EzYTNhQ2EzYTNhQ2EjcTEhISExETEhMRFBESExMREzcSNxM1FAAFEwABJUkTAA0FAAAAAAAAAAA=
     service: broadlink.send
@@ -797,7 +885,7 @@ proj_vup:
   alias: Proj. V+
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBYAAABI5MRFBA5ERQQFRAUERMRFBAUETkQFBE4ETgROBI4ETgQNRY4EBQROBE4EBURExEUEBUQFBI3ERMRFBA5ETkQORA4EgAFFQABIksQAAw8AAEkSREADQU=
     service: broadlink.send
@@ -805,7 +893,7 @@ proj_vdown:
   alias: Proj. V-
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBYAAABIpQSExA4EhMQFRETEhMQFRAUEjcRExE5EDkQORE5ETcROBE5EBQRFBAVEDgRFBETEhMQFRA4ETkSNxISEzcROBA4EwAFFAABI0oQAAw9AAEiSBMADQU=
     service: broadlink.send
@@ -813,7 +901,7 @@ proj_c:
   alias: Proj. Cima
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBIAAABJJMSExA5ERQQFBEUERMRFBETETkQFBI4ETgQORE5EDkQORE5EBQSEhE5EhIRFBETERQQFRA5EDkRFBA5EjgROBA5EgANBQ==
     service: broadlink.send
@@ -821,7 +909,7 @@ proj_b:
   alias: Proj. Baixo
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBIAAABJJQSExA5FBESExEUDhYPFhAUEDkRFBE4ETgQOhA5EjcQORI4ExEVEA4ZDxQQFBAVEBUQFA46EjgROBU0FTUQORE5EAANBQ==
     service: broadlink.send
@@ -829,7 +917,7 @@ proj_t:
   alias: Proj. Tras
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBQAAABIJYSEhI3EhIRFRETEhIRFBYPEDoRExE4EDoQORI4ETcROhETDzkRFg46EBURFBAUEBUQOBMSETgRExA6EzcQOBA7FAAFEwABJEoRAA0FAAAAAAAAAAA=
     service: broadlink.send
@@ -837,7 +925,7 @@ proj_f:
   alias: Proj. Frente
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBQAAABJJQTERE4EBUSExEUEBQQFRETFDYQFRE4EDkSNxE5ETgQORAVEBQPFhE4ERQQFA8WEBUQORI3DzsSExI3ETgROBI4EAAFGAABI0oRAA0FAAAAAAAAAAA=
     service: broadlink.send
@@ -845,7 +933,7 @@ proj_ok:
   alias: Proj. OK
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBYAAABIZUQFBI3ERMRFBAVEBQSExAUEjcRFBE4EDkRORE4EDkROBE4EDkRFBA5ERQQFBETERQQFRETETkRExM2ETgQORI4EAAFFgABIkoSAAw8AAEiShEADQU=
     service: broadlink.send
@@ -853,7 +941,7 @@ proj_esc:
   alias: Proj. ESC
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBYAAABIpIUExA5EhMQFBETERQQFRAUETkQFBI3ETgROBE5ETgQORETETgRORA5EBURExITEBQSNxEUERMRFBA5ETgROBE4EgAFFAABI0sQAAw6AAEkSxAADQU=
     service: broadlink.send
@@ -861,12 +949,220 @@ proj_menu:
   alias: Proj. Menu
   sequence:
   - data:
-      host: 100.64.0.53
+      host: 192.168.87.7
       packet:
       - JgBQAAABJJMRFBA5EhMQFRETERQQFRAUETkRExE5ETgQORA6ETgQORITEDkRORA5EDkRFBAVERMSOBETERQQFRETETkROBA5EgAFGAABI0sQAA0FAAAAAAAAAAA=
     service: broadlink.send
 
-
+# H.TV
+htv_ok:
+  alias: "htv OK"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJpMUEhEUERQSFBEUERQUEhE5ETkRORE5ETkSOBI4EjkRORE5ETkTNxI4EzcSFBEUExISFBEUExISFBEUEjgSOBQ2EgAE/QABKEkRAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_cima:
+  alias: "htv Cima"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJ5MSExITExMSExIUEhMSExM3EzcSORI4EjgSOBI4EjgSOBMTERQSExMTEhMRFBMTEhMSOBI4EjgTNxM4EjgSOBE5EgAE/QABJ0oSAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_baixo:
+  alias: "htv Baixo"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABKJISExITFBITEhITExMSExI4EjgSOBI5ETkSOBI4EjgRORI4EhQSExITEhQRFBEUEhQRFBI4EjgSOBI4EzcSORE5EQAE/QABKEkSAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_esq:
+  alias: "htv Esquerda"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJpQSExIUERQSExMTERQSFBI4EjgSOBE5EjgSOBM3EjgTOBI4EjgRFBEUEhQRFBITEhQRFBITEzcTOBE5EjgSOBI4EgAE/AABJksSAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_direita:
+  alias: "htv Direita"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJ5MSExMTERQSExMTERQSExM3EjkSOBE5ETkRORI4ETkSOBIUEjgRFBIUERQSExITExMSOBEUEzcSOBI4EjkRORI4EgAE/AABJksRAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_menu:
+  alias: "htv Menu"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJ5ITExITEhMSFBEUEhMTExE5EjgRORI4EjgTNxI5EjgSOBITEzcTExI4EjgSExMTEhMSOBITEjgTExITETkSOBM3EwAE/QABJ0oSAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_exit:
+  alias: "htv Exit"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJ5ITExEUEhQSExITEhMTExI4EjgSOBI4EjgSOBI4EzcSORITERQSOBM4EjgRFBITExMRORI4EhMSFBITEjgSOBM3EwAE/AABJksSAAxhAAEmSxIADQU=
+    service: broadlink.send
+htv_home:
+  alias: "htv Home"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJ5MSExIUEhMSExMTEhMSExM4EjgSOBI4EjgSOBI4EzcTNxM4ETkSExI4EjgSFBITEhMTExITETkSExMTETkSOBI4EgAE/AABJ0oTAAxgAAEoSRIADQU=
+    service: broadlink.send
+htv_info:
+  alias: "htv Info"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJ5ITExITEhMTExEUEhMSFBE5ETkRORI4ETkSOBI4EjgSOBIUExISOBIUERQRFBIUERQRORE5EhMSORE5ETkRORI4EQAE+wABJ0sRAAxfAAEoSREADQU=
+    service: broadlink.send
+htv_1:
+  alias: "htv 1"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJpMTExEUEhMSFBEUERQSFBE5ETkRORE5ETkRORI4EjgSOBI5ERQSExIUETkRFBITEhQRFBI4EjgSOBIUETkRORE5EQAE/QABJksRAAxgAAEmSxEADQU=
+    service: broadlink.send
+htv_2:
+  alias: "htv 2"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJpMTExEUERQSFBEUERQSFBI4EjgRORE5ETkSOBI4EjkROREUERQSFBEUETkSExIUERQSOBI4EjgSOREUEjgRORI4EgAE+wABJkwSAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_3:
+  alias: "htv 3"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJpMTExEUExMRFBITExMRFBI4ETkRORE5EjgSOBI5ETkROREUEjgSFBEUETkRFBQSERQTNxITEjkTNxITETkTNxI4EgAE/AABJksRAAxfAAEmSxQADQU=
+    service: broadlink.send
+htv_4:
+  alias: "htv 4"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJpMTExEUEhMSFBITEhMSFBE5ETkTNxE5EjgSOBI4EjkTNxE5ETkTEhIUETkRFBITEhQSExITEjkROREUETkSOBI4EgAE/AABJksSAAxgAAEmSxIADQU=
+    service: broadlink.send
+htv_5:
+  alias: "htv 5"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJpMTExEUEhQRFBITEhQRFBE5ETkRORI4EjgSOBM4ETkROREUERQSOREUETkRFBIUERQRORI4EhQROREUEjgRORI4EgAE/AABJ0sRAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_6:
+  alias: "htv 6"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJpQSExQSERQSExIUERQSExI5ETkRORE5ETkRORE5EjgSOBI4EhQROREUEjgSFBEUEhMUEhE5ERQTNxIUETkRORE5EQAE/QABJksRAAxhAAElTBIADQU=
+    service: broadlink.send
+htv_7:
+  alias: "htv 7"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABKJISExMTERQRFBMTERQRFBM3EjgSORE5ETkTNxE5ETkSOBIUETkROREUFDYSFBEUEhMSOBIUERQSOBQSETkRORM3EQAE/gABJ0oRAAxhAAEoSREADQU=
+    service: broadlink.send
+htv_8:
+  alias: "htv 8"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJ5MRFBIUEhMSExMTERQRFBI4EjkRORI4ETkRORE5EjgSOBM4EjgROREUEjgSFBEUERQTExITERQSOBIUEjgRORE5EgAE/QABJksSAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_9:
+  alias: "htv 9"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJ5ITExEUEhMTExITEhMSFBE5ETkSOBI4EzcTOBE5EjgSOBITEhQRFBI4EjgTExEUEhMSOBM3EjkSExEUEzcTNxM4EgAE+wABJ0sSAAxfAAEmSxIADQU=
+    service: broadlink.send
+htv_0:
+  alias: "htv 0"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJ5ITExITEhMTExEUEhMSFBE5ETkSOBI4EzcSOBI5EjgRORE5EhMSFBE5ETkSExIUEhMRFBI4EjgTExITEjgSOBI4EwAE/AABJ0oTAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_vermelho:
+  alias: "htv Vermelho"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJpQSExITEhQRFBITExMSExI4EjgSOBI4EjgTNxM4ETkSOBI4ERQSOBIUERQSExITEhQSExI4ExMSOBI4EjgSOBI4EgAE+wABJ0oTAAxfAAEnShIADQU=
+    service: broadlink.send
+htv_verde:
+  alias: "htv Verde"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJpMTExEUEhMTExITEhMTExI4EjgSOBE5EjgSOBI4EzgSOBI4ERQSFBI4EhMSExMTEhMSExM3EzgSExE5EjgSOBI4EgAE/QABJ0oSAAxhAAEnShIADQU=
+    service: broadlink.send
+htv_amarelo:
+  alias: "htv Amarelo"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJ5ITExEUEhMTExITEhMTExI4EjgSOBI4EjgSOBI4EzcSOBIUEjgSExITExMSExI4EhMTOBEUEjgSOBI4EjgSExM3EwAE/AABJ0oSAAxgAAEnShIADQU=
+    service: broadlink.send
+htv_azul:
+  alias: "htv Azul"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJ5MSExITExMSExITEhQRFBI4EjgTNxM3EjgTOBI4EjgSOBE5EjgRFBIUERQSExI4EhQRFBITEzcSOBM3EjkRFBI4EQAE/QABJ0oSAAxgAAEnShIADQU=
+    service: broadlink.send
+htv_vmais:
+  alias: "htv Vol+"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBQAAABJpMUEhEUEhMSFBEUEhMTExE5ETkSOBE5EjcUNxM3EjkSOBITEhMSFBE5ETkRFBM3EhQSOBE5EjgSExMTETkSExI4EgAE/QABJ0oTAA0FAAAAAAAAAAA=
+    service: broadlink.send
+htv_vmenos:
+  alias: "htv Vol-"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJpQSExIUERQRFBIUERQRFBI4EjgSOBI5ETkRORI4ETkRORE5EhQSOBI4ETkRFBI4EhQRFBE5ERQSFBEUETkRFBM3EgAE/QABJksRAAxgAAEmSxIADQU=
+    service: broadlink.send
+htv_mute:
+  alias: "htv Mute"
+  sequence:
+  - data:
+      host: 192.168.87.7
+      packet:
+      - JgBYAAABJpMTExEUEhMTExEUERQTExI4ETkRORI4EjgSOBM3EjgTNxM4EhMRORI4EhQSExEUExMSExE5EhMTExE5EjgRORI4EgAE/QABJksSAAxgAAEnShMADQU=
+    service: broadlink.send
 
 #  _           _
 # | |         | |
@@ -921,3 +1217,27 @@ proj_menu:
 #      data:
 #        entity_id: 'camera.ptz'
 #        pan: 'RIGHT'
+
+reseta_porta_geladeira:
+  alias: "Reseta Porta da Geladeira"
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"57810E"}} '
+
+reseta_porta_garagem:
+  alias: Reseta porta da Garagem
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"59840E"}} '
+
+reseta_porta_lavanderia:
+  alias: Reseta porta Lavanderia
+  sequence:
+  - service: mqtt.publish
+    data:
+      topic: "tele/sonoffBr1/RESULT"
+      payload: ' {"RfReceived":{"Data":"54A00E"}} '

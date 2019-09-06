@@ -147,8 +147,8 @@ luzes_quartos:
 #rastreamento:
 #  name: Localização
 #  entities:
-#    - device_tracker.google_maps_000000000000000000000
-#    - device_tracker.google_maps_111111111111111111111
+#    - device_tracker.google_maps_106566341309199592438
+#    - device_tracker.google_maps_118429201781082195315
 
 #ventiladores:
 #  name: Ventiladores

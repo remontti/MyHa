@@ -397,7 +397,7 @@
 #  _| |_| | | | ||  __/ |  | |  | |_| | |_) | || (_) | | |  __/\__ \    | | ___) |__) | |  | | | | |/ / 
 # |_____|_| |_|\__\___|_|  |_|   \__,_| .__/ \__\___/|_|  \___||___/    |_||____/____/|_|  |_|_| |_/___|
 #                                     |_|                                                               
-#Cozinha
+# Cozinha - 2 Teclas
 - alias: RF1 Cozinha On
   initial_state: true
   hide_entity: true
@@ -464,7 +464,41 @@
   - service: switch.turn_off
     data:
       entity_id: switch.pressurizador
-#Banheiro da Suite
+- alias: RF1e2 Cozinha On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e2_interruptor_coz
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.cozinha
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: 
+        - light.cozinha
+- alias: RF1e2 Cozinha Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e2_interruptor_coz
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.cozinha
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: 
+        - light.cozinha
+#Banheiro da Suite - 2 Teclas
 - alias: RF1 Banheiro Suite On
   initial_state: true
   hide_entity: true
@@ -531,7 +565,35 @@
   - service: switch.turn_off
     data:
       entity_id: switch.pressurizador
-#Banheiro Social
+- alias: RF1e2 Banheiro Suite SOS
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e2_interruptor_bsu
+    from: 'off'
+    to: 'on'
+  action:
+    - service: notify.telegramtodos
+      data:
+        message: "Alguém precisa de ajuda no banheiro da suíte!"
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home_sala
+        volume_level: 0.9
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home
+        volume_level: 0.9
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: media_player.google_home_sala
+        message: "Alguém precisa de ajuda no banheiro da suíte!"
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: media_player.google_home
+        message: "Alguém precisa de ajuda no banheiro da suíte!"
+#Banheiro Social - 2 Teclas
 - alias: RF1 Banheiro Social On
   initial_state: true
   hide_entity: true
@@ -598,7 +660,508 @@
   - service: switch.turn_off
     data:
       entity_id: switch.pressurizador
+- alias: RF1e2 Banheiro Social SOS
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e2_interruptor_bso
+    from: 'off'
+    to: 'on'
+  action:
+    - service: notify.telegramtodos
+      data:
+        message: "Alguém precisa de ajuda no banheiro social!"
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home_sala
+        volume_level: 0.9
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home
+        volume_level: 0.9
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: media_player.google_home_sala
+        message: "Alguém precisa de ajuda no banheiro social!"
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: media_player.google_home
+        message: "Alguém precisa de ajuda no banheiro social!"
+# Quarto da Suite - 3 teclas
+- alias: RF1 Interruptor Suite On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_suite
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.quarto_da_suite
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.quarto_da_suite
+- alias: RF1 Interruptor Suite Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_suite
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.quarto_da_suite
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.quarto_da_suite
+- alias: RF2 Interruptor Suite On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_suite
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.yeelight_color1_7c49eb15924b
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.yeelight_color1_7c49eb15924b
+      transition: 5
+- alias: RF2 Interruptor Suite Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_suite
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.yeelight_color1_7c49eb15924b
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.yeelight_color1_7c49eb15924b
+      transition: 5
+- alias: RF3 Interruptor Suite On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf3_interruptor_suite
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_da_suite
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.banheiro_da_suite
+- alias: RF3 Interruptor Suite Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf3_interruptor_suite
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_da_suite
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.banheiro_da_suite
+- alias: RF1e3 Interruptor Suite On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e3_interruptor_suite
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.postes
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.postes
+- alias: RF1e3 Interruptor Suite Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e3_interruptor_suite
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.postes
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.postes
+- alias: RF1e2 Interruptor Suite On Alarme
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e2_interruptor_suite
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.seguranca_casa
+- alias: RF2e3 Interruptor Suite Off Alarme
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2e3_interruptor_suite
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.seguranca_casa
 
+# Quarto da Q Frente - 3 teclas
+# ON - light.quarto_da_frente
+- alias: RF1 Interruptor Q Frente On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_quarto_frente
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.quarto_da_frente
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.quarto_da_frente
+# OFF - light.quarto_da_frente
+- alias: RF1 Interruptor Q Frente Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_quarto_frente
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.quarto_da_frente
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.quarto_da_frente
+# ON - light.corredor
+- alias: RF2 Interruptor Q Frente On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_quarto_frente
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.corredor
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.corredor
+      transition: 5
+# OFF - light.corredor
+- alias: RF2 Interruptor Q Frente Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_quarto_frente
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.corredor
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.corredor
+      transition: 5
+# ON - light.banheiro_social
+- alias: RF3 Interruptor Q Frente On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf3_interruptor_quarto_frente
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_social
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.banheiro_social
+# OFF - light.banheiro_social
+- alias: RF3 Interruptor Q Frente Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf3_interruptor_quarto_frente
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_social
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.banheiro_social
+- alias: RF1e3 Interruptor Q Frente SOS
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e3_interruptor_quarto_frente
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.postes
+    state: 'off'
+  action:
+    - service: notify.telegramtodos
+      data:
+        message: "Alguém precisa de ajuda no quarto da frente!"
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home_sala
+        volume_level: 0.9
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home
+        volume_level: 0.9
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: media_player.google_home_sala
+        message: "Alguém precisa de ajuda no quarto da frente!"
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: media_player.google_home
+        message: "Alguém precisa de ajuda no quarto da frente!"
+- alias: RF1e2 Interruptor Q Frente On Alarme
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e2_interruptor_quarto_frente
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.seguranca_casa
+- alias: RF2e3 Interruptor Q Frente Off Alarme
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2e3_interruptor_quarto_frente
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.seguranca_casa
+
+# Quarto da Q Meio - 3 teclas
+- alias: RF1 Interruptor Q Meio On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_quarto_meio
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.quarto_do_meio
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.quarto_do_meio
+- alias: RF1 Interruptor Q Meio Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1_interruptor_quarto_meio
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.quarto_do_meio
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.quarto_do_meio
+- alias: RF2 Interruptor Q Meio On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_quarto_meio
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.corredor
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.corredor
+      transition: 5
+- alias: RF2 Interruptor Q Meio Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2_interruptor_quarto_meio
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.corredor
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.corredor
+      transition: 5
+- alias: RF3 Interruptor Q Meio On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf3_interruptor_quarto_meio
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_social
+    state: 'off'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.banheiro_social
+- alias: RF3 Interruptor Q Meio Off
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf3_interruptor_quarto_meio
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.banheiro_social
+    state: 'on'
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.banheiro_social
+- alias: RF1e3 Interruptor Q Meio On
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e3_interruptor_quarto_meio
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: state
+    entity_id: light.postes
+    state: 'off'
+  action:
+    - service: notify.telegramtodos
+      data:
+        message: "Alguém precisa de ajuda no quarto do meio!"
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home_sala
+        volume_level: 0.9
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home
+        volume_level: 0.9
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: media_player.google_home_sala
+        message: "Alguém precisa de ajuda no quarto do meio!"
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: media_player.google_home
+        message: "Alguém precisa de ajuda no quarto do meio!"
+
+- alias: RF1e2 Interruptor Q Meio On Alarme
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf1e2_interruptor_quarto_meio
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.seguranca_casa
+- alias: RF2e3 Interruptor Q Meio Off Alarme
+  initial_state: true
+  hide_entity: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.rf2e3_interruptor_quarto_meio
+    from: 'off'
+    to: 'on'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.seguranca_casa
 
 #  _                 _   _       _   _  __
 # | |               | \ | |     | | (_)/ _|
@@ -682,14 +1245,9 @@
     platform: state
     to: 'off'
   condition:
-    condition: or
-    conditions:
-      - condition: state
-        entity_id: 'group.all_devices'
-        state: 'not_home'
-      - condition: state
-        entity_id: 'group.all_devices'
-        state: 'unknown'
+  - condition: state
+    entity_id: sensor.alguem_em_casa
+    state: 'off'
   action:
   - service: notify.telegramtodos
     data_template:
@@ -714,6 +1272,8 @@
       - switch.ar_quarto
       - switch.xboom_som
       - switch.tv_lg_55
+      - switch.htv
+      - switch.pressurizador
     from: 'off'
     platform: state
     to: 'on'
@@ -723,18 +1283,15 @@
       - switch.ar_quarto
       - switch.xboom_som
       - switch.tv_lg_55
+      - switch.htv
+      - switch.pressurizador
     from: 'on'
     platform: state
     to: 'off'
   condition:
-    condition: or
-    conditions:
-      - condition: state
-        entity_id: 'group.all_devices'
-        state: 'not_home'
-      - condition: state
-        entity_id: 'group.all_devices'
-        state: 'unknown'
+  - condition: state
+    entity_id: sensor.alguem_em_casa
+    state: 'off'
   action:
   - service: notify.telegramtodos
     data_template:
@@ -906,6 +1463,8 @@
       - binary_sensor.ext_piscina
       - binary_sensor.porta_varanda
       - binary_sensor.porta_entrada
+      - binary_sensor.porta_garagem
+      - binary_sensor.porta_lavanderia
       - binary_sensor.porta_area
       - binary_sensor.janela_closet
       - binary_sensor.janela_cozinha
@@ -972,23 +1531,15 @@
     from: 'off'
     to: 'on'
   condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: alarm_control_panel.alarme_da_casa
-        state: disarmed
-        # não envia novamente se acontecer movimento nos proximos 70seg
-      - condition: template
-        value_template: '{{ as_timestamp(now()) - as_timestamp(states.automation.piscina_alarme_off_movimento.attributes.last_triggered) | int > 70 }}'
-      - condition: or
-        # Não ter ninguem em casa
-        conditions:
-          - condition: state
-            entity_id: group.all_devices
-            state: 'not_home'
-          - condition: state
-            entity_id: group.all_devices
-            state: 'unknown'
+  - condition: state
+    entity_id: sensor.alguem_em_casa
+    state: 'off'
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: disarmed
+    # não envia novamente se acontecer movimento nos proximos 20seg
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.automation.piscina_alarme_off_movimento.attributes.last_triggered) | int > 20 }}'
   action:
   - service: notify.telegramtodos
     data:
@@ -996,9 +1547,8 @@
   - service: script.turn_on
     entity_id: script.fotos_piscina
   - service: script.turn_on
-    entity_id: script.fotos_interna
-  - service: script.turn_on
-    entity_id: script.fotos_garagem
+    entity_id: script.fotos_380rtsp1
+
 
 # Movimento na garagem
 - alias: "Garagem (Alarme OFF) - Movimento"
@@ -1009,30 +1559,21 @@
     from: 'off'
     to: 'on'
   condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: alarm_control_panel.alarme_da_casa
-        state: disarmed
-        # não envia novamente se acontecer movimento nos proximos 70seg
-      - condition: template
-        value_template: '{{ as_timestamp(now()) - as_timestamp(states.automation.garagem_alarme_off_movimento.attributes.last_triggered) | int > 70 }}'
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: group.all_devices
-            state: 'not_home'
-          - condition: state
-            entity_id: group.all_devices
-            state: 'unknown'
+  - condition: state
+    entity_id: sensor.alguem_em_casa
+    state: 'off'
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: disarmed
+    # não envia novamente se acontecer movimento nos proximos 20seg
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.automation.garagem_alarme_off_movimento.attributes.last_triggered) | int > 20 }}'
   action:
   - service: notify.telegramtodos
     data:
       message: "Movimento na Garagem"
   - service: script.turn_on
     entity_id: script.fotos_garagem
-  - service: script.turn_on
-    entity_id: script.fotos_piscina
 
 # Notifica se algum sensor for violado mesmo com alarme off, porém sem ninguem em casa.
 - alias: 'Notificação: Sensor Alarme Off (S/Ninguém)'
@@ -1045,6 +1586,8 @@
       - binary_sensor.closet
       - binary_sensor.porta_varanda
       - binary_sensor.porta_entrada
+      - binary_sensor.porta_garagem
+      - binary_sensor.porta_lavanderia
       - binary_sensor.porta_area
       - binary_sensor.janela_closet
       - binary_sensor.janela_cozinha
@@ -1055,19 +1598,12 @@
     platform: state
     to: 'on'
   condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: alarm_control_panel.alarme_da_casa
-        state: disarmed
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: group.all_devices
-            state: 'not_home'
-          - condition: state
-            entity_id: group.all_devices
-            state: 'unknown'
+  - condition: state
+    entity_id: sensor.alguem_em_casa
+    state: 'off'
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: disarmed
   action:
   - service: notify.telegramtodos
     data_template:
@@ -1103,9 +1639,7 @@
   - service: script.turn_on
     entity_id: script.fotos_piscina
   - service: script.turn_on
-    entity_id: script.fotos_interna
-  - service: script.turn_on
-    entity_id: script.fotos_garagem
+    entity_id: script.fotos_380rtsp1
 
 # Liga luz area piscina e postes se movimento com alarme ativado
 - alias: "Piscina (Alarme ON) - Luz (Movimento)"
@@ -1174,8 +1708,10 @@
       message: "Movimento na garagem"
   - service: script.turn_on
     entity_id: script.fotos_garagem
-  - service: script.turn_on
-    entity_id: script.fotos_piscina
+#  - service: script.turn_on
+#    entity_id: script.fotos_piscina
+#  - service: script.turn_on
+#    entity_id: script.fotos_380rtsp1
 
 
 # Liga luz garagem e postes se movimento com alarme ativado
@@ -1275,9 +1811,6 @@
   - platform: state
     entity_id: alarm_control_panel.alarme_da_casa
     to: armed_away
-#  - platform: state
-#    entity_id: alarm_control_panel.alarme_da_casa
-#    to: armed_home
   action:
   - service: script.turn_on
     entity_id: script.reseta_sensores
@@ -1290,8 +1823,6 @@
   - service: notify.telegramtodos
     data:
       message: Alarme ativado!
-#      message: Alarme ativado {% if is_state('alarm_control_panel.alarme_da_casa',
-#        'armed_away') %}com delay de 30s.{% else %}instantaneamente.{% endif %}
 #  - service: media_player.volume_set
 #    data_template:
 #      entity_id: media_player.google_home
@@ -1380,6 +1911,8 @@
       - binary_sensor.closet
       - binary_sensor.porta_varanda
       - binary_sensor.porta_entrada
+      - binary_sensor.porta_garagem
+      - binary_sensor.porta_lavanderia
       - binary_sensor.porta_area
       - binary_sensor.janela_closet
       - binary_sensor.janela_cozinha
@@ -1435,7 +1968,14 @@
     entity_id: script.fotos_interna
   - service: script.turn_on
     entity_id: script.fotos_garagem
-
+  - service: script.turn_on
+    entity_id: script.fotos_380rtsp1
+  # Ligação
+  - service: notify.twilio
+    data:
+      message: 'Alarme disparou! Alarme disparou! Alarme disparou! Alarme disparou! Alarme disparou! Alarme disparou!'
+      target:
+        - +5555999382319
 
 #                _          _____            _ _                    _
 #     /\        | |        |  __ \          | (_)                  | |
@@ -1574,7 +2114,7 @@
   condition:
     condition: time
     after: '17:00:00'
-    before: '08:00:00'
+    before: '07:30:00'
   action:
     service: light.turn_on
     entity_id: light.closet
@@ -1743,7 +2283,6 @@
 #        - automation.silvio_acordar
 #        - automation.silvio_saiu
 
-
 #  _______   _                                   _____                                _
 # |__   __| | |                                 / ____|                              | |
 #    | | ___| | ___  __ _ _ __ __ _ _ __ ___   | |     ___  _ __ ___   __ _ _ __   __| | ___  ___
@@ -1796,12 +2335,19 @@
   action:
     - service: notify.telegramtodos
       data:
-        message: 'Já mando!'
+        message: 'Já mando!!!'
     - service: script.turn_on
       entity_id:
         - script.fotos_garagem
         - script.fotos_piscina
         - script.fotos_interna
+#    - delay:
+#        seconds: 2
+#    - service: script.turn_on
+#      entity_id:
+        - script.fotos_380rtsp1
+        - script.fotos_380rtsp2
+
 
 - alias: 'Telegram bot video garagem'
   initial_state: true
@@ -1877,6 +2423,8 @@
         message: 'Já mando!'
     - service: script.turn_on
       entity_id: script.fotos_piscina
+    - service: script.turn_on
+      entity_id: script.fotos_380rtsp1
 
 - alias: 'Telegram bot foto interna'
   initial_state: true
@@ -1892,6 +2440,279 @@
         message: 'Já mando!'
     - service: script.turn_on
       entity_id: script.fotos_interna
+
+#  _____  _                              
+# |  __ \(_)                             
+# | |  | |___   _____ _ __ ___  ___  ___ 
+# | |  | | \ \ / / _ \ '__/ __|/ _ \/ __|
+# | |__| | |\ V /  __/ |  \__ \ (_) \__ \
+# |_____/|_| \_/ \___|_|  |___/\___/|___/
+
+# Aviso/Notificação Geladeira aberta por muito tempo
+- alias: Geladeira aberta por muito tempo
+  initial_state: false
+  trigger:
+    platform: state
+    entity_id: binary_sensor.porta_geladeira
+    to: 'on'
+    for:
+      seconds: 40
+  action:
+    - service: notify.telegramtodos
+      data:
+        message: Geladeira aberta por muito tempo!
+    - service: tts.google_translate_say
+      data_template:
+        entity_id: media_player.google_home_sala
+        message: "Ei você aí, Que tal fechar a porta da geladeira!"
+
+- alias: Geladeira aberta auto reset
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.porta_geladeira
+    to: 'on'
+    for:
+      seconds: 40
+  action:
+    - service: script.turn_on
+      entity_id: script.reseta_porta_geladeira
+
+# Liga luz se abrir varanda na madrugada (Util dog qnd pede para ir fazer xixi)
+- alias: Liga luzez na madrugada Varanda Suite
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.porta_varanda
+    from: 'off'
+    to: 'on'
+  condition:
+    condition: time
+    after: '23:30:01'
+    before: '05:00:00'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id:
+        - light.postes
+
+# Movimento na garagem a noite sem ninguem em casa
+- alias: "Garagem Movimento - Liga Luzez após sol se por"
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.ext_garagem
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sensor.alguem_em_casa
+    state: 'off'
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+#  - condition: time
+#    after: '18:30:00'
+#    before: '21:00:00'
+# Não repetir nos proximos 5min (tempo de atualizar q ja cheguei em casa)
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.automation.liga_luzez_int_ao_abrir_porta_garagem_noite.attributes.last_triggered) | int > 600 }}'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id:
+        - light.postes
+        - light.garagem
+
+# Liga luzes internas ao abrir porta da garagem ()
+- alias: Liga Luzez int. ao abrir porta garagem (Noite)
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.porta_garagem
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sensor.alguem_em_casa
+    state: 'off'
+  - condition: state
+    entity_id: alarm_control_panel.alarme_da_casa
+    state: disarmed
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+#  condition:
+#    condition: and
+#    conditions:
+#      - condition: state
+#        entity_id: alarm_control_panel.alarme_da_casa
+#        state: disarmed
+#      - condition: state
+#        entity_id: sun.sun
+#        state: below_horizon
+#      - condition: or
+#        conditions:
+#          - condition: state
+#            entity_id: group.all_devices
+#            state: 'not_home'
+#          - condition: state
+#            entity_id: group.all_devices
+#            state: 'unknown'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id:
+        - light.mesa_de_jantar
+        - light.pendentes
+        - light.trilhos
+        - light.lustre
+  - service: tts.google_translate_say
+    data_template:
+      entity_id: media_player.google_home_sala
+      message: 'Boa noite. Faz {{ states.sensor.cozinha_temperatura.state | int }} graus aqui dentro, e {{ states.sensor.dark_sky_temperature.state | int }} graus lá fora. Tenha uma ótima noite! '
+
+
+- alias: 'Alerta Maquina de lavar (Desligada)'
+  initial_state: true
+  trigger:
+#    - platform: state
+#      entity_id: sensor.maquina_lavar_status
+#      to: 'Desligada'
+    - entity_id: sensor.maquina_lavar_status
+      from: 'Lavando'
+      platform: state
+      to: 'Desligada'
+  action:
+  - service: notify.telegramtodos
+    data:
+      message: 'Processo de lavagem concluído. Já pode ir estender a roupa!'
+  - service: tts.google_translate_say
+    data_template:
+      entity_id: media_player.google_home_sala
+      message: 'À máquina de lavar concluiu à lavagem e aguarda você para ir estender a roupa!'
+  - service: tts.google_translate_say
+    data_template:
+      entity_id: media_player.google_home
+      message: 'À máquina de lavar concluiu à lavagem e aguarda você para ir estender a roupa!'
+
+- alias: 'Alerta Maquina de lavar (Lavando)'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: sensor.maquina_lavar_status
+      to: 'Lavando'
+      for:
+        seconds: 30
+  action:
+  - service: notify.telegramtodos
+    data:
+      message: 'Máquina de lavar iniciada'
+
+# Desliga o Pow quando processo de lavagem concluir
+- alias: 'Alerta Maquina de lavar (Energia Off)'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: sensor.maquina_lavar_status
+      to: 'Desligada'
+      for:
+        seconds: 90
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.maquina_de_lavar
+
+# Ativa modo visitante
+- alias: "Modo visitante (ON)"
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: input_boolean.modo_visitante
+    to: 'on'
+  action:
+  - service: automation.turn_off
+    data:
+      entity_id:
+        - automation.garagem_alarme_off_movimento
+        - automation.piscina_alarme_off_movimento
+        - automation.notificacao_sensor_alarme_off_s_ninguem
+        - automation.notificacao_luzez_on_off
+        - automation.notificacao_switch_on_off
+  - service: notify.telegramtodos
+    data:
+      message: 'Modo visitante ativo (Alertas desativado)'
+
+# Desativa modo visitante
+- alias: "Modo visitante (OFF)"
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: input_boolean.modo_visitante
+    to: 'off'
+  action:
+  - service: automation.turn_on
+    data:
+      entity_id:
+        - automation.garagem_alarme_off_movimento
+        - automation.piscina_alarme_off_movimento
+        - automation.notificacao_sensor_alarme_off_s_ninguem
+        - automation.notificacao_luzez_on_off
+        - automation.notificacao_switch_on_off
+  - service: notify.telegramtodos
+    data:
+      message: 'Modo visitante desativo (Alertas Ativo)'
+
+#- alias: "Desliga o Modo visitante ao chegar em casa"
+#  initial_state: true
+#  trigger:
+#    platform: state
+#    entity_id:  sensor.alguem_em_casa
+#    to: 'on'
+#  action:
+#  - service: automation.turn_on
+#    data:
+#      entity_id:
+#        - input_boolean.modo_visitante
+
+# Não deixa a energia da geladeira ficar desligada (eventula descuido de desligar)
+- alias: 'Evita deixar Geladeira desligada'
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: switch.geladeira
+      to: 'off'
+      for:
+        minutes: 30
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.geladeira
+  - service: notify.telegramtodos
+    data:
+      message: 'Ops, liguei a energia da geladeira para evitar que algo estrague. <i>Se deseja manter desligada sugiro desativar está automação, ou tirar da tomada!</i>'
+
+- alias: "Aviso ao desligar energia da Geladeira"
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: switch.geladeira
+    to: 'off'
+  action:
+  - service: notify.telegramtodos
+    data:
+      message: 'Energia da geladeira: <b>DESLIGADA</b>!'
+
+- alias: "Aviso ao ligar energia da Geladeira"
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: switch.geladeira
+    to: 'on'
+  action:
+  - service: notify.telegramtodos
+    data:
+      message: 'Energia da geladeira: <b>LIGADA</b>!'
 
 #  _           _
 # | |         | |
@@ -1949,3 +2770,55 @@
 #  action:
 #  - service: 
 #    [...]
+
+
+#- alias: Teste_5
+#  initial_state: false
+#  trigger:
+#  - entity_id: input_boolean.boolean_fake
+#    from: 'off'
+#    platform: state
+#    to: 'on'
+#  condition:
+#  - condition: state
+#    entity_id: sensor.alguem_em_casa
+#    state: 'on'
+#  - condition: state
+#    entity_id: alarm_control_panel.alarme_da_casa
+#    state: disarmed
+#  - condition: time
+#    after: '11:40:00'
+#    before: '11:50:00'
+#
+#  condition:
+#    condition: and
+#    conditions:
+#      - condition: time
+#        after: '18:30:00'
+#        before: '21:00:00'
+#      - condition: or
+#        conditions:
+#          - condition: state
+#            entity_id: group.all_devices
+#            state: 'not_home'
+#          - condition: state
+#            entity_id: group.all_devices
+#            state: 'unknown'
+
+
+#  condition:
+#    condition: and
+#    conditions:
+#      - condition: state
+#        entity_id: alarm_control_panel.alarme_da_casa
+#        state: disarmed
+#      - condition: template
+#        value_template: '{{ as_timestamp(now()) - as_timestamp(states.automation.piscina_alarme_off_movimento.attributes.last_triggered) | int > 70 }}'
+#      - condition: or
+#        conditions:
+#          - condition: state
+#            entity_id: group.all_devices
+#            state: 'not_home'
+#          - condition: state
+#            entity_id: group.all_devices
+#            state: 'unknown'
