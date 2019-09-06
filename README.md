@@ -62,7 +62,7 @@ Firmware utilizado Tasmota: https://github.com/arendst/Sonoff-Tasmota/wiki</i>
 Para rede wireless foi usado um kit Google Wifi com 3.
 <hr>
   
-<h2>Screeshots HA 0.98.3 / HassOS 2.12 (23/07/2019)</h2>
+<h2>Screeshots HA 0.98.3 / HassOS 2.12 (05/09/2019)</h2>
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/1.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/2.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/3.png">
