@@ -10,16 +10,18 @@ https://forum.homeassistantbrasil.com.br/
 
 
 <h2>Lista de dispositivos utilizados no Projeto</h2>
-<table>
+
+<table width="100">
 	<td>
 		<tr>Google Home min</tr>
-		<tr> </tr>
+		<tr> x </tr>
 	</td>
 	<td>
 		<tr>Google Chromecast</tr>
-		<tr> </tr>
+		<tr> y </tr>
 	</td>
 </table>
+
 <b>Google Home min </b>https://goo.gl/8owfdc
 
 <b>Google Chromecast 2 </b> https://goo.gl/mnPxqm
