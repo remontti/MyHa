@@ -11,16 +11,6 @@ https://forum.homeassistantbrasil.com.br/
 
 <h2>Lista de dispositivos utilizados no Projeto</h2>
 
-<table width="100">
-	<td>
-		<tr>Google Home min</tr>
-		<tr> x </tr>
-	</td>
-	<td>
-		<tr>Google Chromecast</tr>
-		<tr> y </tr>
-	</td>
-</table>
 
 <b>Google Home min </b>https://goo.gl/8owfdc
 
@@ -35,8 +25,6 @@ https://forum.homeassistantbrasil.com.br/
 Firmware utilizado Tasmota: https://github.com/arendst/Sonoff-Tasmota/wiki</i>
 
 <b>Sensor Dht11</b> <i>(Soldado no Sonoff basic para Temperatura/Humidade)</i> https://goo.gl/ERyPvJ
-
-<h3>CHINA</h3>
 
 <b>Sonoff Basic </b>https://goo.gl/RzAaGK
 
