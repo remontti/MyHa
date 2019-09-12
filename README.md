@@ -1,4 +1,6 @@
 # Projeto Home Assistant by Rudimar Remontti
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/1.png">
+
 http://home-assistant.io
 
 <h3>Dúvidas</h3>
@@ -8,7 +10,16 @@ Também foi criado uma página para compartilhar informações através de artig
 
 <h2>Lista de dispositivos utilizados no Projeto</h2>
 
-<h3>BRASIL</h3>
+	<table>
+		<td>
+			<tr>Google Home min</tr>
+			<tr> </tr>
+		</td>
+		<td>
+			<tr>Google Chromecast</tr>
+			<tr> </tr>
+		</td>
+	</table>
 
 <b>Google Home min </b>https://goo.gl/8owfdc
 
