@@ -6,21 +6,20 @@ http://home-assistant.io
 <h3>Dúvidas</h3>
 Por favor, se você tiver dúvida entre no grupo do <a href="https://t.me/HomeAssistantbrasil">telegram</a> onde eu e várias outras pessoas compartilham conhecimentos sobre o HA e ajudam na medida do possível nas questões.
 
-Também foi criado uma página para compartilhar informações através de artigos. https://www.home-assistant.wiki.br/
+https://forum.homeassistantbrasil.com.br/
+
 
 <h2>Lista de dispositivos utilizados no Projeto</h2>
-
-	<table>
-		<td>
-			<tr>Google Home min</tr>
-			<tr> </tr>
-		</td>
-		<td>
-			<tr>Google Chromecast</tr>
-			<tr> </tr>
-		</td>
-	</table>
-
+<table>
+	<td>
+		<tr>Google Home min</tr>
+		<tr> </tr>
+	</td>
+	<td>
+		<tr>Google Chromecast</tr>
+		<tr> </tr>
+	</td>
+</table>
 <b>Google Home min </b>https://goo.gl/8owfdc
 
 <b>Google Chromecast 2 </b> https://goo.gl/mnPxqm
