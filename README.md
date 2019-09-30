@@ -84,7 +84,7 @@ Para rede wireless foi usado um kit Google Wifi com 3.
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/13.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/14.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/15.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/16.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/16agua.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/17.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/18.png">
 
