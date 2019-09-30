@@ -58,7 +58,7 @@ Firmware utilizado Tasmota: https://github.com/arendst/Sonoff-Tasmota/wiki</i>
 
 <b>AM2302 DHT22 Temperature And Humidity Sensor</b> http://abre.ai/8ZF
 
-<b>Projeto ESP8266 para Sensor do nível da caixa d'agua e fluxo da vazão.<b><br>
+<b>Projeto ESP8266 para Sensor do nível da caixa d'agua e fluxo da vazão.</b><br>
 https://github.com/remontti/SensorAgua/
 
 <b>NodeMcu Lua ESP8266 ESP-12F</b> http://abre.ai/ajcq<br>
