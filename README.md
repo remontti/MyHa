@@ -58,6 +58,14 @@ Firmware utilizado Tasmota: https://github.com/arendst/Sonoff-Tasmota/wiki</i>
 
 <b>AM2302 DHT22 Temperature And Humidity Sensor</b> http://abre.ai/8ZF
 
+<b>Projeto ESP8266 para Sensor do nível da caixa d'agua e fluxo da vazão.<b><br>
+https://github.com/remontti/SensorAgua/
+
+<b>NodeMcu Lua ESP8266 ESP-12F</b> http://abre.ai/ajcq<br>
+<b>Sensor Fluxo de Vazão</b> http://abre.ai/ajcr<br>
+<b> Ultrasonic Module HC-SR04</b> http://abre.ai/ajct<br>
+Mas recomendo comprar o aprova d'agua <b> Ultrasonic Module SN-SR04T </b> http://abre.ai/ajcv<br>
+
 <hr>
 Para rede wireless foi usado um kit Google Wifi com 3.
 <hr>
