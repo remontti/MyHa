@@ -1,5 +1,5 @@
 # Projeto Home Assistant by Rudimar Remontti
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/1.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/001.png">
 
 http://home-assistant.io
 
@@ -67,24 +67,24 @@ https://github.com/remontti/SensorAgua/
 Mas recomendo comprar o aprova d'agua <b> Ultrasonic Module SN-SR04T </b> http://abre.ai/ajcv<br>
 
 <hr>
-Para rede wireless foi usado um kit Google Wifi com 3.
+Para rede wireless foi usado um kit <b>Google Wifi</b> com 3.
 <hr>
   
-<h2>Screeshots HA 0.98.3 / HassOS 2.12 (05/09/2019)</h2>
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/1.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/2.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/3.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/4.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/5.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/6.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/7.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/8.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/9.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/10.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/13.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/14.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/15.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/16agua.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/17.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/18.png">
+<h2>Screeshots HA 0.100.1 / HassOS 2.12 (11/10/2019)</h2>
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/001.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/002.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/003.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/004.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/005.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/006.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/007.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/008.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/009.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/010.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/013.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/014.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/015.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/016.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/017.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/018.png">
 
