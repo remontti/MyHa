@@ -1164,6 +1164,80 @@ htv_mute:
       - JgBYAAABJpMTExEUEhMTExEUERQTExI4ETkRORI4EjgSOBM3EjgTNxM4EhMRORI4EhQSExEUExMSExE5EhMTExE5EjgRORI4EgAE/QABJksSAAxgAAEnShMADQU=
     service: broadlink.send
 
+# UMIDIFICADOR QUARTO
+umidificador_intermitente:
+  alias: "Umidificador intermitente"
+  sequence:
+  - data:
+      host: 192.168.87.8
+      packet:
+      - JgBIAAABKpQSExMTExIUERMTEhMUERMTEjcTNxI4EjgROBI4EjgRORI3EhQSExMSExMSExQRExMSExM3EjcTNxI4EzcROBM3EgANBQ==
+    service: broadlink.send
+
+umidificador_continuo:
+  alias: "Umidificador contínuo"
+  sequence:
+  - data:
+      host: 192.168.87.8
+      packet:
+      - JgBQAAABKJYUERQSExIUERQSExIUERQSEzYSOBI4EjgRORE4EzcRORITFDYSExQSExISExQSExITNxEUFDYROBM3EjgUNhI3EwAFIwABKkoSAA0FAAAAAAAAAAA=
+    service: broadlink.send
+
+umidificador_cronometrar:
+  alias: "Cronometrar Umidificador"
+  sequence:
+  - data:
+      host: 192.168.87.8
+      packet:
+      - JgBYAAABKpUSExMSExMSExMSExMSExMSEzcSOBI4EjcTNxM3EzcSNxMTEhMTEhM3EhMTExITExITNxE5ETgTExM3EjcTNxI4EQAFJAABKkoSAAxeAAEqShEADQU=
+    service: broadlink.send
+
+umidificador_grande_pequeno:
+  alias: "Umidificador Grande Pequeno"
+  sequence:
+  - data:
+      host: 192.168.87.8
+      packet:
+      - JgBYAAABKpUSExMTEhMTEhMTEhMTEhMTEjgROBI4EzcSOBI3EzcSOBI4EhMTExI3EhQSExMSFBISExM3EjgRFBM3ETkSNxI4EgAFJAABKkoSAAxfAAEqShEADQU=
+    service: broadlink.send
+
+umidificador_luz:
+  alias: "Luz do Umidificador"
+  sequence:
+  - data:
+      host: 192.168.87.8
+      packet:
+      - JgBQAAABKZUSFBMSExITExITExITExITEzcSNxM3EzcRORI3EjgTNxEUEzcSExM3ExMSExMSExMSNxIUEjcTExI3EzcSOBI4EQAFJAABKkoSAA0FAAAAAAAAAAA=
+    service: broadlink.send
+
+# Ligar equipamentos de TV e SOM 
+ver_tv_na_sala:
+  alias: "ver TV na Sala"
+  sequence:
+  - service: switch.turn_on
+    data:
+      entity_id:
+        - switch.tv_lg_55
+        - switch.xboom_som
+        - switch.htv
+        - switch.tv_lg_55
+        - switch.xboom_som
+        - switch.htv
+
+parar_tv_na_sala:
+  alias: "parar TV na Sala"
+  sequence:
+  - service: switch.turn_off
+    data:
+      entity_id:
+        - switch.tv_lg_55
+        - switch.xboom_som
+        - switch.htv
+        - switch.tv_lg_55
+        - switch.xboom_som
+        - switch.htv
+
+
 #  _           _
 # | |         | |
 # | |     __ _| |__
@@ -1241,3 +1315,30 @@ reseta_porta_lavanderia:
     data:
       topic: "tele/sonoffBr1/RESULT"
       payload: ' {"RfReceived":{"Data":"54A00E"}} '
+
+
+testa_amazon_polly1:
+  alias: Testando Vozes
+  sequence:
+  - service: tts.google_translate_say
+    data_template:
+      entity_id: media_player.google_home
+      message: Eu sou a voz mais conhecida de todas!
+  - delay:
+      seconds: 4
+  - service: tts.amazon_polly_say
+    data_template:
+      entity_id: media_player.google_home
+      message: Grande coisa se é a mais conhecida, a minha é a mais máscula!
+  - delay:
+      seconds: 4
+  - service: tts.voicerss_say
+    data_template:
+      entity_id: media_player.google_home
+      message: Eu tenho a vóz meia rachada.
+  - delay:
+      seconds: 1
+  - service: tts.watson_tts_say
+    data_template:
+      entity_id: media_player.google_home
+      message: Eu até sou legalzinha, mas tenho um delei bem grande antes de começar a falar.

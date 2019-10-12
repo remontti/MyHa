@@ -160,8 +160,7 @@ config:
 # |_|  \_\___|\___\___/|_|  \__,_|\___|_|
 # https://www.home-assistant.io/components/recorder/
 recorder:
-  purge_keep_days: 3
-#  db_url: !secret maria_db
+  purge_keep_days: 1
 
 #  _    _ _   _
 # | |  | | | | |
@@ -280,6 +279,7 @@ logger:
 # https://www.home-assistant.io/components/tts/
 # https://www.home-assistant.io/components/google_translate/
 # https://www.home-assistant.io/components/voicerss/
+# https://www.home-assistant.io/components/amazon_polly/
 tts:
   - platform: google_translate
     language: 'pt-br'
@@ -293,7 +293,15 @@ tts:
     # http://www.voicerss.org/personel/statistic.aspx
   - platform: watson_tts
     watson_apikey: !secret watson_key
-    voice: pt-BR_IsabelaVoice
+    #voice: pt-BR_IsabelaVoice
+    voice: pt-BR_IsabelaV3Voice
+  - platform: amazon_polly
+    aws_access_key_id: !secret aws_access_key_id
+    aws_secret_access_key: !secret aws_secret_access_key
+    #text_type: ssml
+    voice: Ricardo
+    #voice: Vitoria
+    region_name: sa-east-1
 
 #   _____ _                 _
 #  / ____| |               | |
@@ -421,6 +429,7 @@ sun:
 # https://www.home-assistant.io/components/sql/
 # https://www.home-assistant.io/components/template/
 # https://www.home-assistant.io/components/integration/
+# https://www.home-assistant.io/components/statistics/
 sensor:
   - platform: mqtt
     name: "Suite Temperatura"
@@ -830,8 +839,52 @@ sensor:
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
 
-# Sensores baseado em Templates
+# Captura trafego na WAN do Roteador RB2011
+  - platform: snmp
+    name: 'ether1_wan_in'
+    host: 192.168.10.1
+    baseoid: 1.3.6.1.2.1.31.1.1.1.6.1
+    community: 'public'
+    version: '2c'
+    #scan_interval: 10
+  - platform: snmp
+    name: 'ether1_wan_out'
+    host: 192.168.10.1
+    baseoid: 1.3.6.1.2.1.31.1.1.1.10.1
+    community: 'public'
+    version: '2c'
+    #scan_interval: 10
+  - platform: statistics
+    name: 'WAN In'
+    entity_id: sensor.internet_speed_in
+    max_age:
+      hours: 12
+  - platform: statistics
+    name: 'WAN Out'
+    entity_id: sensor.internet_speed_out
+    max_age:
+      hours: 12
 
+  - platform: mqtt
+    state_topic: 'SensorAgua/contagem'
+    name: 'Vazão de água'
+    icon: "mdi:water-pump"
+    unit_of_measurement: 'litros'
+    value_template: '{{ value_json.vazao }}'
+#  - platform: mqtt
+#    state_topic: 'SensorAgua/contagem'
+#    name: 'Vazão de água (Méd/Min)'
+#    icon: "mdi:water"
+#    unit_of_measurement: 'litros/min'
+#    value_template: '{{ value_json.consumo_agua }}'
+  - platform: mqtt
+    state_topic: 'SensorAgua/contagem'
+    name: "Distancia D'água"
+    icon: "mdi:ruler"
+    unit_of_measurement: 'cm'
+    value_template: '{{ value_json.distancia }}'
+
+# Sensores baseado em Templates
   - platform: template
     sensors:
       despert1_hora:
@@ -984,6 +1037,39 @@ sensor:
             mdi:thumb-up-outline
           {% endif %}
         entity_id: group.all_devices
+
+      status_abastecimento_agua:
+        friendly_name: "Abastecimento de água"
+        value_template: >-
+           {% if states('sensor.caixa_dagua')|float < 95 %}
+             Faltou
+           {% else %}
+             Normal
+           {% endif %}
+        icon_template: >-
+          {% if states('sensor.caixa_dagua')|float < 95 %}
+            mdi:water-pump-off
+          {% else %}
+            mdi:water-pump
+          {% endif %}
+        entity_id: sensor.caixa_dagua
+
+      status_caixa_dagua:
+        friendly_name: "Status da boia da caixa d'água"
+        value_template: >-
+           {% if states('sensor.vazao_de_agua')|float > 0 %}
+             Enchendo
+           {% else %}             
+             Parada
+           {% endif %}
+        icon_template: >-
+          {% if states('sensor.vazao_de_agua')|float > 0 %}
+            mdi:water
+          {% else %}
+            mdi:water-off
+          {% endif %}
+        entity_id: sensor.caixa_dagua
+
 ### TESTE -------------------------------------------
 
 #      precisa_trabalhar:
@@ -1158,27 +1244,74 @@ sensor:
             mdi:power-cycle
           {% endif %}
 
-# PROXIMO PROJETO 
+#Caixa dágua
+      # Desconta o espaco da tampa ate a agua que no meu caso é 28cm
+      nivel_real_variavel:
+        friendly_name_template: "Nível Real Var"
+        unit_of_measurement: 'cm'
+        icon_template: 'mdi:waves'
+        value_template: "{{ ( float(states.sensor.distancia_d_agua.state) - 28 ) }}" 
+
+      # Evita valor negativos
       nivel_real:
         friendly_name_template: "Nível Real"
         unit_of_measurement: 'cm'
-        icon_template: 'mdi:ruler'
-        value_template: "{{ ( float(states.input_number.nivel.state) - 11 ) }}" 
-        # desconta o espaco da tampa ate a agua
+        icon_template: 'mdi:waves'
+        value_template: >-
+          {% if states('sensor.nivel_real_variavel')|float < 1 %}
+            0
+          {% else %}
+            {{ states('sensor.nivel_real_variavel') }}
+          {% endif %}
 
+      # Centimetros Real * 100 / 61cm que é o total qnd vazia
       caixa_dagua:
-        friendly_name_template: "Caixa D'agua"
+        friendly_name_template: "Caixa D'água"
         unit_of_measurement: '%'
         icon_template: 'mdi:waves'
-        value_template: "{{ (100 - ( float(states.sensor.nivel_real.state) * 100 / 87 )) | round(2) }}" 
-        # Cm Real * 100 / 87 Total qnd vazia
+        value_template: "{{ (100 - ( float(states.sensor.nivel_real.state) * 100 / 60 )) | round(2) }}" 
 
+      # Logo se em 61 cm tem 2000 litros, logo 2000/61 = 32,7868852459
       caixa_dagua_litros:
-        friendly_name_template: "Caixa D'agua"
+        friendly_name_template: "Caixa D'água"
         unit_of_measurement: 'L'
         icon_template: 'mdi:cup-water'
-        value_template: "{{  (2000 - ( float(states.sensor.nivel_real.state) * 22.988 )) | round(0) }}" 
-        # se em 87 cm tem 2000 litros, logo 2000/87 = 22,9885
+        value_template: "{{  (2000 - ( float(states.sensor.nivel_real.state) * 32.787 )) | round(0) }}"
+
+      # Gasto com aguas
+      agua_gasta_valor_dia:
+        friendly_name: "Água gasta hoje"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.agua_gasta_dia.state) * float(states.input_text.text_valor_agua.state) ) | round(2) }}"
+      agua_gasta_valor_mes:
+        friendly_name: "Água gasta no mês"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.agua_gasta_mes.state) * float(states.input_text.text_valor_agua.state) ) | round(2) }}"
+      agua_gasta_valor_semana:
+        friendly_name: "Água gasta na semana"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.agua_gasta_semana.state) * float(states.input_text.text_valor_agua.state) ) | round(2) }}"
+      agua_gasta_valor_ano:
+        friendly_name: "Água gasta no ano"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.agua_gasta_ano.state) * float(states.input_text.text_valor_agua.state) ) | round(2) }}"
+
+      internet_speed_in:
+        friendly_name: 'Download'
+        value_template: '{{ ((states.input_number.internet_delta_in.state | float ) / 1000000 ) | round(2) }}'
+        unit_of_measurement: 'Mbps'
+        icon_template: 'mdi:download-network'
+
+      internet_speed_out:
+        friendly_name: 'Upload'
+        value_template: '{{ ((states.input_number.internet_delta_out.state | float ) / 1000000 ) | round(2) }}'
+        unit_of_measurement: 'Mbps'
+        icon_template: 'mdi:upload-network'
+
 
 
 #  _    _ _   _ _ _ _           __  __      _
@@ -1238,23 +1371,19 @@ utility_meter:
   geladeira_tempo_aberta_mes:
     source: sensor.geladeira_tempo_aberta
     cycle: monthly
-
-
-
-#  - platform: snmp
-#    name: Upload
-#    host: 100.100.0.1
-#    community: public
-#    baseoid: 1.3.6.1.2.1.31.1.1.1.10.1
-#    unit_of_measurement: 'bps'
-#  - platform: snmp
-#    name: Download
-#    host: 100.100.0.1
-#    community: public
-#    baseoid: 1.3.6.1.2.1.31.1.1.1.6.1
-#    unit_of_measurement: 'bps'
-#  - platform: template
-
+# Cosumo de Água Vazão
+  agua_gasta_dia:
+    source: sensor.vazao_de_agua
+    cycle: daily
+  agua_gasta_semana:
+    source: sensor.vazao_de_agua
+    cycle: weekly
+  agua_gasta_mes:
+    source: sensor.vazao_de_agua
+    cycle: monthly
+  agua_gasta_ano:
+    source: sensor.vazao_de_agua
+    cycle: yearly
 
 
 # Binary Sensor
@@ -2409,7 +2538,7 @@ switch:
         command_on: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
         command_off: 'JgBgAAABI5MSExA5ERMRFBETERQQFRETETcTEhI4ETgQORI4ETgQORE4ERMRORE4EDkRFBAUEhISExA5EhMQFRETETgSNxE4EgAFEwABJkkTAAw6AAElRhUADDgAASVIEwANBQAAAAAAAAAA'
       htv:
-        friendly_name: "H.TV"
+        friendly_name: "Android TV"
         command_on: 'JgBYAAABJ5ITExITEhMTExITEhMTExI4EjgSOBI4EjgSOBM3EjgTOBITEjgSExM3ExMRFBITExMSOBITEjgSFBI4EjgSOBI4EQAE/gABJksSAAxgAAEmTBEADQU='
         command_off: 'JgBYAAABJ5ITExITEhMTExITEhMTExI4EjgSOBI4EjgSOBM3EjgTOBITEjgSExM3ExMRFBITExMSOBITEjgSFBI4EjgSOBI4EQAE/gABJksSAAxgAAEmTBEADQU='
 
@@ -2423,6 +2552,10 @@ switch:
         friendly_name: "TV do Quarto"
         command_on: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
         command_off: 'JgBIAAABJpETEhMSEhITEhISExETNhQREzYUNhM2FDUUNhM2ExITNhMSEjcTEhISEzUUERQRExEUNRQRFDUUNhMRFDYTNhQ1FAANBQ=='
+      umidificador:
+        friendly_name: "Umidificador"
+        command_on: 'JgBYAAABKpUTExQRExMTEhQRFBIUERQRFDYUNhI4EjgSNxM3EzcSOBITFREVEBUQFREVEBURFBEVNRI4ETgTNxM3EjgSOBI3EwAFIwABLUgVAAxbAAErShMADQU='
+        command_off: 'JgBYAAABKpUTExQRExMTEhQRFBIUERQRFDYUNhI4EjgSNxM3EzcSOBITFREVEBUQFREVEBURFBEVNRI4ETgTNxM3EjgSOBI3EwAFIwABLUgVAAxbAAErShMADQU='
 
   - platform: mqtt
     name: "Sirenes"
@@ -2478,7 +2611,7 @@ switch:
 #    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
   - platform: mqtt
     name: "Geladeira"
     state_topic: "stat/powgeladeira/POWER"
@@ -2489,7 +2622,7 @@ switch:
 #    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
-    retain: true
+#    retain: true
 #  - platform: mqtt
 #    name: "Sonoff Pro CH1"
 #    state_topic: "stat/sonoffPro/POWER1"
@@ -2582,7 +2715,10 @@ input_text:
     icon: mdi:link-variant
   text_valor_kwh:
     name: "Valor kW/h"
-    initial: "0.756"
+    initial: "0.800"
+  text_valor_agua:
+    name: "Valor por litro"
+    initial: "0.007"
 
 # Inputs de data/hora
 #  _____                   _        _       _       _   _
@@ -2654,7 +2790,7 @@ input_number:
   despert1_volume:
     name: Volume
     icon: mdi:volume-high
-    initial: 0.40
+    initial: 0.60
     min: 0
     max: 0.99
     step: 0.10
@@ -2731,16 +2867,27 @@ input_number:
     max: 1
     step: 0.01
     mode: slider
-  #fake sensor
-  nivel:
-    name: 'Ultrassônico HC-SR04'
-    icon: 'mdi:leak'
-    initial: 11
+#  #fake sensor
+#  nivel:
+#    name: 'Ultrassônico HC-SR04'
+#    icon: 'mdi:leak'
+#    initial: 11
+#    min: 0
+#    max: 98
+#    step: 1
+#    mode: slider
+#    # Caixa tem 87 cm, da tampa até chegar na agua tem + 11 cm
+
+  internet_delta_in:
+    initial: 0
     min: 0
-    max: 98
-    step: 1
+    max: 1000000000000
     mode: slider
-    # Caixa tem 87 cm, da tampa até chegar na agua tem + 11 cm
+  internet_delta_out:
+    initial: 0
+    min: 0
+    max: 1000000000000
+    mode: slider
 
 # Inputs boolean (on/off)
 #  _____                   _     _                 _
@@ -2765,9 +2912,15 @@ input_boolean:
     name: Modo Visitante
     initial: off
     icon: mdi:account-key-outline
-  boolean_fake:
-    name: Boolean Fake
-    initial: off
+#  boolean_fake:
+#    name: Boolean Fake
+#    initial: off
+  despert1_tempo:
+    name: Ouvir informações de tempo
+    initial: on
+  despert2_tempo:
+    name: Ouvir informações de tempo
+    initial: on    
 
 # Inputs selects
 #  _____                   _              _           _
@@ -2782,6 +2935,7 @@ input_select:
   despert1_src:
     name: 'Reproduzir em Googlo Home'
     options:
+      - Todos
       - do Quarto
       - da Sala
     icon: mdi:google-home
@@ -2799,17 +2953,49 @@ input_select:
       - BBC
       - DubBase FM
     icon: mdi:music-note
+  despert1_tts:
+    name: 'Qual Voz'
+    options:
+      - Google
+      - Voicerss
+      - Watson
+      - Amazon
+    icon: mdi:voice
   despert2_src:
     name: 'Reproduzir em Googlo Home'
     options:
+      - Todos
       - da Sala
       - do Quarto
     icon: mdi:google-home
+  despert2_audio_str:
+    name: 'Ouvir Rádio Despertador'
+    options:
+      - Não
+      - Classic Rock Florida
+      - Mix FM
+      - Kiss FM Brasil
+      - Blues
+      - Diney
+      - Coca-Cola
+      - Transamerica
+      - BBC
+      - DubBase FM
+    icon: mdi:music-note
+  despert2_tts:
+    name: 'Qual Voz'
+    options:
+      - Google
+      - Voicerss
+      - Watson
+      - Amazon
+    icon: mdi:voice
   src_cast_audio:
     name: 'Ouvir em'
     options:
       - Google Home Quarto
       - Google Home Sala
+      - Todos Google Homes
       - Chromecast Tv Sala
       - Chromecast Tv Quarto
     icon: mdi:google-home
@@ -2856,6 +3042,15 @@ input_select:
       - Quarto
       - Sala
     icon: mdi:google-chrome
+  padrao_tts:
+    name: 'TTS Padrão'
+    options:
+      - Google
+      - Voicerss
+      - Watson
+      - Amazon
+    icon: mdi:voice
+
 
 # Permite que outros componentes do Home Assistant processem fluxos de vídeo e áudio.
 #   __  __
@@ -2910,7 +3105,6 @@ camera:
   - platform: ffmpeg
     name: V380rtsp2
     input: rtsp://192.168.87.18/live/ch00_1
-
 
 # Integração Google Assistant
 #   _____                   _                         _     _              _
@@ -3063,7 +3257,7 @@ climate:
     name: Climatizador
     unique_id: climatizador
     device_code: 1360
-    controller_data: 192.168.87.23
+    controller_data: 192.168.87.8
     temperature_sensor: sensor.suite_temperatura
     humidity_sensor: sensor.suite_umidade
     #power_sensor: switch.climatizador
@@ -3082,7 +3276,7 @@ fan:
     name:  Ventilação quarto
     unique_id: ar_do_aquirto
     device_code: 1999
-    controller_data: 192.168.87.23
+    controller_data: 192.168.87.8
     #power_sensor: switch.climatizador
 
 #  _____  _       _              __ _
@@ -3162,11 +3356,20 @@ intent_script:
         data:
           entity_id: climate.climatizador
           operation_mode: auto
+  ResumoAgua:
+    speech:
+      text: >
+        A caixa d'água está em {{states('sensor.caixa_dagua')}}%, {{states('sensor.caixa_dagua_litros')}} litros. 
+        Hoje foram gasto aproximadamente {{states('sensor.agua_gasta_dia')}} litros, um gasto de R$ {{states('sensor.agua_gasta_valor_dia')}}. 
+        No mês {{states('sensor.agua_gasta_mes')}} litros, R$ {{states('sensor.agua_gasta_valor_mes')}}
   ResumoEnergia:
     speech:
       text: >
-        Sua tensão atual é de {{ states('sensor.voltagem') }} volts. No momento a casa está consumindo {{ states('sensor.watts') }} watts.
-        Hoje você já gastou {{ states('sensor.energia_gasta_dia') }} reais, ontém {{ states('sensor.energia_gasta_ontem') }} reais. E desde o dia primeiro seu gasto é de {{ states('sensor.gasto_mes') }} reais.
+        Tensão atual é {{ states('sensor.voltagem') }} volts. No momento a casa está consumindo {{ states('sensor.watts') }} watts.
+        Hoje você já gastou {{ states('sensor.energia_gasta_dia') }} reais. 
+        E no mês {{ states('sensor.gasto_mes') }} reais.
+#        Sua tensão atual é de {{ states('sensor.voltagem') }} volts. No momento a casa está consumindo {{ states('sensor.watts') }} watts.
+#        Hoje você já gastou {{ states('sensor.energia_gasta_dia') }} reais, ontém {{ states('sensor.energia_gasta_ontem') }} reais. E desde o dia primeiro seu gasto é de {{ states('sensor.gasto_mes') }} reais.
 #        {% if states('sensor.voltagem')|float > 2000 %}
 #          Prepara o dinheiro porque a conta vai ser bem salgada se manter esse consumo.
 #        {% elif states('sensor.voltagem')|float > 800 %}        

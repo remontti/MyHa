@@ -9,7 +9,8 @@ resources:
     url: /local/button-card.js
   - type: module
     url: /local/rr-calendario.js
-  - type: module
+  - type: js
+    url: /local/bignumber-card.js
 title: Remontti House
 views:
   - badges: []
@@ -93,18 +94,108 @@ views:
                 image: /local/imgs/flavia.jpg
                 type: picture-elements
             type: horizontal-stack
-          - entities:
+          - color: '#222222'
+            color_type: label-card
+            name: Segurança da Casa
+            styles:
+              card:
+                - font-size: 12px
+                - height: 37px
+            type: 'custom:button-card'
+          - cards:
               - entity: switch.seguranca_casa
                 icon: 'mdi:shield-home'
-                name: Alarme da Casa
-              - entity: alarm_control_panel.alarme_da_casa
-                icon: 'mdi:shield-lock'
-                name: Status Alarme
-              - label: Desativa notificações
-                type: section
+                name: Alarme
+                show_label: true
+                state:
+                  - color: green
+                    icon: 'mdi:shield-check'
+                    label: Armado
+                    operator: template
+                    styles:
+                      label:
+                        - color: green
+                    value: >
+                      [[[ return states['switch.seguranca_casa'].state === 'on'
+                      ]]]
+                  - color: red
+                    label: Desarmado
+                    operator: default
+                    styles:
+                      label:
+                        - color: red
+                styles:
+                  card:
+                    - height: 80px
+                    - filter: opacity(85%)
+                  label:
+                    - font-size: 13px
+                  name:
+                    - font-weight: 500
+                    - font-size: 15px
+                type: 'custom:button-card'
+              - entity: sensor.alguem_em_casa
+                show_label: true
+                state:
+                  - color: green
+                    label: Sim
+                    operator: template
+                    styles:
+                      label:
+                        - color: green
+                    value: >
+                      [[[ return states['sensor.alguem_em_casa'].state === 'on'
+                      ]]]
+                  - color: '#FF8F00'
+                    label: Ninguém
+                    operator: default
+                    styles:
+                      label:
+                        - color: '#FF8F00'
+                styles:
+                  card:
+                    - height: 80px
+                    - filter: opacity(85%)
+                  label:
+                    - font-size: 13px
+                  name:
+                    - font-weight: 500
+                    - font-size: 15px
+                type: 'custom:button-card'
               - entity: input_boolean.modo_visitante
-            show_header_toggle: false
-            type: entities
+                show_state: true
+                state:
+                  - color: '#FFC400'
+                    styles:
+                      card:
+                        - background-color: '#000'
+                      state:
+                        - color: '#FFC400'
+                    value: 'on'
+                  - color: green
+                    styles:
+                      state:
+                        - color: green
+                    value: 'off'
+                styles:
+                  card:
+                    - height: 80px
+                    - filter: opacity(85%)
+                  name:
+                    - font-weight: 500
+                    - font-size: 15px
+                  state:
+                    - font-size: 13px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - color: '#222222'
+            color_type: label-card
+            name: Atalhos Rápidos
+            styles:
+              card:
+                - font-size: 13px
+                - height: 37px
+            type: 'custom:button-card'
           - cards:
               - entity: switch.tv_quarto
                 icon: 'mdi:television-classic'
@@ -284,103 +375,157 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
             type: horizontal-stack
+          - entities:
+              - entity: sensor.status_abastecimento_agua
+            show_header_toggle: false
+            type: entities
+          - cards:
+              - entity: sensor.caixa_dagua
+                from: left
+                max: 100
+                min: 0
+                scale: 20px
+                severity:
+                  - style: var(--label-badge-green)
+                    value: 70
+                  - style: var(--label-badge-yellow)
+                    value: 90
+                  - style: var(--label-badge-red)
+                    value: 100
+                title: Caixa D'agua
+                type: 'custom:bignumber-card'
+            type: horizontal-stack
         type: vertical-stack
       - cards:
-          - entity: climate.climatizador
-            name: Ar Suíte
-            type: thermostat
+          - cards:
+              - entity: climate.climatizador
+                name: Suíte
+                type: thermostat
+              - entities:
+                  - entity: fan.ventilacao_quarto
+                    type: 'custom:custom-fan-card'
+                  - entity: script.air_quarto_led
+                    name: Lig. / Des. Led
+                  - entity: script.air_quarto_swing
+                    name: Swing
+                type: entities
+            type: vertical-stack
+          - cards:
+              - custom_fields:
+                  gasto: |
+                    [[[
+                      return `<b>${states['sensor.agua_gasta_dia'].state}</b> l`
+                    ]]]
+                  icone: |
+                    [[[
+                      return `<ha-icon icon="mdi:water"
+                        style="width: 60px; height: 60px;">
+                        </ha-icon><br><b>Água Gasta</b></span>
+                        <br>R$ ${entity.state}`
+                    ]]]
+                  vazao: |
+                    [[[
+                      return `<span style="line-height: 25px"><ha-icon
+                        icon="mdi:water-pump"
+                        style="width: 48px; height: 55px;">
+                        </ha-icon><br><span style="font-size: 26px; ">
+                        <b>${states['sensor.vazao_de_agua'].state}</b></span> l/s</span>`
+                    ]]]
+                entity: sensor.agua_gasta_valor_dia
+                layout: icon_state_name2nd
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - height: 110px
+                    - font-size: 15px
+                  custom_fields:
+                    gasto:
+                      - position: absolute
+                      - left: 60%
+                      - top: 5%
+                      - color: '#448AFF'
+                    icone:
+                      - position: absolute
+                      - left: 8%
+                      - top: 3%
+                    vazao:
+                      - position: absolute
+                      - left: 60%
+                      - top: 18%
+                type: 'custom:button-card'
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `<ha-icon icon="mdi:flash-circle"
+                        style="width: 50px; height: 62px;">
+                        </ha-icon><br><b>Energia Gasta</b></span>
+                        <br>R$ ${entity.state}`
+                    ]]]
+                  tensao: |
+                    [[[
+                      return `<b>${states['sensor.voltagem'].state}</b>v`
+                    ]]]
+                  watts: |
+                    [[[
+                      return `<span style="line-height: 25px"><ha-icon
+                        icon="mdi:power-plug"
+                        style="width: 48px; height: 56px;">
+                        </ha-icon><br><span style="font-size: 26px;">
+                        <b>${states['sensor.watts'].state}</b></span>W</span>`
+                    ]]]
+                entity: sensor.energia_gasta_dia
+                layout: icon_state_name2nd
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - height: 110px
+                    - font-size: 15px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 8%
+                      - top: 3%
+                    tensao:
+                      - position: absolute
+                      - left: 66%
+                      - top: 5%
+                      - color: '#FFC107'
+                    watts:
+                      - position: absolute
+                      - left: 60%
+                      - top: 18%
+                type: 'custom:button-card'
+            type: horizontal-stack
           - entities:
-              - entity: fan.ventilacao_quarto
-                type: 'custom:custom-fan-card'
-              - entity: script.air_quarto_led
-                name: Lig. / Des. Led
-              - entity: script.air_quarto_swing
-                name: Swing
-              - label: Ventiladores
-                type: section
               - entity: switch.ventilador
                 name: Ventilador (Mondial)
             type: entities
         type: vertical-stack
-      - custom_fields:
-          hoje: |
-            [[[
-              return `<ha-icon icon="mdi:calendar-today"
-                style="width: 18px; height: 18px; color: #7CB342;">
-                </ha-icon> H <span><b> R$ ${entity.state}</b></span>`
-            ]]]
-          icone: |
-            [[[
-              return `<ha-icon icon="mdi:flash"
-                style="width: 76px; height: 76px;">
-                </ha-icon><br><b>Energia Gasta</b></span>`
-            ]]]
-          mes: |
-            [[[
-              return `<ha-icon
-                icon="mdi:calendar-blank"
-                style="width: 18px; height: 18px; color: #7CB342;">
-                </ha-icon> M<span> <span style="color: var(--text-color-sensor);">
-                <b>R$ ${states['sensor.gasto_mes'].state}</b></span></span>`
-            ]]]
-          ontem: |
-            [[[
-              return `<ha-icon
-                icon="mdi:calendar-outline"
-                style="width: 18px; height: 18px; color: #7CB342;">
-                </ha-icon> O<span><span style="color: var(--text-color-sensor);">
-                <b>R$ ${states['sensor.energia_gasta_ontem'].state}</b></span></span>`
-            ]]]
-          tensao: |
-            [[[
-              return `<span style=" color: var(--text-color-sensor);">
-                 ${states['sensor.voltagem'].state}</span>v`
-            ]]]
-          watts: |
-            [[[
-              return `<span style="line-height: 25px"><ha-icon
-                icon="mdi:power-plug"
-                style="width: 56px; height: 56px; color: var(--secondary-text-color);">
-                </ha-icon><br><span style="font-size: 28px; color: var(--text-color-sensor);">
-                <b>${states['sensor.watts'].state}</b></span>W</span>`
-            ]]]
-        entity: sensor.energia_gasta_dia
-        layout: icon_state_name2nd
-        show_icon: false
-        show_name: false
-        show_state: false
-        styles:
-          card:
-            - height: 110px
-            - font-size: 15px
-          custom_fields:
-            hoje:
-              - position: absolute
-              - left: 32%
-              - top: 10%
-            icone:
-              - position: absolute
-              - left: 5%
-              - top: 3%
-            mes:
-              - position: absolute
-              - left: 32%
-              - top: 70%
-            ontem:
-              - position: absolute
-              - left: 32%
-              - top: 40%
-            tensao:
-              - position: absolute
-              - left: 77%
-              - top: 7%
-              - color: '#64FFDA'
-            watts:
-              - position: absolute
-              - left: 74%
-              - top: 18%
-        type: 'custom:button-card'
       - cards:
+          - entities:
+              - color: '#76FF03'
+                entity: sensor.internet_speed_in
+                show_legend: false
+                show_state: true
+              - color: '#0288D1'
+                entity: sensor.internet_speed_out
+                show_legend: false
+                show_state: true
+            font_size: 80
+            height: 120
+            hours_to_show: 2
+            icon: 'mdi:wan'
+            line_width: 1
+            name: Internet - WAN
+            points_per_hour: 30
+            show:
+              extrema: true
+              fill: true
+            type: 'custom:mini-graph-card'
           - cards:
               - color_thresholds:
                   - color: '#03A9F4'
@@ -391,10 +536,14 @@ views:
                     value: 30
                 entities:
                   - sensor.dark_sky_temperature
+                font_size: 85
+                height: 200
+                hours_to_show: 36
+                line_width: 2
                 name: Externa
                 show:
                   extrema: true
-                  fill: false
+                  fill: true
                 type: 'custom:mini-graph-card'
               - color_thresholds:
                   - color: '#FFAB00'
@@ -405,10 +554,14 @@ views:
                     value: 90
                 entities:
                   - sensor.dark_sky_humidity
+                font_size: 85
+                height: 200
+                hours_to_show: 36
+                line_width: 2
                 name: Externa
                 show:
                   extrema: true
-                  fill: false
+                  fill: true
                 type: 'custom:mini-graph-card'
             type: horizontal-stack
           - cards:
@@ -595,9 +748,6 @@ views:
                       - top: 60%
                 type: 'custom:button-card'
             type: horizontal-stack
-          - entities:
-              - entity: sensor.alguem_em_casa
-            type: entities
         type: vertical-stack
     icon: 'mdi:home-assistant'
     panel: false
@@ -2371,6 +2521,86 @@ views:
                 type: 'custom:button-card'
             type: horizontal-stack
         type: vertical-stack
+      - cards:
+          - color: var(--secondary-text-color)
+            entity: switch.umidificador
+            icon: 'mdi:air-humidifier'
+            layout: icon_name_state2nd
+            show_state: true
+            state:
+              - styles:
+                  card:
+                    - filter: opacity(80%)
+                  state:
+                    - color: '#BF360C'
+                value: 'off'
+              - styles:
+                  state:
+                    - color: var(--secondary-text-color)
+                value: 'on'
+            styles:
+              card:
+                - height: 82px
+                - background-color: '#333'
+              name:
+                - font-weight: 500
+              state:
+                - font-size: 12px
+            type: 'custom:button-card'
+          - cards:
+              - entity: script.umidificador_intermitente
+                icon: 'mdi:fast-forward-10'
+                name: Intermitente
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.umidificador_cronometrar
+                icon: 'mdi:clock-outline'
+                name: Cronometrar
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.umidificador_continuo
+                icon: 'mdi:play'
+                name: Contínuo
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - color_type: blank-card
+                type: 'custom:button-card'
+              - entity: script.umidificador_grande_pequeno
+                icon: 'mdi:swap-vertical'
+                name: Grande/Pequeno
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.umidificador_luz
+                icon: 'mdi:lightbulb-on-outline'
+                name: Luz
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - color_type: blank-card
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
     icon: 'mdi:remote'
     path: remote
     title: Controles IR
@@ -2383,8 +2613,8 @@ views:
           - switch.camwascam_up
           - switch.camwascam_down
           - switch.camwascam_centralizar
-          - script.camwascam_p1
-          - script.camwascam_p2
+          - entity: script.camwascam_p1
+          - entity: script.camwascam_p2
           - script.fotos_garagem
           - script.video_garagem
         type: picture-glance
@@ -2468,6 +2698,8 @@ views:
         show_header_toggle: false
         title: Streaming Player  via URL
         type: entities
+      - entity: media_player.ghomes
+        type: media-control
     icon: 'mdi:play-speed'
     path: multimidia
     title: Multimídia
@@ -2484,11 +2716,12 @@ views:
                     value: 240
                 entities:
                   - sensor.voltagem
+                font_size: 75
                 height: 165
-                hours_to_show: 12
+                hours_to_show: 24
                 line_width: 4
                 name: Tensão
-                points_per_hour: 6
+                points_per_hour: 3
                 show:
                   extrema: true
                   fill: false
@@ -2503,6 +2736,7 @@ views:
                     value: 70
                 entities:
                   - sensor.frequencia
+                font_size: 75
                 hours_to_show: 1
                 show:
                   extrema: true
@@ -2520,10 +2754,11 @@ views:
                     value: 6000
                 entities:
                   - sensor.watts
+                font_size: 85
                 height: 300
-                hours_to_show: 14
+                hours_to_show: 24
                 line_width: 2
-                points_per_hour: 8
+                points_per_hour: 5
                 show:
                   extrema: true
                   fill: false
@@ -2544,10 +2779,11 @@ views:
                     value: 400
                 entities:
                   - sensor.potencia_reativa
-                hours_to_show: 14
+                font_size: 75
+                hours_to_show: 24
                 icon: 'mdi:vector-triangle'
                 line_width: 4
-                points_per_hour: 12
+                points_per_hour: 2
                 show:
                   extrema: true
                   fill: false
@@ -2563,13 +2799,14 @@ views:
                     value: 10000
                 entities:
                   - sensor.potencia_aparente
-                hours_to_show: 14
+                font_size: 75
+                hours_to_show: 24
                 icon: 'mdi:triforce'
                 line_width: 4
-                points_per_hour: 12
+                points_per_hour: 2
                 show:
                   extrema: true
-                  fill: false
+                  fill: true
                   icon_adaptive_color: true
                 type: 'custom:mini-graph-card'
             type: horizontal-stack
@@ -2583,10 +2820,11 @@ views:
                     value: 25
                 entities:
                   - sensor.corrente
+                font_size: 85
                 height: 50
-                hours_to_show: 14
+                hours_to_show: 24
                 line_width: 2
-                points_per_hour: 12
+                points_per_hour: 3
                 show:
                   extrema: true
                   fill: false
@@ -2603,10 +2841,11 @@ views:
                     value: 0.85
                 entities:
                   - sensor.fator_potencia
+                font_size: 85
                 height: 50
-                hours_to_show: 14
+                hours_to_show: 24
                 line_width: 2
-                points_per_hour: 12
+                points_per_hour: 2
                 show:
                   extrema: true
                   fill: false
@@ -2654,6 +2893,9 @@ views:
           - entities:
               - entity: switch.geladeira
                 icon: 'mdi:power-plug'
+                name: Energia
+            show_header_toggle: false
+            title: Geladeira
             type: entities
           - custom_fields:
               hoje: |
@@ -2781,6 +3023,7 @@ views:
                     value: 70
                 entities:
                   - sensor.watts_geladeira
+                font_size: 70
                 hours_to_show: 3
                 name: Watts
                 points_per_hour: 12
@@ -2797,6 +3040,7 @@ views:
                     value: 240
                 entities:
                   - sensor.voltagem_geladeira
+                font_size: 70
                 hours_to_show: 3
                 name: Tensão
                 points_per_hour: 12
@@ -2813,6 +3057,7 @@ views:
                     value: 0.5
                 entities:
                   - sensor.corrente_geladeira
+                font_size: 70
                 hours_to_show: 3
                 name: Corrente
                 points_per_hour: 12
@@ -2826,6 +3071,9 @@ views:
           - entities:
               - entity: switch.maquina_de_lavar
                 icon: 'mdi:power-plug'
+                name: Energia
+            show_header_toggle: false
+            title: Máquina de Lavar
             type: entities
           - custom_fields:
               hoje: |
@@ -2935,6 +3183,7 @@ views:
                     value: 180
                 entities:
                   - sensor.watts_lava_e_seca
+                font_size: 70
                 hours_to_show: 3
                 name: Watts
                 points_per_hour: 12
@@ -2951,6 +3200,7 @@ views:
                     value: 240
                 entities:
                   - sensor.voltagem_lava_e_seca
+                font_size: 70
                 hours_to_show: 3
                 name: Tensão
                 points_per_hour: 12
@@ -2967,6 +3217,7 @@ views:
                     value: 0.5
                 entities:
                   - sensor.corrente_lava_e_seca
+                font_size: 70
                 hours_to_show: 3
                 name: Corrente
                 points_per_hour: 12
@@ -2980,6 +3231,9 @@ views:
           - entities:
               - entity: switch.motor_da_piscina
                 icon: 'mdi:power-plug'
+                name: Energia
+            show_header_toggle: false
+            title: Motor da Piscina
             type: entities
           - custom_fields:
               hoje: |
@@ -3089,6 +3343,7 @@ views:
                     value: 465
                 entities:
                   - sensor.watts_piscina
+                font_size: 70
                 hours_to_show: 3
                 name: Watts
                 points_per_hour: 12
@@ -3105,6 +3360,7 @@ views:
                     value: 240
                 entities:
                   - sensor.voltagem_piscina
+                font_size: 70
                 hours_to_show: 3
                 name: Tensão
                 points_per_hour: 12
@@ -3121,6 +3377,7 @@ views:
                     value: 2
                 entities:
                   - sensor.corrente_piscina
+                font_size: 70
                 hours_to_show: 3
                 name: Corrente
                 points_per_hour: 12
@@ -3158,28 +3415,195 @@ views:
     title: Lavanderia e Cozinha
   - badges: []
     cards:
+      - cards:
+          - entities:
+              - entity: input_text.text_valor_agua
+              - entity: sensor.vazao_de_agua
+                name: Vazão de água (l/seg)
+            show_header_toggle: false
+            title: Consumo de Água
+            type: entities
+          - cards:
+              - entities:
+                  - color: '#18FFFF'
+                    entity: sensor.vazao_de_agua
+                    show_state: true
+                font_size: 80
+                height: 110
+                hours_to_show: 24
+                line_width: 1
+                name: Vazão (24h)
+                points_per_hour: 10
+                show:
+                  extrema: true
+                  fill: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.agua_gasta_dia
+                icon: 'mdi:water'
+                name: Hoje
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 18px
+                  state:
+                    - font-size: 11px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_semana
+                icon: 'mdi:water'
+                name: Semana
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 18px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_mes
+                icon: 'mdi:water'
+                name: Mês
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 18px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_ano
+                icon: 'mdi:water'
+                name: Ano
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 18px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.agua_gasta_valor_dia
+                name: Hoje
+                show_name: false
+                show_state: true
+                styles:
+                  card:
+                    - height: 48px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_valor_semana
+                name: Semana
+                show_name: false
+                show_state: true
+                styles:
+                  card:
+                    - height: 48px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_valor_mes
+                name: Mês
+                show_name: false
+                show_state: true
+                styles:
+                  card:
+                    - height: 48px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_valor_ano
+                name: Ano
+                show_name: false
+                show_state: true
+                styles:
+                  card:
+                    - height: 48px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entities:
+              - entity: sensor.distancia_d_agua
+                name: Sensor Ultrasonico
+              - entity: sensor.nivel_real
+                icon: 'mdi:waves'
+              - entity: sensor.status_caixa_dagua
+              - entity: sensor.status_abastecimento_agua
+            show_header_toggle: false
+            title: Caixa D'água
+            type: entities
+          - cards:
+              - entity: sensor.caixa_dagua_litros
+                max: 2000
+                min: 0
+                name: Litros
+                severity:
+                  green: 1500
+                  red: 500
+                  yellow: 1000
+                type: gauge
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.caixa_dagua
+                max: 100
+                min: 0
+                name: Nível
+                severity:
+                  green: 90
+                  red: 20
+                  yellow: 50
+                type: gauge
+            type: horizontal-stack
+        type: vertical-stack
+    icon: 'mdi:water'
+    path: agua
+    title: Água
+  - badges: []
+    cards:
       - entities:
           - entity: sensor.despert1_despertar
           - entity: input_select.despert1_src
           - entity: input_number.despert1_hora
           - entity: input_number.despert1_minuto
+          - entity: input_select.despert1_tts
           - entity: input_text.despert1_mensagem
+          - entity: input_boolean.despert1_tempo
+            icon: 'mdi:weather-partly-snowy-rainy'
           - entity: input_select.despert1_audio_str
           - entity: input_number.despert1_volume
           - entity: input_boolean.despert1_status
         show_header_toggle: false
-        title: Despertador (Rádio)
+        title: Despertador (A)
         type: entities
       - entities:
           - entity: sensor.despert2_despertar
           - entity: input_select.despert2_src
           - entity: input_number.despert2_hora
           - entity: input_number.despert2_minuto
+          - entity: input_select.despert2_tts
           - entity: input_text.despert2_mensagem
+          - entity: input_boolean.despert2_tempo
+            icon: 'mdi:weather-partly-snowy-rainy'
+          - entity: input_select.despert2_audio_str
           - entity: input_number.despert2_volume
           - entity: input_boolean.despert2_status
         show_header_toggle: false
-        title: Despertador (Simples)
+        title: Despertador (B)
         type: entities
       - entity: sensor.time
         name: Hora
@@ -3246,32 +3670,38 @@ views:
       - cards:
           - cards:
               - entities:
-                  - sensor.suite_temperatura
-                  - sensor.cozinha_temperatura
-                  - sensor.banheiro_suite_temperatura
-                  - sensor.banheiro_social_temperatura
+                  - color: '#76FF03'
+                    entity: sensor.suite_temperatura
+                    show_state: true
+                  - entity: sensor.cozinha_temperatura
+                    show_state: true
+                  - entity: sensor.banheiro_suite_temperatura
+                    show_state: true
+                  - entity: sensor.banheiro_social_temperatura
+                    show_state: true
                 height: 240
                 hours_to_show: 24
-                line_width: 2
+                line_width: 1
                 name: Temperaturas
-                show:
-                  extrema: true
-                  fill: false
+                points_per_hour: 2
                 type: 'custom:mini-graph-card'
             type: horizontal-stack
           - cards:
               - entities:
-                  - sensor.suite_umidade
-                  - sensor.cozinha_umidade
-                  - sensor.banheiro_suite_umidade
-                  - sensor.banheiro_social_umidade
+                  - color: '#76FF03'
+                    entity: sensor.suite_umidade
+                    show_state: true
+                  - entity: sensor.cozinha_umidade
+                    show_state: true
+                  - entity: sensor.banheiro_suite_umidade
+                    show_state: true
+                  - entity: sensor.banheiro_social_umidade
+                    show_state: true
                 height: 240
                 hours_to_show: 24
-                line_width: 2
+                line_width: 1
                 name: Umidades
-                show:
-                  extrema: true
-                  fill: false
+                points_per_hour: 2
                 type: 'custom:mini-graph-card'
             type: horizontal-stack
         type: vertical-stack
@@ -4395,6 +4825,11 @@ views:
   - badges: []
     cards:
       - entities:
+          - entity: input_select.padrao_tts
+        show_header_toggle: false
+        title: TTS Padrão
+        type: entities
+      - entities:
           - label: 'Após (min) o sol se por ligar luzes:'
             type: section
           - entity: input_number.anoitecer
@@ -4463,12 +4898,12 @@ views:
             name: Deseliga se não tiver movinto (2min)
           - label: 'Luz closet liga com movimento:'
             type: section
-          - entity: automation.luz_closet_liga_17_00h_as_08_00_movimento
+          - entity: automation.luz_closet_liga_movimento
             icon: 'mdi:lightbulb-on'
-            name: 'Liga aut. entre 17:00h e 08:00h'
+            name: 'Liga aut. entre 18:00h e 07:30h'
           - entity: automation.luz_closet_desliga_s_movimento_3min
             icon: 'mdi:lightbulb'
-            name: Deseliga se não tiver movinto (3min)
+            name: Deseliga se não tiver movinto (2min)
           - label: 'Luz banheiros desligam se ligada por muito tempo:'
             type: section
           - entity: input_number.tempo_banheiro_suite
@@ -4520,6 +4955,19 @@ views:
           - entity: automation.alerta_maquina_de_lavar_desligada
           - entity: automation.alerta_maquina_de_lavar_lavando
           - entity: automation.alerta_maquina_de_lavar_energia_off
+          - label: 'Monitoramenteo da WAN :'
+            type: section
+          - entity: automation.monitor_wan_in
+          - entity: automation.monitor_wan_out
+          - label: 'Liga/Desliga TV/Som/HTV:'
+            type: section
+          - entity: script.ver_tv_na_sala
+            name: Quero ver TV
+          - entity: script.parar_tv_na_sala
+            name: Chega de ver TV
+          - label: Notificações do status do motor da piscina
+            type: section
+          - entity: automation.monitoramento_status_do_motor_da_piscina
         show_header_toggle: false
         title: Diversos
         type: entities
@@ -4537,6 +4985,7 @@ views:
           - entity: input_boolean.modo_visitante
           - entity: automation.modo_visitante_off
           - entity: automation.modo_visitante_on
+          - entity: automation.desliga_o_modo_visitante_ao_chegar_em_casa
         show_header_toggle: false
         title: Modo Visitante
         type: entities
@@ -4553,6 +5002,18 @@ views:
           - entity: automation.aviso_ao_desligar_energia_da_geladeira
         show_header_toggle: false
         title: Geladeira
+        type: entities
+      - entities:
+          - entity: automation.notifica_home_assistant_foi_iniciado
+          - entity: automation.notifica_caixa_dagua_nivel_95
+          - entity: automation.notifica_caixa_dagua_nivel_25
+          - entity: automation.notifica_que_voltou_a_agua
+          - entity: automation.raspberry_temperatura_elevada
+          - entity: automation.telegram_bot_responde_ping
+          - entity: automation.telegram_bot_responde_agua
+          - entity: automation.telegram_bot_responde_energia
+        show_header_toggle: false
+        title: 'Notificações '
         type: entities
     icon: 'mdi:home-automation'
     path: automacoes
@@ -4609,29 +5070,3 @@ views:
     panel: false
     path: cast
     title: Cast
-  - badges: []
-    cards:
-      - type: markdown
-        content: |-
-          - Automação para caixa d'agua.
-          - Temperatura água da piscina
-        title: Projetos futuros
-      - entities:
-          - label: Simula Sensor
-            type: section
-          - entity: input_number.nivel
-          - label: Nível descontando entre espaço da tampa
-            type: section
-          - entity: sensor.nivel_real
-          - label: Porcentagem
-            type: section
-          - entity: sensor.caixa_dagua
-          - label: Litros aproximadamente
-            type: section
-          - entity: sensor.caixa_dagua_litros
-        type: entities
-      - entities:
-          - entity: input_boolean.boolean_fake
-        type: entities
-    path: testes
-    title: Testes
