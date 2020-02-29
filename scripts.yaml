@@ -215,7 +215,7 @@ video_garagem:
     - service: camera.record
       data:
         entity_id: camera.wanscam_streaming
-        filename: '/tmp/wanscam.mp4'
+        filename: '/config/www/cameras/wanscam.mp4'
         duration: 15
     - service: notify.telegramtodos
       data:
@@ -227,7 +227,7 @@ video_garagem:
         message: ""
         data:
           video:
-            - file: '/tmp/wanscam.mp4'
+            - file: '/config/www/cameras/wanscam.mp4'
               caption: "Video Garagem Interna"
     - service: script.turn_on
       entity_id: script.video_garagem2
@@ -239,7 +239,7 @@ video_garagem2:
     - service: camera.record
       data:
         entity_id: camera.wanscam_streaming
-        filename: '/tmp/wanscam2.mp4'
+        filename: '/config/www/cameras/wanscam2.mp4'
         duration: 15
     - service: notify.telegramtodos
       data:
@@ -251,7 +251,7 @@ video_garagem2:
         message: ""
         data:
           video:
-            - file: '/tmp/wanscam2.mp4'
+            - file: '/config/www/cameras/wanscam2.mp4'
               caption: "Video Garagem Rampa"
     - delay:
         seconds: 3
@@ -266,7 +266,7 @@ video_piscina:
     - service: camera.record
       data:
         entity_id: camera.xiaofang_streaming
-        filename: '/tmp/piscina.mp4'
+        filename: '/config/www/cameras/piscina.mp4'
         duration: 10
     - delay:
         seconds: 20
@@ -275,7 +275,7 @@ video_piscina:
         message: ""
         data:
           video:
-            - file: '/tmp/piscina.mp4'
+            - file: '/config/www/cameras/piscina.mp4'
               caption: "Video Piscina"
 
 video_interna:
@@ -287,7 +287,7 @@ video_interna:
     - service: camera.record
       data:
         entity_id: camera.camera_interna
-        filename: '/tmp/int.mp4'
+        filename: '/config/www/cameras/int.mp4'
         duration: 10
     - delay:
         seconds: 20
@@ -296,7 +296,7 @@ video_interna:
         message: ""
         data:
           video:
-            - file: '/tmp/int.mp4'
+            - file: '/config/www/cameras/int.mp4'
               caption: "Video Interna"
 
 #   _____                       _           _
@@ -316,7 +316,7 @@ fotos_garagem:
 #  - service: camera.snapshot
 #    data:
 #      entity_id: camera.wanscam_360
-#      filename: '/tmp/garagem.jpg'
+#      filename: '/config/www/cameras/garagem.jpg'
 #  - service: shell_command.wascam_posicao_1
   - service: notify.telegramtodos
     data:
@@ -332,7 +332,7 @@ fotos_garagem_dupla:
   - service: camera.snapshot
     data:
       entity_id: camera.wanscam_360
-      filename: '/tmp/snapshot.jpg'
+      filename: '/config/www/cameras/snapshot.jpg'
   - service: shell_command.wascam_posicao_1
   - service: notify.telegramtodos
     data:
@@ -361,13 +361,13 @@ fotos_piscina:
   - service: camera.snapshot
     data:
       entity_id: camera.xiaofang
-      filename: '/tmp/xiaofang.jpg'
+      filename: '/config/www/cameras/xiaofang.jpg'
   - service: notify.telegramtodos
     data:
       message: ""
       data:
         photo:
-          - file: "/tmp/xiaofang.jpg"
+          - file: '/config/www/cameras/xiaofang.jpg'
             caption: 'Area Piscina'
 
 fotos_interna:
@@ -376,13 +376,13 @@ fotos_interna:
   - service: camera.snapshot
     data:
       entity_id: camera.camera_interna
-      filename: '/tmp/interna.jpg'
+      filename: '/config/www/cameras/interna.jpg'
   - service: notify.telegramtodos
     data:
       message: ""
       data:
         photo:
-          - file: "/tmp/interna.jpg"
+          - file: '/config/www/cameras/interna.jpg'
             caption: Interna
 
 fotos_380rtsp1:
@@ -391,13 +391,13 @@ fotos_380rtsp1:
   - service: camera.snapshot
     data:
       entity_id: camera.v380rtsp1
-      filename: '/tmp/v380rtsp1.jpg'
+      filename: '/config/www/cameras/v380rtsp1.jpg'
   - service: notify.telegramtodos
     data:
       message: ""
       data:
         photo:
-          - file: "/tmp/v380rtsp1.jpg"
+          - file: '/config/www/cameras/v380rtsp1.jpg'
             caption: Cam1
 
 fotos_380rtsp2:
@@ -406,13 +406,13 @@ fotos_380rtsp2:
   - service: camera.snapshot
     data:
       entity_id: camera.v380rtsp2
-      filename: '/tmp/v380rtsp2.jpg'
+      filename: '/config/www/cameras/v380rtsp2.jpg'
   - service: notify.telegramtodos
     data:
       message: ""
       data:
         photo:
-          - file: "/tmp/v380rtsp2.jpg"
+          - file: '/config/www/cameras/v380rtsp2.jpg'
             caption: Cam2
 #  _
 # | |
@@ -1342,3 +1342,12 @@ testa_amazon_polly1:
     data_template:
       entity_id: media_player.google_home
       message: Eu até sou legalzinha, mas tenho um delei bem grande antes de começar a falar.
+
+test_alexa:
+  alias: Alexa Teste
+  sequence:
+  - service: notify.alexa_media_echo_dot_de_rudima
+    data:
+      message: "Home Assistant está funcionando."
+      data:
+        type: tts
