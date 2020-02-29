@@ -16,6 +16,9 @@ https://forum.homeassistantbrasil.com.br/
 
 <b>Google Chromecast 2 </b> https://goo.gl/mnPxqm
 
+<b>Echo Dot</b><a href="https://www.amazon.com.br/Echo-Dot-3%C2%AA-Gera%C3%A7%C3%A3o-Cor-Preta/dp/B07PDHSJ1H">Link</a>
+
+
 <b>Kit Rasberry +Case + SD + Fonte</b> https://goo.gl/ywGofg
 
 <b>Sirenes Residencial	3</b> https://goo.gl/8zxd59
