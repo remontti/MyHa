@@ -62,10 +62,6 @@ script.lg55_simplink:
   icon: mdi:link-variant
 script.lg55_exit:
   icon: mdi:exit-to-app
-#device_tracker.google_maps_106566341309199592438:
-#  friendly_name: Rudimar
-#device_tracker.google_maps_118429201781082195315:
-#  friendly_name: Flávia
 sensor.dark_sky_uv_index:
   friendly_name: Índice de UV
 sensor.dark_sky_cloud_coverage:

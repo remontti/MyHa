@@ -29,7 +29,7 @@
       entity_id: >
         {% if is_state("input_select.src_cast_audio", "Google Home Quarto") %} media_player.google_home
         {% elif is_state("input_select.src_cast_audio", "Google Home Sala") %} media_player.google_home_sala
-        {% elif is_state("input_select.src_cast_audio", "Todos Google Homes") %} media_player.ghomes
+        {% elif is_state("input_select.src_cast_audio", "Todos Google Homes") %} media_player.todos_google_homes
         {% elif is_state("input_select.src_cast_audio", "Chromecast Tv Sala") %} media_player.tv_da_sala
         {% elif is_state("input_select.src_cast_audio", "Chromecast Tv Quarto") %} media_player.tv_do_quarto
         {% endif %}
@@ -260,7 +260,7 @@
         {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
         {% endif %}
     data_template:
-      entity_id: media_player.ghomes
+      entity_id: media_player.todos_google_homes
       message: Home pressinado em controle 2.
 
 # SOS ( SEM FUNCAO)
@@ -283,7 +283,7 @@
         {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
         {% endif %}
     data_template:
-      entity_id: media_player.ghomes
+      entity_id: media_player.todos_google_homes
       message: SOS pressinado em controle 2.
 
 #   _____            _             _            __      ____
@@ -603,7 +603,7 @@
           {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
           {% endif %}
       data_template:
-        entity_id: media_player.ghomes
+        entity_id: media_player.todos_google_homes
         message: "Alguém precisa de ajuda no banheiro da suíte! Só pode que esqueceu a toalha ou ficou sem papel!"
 
 #Banheiro Social - 2 Teclas
@@ -700,7 +700,7 @@
           {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
           {% endif %}
       data_template:
-        entity_id: media_player.ghomes
+        entity_id: media_player.todos_google_homes
         message: "Alguém precisa de ajuda no banheiro social! Só pode que esqueceu a toalha ou ficou sem papel!"
 
 # Quarto da Suite - 3 teclas
@@ -995,7 +995,7 @@
           {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
           {% endif %}
       data_template:
-        entity_id: media_player.ghomes
+        entity_id: media_player.todos_google_homes
         message: "Alguém precisa de ajuda no quarto da frente!"
 
 - alias: RF1e2 Interruptor Q Frente On Alarme
@@ -1071,8 +1071,8 @@
   action:
   - service: light.turn_on
     data:
-      entity_id: light.corredor
-      transition: 5
+      entity_id: light.quarto_do_meio
+#      transition: 5
 - alias: RF2 Interruptor Q Meio Off
   initial_state: true
   hide_entity: true
@@ -1088,46 +1088,47 @@
   action:
   - service: light.turn_off
     data:
-      entity_id: light.corredor
-      transition: 5
-- alias: RF3 Interruptor Q Meio On
-  initial_state: true
-  hide_entity: true
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.rf3_interruptor_quarto_meio
-    from: 'off'
-    to: 'on'
-  condition:
-    condition: state
-    entity_id: light.banheiro_social
-    state: 'off'
-  action:
-  - service: light.turn_on
-    data:
-      entity_id: light.banheiro_social
-- alias: RF3 Interruptor Q Meio Off
-  initial_state: true
-  hide_entity: true
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.rf3_interruptor_quarto_meio
-    from: 'off'
-    to: 'on'
-  condition:
-    condition: state
-    entity_id: light.banheiro_social
-    state: 'on'
-  action:
-  - service: light.turn_off
-    data:
-      entity_id: light.banheiro_social
+      entity_id: light.quarto_do_meio
+#      transition: 5
+#- alias: RF3 Interruptor Q Meio On
+#  initial_state: true
+#  hide_entity: true
+#  trigger:
+#  - platform: state
+#    entity_id: binary_sensor.rf3_interruptor_quarto_meio
+#    from: 'off'
+#    to: 'on'
+#  condition:
+#    condition: state
+#    entity_id: light.banheiro_social
+#    state: 'off'
+#  action:
+#  - service: light.turn_on
+#    data:
+#      entity_id: light.banheiro_social
+#- alias: RF3 Interruptor Q Meio Off
+#  initial_state: true
+#  hide_entity: true
+#  trigger:
+#  - platform: state
+#    entity_id: binary_sensor.rf3_interruptor_quarto_meio
+#    from: 'off'
+#    to: 'on'
+#  condition:
+#    condition: state
+#    entity_id: light.banheiro_social
+#    state: 'on'
+#  action:
+#  - service: light.turn_off
+#    data:
+#      entity_id: light.banheiro_social
 - alias: RF1e3 Interruptor Q Meio On
   initial_state: true
   hide_entity: true
   trigger:
   - platform: state
-    entity_id: binary_sensor.rf1e3_interruptor_quarto_meio
+#    entity_id: binary_sensor.rf1e3_interruptor_quarto_meio
+    entity_id: binary_sensor.rf3_interruptor_quarto_meio
     from: 'off'
     to: 'on'
   condition:
@@ -1153,33 +1154,33 @@
           {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
           {% endif %}
       data_template:
-        entity_id: media_player.ghomes
+        entity_id: media_player.todos_google_homes
         message: "Alguém precisa de ajuda no quarto do meio!"
 
-- alias: RF1e2 Interruptor Q Meio On Alarme
-  initial_state: true
-  hide_entity: true
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.rf1e2_interruptor_quarto_meio
-    from: 'off'
-    to: 'on'
-  action:
-  - service: switch.turn_on
-    data:
-      entity_id: switch.seguranca_casa
-- alias: RF2e3 Interruptor Q Meio Off Alarme
-  initial_state: true
-  hide_entity: true
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.rf2e3_interruptor_quarto_meio
-    from: 'off'
-    to: 'on'
-  action:
-  - service: switch.turn_off
-    data:
-      entity_id: switch.seguranca_casa
+#- alias: RF1e2 Interruptor Q Meio On Alarme
+#  initial_state: true
+#  hide_entity: true
+#  trigger:
+#  - platform: state
+#    entity_id: binary_sensor.rf1e2_interruptor_quarto_meio
+#    from: 'off'
+#    to: 'on'
+#  action:
+#  - service: switch.turn_on
+#    data:
+#      entity_id: switch.seguranca_casa
+#- alias: RF2e3 Interruptor Q Meio Off Alarme
+#  initial_state: true
+#  hide_entity: true
+#  trigger:
+#  - platform: state
+#    entity_id: binary_sensor.rf2e3_interruptor_quarto_meio
+#    from: 'off'
+#    to: 'on'
+#  action:
+#  - service: switch.turn_off
+#    data:
+#      entity_id: switch.seguranca_casa
 
 #  _                 _   _       _   _  __
 # | |               | \ | |     | | (_)/ _|
@@ -1264,7 +1265,7 @@
     to: 'off'
   condition:
   - condition: state
-    entity_id: sensor.alguem_em_casa
+    entity_id: sensor.donos_em_casa
     state: 'off'
   action:
   - service: notify.telegramtodos
@@ -1308,7 +1309,7 @@
     to: 'off'
   condition:
   - condition: state
-    entity_id: sensor.alguem_em_casa
+    entity_id: sensor.donos_em_casa
     state: 'off'
   action:
   - service: notify.telegramtodos
@@ -1325,7 +1326,7 @@
 #
 # Fala temperatura externa ao ligar o climatizador
 - alias: "Falar Temperatura ao ligar Ar"
-  initial_state: true
+  initial_state: false
   trigger:
   - platform: state
     entity_id: climate.climatizador
@@ -1388,7 +1389,7 @@
       entity_id: >
         {% if is_state("input_select.despert1_src", "do Quarto") %} media_player.google_home
         {% elif is_state("input_select.despert1_src", "da Sala") %} media_player.google_home_sala
-        {% elif is_state("input_select.despert1_src", "Todos") %} media_player.ghomes
+        {% elif is_state("input_select.despert1_src", "Todos") %} media_player.todos_google_homes
         {% endif %}
       volume_level: '{{  states.input_number.despert1_volume.state  }}'
   - service_template: >
@@ -1401,7 +1402,7 @@
       entity_id: >
         {% if is_state("input_select.despert1_src", "do Quarto") %} media_player.google_home
         {% elif is_state("input_select.despert1_src", "da Sala") %} media_player.google_home_sala
-        {% elif is_state("input_select.despert1_src", "Todos") %} media_player.ghomes
+        {% elif is_state("input_select.despert1_src", "Todos") %} media_player.todos_google_homes
         {% endif %}
       message: >
         {{ states.input_text.despert1_mensagem.state }}. São {{ states.input_number.despert1_hora.state | int }} horas
@@ -1422,7 +1423,7 @@
        entity_id: >
         {% if is_state("input_select.despert1_src", "do Quarto") %} media_player.google_home
         {% elif is_state("input_select.despert1_src", "da Sala") %} media_player.google_home_sala
-        {% elif is_state("input_select.despert1_src", "Todos") %} media_player.ghomes
+        {% elif is_state("input_select.despert1_src", "Todos") %} media_player.todos_google_homes
         {% endif %}
        media_content_id: >
         {% if is_state("input_select.despert1_audio_str", "Classic Rock Florida") %} http://us4.internet-radio.com:8258/stream
@@ -1453,7 +1454,7 @@
       entity_id: >
         {% if is_state("input_select.despert2_src", "do Quarto") %} media_player.google_home
         {% elif is_state("input_select.despert2_src", "da Sala") %} media_player.google_home_sala
-        {% elif is_state("input_select.despert2_src", "Todos") %} media_player.ghomes
+        {% elif is_state("input_select.despert2_src", "Todos") %} media_player.todos_google_homes
         {% endif %}
       volume_level: '{{  states.input_number.despert2_volume.state  }}'
   - service_template: >
@@ -1466,7 +1467,7 @@
       entity_id: >
         {% if is_state("input_select.despert2_src", "do Quarto") %} media_player.google_home
         {% elif is_state("input_select.despert2_src", "da Sala") %} media_player.google_home_sala
-        {% elif is_state("input_select.despert2_src", "Todos") %} media_player.ghomes
+        {% elif is_state("input_select.despert2_src", "Todos") %} media_player.todos_google_homes
         {% endif %}
       message: >
         {{ states.input_text.despert2_mensagem.state }}. São {{ states.input_number.despert2_hora.state | int }} horas
@@ -1487,7 +1488,7 @@
        entity_id: >
         {% if is_state("input_select.despert2_src", "do Quarto") %} media_player.google_home
         {% elif is_state("input_select.despert2_src", "da Sala") %} media_player.google_home_sala
-        {% elif is_state("input_select.despert2_src", "Todos") %} media_player.ghomes
+        {% elif is_state("input_select.despert2_src", "Todos") %} media_player.todos_google_homes
         {% endif %}
        media_content_id: >
         {% if is_state("input_select.despert2_audio_str", "Classic Rock Florida") %} http://us4.internet-radio.com:8258/stream
@@ -1592,7 +1593,7 @@
     to: 'on'
   condition:
   - condition: state
-    entity_id: sensor.alguem_em_casa
+    entity_id: sensor.donos_em_casa
     state: 'off'
   - condition: state
     entity_id: alarm_control_panel.alarme_da_casa
@@ -1620,7 +1621,7 @@
     to: 'on'
   condition:
   - condition: state
-    entity_id: sensor.alguem_em_casa
+    entity_id: sensor.donos_em_casa
     state: 'off'
   - condition: state
     entity_id: alarm_control_panel.alarme_da_casa
@@ -1659,7 +1660,7 @@
     to: 'on'
   condition:
   - condition: state
-    entity_id: sensor.alguem_em_casa
+    entity_id: sensor.donos_em_casa
     state: 'off'
   - condition: state
     entity_id: alarm_control_panel.alarme_da_casa
@@ -1992,7 +1993,7 @@
   # Mensagem de audio nos google homes
   - service: media_player.volume_set
     data_template:
-      entity_id: media_player.ghomes
+      entity_id: media_player.todos_google_homes
       volume_level: 0.9
   - service_template: >
         {% if is_state("input_select.padrao_tts", "Google") %} tts.google_translate_say
@@ -2050,7 +2051,7 @@
         {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
         {% endif %}
     data_template:
-      entity_id: media_player.ghomes
+      entity_id: media_player.todos_google_homes
       message: "Oops! Desliguei a luz do banheiro da suíte, estava à {{ states.input_number.tempo_banheiro_suite.state | int }} minutos ligada!"
 
 # Banheiro social
@@ -2074,7 +2075,7 @@
         {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
         {% endif %}
     data_template:
-      entity_id: media_player.ghomes
+      entity_id: media_player.todos_google_homes
       message: "Oops! Desliguei a luz do banheiro Social, estava à {{ states.input_number.tempo_banheiro_social.state | int }} minutos ligada!"
 
 # Banheiro lavabo
@@ -2098,7 +2099,7 @@
         {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
         {% endif %}
     data_template:
-      entity_id: media_player.ghomes
+      entity_id: media_player.todos_google_homes
       message: "Oops! Desliguei a luz do lavabo, estava à {{ states.input_number.tempo_banheiro_lavabo.state | int }} minutos ligada!"
 
 #  _                  _____                        _
@@ -2109,7 +2110,7 @@
 # |______\__,_/___|  \_____\___/|_|  |_|  \___|\__,_|\___/|_|
 
 # Liga se tiver movimento
-- alias: Luz Corredor Liga - 17:00h as 07:30 (Movimento)
+- alias: Luz Corredor Liga (Movimento)
   initial_state: true
   trigger:
     platform: state
@@ -2118,8 +2119,8 @@
     to: 'on'
   condition:
     condition: time
-    after: '17:00:00'
-    before: '08:00:00'
+    after: '18:30:00'
+    before: '07:00:00'
   action:
     service: light.turn_on
     entity_id: light.corredor
@@ -2133,10 +2134,10 @@
     to: 'off'
     for:
       minutes: 2
-  condition:
-    condition: time
-    after: '17:00:00'
-    before: '08:30:00'
+#  condition:
+#    condition: time
+#    after: '17:00:00'
+#    before: '08:30:00'
   action:
     service: light.turn_off
     entity_id: light.corredor
@@ -2158,8 +2159,8 @@
     to: 'on'
   condition:
     condition: time
-    after: '18:00:00'
-    before: '07:30:00'
+    after: '19:00:00'
+    before: '06:30:00'
   action:
     service: light.turn_on
     entity_id: light.closet
@@ -2450,7 +2451,7 @@
       entity_id:
         - light.postes
 
-# Movimento na garagem a noite sem ninguem em casa ------------------$$$----------- AJUSTAR PARA Q sensor.alguem_em_casa seja off, ou on menos de 2 min
+# Movimento na garagem a noite sem ninguem em casa ----------------------------- PROVIDENCIAR ATRASO NA CHEGADA $$$$$$
 - alias: "Garagem Movimento - Liga Luzez após sol se por"
   initial_state: true
   trigger:
@@ -2460,17 +2461,14 @@
     to: 'on'
   condition:
   - condition: state
-    entity_id: sensor.alguem_em_casa
+    entity_id: sensor.donos_em_casa
     state: 'off'
   - condition: state
     entity_id: sun.sun
     state: below_horizon
-#  - condition: time
-#    after: '18:30:00'
-#    before: '21:00:00'
-# Não repetir nos proximos 5min (tempo de atualizar q ja cheguei em casa)
+# Não repetir nos proximos 10min (tempo de atualizar q ja cheguei em casa)
   - condition: template
-    value_template: '{{ as_timestamp(now()) - as_timestamp(states.automation.liga_luzez_int_ao_abrir_porta_garagem_noite.attributes.last_triggered) | int > 600 }}'
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.automation.garagem_movimento_liga_luzez_apos_sol_se_por.attributes.last_triggered) | int > 600 }}'
   action:
   - service: light.turn_on
     data:
@@ -2478,7 +2476,7 @@
         - light.postes
         - light.garagem
 
-# Liga luzes internas ao abrir porta da garagem ------------------$$$----------- AJUSTAR PARA Q sensor.alguem_em_casa seja off, ou on menos de 2 min
+# Liga luzes internas ao abrir porta da garagem () ------------------------------>>>>$$$$$$$$$$$$$$$$$$$$
 - alias: Liga Luzez int. ao abrir porta garagem (Noite)
   initial_state: true
   trigger:
@@ -2487,32 +2485,17 @@
     from: 'off'
     to: 'on'
   condition:
-  - condition: state
-    entity_id: sensor.alguem_em_casa
-    state: 'off'
+#  - condition: state
+#    entity_id: sensor.donos_em_casa
+#    state: 'off'
   - condition: state
     entity_id: alarm_control_panel.alarme_da_casa
     state: disarmed
   - condition: state
     entity_id: sun.sun
     state: below_horizon
-#  condition:
-#    condition: and
-#    conditions:
-#      - condition: state
-#        entity_id: alarm_control_panel.alarme_da_casa
-#        state: disarmed
-#      - condition: state
-#        entity_id: sun.sun
-#        state: below_horizon
-#      - condition: or
-#        conditions:
-#          - condition: state
-#            entity_id: group.all_devices
-#            state: 'not_home'
-#          - condition: state
-#            entity_id: group.all_devices
-#            state: 'unknown'
+  - condition: template
+    value_template: '{{ as_timestamp(now()) - as_timestamp(states.automation.liga_luzez_int_ao_abrir_porta_garagem_noite.attributes.last_triggered) | int > 21600 }}'
   action:
   - service: light.turn_on
     data:
@@ -2542,7 +2525,7 @@
   action:
   - service: notify.telegramtodos
     data:
-      message: 'À máquina terminou o processo de lavagem! Sua roupra está limpinha, você já pode estende-la!'
+      message: 'À máquina terminou o processo de lavagem! Sua roupra está ponta!'
   - service_template: >
         {% if is_state("input_select.padrao_tts", "Google") %} tts.google_translate_say
         {% elif is_state("input_select.padrao_tts", "Voicerss") %} tts.voicerss_say
@@ -2550,8 +2533,8 @@
         {% elif is_state("input_select.padrao_tts", "Amazon") %} tts.amazon_polly_say
         {% endif %}
     data_template:
-      entity_id: media_player.ghomes
-      message: 'À máquina terminou o processo de lavagem! Sua roupra está limpinha, você já pode estende-la!'
+      entity_id: media_player.todos_google_homes
+      message: 'À máquina terminou o processo de lavagem! Sua roupra está pronta!'
 
 - alias: 'Alerta Maquina de lavar (Lavando)'
   initial_state: true
@@ -2625,7 +2608,7 @@
   initial_state: true
   trigger:
     platform: state
-    entity_id:  sensor.alguem_em_casa
+    entity_id:  sensor.donos_em_casa
     to: 'on'
   action:
   - service: input_boolean.turn_off
@@ -2821,7 +2804,47 @@
           E no mês <code>R$ {{ states('sensor.gasto_mes') }}</code>.
           
 
+- alias: 'Sem energia'
+  trigger:
+    platform: template
+    value_template: "{{states('sensor.watts')|float < 1 }}"
+  action:
+    service: notify.telegramrudi
+    data_template:
+      message: "Faltou energia! Equipamentos alimentado pelo nobreak."
 
+- alias: 'Sem energia por mais de 1h'
+  trigger:
+    platform: template
+    value_template: "{{states('sensor.watts')|float < 1 }}"
+    for:
+      hours: 1
+  action:
+    service: notify.telegramtodos
+    data_template:
+      message: "Sem energia por mais de 1h"
+
+- alias: 'Sem energia por mais de 2h'
+  trigger:
+    platform: template
+    value_template: "{{states('sensor.watts')|float < 1 }}"
+    for:
+      hours: 2
+  action:
+    service: notify.telegramtodos
+    data_template:
+      message: "Sem energia por mais de 2h"
+
+- alias: 'Sem energia por mais de 3h'
+  trigger:
+    platform: template
+    value_template: "{{states('sensor.watts')|float < 1 }}"
+    for:
+      hours: 3
+  action:
+    service: notify.telegramtodos
+    data_template:
+      message: "Sem energia por mais de 3h, recomendo fazer o procedimento de desligamento para evitar corromper o SD."
 
 #  _           _
 # | |         | |
@@ -2890,7 +2913,7 @@
 #    to: 'on'
 #  condition:
 #  - condition: state
-#    entity_id: sensor.alguem_em_casa
+#    entity_id: sensor.donos_em_casa
 #    state: 'on'
 #  - condition: state
 #    entity_id: alarm_control_panel.alarme_da_casa
@@ -2931,3 +2954,37 @@
 #          - condition: state
 #            entity_id: group.all_devices
 #            state: 'unknown'
+
+- alias: 'Automacao hora e dia'
+  initial_state: true
+  trigger:
+    platform: time
+    at: '00:00:00'
+  condition:
+    condition: template
+    value_template: '{{ now().strftime("%d") == "22" }}'
+  action:
+    - service: notify.telegramrudi
+      data_template:
+        message: >
+          Gasto no mês <code>R$ {{ states('sensor.gasto_mes') }}</code>.
+
+#  action:
+#    service: media_player.turn_off
+#    data_template:
+#      entity_id: >
+#          {% if is_state("input_select.radio_player", "Mansarda") %}
+#            media_player.bed_2
+#          {%-elif is_state("input_select.radio_player", "Doccia") %}
+#            media_player.bed_3
+#          {%-elif is_state("input_select.radio_player", "Bed") %}
+#            media_player.bed
+#          {%-elif is_state("input_select.radio_player", "Bath") %}
+#            media_player.bath
+#          {%-elif is_state("input_select.radio_player", "Salotto") %}
+#            media_player.salotto
+#          {%-elif is_state("input_select.radio_player", "Salotto Video") %}
+#            media_player.salotto_video
+#          {% else %}
+#            none
+#          {% endif %}

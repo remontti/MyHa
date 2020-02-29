@@ -36,15 +36,15 @@ homeassistant:
 # | |  |  __/ |  \__ \ (_) | | | |
 # |_|   \___|_|  |___/\___/|_| |_|
 # https://www.home-assistant.io/components/person/
-person:
-  - name: Rudi
-    id: 3nfr8CXF
-    device_trackers:
-      - device_tracker.life360_rudimar_remontti
-  - name: Flavia
-    id: nucnTHSG
-    device_trackers:
-      - device_tracker.life360_flavia_cristine_vendruscolo
+#person:
+#  - name: Rudi
+#    id: 3nfr8CXF
+#    device_trackers:
+#      - device_tracker.life360_rudimar_remontti
+#  - name: Flavia
+#    id: nucnTHSG
+#    device_trackers:
+#      - device_tracker.life360_flavia_cristine_vendruscolo
 
 # Zonas de localização
 #  ______
@@ -96,9 +96,8 @@ scene:
 # |_|  |_|  \___/|_| |_|\__\___|_| |_|\__,_|
 # https://www.home-assistant.io/components/frontend/
 frontend:
-  themes: !include themes.yaml
-#  themes: !include_dir_merge_named themes/
-
+#  themes: !include themes.yaml
+  themes: !include_dir_merge_named themes
 
 #  _____                 _   _____  __
 # |  __ \               | | |_   _|/ _|
@@ -149,18 +148,6 @@ config:
 #    "updater",
 #    "zeroconf"
 #]
-
-
-# Armazenamento do Banco de dados
-#  _____                        _
-# |  __ \                      | |
-# | |__) |___  ___ ___  _ __ __| | ___ _ __
-# |  _  // _ \/ __/ _ \| '__/ _` |/ _ \ '__|
-# | | \ \  __/ (_| (_) | | | (_| |  __/ |
-# |_|  \_\___|\___\___/|_|  \__,_|\___|_|
-# https://www.home-assistant.io/components/recorder/
-recorder:
-  purge_keep_days: 1
 
 #  _    _ _   _
 # | |  | | | | |
@@ -215,6 +202,26 @@ discovery:
 # https://www.home-assistant.io/components/conversation/
 conversation:
 
+# Armazenamento do Banco de dados
+#  _____                        _
+# |  __ \                      | |
+# | |__) |___  ___ ___  _ __ __| | ___ _ __
+# |  _  // _ \/ __/ _ \| '__/ _` |/ _ \ '__|
+# | | \ \  __/ (_| (_) | | | (_| |  __/ |
+# |_|  \_\___|\___\___/|_|  \__,_|\___|_|
+# https://www.home-assistant.io/components/recorder/
+
+recorder:
+  purge_keep_days: 1
+  db_url: !secret maria_db
+  exclude:
+    domains:
+      - automation
+    entities:
+      - sun.sun
+      - sensor.last_boot
+      - sensor.date
+
 # Suporte para rastrear mudanças de estado ao longo do tempo
 #  _    _ _     _
 # | |  | (_)   | |
@@ -225,18 +232,26 @@ conversation:
 #                             |___/
 # https://www.home-assistant.io/components/history/
 history:
-#  include:
-#    domains:
-#      - sensor
-#      - switch
-#      - light
-#      - binary_sensor
-#  exclude:
-#    entities:
-#      - sensor.last_boot
-#      - sensor.date
-#      - sensor.time
-#      - binary_sensor.trabalhando
+  exclude:
+    entities:
+      - sensor.last_boot
+      - sensor.date
+      - sensor.distancia_d_agua
+      - sensor.nivel_real
+#      - sensor.vazao_de_agua
+    domains:
+      - sun
+      - binary_sensor
+      - media_player
+      - device_tracker
+      - input_boolean
+      - input_datetime
+      - input_number
+      - input_select
+      - input_text
+      - camera
+      - script
+#      - automation
 
 # Ver todos os eventos em um diário de bordo
 #  _                 _                 _
@@ -247,13 +262,26 @@ history:
 #              |___/
 # https://www.home-assistant.io/components/logbook/
 logbook:
-#  include:
-#    domains:
-#      - switch
-#      - light
-#      - script
+  exclude:
+    entities:
+      - sensor.last_boot
+      - sensor.date
+      - sensor.distancia_d_agua
+      - sensor.nivel_real
+      - sensor.vazao_de_agua
+    domains:
+      - sun
+      - binary_sensor
+      - media_player
+      - device_tracker
+      - input_boolean
+      - input_datetime
+      - input_number
+      - input_select
+      - input_text
+      - camera
+      - script
 #      - automation
-
 
 # Nível de registro de atividades
 #  _
@@ -264,7 +292,7 @@ logbook:
 #              |___/ |___/
 # https://www.home-assistant.io/components/logger/
 logger:
-#  default: warning
+  default: warning
 #  logs:
 #    asyncio: debug
 
@@ -286,22 +314,22 @@ tts:
     cache: true
     cache_dir: /tmp/tts
     time_memory: 300
-  - platform: voicerss
-    api_key: !secret voicerss_key
-    language: 'pt-br'
-    format: '44khz_16bit_stereo'
-    # http://www.voicerss.org/personel/statistic.aspx
-  - platform: watson_tts
-    watson_apikey: !secret watson_key
-    #voice: pt-BR_IsabelaVoice
-    voice: pt-BR_IsabelaV3Voice
-  - platform: amazon_polly
-    aws_access_key_id: !secret aws_access_key_id
-    aws_secret_access_key: !secret aws_secret_access_key
-    #text_type: ssml
-    voice: Ricardo
-    #voice: Vitoria
-    region_name: sa-east-1
+#  - platform: voicerss
+#    api_key: !secret voicerss_key
+#    language: 'pt-br'
+#    format: '44khz_16bit_stereo'
+#    # http://www.voicerss.org/personel/statistic.aspx
+#  - platform: watson_tts
+#    watson_apikey: !secret watson_key
+#    #voice: pt-BR_IsabelaVoice
+#    voice: pt-BR_IsabelaV3Voice
+#  - platform: amazon_polly
+#    aws_access_key_id: !secret aws_access_key_id
+#    aws_secret_access_key: !secret aws_secret_access_key
+#    #text_type: ssml
+#    voice: Ricardo
+#    #voice: Vitoria
+#    region_name: sa-east-1
 
 #   _____ _                 _
 #  / ____| |               | |
@@ -359,6 +387,19 @@ media_player:
 #    device_code: 1100
 #    controller_data: 192.168.87.7
 #    power_sensor: binary_sensor.tv_power
+#  - platform: webostv
+#    host: 192.168.0.142
+#    name: "Televisao 32"
+#    filename: webostv.conf
+#    timeout: 5
+#    turn_on_action:
+#      service: persistent_notification.create
+#      data:
+#        message: "Turn on action"
+#    customize:
+#      sources:
+#        - youtube
+#        - netflix
 
 
 # Casts (google home mini/chrome cast)
@@ -515,13 +556,13 @@ sensor:
 #  - platform: filesize
 #    file_paths:
 #      - /config/home-assistant_v2.db
-#  - platform: sql
-#    db_url: !secret maria_db
-#    queries:
-#      - name: DB size
-#        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 1) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
-#        column: 'value'
-#        unit_of_measurement: MB
+  - platform: sql
+    db_url: !secret maria_db
+    queries:
+      - name: DB size
+        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 1) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
+        column: 'value'
+        unit_of_measurement: MB
   - platform: uptime
     name: Uptime
   - platform: version
@@ -728,6 +769,92 @@ sensor:
     unit_prefix: k
     round: 3
 
+# powpurificadorR2 Purificador
+  - platform: mqtt
+    name: "Watts Purificador"
+    state_topic: "tele/powpurificador/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:power-plug
+  - platform: mqtt
+    name: "Voltagem Purificador"
+    state_topic: "tele/powpurificador/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:flash
+  - platform: mqtt
+    name: "Corrente Purificador"
+    state_topic: "tele/powpurificador/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:current-ac
+  - platform: mqtt
+    name: "Consumo Diário Purificador"
+    state_topic: "tele/powpurificador/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo dia Anterior Purificador"
+    state_topic: "tele/powpurificador/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo Total Purificador"
+    state_topic: "tele/powpurificador/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: integration
+    source: sensor.watts_purificador
+    name: Energia Gasta Purificador
+    unit_prefix: k
+    round: 3
+
+# powcervejaR2 Cervejeira
+  - platform: mqtt
+    name: "Watts Cervejeira"
+    state_topic: "tele/powcerveja/SENSOR"
+    value_template: "{{ value_json.ENERGY.Power }}"
+    unit_of_measurement: "W"
+    icon: mdi:power-plug
+  - platform: mqtt
+    name: "Voltagem Cervejeira"
+    state_topic: "tele/powcerveja/SENSOR"
+    value_template: "{{ value_json.ENERGY.Voltage }}"
+    unit_of_measurement: "V"
+    icon: mdi:flash
+  - platform: mqtt
+    name: "Corrente Cervejeira"
+    state_topic: "tele/powcerveja/SENSOR"
+    value_template: "{{ value_json.ENERGY.Current }}"
+    unit_of_measurement: "A"
+    icon: mdi:current-ac
+  - platform: mqtt
+    name: "Consumo Diário Cervejeira"
+    state_topic: "tele/powcerveja/SENSOR"
+    value_template: "{{ value_json.ENERGY.Today }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo dia Anterior Cervejeira"
+    state_topic: "tele/powcerveja/SENSOR"
+    value_template: "{{ value_json.ENERGY.Yesterday }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: mqtt
+    name: "Consumo Total Cervejeira"
+    state_topic: "tele/powcerveja/SENSOR"
+    value_template: "{{ value_json.ENERGY.Total }}"
+    unit_of_measurement: "kWh"
+    icon: mdi:counter
+  - platform: integration
+    source: sensor.watts_cervejeira
+    name: Energia Gasta Cervejeira
+    unit_prefix: k
+    round: 3
+
 # powpiscinaR2 Piscina
   - platform: mqtt
     name: "Watts Piscina"
@@ -831,13 +958,13 @@ sensor:
     type: count
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
-  - platform: history_stats
-    name: Geladeira tempo aberta
-    entity_id: binary_sensor.porta_geladeira
-    state: 'on'
-    type: time
-    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
-    end: '{{ now() }}'
+#  - platform: history_stats
+#    name: Geladeira tempo aberta
+#    entity_id: binary_sensor.porta_geladeira
+#    state: 'on'
+#    type: time
+#    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+#    end: '{{ now() }}'
 
 # Captura trafego na WAN do Roteador RB2011
   - platform: snmp
@@ -1018,8 +1145,8 @@ sensor:
            {% endif %}
         entity_id: device_tracker.life360_flavia_cristine_vendruscolo
 
-      alguem_em_casa:
-        friendly_name: "Alguém em casa"
+      donos_em_casa:
+        friendly_name: "Donos em casa"
         value_template: >-
            {% if is_state('group.all_devices', 'not_home') %}
              off
@@ -1182,6 +1309,48 @@ sensor:
         icon_template: mdi:cash-usd-outline
         unit_of_measurement: 'R$'
         value_template: "{{ ( float(states.sensor.kwh_gasto_mes_ge.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      # Purificador
+      energia_gasta_dia_pur:
+        friendly_name: "Purificador gastou hoje"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_diario_purificador.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_ontem_pur:
+        friendly_name: "Purificador gastou otem"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_dia_anterior_purificador.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_semana_pur:
+        friendly_name: "Purificador Gastou na semana"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_semana_pur.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_mes_pur:
+        friendly_name: "Purificador Gastou no mês"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_mes_pur.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      # Cervejeira
+      energia_gasta_dia_ceva:
+        friendly_name: "Cervejeira gastou hoje"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_diario_cervejeira.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_ontem_ceva:
+        friendly_name: "Cervejeira gastou otem"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.consumo_dia_anterior_cervejeira.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_semana_ceva:
+        friendly_name: "Cervejeira Gastou na semana"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_semana_ceva.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
+      energia_gasta_mes_ceva:
+        friendly_name: "Cervejeira Gastou no mês"
+        icon_template: mdi:cash-usd-outline
+        unit_of_measurement: 'R$'
+        value_template: "{{ ( float(states.sensor.kwh_gasto_mes_ceva.state) * float(states.input_text.text_valor_kwh.state) ) | round(2) }}"
 
 #      yr_previsao:
 #        friendly_name: "Clima"
@@ -1239,6 +1408,44 @@ sensor:
           {% if is_state('switch.geladeira', 'off') %}
             mdi:power-off
           {% elif states('sensor.watts_geladeira')|float > 4 %}
+            mdi:power
+          {% else %}
+            mdi:power-cycle
+          {% endif %}
+
+      cervejeira_status:
+        friendly_name_template: Status Cervejeira
+        value_template: >-
+          {% if is_state('switch.cervejeira', 'off') %}
+            Desligada
+          {% elif states('sensor.watts_cervejeira')|float > 4 %}
+            Ligada
+          {% else %}
+            Standby
+          {% endif %}
+        icon_template: >-
+          {% if is_state('switch.cervejeira', 'off') %}
+            mdi:power-off
+          {% elif states('sensor.watts_cervejeira')|float > 4 %}
+            mdi:power
+          {% else %}
+            mdi:power-cycle
+          {% endif %}
+
+      purificador_status:
+        friendly_name_template: Status Purificador
+        value_template: >-
+          {% if is_state('switch.purificador', 'off') %}
+            Desligada
+          {% elif states('sensor.watts_purificador')|float > 4 %}
+            Ligada
+          {% else %}
+            Standby
+          {% endif %}
+        icon_template: >-
+          {% if is_state('switch.purificador', 'off') %}
+            mdi:power-off
+          {% elif states('sensor.watts_purificador')|float > 4 %}
             mdi:power
           {% else %}
             mdi:power-cycle
@@ -1364,13 +1571,27 @@ utility_meter:
   kwh_gasto_mes_ge:
     source: sensor.energia_gasta_geladeira
     cycle: monthly
+# Purificador
+  kwh_gasto_semana_pur:
+    source: sensor.energia_gasta_purificador
+    cycle: weekly
+  kwh_gasto_mes_pur:
+    source: sensor.energia_gasta_purificador
+    cycle: monthly
+# Cervejeira
+  kwh_gasto_semana_ceva:
+    source: sensor.energia_gasta_cervejeira
+    cycle: weekly
+  kwh_gasto_mes_ceva:
+    source: sensor.energia_gasta_cervejeira
+    cycle: monthly
 #Porta Geladeira
   geladeira_x_aberta_mes:
     source: sensor.geladeira_vezes_aberta
     cycle: monthly
-  geladeira_tempo_aberta_mes:
-    source: sensor.geladeira_tempo_aberta
-    cycle: monthly
+#  geladeira_tempo_aberta_mes:
+#    source: sensor.geladeira_tempo_aberta
+#    cycle: monthly
 # Cosumo de Água Vazão
   agua_gasta_dia:
     source: sensor.vazao_de_agua
@@ -1676,7 +1897,7 @@ binary_sensor:
     name: Ext Piscina
     state_topic: 'tele/sonoffBr1/RESULT'
     value_template: >-
-      {% if value_json.RfReceived.Data == 'EE4986' %}
+      {% if value_json.RfReceived.Data == '4AFE66' %}
         {{'ON'}}
       {% else %}
         {{states('binary_sensor.ext_piscina') | upper}}
@@ -2622,6 +2843,27 @@ switch:
 #    qos: 1
     payload_on: "ON"
     payload_off: "OFF"
+  - platform: mqtt
+    name: "Purificador"
+    state_topic: "stat/powpurificador/POWER"
+    command_topic: "cmnd/powpurificador/power"
+    availability_topic: "tele/powpurificador/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+#    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+  - platform: mqtt
+    name: "Cervejeira"
+    state_topic: "stat/powcerveja/POWER"
+    command_topic: "cmnd/powcerveja/power"
+    availability_topic: "tele/powcerveja/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+#    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+#    retain: true
 #    retain: true
 #  - platform: mqtt
 #    name: "Sonoff Pro CH1"
@@ -2957,9 +3199,9 @@ input_select:
     name: 'Qual Voz'
     options:
       - Google
-      - Voicerss
-      - Watson
-      - Amazon
+#      - Voicerss
+#      - Watson
+#      - Amazon
     icon: mdi:voice
   despert2_src:
     name: 'Reproduzir em Googlo Home'
@@ -2986,9 +3228,9 @@ input_select:
     name: 'Qual Voz'
     options:
       - Google
-      - Voicerss
-      - Watson
-      - Amazon
+#      - Voicerss
+#      - Watson
+#      - Amazon
     icon: mdi:voice
   src_cast_audio:
     name: 'Ouvir em'
@@ -3046,9 +3288,9 @@ input_select:
     name: 'TTS Padrão'
     options:
       - Google
-      - Voicerss
-      - Watson
-      - Amazon
+#      - Voicerss
+#      - Watson
+#      - Amazon
     icon: mdi:voice
 
 
@@ -3118,7 +3360,8 @@ camera:
 # https://www.home-assistant.io/components/google_assistant/
 google_assistant:
   project_id: !secret google_project
-  api_key: !secret google_key
+  service_account: !include google_service_account.json
+  report_state: true
   exposed_domains:
     - switch
     - light
@@ -3138,10 +3381,64 @@ google_assistant:
 #  \_____|\___/ \___/ \__, |_|\___|  \_____\__,_|_|\___|_| |_|\__,_|\__,_|_|
 #                     |___/
 # https://www.home-assistant.io/components/calendar.google/
-google:
-  client_id: !secret google_client_id
-  client_secret: !secret google_client_secret
+#google:
+#  client_id: !secret google_client_id
+#  client_secret: !secret google_client_secret
 
+#           _                
+#     /\   | |               
+#    /  \  | | _____  ____ _ 
+#   / /\ \ | |/ _ \ \/ / _` |
+#  / ____ \| |  __/>  < (_| |
+# /_/    \_\_|\___/_/\_\__,_|
+# https://www.home-assistant.io/integrations/alexa/
+# https://www.home-assistant.io/integrations/alexa.smart_home/
+
+alexa:
+  smart_home:
+    endpoint: https://api.amazonalexa.com/v3/events
+    client_id: !secret alexa_client_id
+    client_secret: !secret alexa_client_secret
+    filter:
+      exclude_entities:
+        - switch.camwascam_centralizar
+        - switch.camwascam_up
+        - switch.camwascam_down
+        - switch.camwascam_dir
+        - switch.camwascam_esq
+      exclude_domains:
+        - script
+        - automation
+        - input_text
+        - input_number
+        - input_datetime
+        - input_select
+        - sensor
+        - binary_sensor
+    entity_config:
+      light.yeelight_color1_7c49eb15924b:
+        name: "Abajur"
+      group.all_lights:
+        name: Todas as Luzes
+        display_categories: LIGHT
+      alarm_control_panel.alarme_da_casa:
+        name: Segurança
+      climate.climatizador:
+        name: Ar do Quarto
+        display_categories: THERMOSTAT
+      climate.ar_da_sala:
+        name: Ar da Sala
+        display_categories: THERMOSTAT
+      climate.ar_da_cozinha:
+        name: Ar da Cozinha
+        display_categories: THERMOSTAT
+
+# https://github.com/custom-components/alexa_media_player
+alexa_media:
+  accounts:
+    - email: !secret amazon_user
+      password: !secret amazon_password
+      url: amazon.com
 
 # Telegram BOT
 #  _______   _                                  _           _
@@ -3154,20 +3451,25 @@ google:
 #                   |___/                 |______|
 # https://www.home-assistant.io/components/polling/
 telegram_bot:
-  platform: polling
-  api_key: !secret tg_api
-  parse_mode: html
-  allowed_chat_ids:
-    - !secret tg_chat_idr
-    - !secret tg_chat_idf
-  # Parse mode HTMN
-  # <b>bold</b>, <strong>bold</strong>
-  # <i>italic</i>, <em>italic</em>
-  # <a href="http://www.example.com/">inline URL</a>
-  # <a href="tg://user?id=123456789">inline mention of a user</a>
-  # <code>inline fixed-width code</code>
-  # <pre>pre-formatted fixed-width code block</pre>
-
+#  - platform: polling
+#    api_key: !secret tg_api
+#    parse_mode: html
+#    allowed_chat_ids:
+#      - !secret tg_chat_idr
+#      - !secret tg_chat_idf
+    # Parse mode HTMN
+    # <b>bold</b>, <strong>bold</strong>
+    # <i>italic</i>, <em>italic</em>
+    # <a href="http://www.example.com/">inline URL</a>
+    # <a href="tg://user?id=123456789">inline mention of a user</a>
+    # <code>inline fixed-width code</code>
+    # <pre>pre-formatted fixed-width code block</pre>
+  - platform: broadcast
+    api_key: !secret tg_api
+    parse_mode: html
+    allowed_chat_ids:
+      - !secret tg_chat_idr
+      - !secret tg_chat_idf
 
 # Notificações
 #  _   _       _   _  __
@@ -3254,11 +3556,27 @@ smartir:
 # https://www.home-assistant.io/components/climate/
 climate:
   - platform: smartir
-    name: Climatizador
+    name: "Climatizador"
     unique_id: climatizador
     device_code: 1360
     controller_data: 192.168.87.8
     temperature_sensor: sensor.suite_temperatura
+    humidity_sensor: sensor.suite_umidade
+    #power_sensor: switch.climatizador
+  - platform: smartir
+    name: "Ar da Cozinha"
+    unique_id: arcozinha
+    device_code: 1702
+    controller_data: 192.168.87.7
+    temperature_sensor: sensor.cozinha_temperatura
+    humidity_sensor: sensor.suite_umidade
+    #power_sensor: switch.climatizador
+  - platform: smartir
+    name: "Ar da Sala"
+    unique_id: arsala
+    device_code: 1702
+    controller_data: 192.168.87.7
+    temperature_sensor: sensor.cozinha_temperatura
     humidity_sensor: sensor.suite_umidade
     #power_sensor: switch.climatizador
 
@@ -3389,10 +3707,21 @@ intent_script:
     speech:
       text: >
         No momento você está consumindo {{ states('sensor.watts') }} watts.
+  LitrosCaixaDagua:
+    speech:
+      text: >
+        Sua caixa dágua tem {{ states('sensor.caixa_dagua_litros') }} litros.
+  NivelCaixaDagua:
+    speech:
+      text: >
+        Nível da caixa dágua é de {{ states('sensor.caixa_dagua') }} %.
+  GastosAgua:
+    speech:
+      text: >
+        Hoje você já gastou {{ states('sensor.agua_gasta_dia') }} litros, e neste mês {{ states('sensor.agua_gasta_mes') }} litros.
 
 
-
-
+ 
 
 # Shell Commands
 #   _____ _          _ _    _____                                          _
@@ -3464,7 +3793,7 @@ life360:
 #  accounts:
 #    - username: !secret gmail_user
 #      password: !secret life_360_pass
-  driving_speed: 25
+  driving_speed: 18
   interval_seconds: 10
   max_gps_accuracy: 200
   max_update_wait:
