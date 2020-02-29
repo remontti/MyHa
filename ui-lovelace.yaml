@@ -1,0 +1,5425 @@
+resources:
+  - type: module
+    url: /local/mini-graph-card-bundle.js?v=0.9.2
+  - type: js
+    url: /local/custom-fan-card.js
+  - type: module
+    url: /local/button-card.js?v=3.1.1
+  - type: js
+    url: /local/bignumber-card.js
+title: Remontti House
+views:
+  - badges: []
+    cards:
+      - cards:
+          - cards:
+              - elements:
+                  - entity: sensor.status_rudi
+                    style:
+                      color: white
+                      font-size: 1.5em
+                      font-weight: bold
+                      left: 27%
+                      top: 90%
+                    type: state-label
+                  - entity: sensor.bateria_rudi
+                    style:
+                      color: white
+                      font-weight: bold
+                      left: 83%
+                      top: 87%
+                    type: state-label
+                  - entity: sensor.bateria_status_rudi
+                    style:
+                      left: 69%
+                      top: 86%
+                    type: state-icon
+                  - entity: sensor.bateria_status_rudi
+                    style:
+                      color: white
+                      font-size: 11px
+                      left: 78%
+                      top: 96%
+                    type: state-label
+                  - entity: script.cade_o_rudi
+                    icon: 'mdi:map-marker-radius'
+                    style:
+                      color: white
+                      font-size: 1.4em
+                      left: 8%
+                      top: 7%
+                    type: state-icon
+                image: /local/imgs/rudi.jpg
+                type: picture-elements
+              - elements:
+                  - entity: sensor.status_flavia
+                    style:
+                      color: white
+                      font-size: 1.5em
+                      font-weight: bold
+                      left: 27%
+                      top: 90%
+                    type: state-label
+                  - entity: sensor.bateria_flavia
+                    style:
+                      color: white
+                      font-weight: bold
+                      left: 82%
+                      top: 87%
+                    type: state-label
+                  - entity: sensor.bateria_status_flavia
+                    style:
+                      left: 69%
+                      top: 86%
+                    type: state-icon
+                  - entity: sensor.bateria_status_flavia
+                    style:
+                      color: white
+                      font-size: 11px
+                      left: 80%
+                      top: 96%
+                    type: state-label
+                  - entity: script.cade_a_flavia
+                    icon: 'mdi:map-marker-radius'
+                    style:
+                      color: white
+                      font-size: 1.4em
+                      left: 8%
+                      top: 7%
+                    type: state-icon
+                image: /local/imgs/flavia.jpg
+                type: picture-elements
+            type: horizontal-stack
+          - color: '#222222'
+            color_type: label-card
+            name: Segurança da Casa
+            styles:
+              card:
+                - font-size: 12px
+                - height: 37px
+            type: 'custom:button-card'
+          - cards:
+              - entity: switch.seguranca_casa
+                icon: 'mdi:shield-home'
+                name: Alarme
+                show_label: true
+                state:
+                  - color: green
+                    icon: 'mdi:shield-check'
+                    label: Armado
+                    operator: template
+                    styles:
+                      label:
+                        - color: green
+                    value: >
+                      [[[ return states['switch.seguranca_casa'].state === 'on'
+                      ]]]
+                  - color: red
+                    label: Desarmado
+                    operator: default
+                    styles:
+                      label:
+                        - color: red
+                styles:
+                  card:
+                    - height: 80px
+                    - filter: opacity(85%)
+                  label:
+                    - font-size: 13px
+                  name:
+                    - font-weight: 500
+                    - font-size: 15px
+                type: 'custom:button-card'
+              - entity: sensor.donos_em_casa
+                name: Donos em casa?
+                show_label: true
+                state:
+                  - color: green
+                    label: Sim
+                    operator: template
+                    styles:
+                      label:
+                        - color: green
+                    value: >
+                      [[[ return states['sensor.donos_em_casa'].state === 'on'
+                      ]]]
+                  - color: '#FF8F00'
+                    label: Não
+                    operator: default
+                    styles:
+                      label:
+                        - color: '#FF8F00'
+                styles:
+                  card:
+                    - height: 80px
+                    - filter: opacity(85%)
+                  label:
+                    - font-size: 13px
+                  name:
+                    - font-weight: 500
+                    - font-size: 15px
+                type: 'custom:button-card'
+              - entity: input_boolean.modo_visitante
+                show_state: true
+                state:
+                  - color: '#FFC400'
+                    styles:
+                      card:
+                        - background-color: '#B71C1C'
+                      state:
+                        - color: '#FFC400'
+                    value: 'on'
+                  - color: green
+                    styles:
+                      state:
+                        - color: green
+                    value: 'off'
+                styles:
+                  card:
+                    - height: 80px
+                    - filter: opacity(85%)
+                  name:
+                    - font-weight: 500
+                    - font-size: 15px
+                  state:
+                    - font-size: 13px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - color: '#222222'
+            color_type: label-card
+            name: Atalhos Rápidos
+            styles:
+              card:
+                - font-size: 13px
+                - height: 37px
+            type: 'custom:button-card'
+          - cards:
+              - entity: switch.tv_quarto
+                icon: 'mdi:television-classic'
+                name: Tv Suíte
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 75px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - color: '#4DD0E1'
+                entity: switch.pressurizador
+                icon: 'mdi:engine-outline'
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: '#4DD0E1'
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 75px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - color: '#FFB74D'
+                entity: group.all_lights
+                icon: 'mdi:lightbulb-on-outline'
+                name: Todas Luzes
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 75px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: switch.tv_lg_55
+                icon: 'mdi:television-classic'
+                name: Tv Sala
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 75px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: switch.xboom_som
+                icon: 'mdi:speaker'
+                name: Xboom
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 75px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: switch.htv
+                icon: 'mdi:android'
+                name: Android TV
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 75px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: climate.ar_da_cozinha
+                icon: 'mdi:air-filter'
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: green
+                    value: auto
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 11px
+                type: 'custom:button-card'
+              - entity: climate.climatizador
+                icon: 'mdi:air-filter'
+                name: Ar da Suíte
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: green
+                    value: auto
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 11px
+                type: 'custom:button-card'
+              - color: '#4DD0E1'
+                entity: climate.ar_da_sala
+                icon: 'mdi:air-filter'
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: '#4DD0E1'
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 75px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - entity: climate.climatizador
+                name: Suíte
+                type: thermostat
+              - entities:
+                  - entity: fan.ventilacao_quarto
+                    type: 'custom:custom-fan-card'
+                  - entity: script.air_quarto_led
+                    name: Lig. / Des. Led
+                  - entity: script.air_quarto_swing
+                    name: Swing
+                type: entities
+            type: vertical-stack
+          - cards:
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `<ha-icon icon="mdi:waves"
+                        style="width: 60px; height: 60px;">
+                        </ha-icon><br><b>Nível Caixa</b></span>
+                        <br>${entity.state} %`
+                    ]]]
+                  vazao: |
+                    [[[
+                     return `<ha-icon icon="mdi:water-pump"
+                        style="width: 60px; height: 60px;">
+                        </ha-icon><br><b>Litros/seg</b></span>
+                        <br>${states['sensor.vazao_de_agua'].state} l/s`
+                        
+                    ]]]
+                entity: sensor.caixa_dagua
+                layout: icon_state_name2nd
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - height: 110px
+                    - font-size: 15px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 8%
+                      - top: 3%
+                    vazao:
+                      - position: absolute
+                      - left: 60%
+                      - top: 3%
+                type: 'custom:button-card'
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `<ha-icon icon="mdi:flash-circle"
+                        style="width: 50px; height: 62px;">
+                        </ha-icon><br><b>Energia Gasta</b></span>
+                        <br>R$ ${entity.state}`
+                    ]]]
+                  tensao: |
+                    [[[
+                      return `<b>${states['sensor.voltagem'].state}</b>v`
+                    ]]]
+                  watts: |
+                    [[[
+                      return `<span style="line-height: 25px"><ha-icon
+                        icon="mdi:power-plug"
+                        style="width: 48px; height: 56px;">
+                        </ha-icon><br><span style="font-size: 26px;">
+                        <b>${states['sensor.watts'].state}</b></span>W</span>`
+                    ]]]
+                entity: sensor.energia_gasta_dia
+                layout: icon_state_name2nd
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - height: 110px
+                    - font-size: 15px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 8%
+                      - top: 3%
+                    tensao:
+                      - position: absolute
+                      - left: 66%
+                      - top: 5%
+                      - color: '#FFC107'
+                    watts:
+                      - position: absolute
+                      - left: 60%
+                      - top: 18%
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - entities:
+              - entity: switch.ventilador
+                name: Ventilador (Mondial)
+            type: entities
+        type: vertical-stack
+      - cards:
+          - entities:
+              - color: '#76FF03'
+                entity: sensor.internet_speed_in
+                index: 0
+                show_legend: false
+                show_state: true
+              - color: '#0288D1'
+                entity: sensor.internet_speed_out
+                index: 1
+                show_legend: false
+                show_state: true
+            font_size: 80
+            height: 120
+            hours_to_show: 2
+            icon: 'mdi:wan'
+            line_width: 1
+            name: Internet - WAN
+            points_per_hour: 30
+            show:
+              extrema: true
+              fill: true
+            type: 'custom:mini-graph-card'
+          - cards:
+              - color_thresholds:
+                  - color: '#E65100'
+                    value: 30
+                  - color: '#4CAF50'
+                    value: 20
+                  - color: '#03A9F4'
+                    value: 10
+                entities:
+                  - entity: sensor.dark_sky_temperature
+                    index: 0
+                font_size: 85
+                height: 200
+                hours_to_show: 36
+                line_width: 2
+                name: Externa
+                show:
+                  extrema: true
+                  fill: true
+                type: 'custom:mini-graph-card'
+              - color_thresholds:
+                  - color: '#29B6F6'
+                    value: 90
+                  - color: '#00897B'
+                    value: 70
+                  - color: '#FFAB00'
+                    value: 50
+                entities:
+                  - entity: sensor.dark_sky_humidity
+                    index: 0
+                font_size: 85
+                height: 200
+                hours_to_show: 36
+                line_width: 2
+                name: Externa
+                show:
+                  extrema: true
+                  fill: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `
+                        <ha-icon icon="mdi:hotel"
+                        style="width: 48px; height: 48px;">
+                        </ha-icon><br>Quarto Suíte</span>`
+                    ]]]
+                  temp: |
+                    [[[
+                      return `<ha-icon
+                        icon="mdi:thermometer"
+                        style="width: 24px; height: 24px; color: #B2FF59;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
+                    ]]]
+                  umidade: |
+                    [[[
+                      return `<ha-icon
+                        icon="mdi:water-percent"
+                        style="width: 24px; height: 24px; color: #42A5F5;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.suite_umidade'].state}%</b></span></span>`
+                    ]]]
+                entity: sensor.suite_temperatura
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - padding: 20%
+                    - font-size: 18px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 5%
+                      - top: 10%
+                      - font-size: 14px
+                    temp:
+                      - position: absolute
+                      - left: 45%
+                      - top: 20%
+                    umidade:
+                      - position: absolute
+                      - left: 45%
+                      - top: 60%
+                type: 'custom:button-card'
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `
+                        <ha-icon icon="mdi:microwave"
+                        style="width: 48px; height: 48px;">
+                        </ha-icon><br>Cozinha</span>`
+                    ]]]
+                  temp: |
+                    [[[
+                      return `<ha-icon
+                        icon="mdi:thermometer"
+                        style="width: 24px; height: 24px; color: #B2FF59;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
+                    ]]]
+                  umidade: |
+                    [[[
+                      return `<ha-icon
+                        icon="mdi:water-percent"
+                        style="width: 24px; height: 24px; color: #42A5F5;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.cozinha_umidade'].state}%</b></span></span>`
+                    ]]]
+                entity: sensor.cozinha_temperatura
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - padding: 20%
+                    - font-size: 18px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 6%
+                      - top: 10%
+                      - font-size: 14px
+                    temp:
+                      - position: absolute
+                      - left: 45%
+                      - top: 20%
+                    umidade:
+                      - position: absolute
+                      - left: 45%
+                      - top: 60%
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `
+                        <ha-icon icon="mdi:shower-head"
+                        style="width: 48px; height: 48px;">
+                        </ha-icon><br>Banh. Suíte</span>`
+                    ]]]
+                  temp: |
+                    [[[
+                      return `<ha-icon
+                        icon="mdi:thermometer"
+                        style="width: 24px; height: 24px; color: #B2FF59;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
+                    ]]]
+                  umidade: |
+                    [[[
+                      return `<ha-icon
+                        icon="mdi:water-percent"
+                        style="width: 24px; height: 24px; color: #42A5F5;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.banheiro_suite_umidade'].state}%</b></span></span>`
+                    ]]]
+                entity: sensor.banheiro_suite_temperatura
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - padding: 20%
+                    - font-size: 18px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 5%
+                      - top: 10%
+                      - font-size: 14px
+                    temp:
+                      - position: absolute
+                      - left: 45%
+                      - top: 20%
+                    umidade:
+                      - position: absolute
+                      - left: 45%
+                      - top: 60%
+                type: 'custom:button-card'
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `
+                        <ha-icon icon="mdi:shower-head"
+                        style="width: 48px; height: 48px;">
+                        </ha-icon><br>Banh. Social</span>`
+                    ]]]
+                  temp: |
+                    [[[
+                      return `<ha-icon
+                        icon="mdi:thermometer"
+                        style="width: 24px; height: 24px; color: #B2FF59;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
+                    ]]]
+                  umidade: |
+                    [[[
+                      return `<ha-icon
+                        icon="mdi:water-percent"
+                        style="width: 24px; height: 24px; color: #42A5F5;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.banheiro_social_umidade'].state}%</b></span></span>`
+                    ]]]
+                entity: sensor.banheiro_social_temperatura
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - padding: 20%
+                    - font-size: 18px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 2%
+                      - top: 10%
+                      - font-size: 14px
+                    temp:
+                      - position: absolute
+                      - left: 45%
+                      - top: 20%
+                    umidade:
+                      - position: absolute
+                      - left: 45%
+                      - top: 60%
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+    icon: 'mdi:home-assistant'
+    panel: false
+    path: home
+    title: Home Inicial
+  - badges: []
+    cards:
+      - cards:
+          - cards:
+              - entity: light.quarto_da_suite
+                icon: 'mdi:hotel'
+                name: Suíte
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 11px
+                type: 'custom:button-card'
+              - entity: light.yeelight_color1_7c49eb15924b
+                icon: 'mdi:floor-lamp'
+                name: Abajur
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.closet
+                icon: 'mdi:tshirt-crew'
+                name: Closet
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.cozinha
+                icon: 'mdi:fridge-outline'
+                name: Cozinha
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.pia
+                icon: 'mdi:silverware-fork-knife'
+                name: Pia
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.bebedor
+                icon: 'mdi:cup-water'
+                name: Bebedor
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - custom_fields:
+                  notification: >
+                    [[[ return
+                    Math.floor(states['sensor.banheiro_da_suite_contador'].state
+                    ) ]]]
+                entity: light.banheiro_da_suite
+                icon: 'mdi:toilet'
+                name: Suíte
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  custom_fields:
+                    notification:
+                      - background-color: |
+                          [[[
+                            if (states['sensor.banheiro_da_suite_contador'].state == 0)
+                              return "var(--primary-color)";
+                              return "var(--primary-color)";
+                          ]]]
+                      - border-radius: 50%
+                      - position: absolute
+                      - left: 70%
+                      - top: 7%
+                      - height: 18px
+                      - width: 18px
+                      - font-size: 10px
+                      - line-height: 20px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - custom_fields:
+                  notification: >
+                    [[[ return
+                    Math.floor(states['sensor.banheiro_social_contador'].state )
+                    ]]]
+                entity: light.banheiro_social
+                icon: 'mdi:toilet'
+                name: Social
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  custom_fields:
+                    notification:
+                      - background-color: |
+                          [[[
+                            if (states['sensor.banheiro_social_contador'].state == 0)
+                              return "var(--primary-color)";
+                              return "var(--primary-color)";
+                          ]]]
+                      - border-radius: 50%
+                      - position: absolute
+                      - left: 70%
+                      - top: 7%
+                      - height: 18px
+                      - width: 18px
+                      - font-size: 10px
+                      - line-height: 20px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - custom_fields:
+                  notification: >
+                    [[[ return Math.floor(states['sensor.lavabo_contador'].state
+                    ) ]]]
+                entity: light.lavabo
+                icon: 'mdi:toilet'
+                name: Lavabo
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  custom_fields:
+                    notification:
+                      - background-color: |
+                          [[[
+                            if (states['sensor.lavabo_contador'].state == 0)
+                              return "var(--primary-color)";
+                              return "var(--primary-color)";
+                          ]]]
+                      - border-radius: 50%
+                      - position: absolute
+                      - left: 70%
+                      - top: 7%
+                      - height: 18px
+                      - width: 18px
+                      - font-size: 10px
+                      - line-height: 20px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - entity: light.pendentes
+                icon: 'mdi:ceiling-light'
+                name: Pendentes
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.trilhos
+                icon: 'mdi:track-light'
+                name: Trilhos
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.mesa_de_jantar
+                icon: 'mdi:ceiling-light'
+                name: Jantar
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.lustre
+                icon: 'mdi:ceiling-light'
+                name: Lustre
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.sala_game
+                icon: 'mdi:sofa'
+                name: Social
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - custom_fields:
+                  notification: >
+                    [[[ return
+                    Math.floor(states['sensor.corredor_contador'].state ) ]]]
+                entity: light.corredor
+                icon: 'mdi:wall-sconce-flat'
+                name: Corredor
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  custom_fields:
+                    notification:
+                      - background-color: |
+                          [[[
+                            if (states['sensor.corredor_contador'].state == 0)
+                              return "var(--primary-color)";
+                              return "var(--primary-color)";
+                          ]]]
+                      - border-radius: 50%
+                      - position: absolute
+                      - left: 70%
+                      - top: 7%
+                      - height: 18px
+                      - width: 18px
+                      - font-size: 10px
+                      - line-height: 20px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.sala_de_estar
+                icon: 'mdi:wall-sconce-flat'
+                name: Spots Estar
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.central
+                icon: 'mdi:wall-sconce-flat'
+                name: Spots Social
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.jf
+                icon: 'mdi:car-parking-lights'
+                name: J. Frente
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.quarto_do_meio
+                icon: 'mdi:hotel'
+                name: Quarto Meio
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.quarto_da_frente
+                icon: 'mdi:hotel'
+                name: Quarto Frente
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.jg
+                icon: 'mdi:car-parking-lights'
+                name: J. Garagem
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - entity: light.garagem
+                icon: 'mdi:car'
+                name: Garagem
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.postes
+                icon: 'mdi:lighthouse-on'
+                name: Postes
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.area_da_piscina
+                icon: 'mdi:pool'
+                name: A.Piscina
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.arandelas
+                icon: 'mdi:wall-sconce-variant'
+                name: Arandelas
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.varanda_fundo
+                icon: 'mdi:spotlight'
+                name: Varanda
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.entrada
+                icon: 'mdi:door-closed'
+                name: Entrada
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.arandelas_da_varanda
+                icon: 'mdi:wall-sconce-variant'
+                name: Arandelas V.
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.lavanderia
+                icon: 'mdi:washing-machine'
+                name: Lavanderia
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.bancada
+                icon: 'mdi:led-strip'
+                name: Bancada
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      state:
+                        - color: var(--secondary-text-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - entity: light.yeelight_color1_7c49eb15924b
+        name: Abajur Suíte
+        type: light
+      - cards:
+          - color: '#333'
+            color_type: label-card
+            name: Todas as Luzes
+            styles:
+              card:
+                - font-size: 13px
+                - height: 37px
+            type: 'custom:button-card'
+          - cards:
+              - entity: script.on_todas_luzes
+                icon: 'mdi:lightbulb-on'
+                name: Ligar Todas
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.off_todas_luzes
+                icon: 'mdi:lightbulb'
+                name: Desligar Todas
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - color: '#333'
+            color_type: label-card
+            name: Luzes Quentes / Frias
+            styles:
+              card:
+                - font-size: 13px
+                - height: 37px
+            type: 'custom:button-card'
+          - cards:
+              - entity: script.on_todas_luzes_amarelas
+                icon: 'mdi:lightbulb-on-outline'
+                name: On Quentes
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.off_todas_luzes_amarelas
+                icon: 'mdi:lightbulb-outline'
+                name: Off Quentes
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.on_todas_luzes_brancas
+                icon: 'mdi:lightbulb-on-outline'
+                name: On Frias
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.off_todas_luzes_brancas
+                icon: 'mdi:lightbulb-outline'
+                name: Off Frias
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - entity: light.bancada
+        name: Fita LED Bancada
+        type: light
+    icon: 'mdi:lightbulb-on-outline'
+    path: iluminacao
+    title: Iluminação
+  - badges: []
+    cards:
+      - cards:
+          - color: var(--secondary-text-color)
+            entity: switch.tv_quarto
+            icon: 'mdi:television-classic'
+            layout: icon_name_state2nd
+            show_state: true
+            state:
+              - color: var(--secondary-text-color)
+                styles:
+                  card:
+                    - background-color: var(--paper-card-background-color)
+                  state:
+                    - color: var(--secondary-text-color)
+                value: 'on'
+            styles:
+              card:
+                - height: 82px
+                - background-color: var(--switch-unchecked-button-color)
+              name:
+                - font-weight: 500
+              state:
+                - font-size: 12px
+            type: 'custom:button-card'
+          - cards:
+              - entity: script.tv_quarto_vol_down
+                name: Vol -
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.tv_quarto_mute
+                name: Mute
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.tv_quarto_vol_up
+                name: Vol +
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - color_type: blank-card
+                type: 'custom:button-card'
+              - entity: script.tv_quarto_sleep
+                name: Sleep
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.tv_quarto_input
+                name: Input
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - color_type: blank-card
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards: null
+            color: var(--secondary-text-color)
+            entity: switch.tv_lg_55
+            icon: 'mdi:television-classic'
+            layout: icon_name_state2nd
+            show_state: true
+            state:
+              - color: var(--secondary-text-color)
+                styles:
+                  card:
+                    - background-color: var(--paper-card-background-color)
+                  state:
+                    - color: var(--secondary-text-color)
+                value: 'on'
+            styles:
+              card:
+                - height: 82px
+                - background-color: var(--switch-unchecked-button-color)
+              name:
+                - font-weight: 500
+              state:
+                - font-size: 12px
+            type: 'custom:button-card'
+          - cards:
+              - entity: script.lg55_vol_down
+                name: Vol -
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.lg55_mute
+                name: Mute
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.lg55_vol_up
+                name: Vol +
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.lg55_settings
+                icon: 'mdi:settings'
+                name: Settings
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.lg55_cima
+                icon: 'mdi:arrow-up-thick'
+                name: ' '
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.lg55_input
+                name: Input
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.lg55_esq
+                icon: 'mdi:arrow-left-bold'
+                name: ' '
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.lg55_ok
+                icon: 'mdi:chevron-down-circle-outline'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.lg55_dir
+                icon: 'mdi:arrow-right-bold'
+                name: ' '
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.lg55_voltar
+                icon: 'mdi:undo-variant'
+                name: Voltar
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.lg55_baixo
+                icon: 'mdi:arrow-down-thick'
+                name: ' '
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.lg55_exit
+                name: Exit
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards: null
+            color: var(--secondary-text-color)
+            entity: switch.xboom_som
+            layout: icon_name_state2nd
+            show_state: true
+            state:
+              - color: var(--secondary-text-color)
+                styles:
+                  card:
+                    - background-color: var(--paper-card-background-color)
+                  state:
+                    - color: var(--secondary-text-color)
+                value: 'on'
+            styles:
+              card:
+                - height: 82px
+                - background-color: var(--switch-unchecked-button-color)
+              name:
+                - font-weight: 500
+              state:
+                - font-size: 12px
+            type: 'custom:button-card'
+          - cards:
+              - entity: script.xboom_vol_down
+                name: Vol -
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.xboom_mute
+                name: Mute
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.xboom_vol_up
+                name: Vol +
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.xboom_input
+                name: Input
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.xboom_equalizer
+                name: Equalizar
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.xbom_auxiliar
+                icon: 'mdi:television'
+                name: Auxiliar
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.xbom_bluetooth
+                icon: 'mdi:bluetooth'
+                name: Bluetooth
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards: null
+            color: var(--secondary-text-color)
+            entity: switch.htv
+            icon: 'mdi:android'
+            layout: icon_name_state2nd
+            name: Android TV
+            show_state: true
+            state:
+              - color: var(--secondary-text-color)
+                styles:
+                  card:
+                    - background-color: var(--paper-card-background-color)
+                  state:
+                    - color: var(--secondary-text-color)
+                value: 'on'
+            styles:
+              card:
+                - height: 82px
+                - background-color: var(--switch-unchecked-button-color)
+              name:
+                - font-weight: 500
+              state:
+                - font-size: 12px
+            type: 'custom:button-card'
+          - cards:
+              - entity: script.htv_vmenos
+                icon: 'mdi:volume-minus'
+                name: Vol -
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_mute
+                icon: 'mdi:volume-mute'
+                name: Mute
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_vmais
+                icon: 'mdi:volume-plus'
+                name: Vol +
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.htv_menu
+                icon: 'mdi:dots-horizontal-circle-outline'
+                name: null
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_cima
+                icon: 'mdi:arrow-up-thick'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_exit
+                icon: 'mdi:exit-to-app'
+                name: Exit
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.htv_esq
+                icon: 'mdi:arrow-left-thick'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_ok
+                icon: 'mdi:chevron-down-circle-outline'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_direita
+                icon: 'mdi:arrow-right-thick'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.htv_home
+                icon: 'mdi:home'
+                name: Home
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_baixo
+                icon: 'mdi:arrow-down-thick'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_info
+                icon: 'mdi:information-outline'
+                name: Info
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.htv_1
+                icon: 'mdi:numeric-1'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_2
+                icon: 'mdi:numeric-2'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_3
+                icon: 'mdi:numeric-3'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_4
+                icon: 'mdi:numeric-4'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_5
+                icon: 'mdi:numeric-5'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.htv_6
+                icon: 'mdi:numeric-6'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_7
+                icon: 'mdi:numeric-7'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_8
+                icon: 'mdi:numeric-8'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_9
+                icon: 'mdi:numeric-9'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.htv_0
+                icon: 'mdi:numeric-0'
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.htv_vermelho
+                show_icon: false
+                show_name: false
+                styles:
+                  card:
+                    - background-color: '#C62828'
+                    - height: 20px
+                type: 'custom:button-card'
+              - entity: script.htv_verde
+                show_icon: false
+                show_name: false
+                styles:
+                  card:
+                    - background-color: '#2E7D32'
+                    - height: 20px
+                type: 'custom:button-card'
+              - entity: script.htv_amarelo
+                show_icon: false
+                show_name: false
+                styles:
+                  card:
+                    - background-color: '#FDD835'
+                    - height: 20px
+                type: 'custom:button-card'
+              - entity: script.htv_azul
+                show_icon: false
+                show_name: false
+                styles:
+                  card:
+                    - background-color: '#1565C0'
+                    - height: 20px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards: null
+            color: var(--secondary-text-color)
+            entity: switch.projetor
+            layout: icon_name_state2nd
+            show_state: true
+            state:
+              - color: var(--secondary-text-color)
+                styles:
+                  card:
+                    - background-color: var(--paper-card-background-color)
+                  state:
+                    - color: var(--secondary-text-color)
+                value: 'on'
+            styles:
+              card:
+                - height: 82px
+                - background-color: var(--switch-unchecked-button-color)
+              name:
+                - font-weight: 500
+              state:
+                - font-size: 12px
+            type: 'custom:button-card'
+          - cards:
+              - entity: script.proj_vdown
+                name: Vol -
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.proj_mute
+                name: Mute
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.proj_vup
+                name: Vol +
+                styles:
+                  card:
+                    - height: 70px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.proj_menu
+                name: Menu
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.proj_c
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.proj_esc
+                name: Esc
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: script.proj_t
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.proj_ok
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.proj_f
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - color_type: blank-card
+                type: 'custom:button-card'
+              - entity: script.proj_b
+                show_name: false
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.proj_input
+                name: Input
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - color: var(--secondary-text-color)
+            entity: switch.umidificador
+            icon: 'mdi:air-humidifier'
+            layout: icon_name_state2nd
+            show_state: true
+            state:
+              - color: var(--secondary-text-color)
+                styles:
+                  card:
+                    - background-color: var(--paper-card-background-color)
+                  state:
+                    - color: var(--secondary-text-color)
+                value: 'on'
+            styles:
+              card:
+                - height: 82px
+                - background-color: var(--switch-unchecked-button-color)
+              name:
+                - font-weight: 500
+              state:
+                - font-size: 12px
+            type: 'custom:button-card'
+          - cards:
+              - entity: script.umidificador_intermitente
+                icon: 'mdi:fast-forward-10'
+                name: Intermitente
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.umidificador_cronometrar
+                icon: 'mdi:clock-outline'
+                name: Cronometrar
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.umidificador_continuo
+                icon: 'mdi:play'
+                name: Contínuo
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - color_type: blank-card
+                type: 'custom:button-card'
+              - entity: script.umidificador_grande_pequeno
+                icon: 'mdi:swap-vertical'
+                name: Grande/Pequeno
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: script.umidificador_luz
+                icon: 'mdi:lightbulb-on-outline'
+                name: Luz
+                styles:
+                  card:
+                    - height: 60px
+                  name:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - color_type: blank-card
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+    icon: 'mdi:remote'
+    path: remote
+    title: Controles IR
+  - badges: []
+    cards:
+      - aspect_ratio: 0%
+        camera_image: camera.wanscam_360
+        entities:
+          - entity: switch.camwascam_esq
+          - entity: switch.camwascam_dir
+          - entity: switch.camwascam_up
+          - entity: switch.camwascam_down
+          - entity: switch.camwascam_centralizar
+          - entity: script.camwascam_p1
+          - entity: script.camwascam_p2
+          - entity: script.fotos_garagem_dupla
+          - entity: script.video_garagem
+        type: picture-glance
+      - camera_image: camera.xiaofang
+        entities:
+          - script.fotos_piscina
+          - script.video_piscina
+        type: picture-glance
+      - camera_image: camera.camera_interna
+        entities:
+          - script.fotos_interna
+          - script.video_interna
+        type: picture-glance
+      - camera_image: camera.v380rtsp2
+        entities:
+          - script.fotos_380rtsp2
+        type: picture-glance
+      - camera_image: camera.v380rtsp1
+        entities:
+          - script.fotos_380rtsp1
+        type: picture-glance
+      - entities:
+          - entity: switch.sirenes
+            name: Liga Sirenes
+        show_header_toggle: false
+        title: Sirenes
+        type: entities
+    icon: 'mdi:cctv'
+    path: cameras
+    title: Segurança
+  - badges: []
+    cards:
+      - entity: media_player.google_home
+        type: media-control
+      - entity: media_player.google_home_sala
+        type: media-control
+      - entity: media_player.lg_smart_tv
+        type: media-control
+      - entity: media_player.tv_do_quarto
+        type: media-control
+      - entity: media_player.tv_da_sala
+        type: media-control
+      - entities:
+          - entity: input_select.src_cast_audio
+          - entity: input_select.str_audio
+          - entity: script.ouvir_audio
+            icon: 'mdi:play-circle-outline'
+            name: Play
+          - entity: script.stop_audio
+            icon: 'mdi:stop-circle-outline'
+            name: Stop
+          - entity: input_number.audio_volume
+        show_header_toggle: false
+        title: Áudio Player
+        type: entities
+      - entities:
+          - entity: input_select.src_cast_video
+          - entity: input_select.str_video
+          - entity: script.ver_video
+            icon: 'mdi:play-circle-outline'
+            name: Play
+          - entity: script.stop_video
+            icon: 'mdi:stop-circle-outline'
+            name: Stop
+          - entity: input_number.video_volume
+        show_header_toggle: false
+        title: TV Player
+        type: entities
+      - entities:
+          - entity: input_select.src_cast_teste_video
+          - entity: input_text.url_teste_video
+          - entity: script.ver_teste_video
+            icon: 'mdi:play-circle-outline'
+            name: Play
+          - entity: script.stop_teste_video
+            icon: 'mdi:stop-circle-outline'
+            name: Stop
+          - entity: input_number.video_teste_volume
+        show_header_toggle: false
+        title: Streaming Player  via URL
+        type: entities
+      - entity: media_player.todos_google_homes
+        type: media-control
+      - entities:
+          - switch.echo_dot_de_rudima_do_not_disturb_switch
+          - sensor.echo_dot_de_rudima_next_alarm
+          - sensor.echo_dot_de_rudima_next_reminder
+          - sensor.echo_dot_de_rudima_next_timer
+          - switch.echo_dot_de_rudima_repeat_switch
+          - switch.echo_dot_de_rudima_shuffle_switch
+        type: entities
+      - entity: media_player.echo_dot_de_rudima
+        type: media-control
+    icon: 'mdi:play-speed'
+    path: multimidia
+    title: Multimídia
+  - badges: []
+    cards:
+      - cards:
+          - cards:
+              - color_thresholds:
+                  - color: '#C62828'
+                    value: 240
+                  - color: '#03A9F4'
+                    value: 230
+                  - color: '#F44336'
+                    value: 200
+                entities:
+                  - entity: sensor.voltagem
+                    index: 0
+                font_size: 75
+                height: 165
+                hours_to_show: 16
+                line_width: 4
+                name: Tensão
+                points_per_hour: 3
+                show:
+                  extrema: true
+                  fill: false
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+              - color_thresholds:
+                  - color: '#E65100'
+                    value: 70
+                  - color: '#4CAF50'
+                    value: 60
+                  - color: '#7CB342'
+                    value: 50
+                entities:
+                  - entity: sensor.frequencia
+                    index: 0
+                font_size: 75
+                hours_to_show: 1
+                show:
+                  extrema: true
+                  fill: false
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - color_thresholds:
+                  - color: '#DD2C00'
+                    value: 6000
+                  - color: '#FFAB00'
+                    value: 1000
+                  - color: '#4CAF50'
+                    value: 100
+                entities:
+                  - entity: sensor.watts
+                    index: 0
+                font_size: 85
+                height: 300
+                hours_to_show: 16
+                line_width: 2
+                points_per_hour: 5
+                show:
+                  extrema: true
+                  fill: false
+                  icon_adaptive_color: true
+                  labels: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - align_state: center
+                color_thresholds:
+                  - color: '#E65100'
+                    value: 400
+                  - color: '#66BB6A'
+                    value: 50
+                  - color: '#03A9F4'
+                    value: 0
+                entities:
+                  - entity: sensor.potencia_reativa
+                    index: 0
+                font_size: 75
+                hours_to_show: 16
+                icon: 'mdi:vector-triangle'
+                line_width: 4
+                points_per_hour: 2
+                show:
+                  extrema: true
+                  fill: false
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+              - align_state: center
+                color_thresholds:
+                  - color: '#D50000'
+                    value: 10000
+                  - color: '#F9A825'
+                    value: 1500
+                  - color: '#66FF03'
+                    value: 150
+                entities:
+                  - entity: sensor.potencia_aparente
+                    index: 0
+                font_size: 75
+                hours_to_show: 16
+                icon: 'mdi:triforce'
+                line_width: 4
+                points_per_hour: 2
+                show:
+                  extrema: true
+                  fill: true
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - color_thresholds:
+                  - color: '#F44336'
+                    value: 25
+                  - color: '#512DA8'
+                    value: 10
+                  - color: '#0288D1'
+                    value: 0
+                entities:
+                  - entity: sensor.corrente
+                    index: 0
+                font_size: 85
+                height: 50
+                hours_to_show: 16
+                line_width: 2
+                points_per_hour: 3
+                show:
+                  extrema: true
+                  fill: false
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - color_thresholds:
+                  - color: '#F44336'
+                    value: 0.85
+                  - color: '#FDD835'
+                    value: 0.7
+                  - color: '#76FF03'
+                    value: 0.5
+                entities:
+                  - entity: sensor.fator_potencia
+                    index: 0
+                font_size: 85
+                height: 50
+                hours_to_show: 16
+                line_width: 2
+                points_per_hour: 2
+                show:
+                  extrema: true
+                  fill: false
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - entities:
+          - label: Valor médio do kW/h da última fatura
+            type: section
+          - entity: input_text.text_valor_kwh
+            icon: 'mdi:square-inc-cash'
+          - label: Estimativa de gastos em R$
+            type: section
+          - entity: sensor.energia_gasta_dia
+            name: Hoje
+          - entity: sensor.energia_gasta_ontem
+            name: Ontem
+          - entity: sensor.gasto_mes
+            name: Mês
+          - type: section
+          - entity: sensor.energia_gasta_total
+            name: Total (Mqtt/Sonoff)
+          - label: Consumo em kWh
+            type: section
+          - entity: sensor.consumo_diario
+            name: Hoje
+          - entity: sensor.consumo_dia_anterior
+            name: Ontem
+          - entity: sensor.kwh_gasto_mes
+            name: Mês
+          - type: section
+          - entity: sensor.consumo_total
+            name: Total (Mqtt/Sonoff)
+          - type: section
+        show_header_toggle: false
+        title: Estimativa de gastos
+        type: entities
+    icon: 'mdi:power-plug'
+    path: energia
+    title: Energia
+  - badges: []
+    cards:
+      - cards:
+          - entities:
+              - entity: input_text.text_valor_agua
+              - entity: sensor.vazao_de_agua
+                name: Vazão de água (l/seg)
+            show_header_toggle: false
+            title: Consumo de Água
+            type: entities
+          - cards:
+              - entities:
+                  - color: '#18FFFF'
+                    entity: sensor.vazao_de_agua
+                    index: 0
+                    show_state: true
+                font_size: 80
+                height: 110
+                hours_to_show: 12
+                line_width: 1
+                name: Vazão (24h)
+                points_per_hour: 10
+                show:
+                  extrema: true
+                  fill: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.agua_gasta_dia
+                icon: 'mdi:water'
+                name: Hoje
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 18px
+                  state:
+                    - font-size: 11px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_semana
+                icon: 'mdi:water'
+                name: Semana
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 18px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_mes
+                icon: 'mdi:water'
+                name: Mês
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 18px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_ano
+                icon: 'mdi:water'
+                name: Ano
+                show_state: true
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 18px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.agua_gasta_valor_dia
+                name: Hoje
+                show_name: false
+                show_state: true
+                styles:
+                  card:
+                    - height: 48px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_valor_semana
+                name: Semana
+                show_name: false
+                show_state: true
+                styles:
+                  card:
+                    - height: 48px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_valor_mes
+                name: Mês
+                show_name: false
+                show_state: true
+                styles:
+                  card:
+                    - height: 48px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.agua_gasta_valor_ano
+                name: Ano
+                show_name: false
+                show_state: true
+                styles:
+                  card:
+                    - height: 48px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entities:
+              - entity: sensor.distancia_d_agua
+                name: Sensor Ultrasonico
+              - entity: sensor.nivel_real
+                icon: 'mdi:waves'
+              - entity: sensor.status_caixa_dagua
+              - entity: sensor.status_abastecimento_agua
+            show_header_toggle: false
+            title: Caixa D'água
+            type: entities
+          - cards:
+              - entity: sensor.caixa_dagua_litros
+                max: 2000
+                min: 0
+                name: Litros
+                severity:
+                  green: 1800
+                  red: 0
+                  yellow: 1000
+                type: gauge
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.caixa_dagua
+                max: 100
+                min: 0
+                name: Nível
+                severity:
+                  green: 90
+                  red: 0
+                  yellow: 50
+                type: gauge
+            type: horizontal-stack
+        type: vertical-stack
+      - entities:
+          - entity: sensor.vazao_de_agua
+        hours_to_show: 8
+        refresh_interval: 0
+        title: Vazão
+        type: history-graph
+    icon: 'mdi:water'
+    path: agua
+    title: Água
+  - badges: []
+    cards:
+      - cards:
+          - entities:
+              - entity: switch.geladeira
+                icon: 'mdi:power-plug'
+                name: Energia
+            show_header_toggle: false
+            title: Geladeira
+            type: entities
+          - cards:
+              - custom_fields:
+                  notification: >
+                    [[[ return
+                    Math.floor(states['sensor.geladeira_vezes_aberta'].state )
+                    ]]]
+                entity: sensor.geladeira_status
+                icon: 'mdi:fridge-outline'
+                layout: vertical
+                name: Status
+                show_icon: true
+                show_name: true
+                show_state: true
+                styles:
+                  card:
+                    - height: 160px
+                    - width: 130px
+                  custom_fields:
+                    notification:
+                      - position: absolute
+                      - left: 48%
+                      - top: 40%
+                      - font-size: 18px
+                      - font-weight: bold
+                      - color: var(--primary-color)
+                  icon:
+                    - width: 104px
+                    - height: 104px
+                  name:
+                    - font-size: 12px
+                  state:
+                    - color: var(--primary-color)
+                type: 'custom:button-card'
+              - color_thresholds:
+                  - color: '#DD2C00'
+                    value: 70
+                  - color: '#FFAB00'
+                    value: 30
+                  - color: '#4CAF50'
+                    value: 0
+                entities:
+                  - entity: sensor.watts_geladeira
+                    index: 0
+                font_size: 70
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                name: Watts
+                points_per_hour: 12
+                show:
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - color_thresholds:
+                  - color: '#C62828'
+                    value: 240
+                  - color: '#03A9F4'
+                    value: 230
+                  - color: '#999'
+                    value: 0
+                entities:
+                  - entity: sensor.voltagem_geladeira
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+              - color_thresholds:
+                  - color: '#F44336'
+                    value: 0.5
+                  - color: '#512DA8'
+                    value: 0.3
+                  - color: '#0288D1'
+                    value: 0
+                entities:
+                  - entity: sensor.corrente_geladeira
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.consumo_diario_geladeira
+                name: Hoje
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.consumo_dia_anterior_geladeira
+                icon: 'mdi:water'
+                name: Ontem
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_semana_ge
+                icon: 'mdi:water'
+                name: Semana
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_mes_ge
+                icon: 'mdi:water'
+                name: Mês
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.energia_gasta_dia_ge
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_ontem_ge
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_semana_ge
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_mes_ge
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entities:
+              - entity: switch.maquina_de_lavar
+                icon: 'mdi:power-plug'
+                name: Energia
+            show_header_toggle: false
+            title: Maquina de Lavar
+            type: entities
+          - cards:
+              - entity: sensor.geladeira_status
+                icon: 'mdi:washing-machine'
+                layout: vertical
+                name: Status
+                show_icon: true
+                show_name: true
+                show_state: true
+                styles:
+                  card:
+                    - height: 160px
+                    - width: 130px
+                  icon:
+                    - width: 104px
+                    - height: 104px
+                  name:
+                    - font-size: 12px
+                  state:
+                    - color: var(--primary-color)
+                type: 'custom:button-card'
+              - color_thresholds:
+                  - color: '#DD2C00'
+                    value: 70
+                  - color: '#FFAB00'
+                    value: 30
+                  - color: '#4CAF50'
+                    value: 0
+                entities:
+                  - entity: sensor.watts_lava_e_seca
+                    index: 0
+                font_size: 70
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                name: Watts
+                points_per_hour: 12
+                show:
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - color_thresholds:
+                  - color: '#C62828'
+                    value: 240
+                  - color: '#03A9F4'
+                    value: 230
+                  - color: '#999'
+                    value: 0
+                entities:
+                  - entity: sensor.voltagem_lava_e_seca
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+              - color_thresholds:
+                  - color: '#F44336'
+                    value: 0.5
+                  - color: '#512DA8'
+                    value: 0.3
+                  - color: '#0288D1'
+                    value: 0
+                entities:
+                  - entity: sensor.corrente_lava_e_seca
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.consumo_diario_lava_e_seca
+                name: Hoje
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.consumo_dia_anterior_lava_e_seca
+                icon: 'mdi:water'
+                name: Ontem
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_semana_ml
+                icon: 'mdi:water'
+                name: Semana
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_mes_ml
+                icon: 'mdi:water'
+                name: Mês
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.energia_gasta_dia_ml
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_ontem_ml
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_semana_ml
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_mes_ml
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entities:
+              - entity: switch.motor_da_piscina
+                icon: 'mdi:power-plug'
+                name: Energia
+            show_header_toggle: false
+            title: Motor Piscina
+            type: entities
+          - cards:
+              - entity: sensor.geladeira_status
+                icon: 'mdi:pool'
+                layout: vertical
+                name: Status
+                show_icon: true
+                show_name: true
+                show_state: true
+                styles:
+                  card:
+                    - height: 160px
+                    - width: 130px
+                  icon:
+                    - width: 104px
+                    - height: 104px
+                  name:
+                    - font-size: 12px
+                  state:
+                    - color: var(--primary-color)
+                type: 'custom:button-card'
+              - color_thresholds:
+                  - color: '#DD2C00'
+                    value: 70
+                  - color: '#FFAB00'
+                    value: 30
+                  - color: '#4CAF50'
+                    value: 0
+                entities:
+                  - entity: sensor.watts_piscina
+                    index: 0
+                font_size: 70
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                name: Watts
+                points_per_hour: 12
+                show:
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - color_thresholds:
+                  - color: '#C62828'
+                    value: 240
+                  - color: '#03A9F4'
+                    value: 230
+                  - color: '#999'
+                    value: 0
+                entities:
+                  - entity: sensor.voltagem_piscina
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+              - color_thresholds:
+                  - color: '#F44336'
+                    value: 0.5
+                  - color: '#512DA8'
+                    value: 0.3
+                  - color: '#0288D1'
+                    value: 0
+                entities:
+                  - entity: sensor.corrente_piscina
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.consumo_diario_piscina
+                name: Hoje
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.consumo_dia_anterior_piscina
+                icon: 'mdi:water'
+                name: Ontem
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_semana_ml
+                icon: 'mdi:water'
+                name: Semana
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_mes_mp
+                icon: 'mdi:water'
+                name: Mês
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.energia_gasta_dia_mp
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_ontem_mp
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_semana_mp
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_mes_mp
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entities:
+              - entity: switch.purificador
+                icon: 'mdi:power-plug'
+                name: Energia
+            show_header_toggle: false
+            title: Purificador
+            type: entities
+          - cards:
+              - entity: sensor.purificador_status
+                icon: 'mdi:water-well'
+                layout: vertical
+                name: Status
+                show_icon: true
+                show_name: true
+                show_state: true
+                styles:
+                  card:
+                    - height: 160px
+                    - width: 130px
+                  icon:
+                    - width: 104px
+                    - height: 104px
+                  name:
+                    - font-size: 12px
+                  state:
+                    - color: var(--primary-color)
+                type: 'custom:button-card'
+              - color_thresholds:
+                  - color: '#DD2C00'
+                    value: 70
+                  - color: '#FFAB00'
+                    value: 30
+                  - color: '#4CAF50'
+                    value: 0
+                entities:
+                  - entity: sensor.watts_purificador
+                    index: 0
+                font_size: 70
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                name: Watts
+                points_per_hour: 12
+                show:
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - color_thresholds:
+                  - color: '#C62828'
+                    value: 240
+                  - color: '#03A9F4'
+                    value: 230
+                  - color: '#999'
+                    value: 0
+                entities:
+                  - entity: sensor.voltagem_purificador
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+              - color_thresholds:
+                  - color: '#F44336'
+                    value: 0.5
+                  - color: '#512DA8'
+                    value: 0.3
+                  - color: '#0288D1'
+                    value: 0
+                entities:
+                  - entity: sensor.corrente_purificador
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.consumo_diario_purificador
+                name: Hoje
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.consumo_dia_anterior_purificador
+                icon: 'mdi:water'
+                name: Ontem
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_semana_pur
+                icon: 'mdi:water'
+                name: Semana
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_mes_pur
+                icon: 'mdi:water'
+                name: Mês
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.energia_gasta_dia_pur
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_ontem_pur
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_semana_pur
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_mes_pur
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entities:
+              - entity: switch.cervejeira
+                icon: 'mdi:power-plug'
+                name: Energia
+            show_header_toggle: false
+            title: Cervejeira
+            type: entities
+          - cards:
+              - entity: sensor.cervejeira_status
+                icon: 'mdi:glass-mug-variant'
+                layout: vertical
+                name: Status
+                show_icon: true
+                show_name: true
+                show_state: true
+                styles:
+                  card:
+                    - height: 160px
+                    - width: 130px
+                  icon:
+                    - width: 104px
+                    - height: 104px
+                  name:
+                    - font-size: 12px
+                  state:
+                    - color: var(--primary-color)
+                type: 'custom:button-card'
+              - color_thresholds:
+                  - color: '#DD2C00'
+                    value: 70
+                  - color: '#FFAB00'
+                    value: 30
+                  - color: '#4CAF50'
+                    value: 0
+                entities:
+                  - entity: sensor.watts_cervejeira
+                    index: 0
+                font_size: 70
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                name: Watts
+                points_per_hour: 12
+                show:
+                  icon_adaptive_color: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - color_thresholds:
+                  - color: '#C62828'
+                    value: 240
+                  - color: '#03A9F4'
+                    value: 230
+                  - color: '#999'
+                    value: 0
+                entities:
+                  - entity: sensor.voltagem_cervejeira
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+              - color_thresholds:
+                  - color: '#F44336'
+                    value: 0.5
+                  - color: '#512DA8'
+                    value: 0.3
+                  - color: '#0288D1'
+                    value: 0
+                entities:
+                  - entity: sensor.corrente_cervejeira
+                    index: 0
+                font_size: 60
+                height: 80
+                hours_to_show: 3
+                line_width: 2
+                points_per_hour: 12
+                show:
+                  icon: false
+                  name: false
+                  state: true
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.consumo_diario_cervejeira
+                name: Hoje
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.consumo_dia_anterior_cervejeira
+                icon: 'mdi:water'
+                name: Ontem
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_semana_ceva
+                icon: 'mdi:water'
+                name: Semana
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: sensor.kwh_gasto_mes_ceva
+                icon: 'mdi:water'
+                name: Mês
+                show_icon: false
+                show_state: true
+                styles:
+                  name:
+                    - font-weight: 500
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.energia_gasta_dia_ceva
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_ontem_ceva
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_semana_ceva
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+              - entity: sensor.energia_gasta_mes_ceva
+                show_icon: false
+                show_name: false
+                show_state: true
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - entities:
+          - entity: binary_sensor.porta_geladeira
+            icon: 'mdi:fridge'
+            secondary_info: last-changed
+          - label: Hoje
+            secondary_info: last-changed
+            type: section
+          - entity: sensor.geladeira_vezes_aberta
+            icon: 'mdi:counter'
+            name: Vezes que foi aberta
+          - entity: sensor.geladeira_x_aberta_mes
+            name: Vezes que foi aberta
+        show_header_toggle: false
+        title: Geladeira
+        type: entities
+    icon: 'mdi:atom-variant'
+    path: lavanderiaecozinha
+    title: Lavanderia e Cozinha
+  - badges: []
+    cards:
+      - entities:
+          - entity: sensor.despert1_despertar
+          - entity: input_select.despert1_src
+          - entity: input_number.despert1_hora
+          - entity: input_number.despert1_minuto
+          - entity: input_select.despert1_tts
+          - entity: input_text.despert1_mensagem
+          - entity: input_boolean.despert1_tempo
+            icon: 'mdi:weather-partly-snowy-rainy'
+          - entity: input_select.despert1_audio_str
+          - entity: input_number.despert1_volume
+          - entity: input_boolean.despert1_status
+        show_header_toggle: false
+        title: Despertador (A)
+        type: entities
+      - entities:
+          - entity: sensor.despert2_despertar
+          - entity: input_select.despert2_src
+          - entity: input_number.despert2_hora
+          - entity: input_number.despert2_minuto
+          - entity: input_select.despert2_tts
+          - entity: input_text.despert2_mensagem
+          - entity: input_boolean.despert2_tempo
+            icon: 'mdi:weather-partly-snowy-rainy'
+          - entity: input_select.despert2_audio_str
+          - entity: input_number.despert2_volume
+          - entity: input_boolean.despert2_status
+        show_header_toggle: false
+        title: Despertador (B)
+        type: entities
+      - entity: sensor.time
+        name: Hora
+        type: sensor
+        unit: h
+    icon: 'mdi:alarm-multiple'
+    path: despertador
+    title: Despertadores
+  - badges: []
+    cards:
+      - type: weather-forecast
+        entity: weather.casa
+      - cards:
+          - cards:
+              - color_thresholds:
+                  - color: '#FFEA00'
+                    value: 0
+                  - color: '#01579B'
+                    value: 100
+                entities:
+                  - sensor.dark_sky_cloud_coverage
+                height: 140
+                hours_to_show: 24
+                line_width: 2
+                name: Nuvens - 24h
+                points_per_hour: 1
+                type: 'custom:mini-graph-card'
+              - color_thresholds:
+                  - color: '#4CAF50'
+                    value: 0
+                  - color: '#FFEB3B'
+                    value: 3
+                  - color: '#EF6C00'
+                    value: 6
+                  - color: '#F44336'
+                    value: 8
+                  - color: '#9C27B0'
+                    value: 11
+                entities:
+                  - sensor.dark_sky_uv_index
+                height: 140
+                hours_to_show: 24
+                line_width: 2
+                name: Índice UV - 24h
+                points_per_hour: 1
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entities:
+                  - entity: sun.sun
+                  - entity: sensor.moon
+                  - entity: sensor.dark_sky_pressure
+                  - entity: sensor.dark_sky_visibility
+                type: entities
+            type: horizontal-stack
+          - cards:
+              - entities:
+                  - entity: sensor.dark_sky_hourly_summary
+                  - entity: sensor.dark_sky_daily_summary
+                type: entities
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - entities:
+                  - color: '#76FF03'
+                    entity: sensor.suite_temperatura
+                    show_state: true
+                  - entity: sensor.cozinha_temperatura
+                    show_state: true
+                  - entity: sensor.banheiro_suite_temperatura
+                    show_state: true
+                  - entity: sensor.banheiro_social_temperatura
+                    show_state: true
+                height: 240
+                hours_to_show: 24
+                line_width: 1
+                name: Temperaturas
+                points_per_hour: 2
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entities:
+                  - color: '#76FF03'
+                    entity: sensor.suite_umidade
+                    show_state: true
+                  - entity: sensor.cozinha_umidade
+                    show_state: true
+                  - entity: sensor.banheiro_suite_umidade
+                    show_state: true
+                  - entity: sensor.banheiro_social_umidade
+                    show_state: true
+                height: 240
+                hours_to_show: 24
+                line_width: 1
+                name: Umidades
+                points_per_hour: 2
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - aspect_ratio: 90%
+                title: Temperatura
+                type: iframe
+                url: >-
+                  https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=5&level=surface&overlay=temp&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
+            type: horizontal-stack
+          - cards:
+              - aspect_ratio: 90%
+                title: Chuva e Trovão
+                type: iframe
+                url: >-
+                  https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=5&level=surface&overlay=rain&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
+            type: horizontal-stack
+        type: vertical-stack
+    icon: 'mdi:weather-partly-snowy-rainy'
+    path: clima
+    title: Clima
+  - badges: []
+    cards:
+      - entities:
+          - label: Movimentos
+            type: section
+          - entity: binary_sensor.sala_social
+            secondary_info: last-changed
+          - entity: binary_sensor.sala_jantar
+            secondary_info: last-changed
+          - entity: binary_sensor.corredor
+            secondary_info: last-changed
+          - entity: binary_sensor.closet
+            secondary_info: last-changed
+          - label: Movimentos Externos
+            type: section
+          - entity: binary_sensor.ext_garagem
+            secondary_info: last-changed
+          - entity: binary_sensor.ext_piscina
+            secondary_info: last-changed
+          - label: Portas
+            type: section
+          - entity: binary_sensor.porta_garagem
+            secondary_info: last-changed
+          - entity: binary_sensor.porta_lavanderia
+            secondary_info: last-changed
+          - entity: binary_sensor.porta_varanda
+            secondary_info: last-changed
+          - entity: binary_sensor.porta_entrada
+            secondary_info: last-changed
+          - entity: binary_sensor.porta_area
+            secondary_info: last-changed
+          - entity: script.reseta_porta_garagem
+          - entity: script.reseta_porta_lavanderia
+          - label: Janelas
+            type: section
+          - entity: binary_sensor.janela_closet
+            secondary_info: last-changed
+          - entity: binary_sensor.janela_cozinha
+            secondary_info: last-changed
+          - entity: binary_sensor.janela_suite
+            secondary_info: last-changed
+          - entity: binary_sensor.janela_quarto_f
+            secondary_info: last-changed
+          - entity: binary_sensor.janela_quarto_m
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Sensores
+        type: entities
+      - entities:
+          - label: Controle 1
+            type: section
+          - entity: binary_sensor.c1_armar
+            secondary_info: last-changed
+          - entity: binary_sensor.c1_desarmar
+            secondary_info: last-changed
+          - entity: binary_sensor.c1_home
+            secondary_info: last-changed
+          - entity: binary_sensor.c1_sos
+            secondary_info: last-changed
+          - label: Controle 2
+            type: section
+          - entity: binary_sensor.c2_armar
+            secondary_info: last-changed
+          - entity: binary_sensor.c2_desarmar
+            secondary_info: last-changed
+          - entity: binary_sensor.c2_home
+            secondary_info: last-changed
+          - entity: binary_sensor.c2_sos
+            secondary_info: last-changed
+          - label: Controle 3
+            type: section
+          - entity: binary_sensor.c3_armar
+            secondary_info: last-changed
+          - entity: binary_sensor.c3_desarmar
+            secondary_info: last-changed
+          - entity: binary_sensor.c3_home
+            secondary_info: last-changed
+          - entity: binary_sensor.c3_sos
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Controles Digoo
+        type: entities
+      - entities:
+          - entity: binary_sensor.rf1_interruptor_bso
+            name: '(#1) Luz On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf2_interruptor_bso
+            name: '(#2) Pressurizador On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf1e2_interruptor_bso
+            name: '(#1+2) Pede ajuda nos Google Home'
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Int. Banheiro Social
+        type: entities
+      - entities:
+          - entity: binary_sensor.rf1_interruptor_suite
+            name: '(#1) Luz Suíte On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf2_interruptor_suite
+            name: '(#2) Luz Abajur On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf3_interruptor_suite
+            name: '(#3) Luz Banheiro On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf1e2_interruptor_suite
+            name: '(#1+2) Ativa Alarme'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf1e3_interruptor_suite
+            name: '(#1+3) Luz Poste e Piscina On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf2e3_interruptor_suite
+            name: '(#2+3) Desativa Alarme'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf123_interruptor_suite
+            name: '(#1+2+3) NULL'
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: 'Int. Suíte '
+        type: entities
+      - entities:
+          - entity: binary_sensor.rf1_interruptor_quarto_meio
+            name: '(#1) Luz Quarto On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf2_interruptor_quarto_meio
+            name: '(#2) Luz Corredor On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf3_interruptor_quarto_meio
+            name: '(#2) Luz Banehro Social On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf1e2_interruptor_quarto_meio
+            name: '(#1+2) Ativa Alarme'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf1e3_interruptor_quarto_meio
+            name: '(#1+3) Luz Postest On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf2e3_interruptor_quarto_meio
+            name: '(#2+3) Desativa Alarme'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf123_interruptor_quarto_meio
+            name: '(#1+2+3) Null'
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: 'Int. Q. Meio '
+        type: entities
+      - entities:
+          - entity: binary_sensor.rf1_interruptor_quarto_frente
+            name: '(#1) Luz Quarto On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf2_interruptor_quarto_frente
+            name: '(#2) Luz Corredor On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf3_interruptor_quarto_frente
+            name: '(#2) Luz Banehro Social On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf1e2_interruptor_quarto_frente
+            name: '(#1+2) Ativa Alarme'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf1e3_interruptor_quarto_frente
+            name: '(#1+3) Luz Postest On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf2e3_interruptor_quarto_frente
+            name: '(#2+3) Desativa Alarme'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf123_interruptor_quarto_frente
+            name: '(#1+2+3) Null'
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Int. Q. Frente
+        type: entities
+      - entities:
+          - entity: binary_sensor.rf1_interruptor_bsu
+            name: '(#1) Luz On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf2_interruptor_bsu
+            name: '(#2) Pressurizador On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf1e2_interruptor_bsu
+            name: '(#1+2) Pede ajuda nos Google Home'
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: 'Int. Banheiro Suíte '
+        type: entities
+      - entities:
+          - entity: binary_sensor.rf1_interruptor_coz
+            name: '(#1) Luz Pia On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf2_interruptor_coz
+            name: '(#2) Pressurizador On/Off'
+            secondary_info: last-changed
+          - entity: binary_sensor.rf1e2_interruptor_coz
+            name: '(#1) Luz Cozinha On/Off'
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Int. Pia da Cozinha
+        type: entities
+      - entities:
+          - entity: binary_sensor.porta_geladeira
+        show_header_toggle: false
+        title: Geladeira
+        type: entities
+      - entities:
+          - entity: binary_sensor.porta_teste_json
+        show_header_toggle: false
+        title: Sensor Testes
+        type: entities
+    icon: 'mdi:contactless-payment'
+    path: 433mhz
+    title: 433Mhz
+  - badges: []
+    cards:
+      - elements:
+          - entity: group.all_lights
+            icon: 'mdi:square-inc'
+            style:
+              left: 35%
+              top: 15%
+            tap_action:
+              action: toggle
+            type: state-badge
+          - entity: light.garagem
+            icon: 'mdi:square-inc'
+            style:
+              left: 23%
+              top: 81%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.garagem
+            icon: 'mdi:square-inc'
+            style:
+              left: 12%
+              top: 81%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.garagem
+            icon: 'mdi:square-inc'
+            style:
+              left: 12%
+              top: 59%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.pendentes
+            icon: 'mdi:ceiling-light'
+            style:
+              left: 44%
+              top: 65%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.lustre
+            icon: 'mdi:ceiling-light'
+            style:
+              left: 63%
+              top: 81%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.pendentes
+            icon: 'mdi:ceiling-light'
+            style:
+              left: 47%
+              top: 62%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.pendentes
+            icon: 'mdi:ceiling-light'
+            style:
+              left: 50%
+              top: 59%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.mesa_de_jantar
+            icon: 'mdi:ceiling-light'
+            style:
+              left: 40%
+              top: 78%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.jg
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 38%
+              top: 70.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.jg
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 42%
+              top: 70.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.jf
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 48%
+              top: 77%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.jf
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 48%
+              top: 81%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.cozinha
+            icon: 'mdi:square-inc'
+            style:
+              left: 34%
+              top: 57%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.cozinha
+            icon: 'mdi:square-inc'
+            style:
+              left: 41%
+              top: 57%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.pia
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 37%
+              top: 50%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.pia
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 33%
+              top: 50%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.postes
+            icon: 'mdi:lighthouse-on'
+            style:
+              left: '-1%'
+              top: 4%
+              transform: scaleX(-1)
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.postes
+            icon: 'mdi:lighthouse-on'
+            style:
+              left: '-1%'
+              top: 92%
+              transform: scaleX(-1)
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.trilhos
+            icon: 'mdi:track-light'
+            style:
+              left: 64%
+              top: 57%
+              transform: scaleX(-1)
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.trilhos
+            icon: 'mdi:track-light'
+            style:
+              left: 64%
+              top: 50%
+              transform: scaleX(-1)
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.lavabo
+            icon: 'mdi:square-inc'
+            style:
+              left: 68.5%
+              top: 40%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.quarto_da_frente
+            icon: 'mdi:square-inc'
+            style:
+              left: 82%
+              top: 85%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.quarto_do_meio
+            icon: 'mdi:square-inc'
+            style:
+              left: 85%
+              top: 66%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.quarto_da_suite
+            icon: 'mdi:square-inc'
+            style:
+              left: 85%
+              top: 38%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.yeelight_color1_7c49eb15924b
+            icon: 'mdi:floor-lamp'
+            style:
+              left: 90%
+              top: 29%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.closet
+            icon: 'mdi:square-inc'
+            style:
+              left: 85%
+              top: 11.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.banheiro_da_suite
+            icon: 'mdi:square-inc'
+            style:
+              left: 85%
+              top: 21%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.banheiro_social
+            icon: 'mdi:square-inc'
+            style:
+              left: 85%
+              top: 52%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.corredor
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 75%
+              top: 55%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.corredor
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 75%
+              top: 62%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.corredor
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 75%
+              top: 69%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.varanda_fundo
+            icon: 'mdi:square-inc'
+            style:
+              left: 68%
+              top: 23%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.area_da_piscina
+            icon: 'mdi:square-inc'
+            style:
+              left: 50%
+              top: 42%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.area_da_piscina
+            icon: 'mdi:square-inc'
+            style:
+              left: 30%
+              top: 42%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.entrada
+            icon: 'mdi:square-inc'
+            style:
+              left: 49%
+              top: 91%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.lavanderia
+            icon: 'mdi:square-inc'
+            style:
+              left: 24%
+              top: 59%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.sala_game
+            icon: 'mdi:square-inc'
+            style:
+              left: 59%
+              top: 57%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.central
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 54%
+              top: 53%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.central
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 54%
+              top: 58%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.central
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 54%
+              top: 63%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.central
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 52%
+              top: 67.5%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.central
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 49%
+              top: 71%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.sala_de_estar
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 63%
+              top: 70%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.sala_de_estar
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 68%
+              top: 70%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.sala_de_estar
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 68%
+              top: 79%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.sala_de_estar
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 68%
+              top: 88%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.sala_de_estar
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 62%
+              top: 88%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.sala_de_estar
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 56%
+              top: 88%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.sala_de_estar
+            icon: 'mdi:square-medium-outline'
+            style:
+              left: 56%
+              top: 79%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 90%
+              top: 80%
+              transform: rotate(90deg)
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 92%
+              top: 60%
+              transform: rotate(90deg)
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 92%
+              top: 34%
+              transform: rotate(90deg)
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 92%
+              top: 10%
+              transform: rotate(90deg)
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 88%
+              top: 3%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 78%
+              top: 3%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 77%
+              top: 97%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 86%
+              top: 97%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 25%
+              top: 70%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas_da_varanda
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 68%
+              top: 34%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.arandelas_da_varanda
+            icon: 'mdi:car-parking-lights'
+            style:
+              left: 68%
+              top: 9%
+            tap_action:
+              action: toggle
+            type: state-icon
+        image: /local/imgs/planta2.svg
+        title: Iluminação
+        type: picture-elements
+      - elements:
+          - entity: switch.tv_quarto
+            icon: 'mdi:television-classic'
+            style:
+              left: 85%
+              top: 29%
+            type: state-icon
+          - entity: switch.tv_lg_55
+            icon: 'mdi:television-classic'
+            style:
+              left: 65%
+              top: 51%
+              transform: rotate(90deg)
+            type: state-icon
+          - entity: switch.xboom_som
+            icon: 'mdi:speaker'
+            style:
+              left: 64%
+              top: 57%
+              transform: rotate(90deg)
+            type: state-icon
+        image: /local/imgs/planta.svg
+        title: Eletrônicos
+        type: picture-elements
+      - elements:
+          - entity: alarm_control_panel.alarme_da_casa
+            style:
+              font-size: 14px
+              left: 12%
+              top: 1%
+            type: state-label
+          - entity: binary_sensor.sala_social
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 58%
+              top: 57%
+            type: state-icon
+          - entity: binary_sensor.sala_jantar
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 43%
+              top: 78%
+            type: state-icon
+          - entity: binary_sensor.corredor
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 75%
+              top: 60%
+            type: state-icon
+          - entity: binary_sensor.closet
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 80%
+              top: 12%
+            type: state-icon
+          - entity: binary_sensor.ext_garagem
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 18%
+              top: 80%
+            type: state-icon
+          - entity: binary_sensor.ext_piscina
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 38%
+              top: 25%
+            type: state-icon
+          - entity: camera.wanscam_360
+            icon: 'mdi:cctv'
+            style:
+              '--paper-item-icon-color': '#795548'
+              left: 4%
+              top: 81%
+              transform: rotate(-80deg) scaleX(-1)
+            type: state-icon
+          - entity: camera.xiaofang
+            icon: 'mdi:cctv'
+            style:
+              '--paper-item-icon-color': '#795548'
+              left: 68%
+              top: 10%
+            type: state-icon
+          - entity: binary_sensor.v380_piscina
+            icon: 'mdi:cctv'
+            style:
+              '--paper-item-icon-color': '#795548'
+              left: 3%
+              top: 40%
+              transform: rotate(-80deg) scaleX(-1)
+            type: state-icon
+          - entity: camera.camera_interna
+            icon: 'mdi:webcam'
+            style:
+              '--paper-item-icon-color': '#795548'
+              left: 54%
+              top: 68%
+            type: state-icon
+          - entity: binary_sensor.porta_varanda
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 69%
+              top: 28%
+            type: state-icon
+          - entity: binary_sensor.porta_lavanderia
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 22%
+              top: 45%
+              transform: rotate(-180deg)
+            type: state-icon
+          - entity: binary_sensor.porta_entrada
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 49%
+              top: 86%
+            type: state-icon
+          - entity: binary_sensor.porta_garagem
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 30%
+              top: 66%
+              transform: rotate(90deg)
+            type: state-icon
+          - entity: binary_sensor.porta_area
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 56%
+              top: 44%
+            type: state-icon
+          - entity: binary_sensor.janela_cozinha
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 35%
+              top: 44%
+            type: state-icon
+          - entity: binary_sensor.janela_suite
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 90%
+              top: 37%
+            type: state-icon
+          - entity: binary_sensor.janela_quarto_m
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 90%
+              top: 65%
+            type: state-icon
+          - entity: binary_sensor.janela_quarto_f
+            style:
+              '--paper-item-icon-color': '#B0BEC5'
+              left: 88.5%
+              top: 84%
+            type: state-icon
+        image: /local/imgs/planta2.svg
+        title: Segurança
+        type: picture-elements
+    icon: 'mdi:floor-plan'
+    panel: false
+    path: planta
+    title: Planta
+  - badges: []
+    cards:
+      - custom_fields:
+          icone: |
+            [[[
+              return `<b>HassOS</b><br><ha-icon
+                icon="mdi:raspberry-pi"
+                style="width: 40px; height: 40px;">
+                </ha-icon><br></span>
+                <ha-icon
+                icon="mdi:radioactive"
+                style="width: 18px; height: 16px; color: red;">
+                </ha-icon><span> <span style="color: var(--text-color-sensor);">${states['sensor.processor_use'].state}%</span></span>`
+            ]]]
+          ram: |
+            [[[
+              return `<ha-icon
+                icon="mdi:memory"
+                style="width: 22px; height: 18px; color: #C51162;">
+                </ha-icon><span>RAM: <span style="color: var(--text-color-sensor);"><b>${states['sensor.memory_free'].state}</b> MB</span></span>`
+            ]]]
+          ramuse: |
+            [[[
+              return `<ha-icon
+                icon="mdi:memory"
+                style="width: 22px; height: 18px; color: #C51162;">
+                </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.memory_use_percent'].state}</b>%</span></span>`
+            ]]]
+          sd: |
+            [[[
+              return `<ha-icon
+                icon="mdi:harddisk"
+                style="width: 22px; height: 18px; color: #8BC34A;">
+                </ha-icon><span>SD: <span style="color: var(--text-color-sensor);"><b>${states['sensor.disk_free'].state}</b> GB</span></span>`
+            ]]]
+          sduse: |
+            [[[
+              return `<ha-icon
+                icon="mdi:harddisk"
+                style="width: 22px; height: 18px; color: #8BC34A;">
+                </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.disk_use_percent'].state}</b>%</span></span>`
+            ]]]
+          temp: |
+            [[[
+              return `<ha-icon
+                icon="mdi:thermometer"
+                style="width: 22px; height: 18px; color: yellow;">
+                </ha-icon><span><b>${entity.state}</b>°C</span>`
+            ]]]
+          versao: |
+            [[[
+              return `<ha-icon
+                icon="mdi:settings"
+                style="width: 22px; height: 18px; color: deepskyblue;">
+                </ha-icon><span>Versão: <span style="color: var(--text-color-sensor);"><b>${states['sensor.versao'].state}</b></span></span>`
+            ]]]
+        entity: sensor.cpu_temperatura
+        layout: icon_state_name2nd
+        show_icon: false
+        show_name: false
+        show_state: false
+        styles:
+          card:
+            - padding: 10%
+            - font-size: 15px
+          custom_fields:
+            icone:
+              - position: absolute
+              - left: 77%
+              - top: 5%
+            ram:
+              - position: absolute
+              - left: 2%
+              - top: 70%
+            ramuse:
+              - position: absolute
+              - left: 35%
+              - top: 70%
+            sd:
+              - position: absolute
+              - left: 2%
+              - top: 40%
+            sduse:
+              - position: absolute
+              - left: 35%
+              - top: 40%
+            temp:
+              - position: absolute
+              - left: 35%
+              - top: 10%
+            versao:
+              - position: absolute
+              - left: 2%
+              - top: 10%
+        type: 'custom:button-card'
+      - cards:
+          - cards:
+              - color_thresholds:
+                  - color: '#03A9F4'
+                    value: 40
+                  - color: '#66BB6A'
+                    value: 45
+                  - color: '#E65100'
+                    value: 50
+                entities:
+                  - sensor.cpu_temperatura
+                hours_to_show: 24
+                line_width: 4
+                name: Temperatura 24h
+                points_per_hour: 4
+                show:
+                  extrema: true
+                  fill: false
+                type: 'custom:mini-graph-card'
+              - color_thresholds:
+                  - color: '#03A9F4'
+                    value: 5
+                  - color: '#66BB6A'
+                    value: 10
+                  - color: '#E65100'
+                    value: 60
+                entities:
+                  - sensor.processor_use
+                hours_to_show: 2
+                line_width: 4
+                name: CPU - 2h
+                points_per_hour: 30
+                show:
+                  extrema: true
+                  fill: false
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.disk_use_percent
+                name: SD
+                type: gauge
+              - entity: sensor.memory_use_percent
+                name: RAM
+                type: gauge
+            type: horizontal-stack
+        type: vertical-stack
+      - entities:
+          - entity: binary_sensor.internet
+            name: RB2011 (RouterOS)
+          - entity: binary_sensor.google_wifi
+          - entity: binary_sensor.pc_desktop
+            icon: 'mdi:desktop-classic'
+          - entity: binary_sensor.fita_led_bancada
+            icon: 'mdi:led-strip'
+        show_header_toggle: false
+        title: Diversos
+        type: entities
+      - entities:
+          - entity: binary_sensor.broadlink_ir_quarto
+          - entity: binary_sensor.broadlink_ir_sala
+          - entity: binary_sensor.sonoff_rf_bridge
+        show_header_toggle: false
+        title: Gateway's
+        type: entities
+      - entities:
+          - entity: binary_sensor.camera_digoo
+            icon: 'mdi:webcam'
+            name: Câmera Interna 360
+          - entity: binary_sensor.wcam360
+            name: Câmera Garagem 360
+          - entity: binary_sensor.xiaofang
+            icon: 'mdi:webcam'
+            name: Câmera Xiaofang
+          - entity: binary_sensor.v380_piscina
+            icon: 'mdi:video'
+            name: Câmera 360 Piscina
+          - entity: binary_sensor.v380_interna
+            icon: 'mdi:video'
+            name: Câmera 360 Interna 2
+        show_header_toggle: false
+        title: Câmeras
+        type: entities
+      - entities:
+          - entity: binary_sensor.tv_lg_game
+            name: TV LG55 - Salva Social
+          - entity: binary_sensor.chrome_cast_quarto
+          - entity: binary_sensor.chrome_cast_game
+          - entity: binary_sensor.google_home_quarto
+          - entity: binary_sensor.google_home_sala
+        show_header_toggle: false
+        title: Tv / Casts / G Home
+        type: entities
+      - entities:
+          - entity: sensor.db_size
+            icon: 'mdi:database'
+            name: Maria DB
+          - entity: sensor.last_boot
+            name: Última inicialização
+          - entity: sensor.uptime
+        type: entities
+    icon: 'mdi:raspberry-pi'
+    panel: false
+    path: dispositivos
+    title: Dispositivos
+  - badges: []
+    cards:
+      - entity: climate.ar_da_cozinha
+        type: thermostat
+      - entity: climate.ar_da_sala
+        type: thermostat
+      - entity: climate.climatizador
+        name: Suíte
+        type: thermostat
+    icon: 'mdi:air-filter'
+    path: Ar
+    title: Lab
+  - badges: []
+    cards:
+      - entities:
+          - entity: input_select.padrao_tts
+        show_header_toggle: false
+        title: TTS Padrão
+        type: entities
+      - entities:
+          - label: 'Após (min) o sol se por ligar luzes:'
+            type: section
+          - entity: input_number.anoitecer
+            name: Minutos
+          - label: Postes
+            type: section
+          - entity: sensor.anoiteceu
+            name: Ligar
+          - entity: input_datetime.poste_off
+            name: Desligar
+          - label: Arandelas
+            type: section
+          - entity: sensor.anoiteceu
+            name: Ligar
+          - entity: input_datetime.arandelas_off
+            name: Desligar
+          - label: 'Automação Postes / Arandelas:'
+            type: section
+          - entity: automation.luz_postes_ligar
+          - entity: automation.luz_postes_desligar
+          - entity: automation.luz_arandelas_ligar
+          - entity: automation.luz_arandelas_desligar
+        show_header_toggle: false
+        title: Regras Luzes externas
+        type: entities
+      - entities:
+          - label: 'Movimento com alarme desativado e ninguém em casa:'
+            type: section
+          - entity: automation.garagem_alarme_off_movimento
+          - entity: automation.piscina_alarme_off_movimento
+          - label: 'Movimento com alarme ativado:'
+            type: section
+          - entity: automation.garagem_alarme_on_movimento
+          - entity: automation.piscina_alarme_on_movimento
+          - label: 'Movimento com alarme ativado liga luzes:'
+            type: section
+          - entity: automation.garagem_alarme_on_luz_movimento
+          - entity: automation.piscina_alarme_on_luz_movimento
+          - label: 'Sem movimento com alarme ativado desliga luzes:'
+            type: section
+          - entity: automation.garagem_alarme_on_luz_s_movimento
+          - entity: automation.piscina_alarme_on_luz_s_movimento
+        show_header_toggle: false
+        title: Alarme Movimentos
+        type: entities
+      - entities:
+          - entity: automation.alarme_aviso_que_sera_ativado
+          - entity: automation.alarme_notif_que_foi_ativado
+          - entity: automation.alarme_apaga_todas_as_luzes_quando_ativo
+          - entity: automation.alarme_desliga_sirene_ao_ser_desativado
+          - entity: automation.alarme_aviso_desativado
+          - entity: automation.alarme_disparar_ao_ter_sensor_violado
+          - entity: automation.alarme_testar_sensores
+          - entity: automation.notificacao_sensor_alarme_off_s_ninguem
+        show_header_toggle: false
+        title: Alarme da Casa
+        type: entities
+      - entities:
+          - label: 'Luz corredor liga com movimento:'
+            type: section
+          - entity: automation.luz_corredor_liga_movimento
+            icon: 'mdi:lightbulb-on'
+            name: 'Liga aut. entre 18:30h e 7:00h'
+          - entity: automation.luz_corredor_desliga_s_movimento_2min
+            icon: 'mdi:lightbulb'
+            name: Deseliga se não tiver movinto (2min)
+          - label: 'Luz closet liga com movimento:'
+            type: section
+          - entity: automation.luz_closet_liga_movimento
+            icon: 'mdi:lightbulb-on'
+            name: 'Liga aut. entre 19:00h e 06:30h'
+          - entity: automation.luz_closet_desliga_s_movimento_3min
+            icon: 'mdi:lightbulb'
+            name: Deseliga se não tiver movinto (2min)
+          - label: 'Luz banheiros desligam se ligada por muito tempo:'
+            type: section
+          - entity: input_number.tempo_banheiro_suite
+            name: Suíte
+          - entity: automation.luz_sem_desligar_banheiro_suite
+            name: Banhero da suíte
+          - type: section
+          - entity: input_number.tempo_banheiro_social
+            name: Social
+          - entity: automation.luz_sem_desligar_banheiro_social
+            name: Banhero social
+          - type: section
+          - entity: input_number.tempo_banheiro_lavabo
+            name: Lavabo
+          - entity: automation.luz_sem_desligar_lavabo
+            name: Lavabo
+        show_header_toggle: false
+        title: Regras Luzes Internas
+        type: entities
+      - entities:
+          - label: 'Fala a temperatura do ar ao ligar:'
+            type: section
+          - entity: automation.falar_temperatura_ao_ligar_ar
+            name: Ar quarto
+          - label: 'Da boas vindas ao abrir porta:'
+            type: section
+          - entity: automation.porta_entrada_aberta
+            name: Porta de entrada
+          - label: 'Se Rudi/Flávia não estiver em casa:'
+            type: section
+          - entity: automation.notificacao_luzez_on_off
+          - entity: automation.notificacao_switch_on_off
+        show_header_toggle: false
+        title: Avisos / Alertas
+        type: entities
+      - entities:
+          - label: 'Renovar certificado automaticamente:'
+            type: section
+          - entity: automation.renova_let_s_encrypt
+          - label: 'Configuração dos despertadores:'
+            type: section
+          - entity: automation.conf_despertador_1
+          - entity: automation.conf_despertador_2
+          - label: 'Desliga TVs/Som quando não utilizado:'
+            type: section
+          - entity: automation.tv_quarto_desliga_sem_player_5min
+          - label: 'Alertas do status da Máquina de Lavar:'
+            type: section
+          - entity: automation.alerta_maquina_de_lavar_desligada
+          - entity: automation.alerta_maquina_de_lavar_lavando
+          - entity: automation.alerta_maquina_de_lavar_energia_off
+          - label: 'Monitoramenteo da WAN :'
+            type: section
+          - entity: automation.monitor_wan_in
+          - entity: automation.monitor_wan_out
+          - label: 'Liga/Desliga TV/Som/HTV:'
+            type: section
+          - entity: script.ver_tv_na_sala
+            name: Quero ver TV
+          - entity: script.parar_tv_na_sala
+            name: Chega de ver TV
+          - label: Notificações do status do motor da piscina
+            type: section
+          - entity: automation.monitoramento_status_do_motor_da_piscina
+        show_header_toggle: false
+        title: Diversos
+        type: entities
+      - entities:
+          - entity: automation.garagem_movimento_liga_luzez_apos_sol_se_por
+          - entity: automation.liga_luzez_int_ao_abrir_porta_garagem_noite
+        show_header_toggle: false
+        title: Porta Garagem
+        type: entities
+      - entities:
+          - label: >-
+              Desativa notificações de sensores, switchs e luzes quando ningém
+              em casa.
+            type: section
+          - entity: input_boolean.modo_visitante
+          - entity: automation.modo_visitante_off
+          - entity: automation.modo_visitante_on
+          - entity: automation.desliga_o_modo_visitante_ao_chegar_em_casa
+        show_header_toggle: false
+        title: Modo Visitante
+        type: entities
+      - entities:
+          - entity: script.loop_luzes_auxiliar
+        type: entities
+      - entities:
+          - entity: script.reseta_porta_geladeira
+          - entity: automation.geladeira_aberta_por_muito_tempo
+            name: Notificar se ficar aberta
+          - entity: automation.geladeira_aberta_auto_reset
+          - entity: automation.evita_deixar_geladeira_desligada
+          - entity: automation.aviso_ao_ligar_energia_da_geladeira
+          - entity: automation.aviso_ao_desligar_energia_da_geladeira
+        show_header_toggle: false
+        title: Geladeira
+        type: entities
+      - entities:
+          - entity: automation.notifica_home_assistant_foi_iniciado
+          - entity: automation.notifica_caixa_dagua_nivel_95
+          - entity: automation.notifica_caixa_dagua_nivel_25
+          - entity: automation.notifica_que_voltou_a_agua
+          - entity: automation.raspberry_temperatura_elevada
+          - entity: automation.telegram_bot_responde_ping
+          - entity: automation.telegram_bot_responde_agua
+          - entity: automation.telegram_bot_responde_energia
+        show_header_toggle: false
+        title: 'Notificações '
+        type: entities
+      - entities:
+          - entity: automation.sem_energia
+          - entity: automation.sem_energia_por_mais_de_1h
+          - entity: automation.sem_energia_por_mais_de_2h
+          - entity: automation.sem_energia_por_mais_de_3h
+        show_header_toggle: false
+        title: Falta de energia
+        type: entities
+    icon: 'mdi:home-automation'
+    path: automacoes
+    title: Automações
+  - badges: []
+    cards:
+      - entities:
+          - hide_if_unavailable: true
+            name: Home
+            type: cast
+            view: home
+          - hide_if_unavailable: true
+            name: Energia
+            type: cast
+            view: energia
+          - hide_if_unavailable: true
+            name: Iluminação
+            type: cast
+            view: iluminacao
+          - hide_if_unavailable: true
+            name: Cameras
+            type: cast
+            view: cameras
+          - hide_if_unavailable: true
+            name: Multimidia
+            type: cast
+            view: multimidia
+          - hide_if_unavailable: true
+            name: Clima
+            type: cast
+            view: clima
+          - hide_if_unavailable: true
+            name: 433Mhz
+            type: cast
+            view: 433mhz
+          - hide_if_unavailable: true
+            name: Lavanderia
+            type: cast
+            view: lavanderiaecozinha
+          - hide_if_unavailable: true
+            name: Planta
+            type: cast
+            view: planta
+          - hide_if_unavailable: true
+            name: Agenda
+            type: cast
+            view: agenda
+          - hide_if_unavailable: true
+            name: Dispositivos
+            type: cast
+            view: dispositivos
+        type: entities
+    icon: 'mdi:cast'
+    panel: false
+    path: cast
+    title: Cast
