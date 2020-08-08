@@ -104,7 +104,7 @@ ver_video:
          media_content_type: 'video'
 
 stop_video:
-  alias: Stop Vídeo
+  alias: Stop Streaming
   sequence:
     - service: media_player.turn_off
       data_template:
@@ -113,35 +113,35 @@ stop_video:
           {% elif is_state("input_select.src_cast_video", "Sala") %} media_player.tv_da_sala
           {% endif %}
 
-
-ver_teste_video:
-  alias: Play Vídeo Streaming
+# URL Streaming
+play_media_ext:
+  alias: Play Streaming
   sequence:
     - service: media_player.volume_set
       data_template:
         entity_id: >
-          {% if is_state("input_select.src_cast_teste_video", "Quarto") %} media_player.tv_do_quarto
-          {% elif is_state("input_select.src_cast_teste_video", "Sala") %} media_player.tv_da_sala
+          {% if is_state("input_select.src_cast_media_extractor", "Quarto") %} media_player.google_home
+          {% elif is_state("input_select.src_cast_media_extractor", "Sala") %} media_player.google_home_sala
           {% endif %}
-        volume_level: '{{  states.input_number.video_teste_volume.state  }}'
-    -  service: media_player.play_media
+        volume_level: '{{  states.input_number.volume_media_extractor.state  }}'
+    -  service: media_extractor.play_media
        data_template:
          entity_id: >
-          {% if is_state("input_select.src_cast_teste_video", "Quarto") %} media_player.tv_do_quarto
-          {% elif is_state("input_select.src_cast_teste_video", "Sala") %} media_player.tv_da_sala
+          {% if is_state("input_select.src_cast_media_extractor", "Quarto") %} media_player.google_home
+          {% elif is_state("input_select.src_cast_media_extractor", "Sala") %} media_player.google_home_sala
           {% endif %}
          media_content_id: >
-          {{ states.input_text.url_teste_video.state }}
-         media_content_type: 'video'
+          {{ states.input_text.url_media_extractor.state }}
+         media_content_type: 'music'
 
-stop_teste_video:
+stop_media_ext:
   alias: Stop Vídeo
   sequence:
     - service: media_player.turn_off
       data_template:
         entity_id: >
-          {% if is_state("input_select.src_cast_teste_video", "Quarto") %} media_player.tv_do_quarto
-          {% elif is_state("input_select.src_cast_teste_video", "Sala") %} media_player.tv_da_sala
+          {% if is_state("input_select.src_cast_media_extractor", "Quarto") %} media_player.google_home
+          {% elif is_state("input_select.src_cast_media_extractor", "Sala") %} media_player.google_home_sala
           {% endif %}
 
 
@@ -421,81 +421,6 @@ fotos_380rtsp2:
 # | |___| |_| |/ /  __/\__ \
 # |______\__,_/___\___||___/
 #
-# https://www.home-assistant.io/components/light/
-
-# Apaga todas as luzes
-off_todas_luzes:
-  alias: "(Off) Todas as luzes"
-  sequence:
-  - service: light.turn_off
-    data:
-      entity_id: group.all_lights
-
-# Liga todas as luzes
-on_todas_luzes:
-  alias: "(On) Todas as luzes"
-  sequence:
-  - service: light.turn_on
-    data:
-      entity_id: group.all_lights
-
-# Apaga todas as luzes amarelas da parte social da casa
-off_todas_luzes_amarelas:
-  alias: "(Off) Luzes Quentes"
-  sequence:
-  - service: light.turn_off
-    data:
-      entity_id:
-        - light.pendentes
-        - light.trilhos
-        - light.mesa_de_jantar
-        - light.lustre
-        - light.bancada
-
-# Liga todas as luzes amarelas da parte social da casa
-on_todas_luzes_amarelas:
-  alias: "(On) Luzes Quentes"
-  sequence:
-  - service: light.turn_on
-    data:
-      entity_id:
-        - light.pendentes
-        - light.trilhos
-        - light.mesa_de_jantar
-        - light.lustre
-        - light.bancada
-
-# Liga todas as luzes brancas da parte social da casa
-off_todas_luzes_brancas:
-  alias: "(Off) Luzes Brancas"
-  sequence:
-  - service: light.turn_off
-    data:
-      entity_id:
-        - llight.cozinha
-        - light.pia
-        - light.bebedor
-        - light.sala_game
-        - light.central
-        - light.jf
-        - light.entrada_garagem
-        - light.sala_de_estar
-
-# Apaga todas as luzes brancas da parte social da casa
-on_todas_luzes_brancas:
-  alias: "(On) Luzes Brancas - Social"
-  sequence:
-  - service: light.turn_on
-    data:
-      entity_id:
-        - llight.cozinha
-        - light.pia
-        - light.bebedor
-        - light.sala_game
-        - light.central
-        - light.jf
-        - light.entrada_garagem
-        - light.sala_de_estar
 
 # Frescura para fazer um looing nas luzes. Ótimo para queimar tudo, mas bebado numa festinha em casa é da hora!
 loop_luzes_auxiliar:
@@ -503,94 +428,94 @@ loop_luzes_auxiliar:
   sequence:
   - service: light.turn_on
     data:
-      entity_id: light.arandelas
+      entity_id: light.luz_arandelas_principais
   - service: light.turn_off
     data:
-      entity_id: light.arandelas
+      entity_id: light.luz_arandelas_principais
   - service: light.turn_on
     data:
-      entity_id: light.arandelas_da_varanda
+      entity_id: light.luz_arandelas_da_varanda
   - service: light.turn_off
     data:
-      entity_id: light.arandelas_da_varanda
+      entity_id: light.luz_arandelas_da_varanda
   - service: light.turn_on
     data:
-      entity_id: light.varanda_fundos
+      entity_id: light.luz_varanda_fundos
   - service: light.turn_off
     data:
-      entity_id: light.varanda_fundos
+      entity_id: light.luz_varanda_fundos
   - service: light.turn_on
     data:
-      entity_id: light.area_da_piscina
+      entity_id: light.luz_da_area_da_piscina
   - service: light.turn_off
     data:
-      entity_id: light.area_da_piscina
+      entity_id: light.luz_da_area_da_piscina
   - service: light.turn_on
     data:
-      entity_id: light.garagem
+      entity_id: light.luz_da_garagem
   - service: light.turn_off
     data:
-      entity_id: light.garagem
+      entity_id: light.luz_da_garagem
   - service: light.turn_on
     data:
-      entity_id: light.lavanderia
+      entity_id: light.luz_da_lavanderia
   - service: light.turn_off
     data:
-      entity_id: light.lavanderia
+      entity_id: light.luz_da_lavanderia
   - service: light.turn_on
     data:
-      entity_id: light.garagem
+      entity_id: light.luz_da_garagem
   - service: light.turn_off
     data:
-      entity_id: light.garagem
+      entity_id: light.luz_da_garagem
   - service: light.turn_on
     data:
-      entity_id: light.bebedor
+      entity_id: light.luz_do_bebedor
   - service: light.turn_off
     data:
-      entity_id: light.bebedor
+      entity_id: light.luz_do_bebedor
   - service: light.turn_on
     data:
-      entity_id: light.pendentes
+      entity_id: light.luz_pendentes
   - service: light.turn_off
     data:
-      entity_id: light.pendentes
+      entity_id: light.luz_pendentes
   - service: light.turn_on
     data:
-      entity_id: light.trilhos
+      entity_id: light.luz_trilhos
   - service: light.turn_off
     data:
-      entity_id: light.trilhos
+      entity_id: light.luz_trilhos
   - service: light.turn_on
     data:
-      entity_id: light.central
+      entity_id: light.luz_central
   - service: light.turn_off
     data:
-      entity_id: light.central
+      entity_id: light.luz_central
   - service: light.turn_on
     data:
-      entity_id: light.lustre
+      entity_id: light.luz_do_lustre
   - service: light.turn_off
     data:
-      entity_id: light.lustre
+      entity_id: light.luz_do_lustre
   - service: light.turn_on
     data:
-      entity_id: light.sala_game
+      entity_id: light.luz_sala_game
   - service: light.turn_off
     data:
-      entity_id: light.sala_game
+      entity_id: light.luz_sala_game
   - service: light.turn_on
     data:
-      entity_id: light.sala_de_estar
+      entity_id: light.luz_da_sala_de_estar
   - service: light.turn_off
     data:
-      entity_id: light.sala_de_estar
+      entity_id: light.luz_da_sala_de_estar
   - service: light.turn_on
     data:
-      entity_id: llight.cozinha
+      entity_id: light.luz_da_cozinha
   - service: light.turn_off
     data:
-      entity_id: llight.cozinha
+      entity_id: light.luz_da_cozinha
   - service: light.turn_on
     data:
       entity_id: light.mesa_de_antar
@@ -599,10 +524,10 @@ loop_luzes_auxiliar:
       entity_id: light.mesa_de_antar
   - service: light.turn_on
     data:
-      entity_id: light.jf
+      entity_id: light.luz_jf
   - service: light.turn_off
     data:
-      entity_id: light.jf
+      entity_id: light.luz_jf
 
 
 #   _____            _             _        _____ _____    ____                      _ _ _       _
@@ -1237,6 +1162,55 @@ parar_tv_na_sala:
         - switch.xboom_som
         - switch.htv
 
+# Controle WebOS TV Sala Estar 
+#tv_estar_home:
+#  sequence:
+#    - service: webostv.button
+#      data:
+#        entity_id:  media_player.tv_estar
+#        button: "HOME"
+#tv_estar_exit:
+#  sequence:
+#    - service: webostv.button
+#      data:
+#        entity_id:  media_player.tv_estar
+#        button: "EXIT"
+#tv_estar_back:
+#  sequence:
+#    - service: webostv.button
+#      data:
+#        entity_id:  media_player.tv_estar
+#        button: "BACK"
+#tv_estar_enter:
+#  sequence:
+#    - service: webostv.button
+#      data:
+#        entity_id:  media_player.tv_estar
+#        button: "ENTER"
+#tv_estar_left:
+#  sequence:
+#    - service: webostv.button
+#      data:
+#        entity_id:  media_player.tv_estar
+#        button: "LEFT"
+#tv_estar_right:
+#  sequence:
+#    - service: webostv.button
+#      data:
+#        entity_id:  media_player.tv_estar
+#        button: "RIGHT"
+#tv_estar_up:
+#  sequence:
+#    - service: webostv.button
+#      data:
+#        entity_id:  media_player.tv_estar
+#        button: "UP"
+#tv_estar_down:
+#  sequence:
+#    - service: webostv.button
+#      data:
+#        entity_id:  media_player.tv_estar
+#        button: "DOWN"
 
 #  _           _
 # | |         | |
@@ -1316,38 +1290,20 @@ reseta_porta_lavanderia:
       topic: "tele/sonoffBr1/RESULT"
       payload: ' {"RfReceived":{"Data":"54A00E"}} '
 
-
-testa_amazon_polly1:
-  alias: Testando Vozes
+telegram_call_alarme:
+  alias: Liga no Telegram - Avisa que alarme disparou
   sequence:
-  - service: tts.google_translate_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Eu sou a voz mais conhecida de todas!
-  - delay:
-      seconds: 4
-  - service: tts.amazon_polly_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Grande coisa se é a mais conhecida, a minha é a mais máscula!
-  - delay:
-      seconds: 4
-  - service: tts.voicerss_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Eu tenho a vóz meia rachada.
-  - delay:
-      seconds: 1
-  - service: tts.watson_tts_say
-    data_template:
-      entity_id: media_player.google_home
-      message: Eu até sou legalzinha, mas tenho um delei bem grande antes de começar a falar.
+    - service: shell_command.telegram_call
+      data_template:
+        url: 'http://api.callmebot.com/start.php?source=auth&user=@remontti&text=Alarme%20Disparou&lang=pt-BR-Standard-A'
 
-test_alexa:
-  alias: Alexa Teste
-  sequence:
-  - service: notify.alexa_media_echo_dot_de_rudima
-    data:
-      message: "Home Assistant está funcionando."
-      data:
-        type: tts
+# TESTE BROADLINK
+#teste_10:
+#  alias: "TESTE BROADLINK"
+#  sequence:
+#  - data:
+#      host: 192.168.87.251
+#      packet:
+#      - JgBQAAABJJURExITERMSExETEhMSNxISEjcTNhQ2EjcTNxI3EhISOBISEjgRExI4EjcTEhISEhMRNxQREzYUEBMSEzYTNxM1EwAFFwABJ0gTAA0FAAAAAAAAAAA=
+#      - JgBQAAABJJURExITERMSExETEhMSNxISEjcTNhQ2EjcTNxI3EhISOBISEjgRExI4EjcTEhISEhMRNxQREzYUEBMSEzYTNxM1EwAFFwABJ0gTAA0FAAAAAAAAAAA=
+#    service: broadlink.send
