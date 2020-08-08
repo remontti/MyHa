@@ -1,61 +1,62 @@
 luzes_externas:
   name: Externas
   entities:
-    - light.garagem
-    - light.arandelas
-    - light.arandelas_da_varanda
-    - light.area_da_piscina
-    - light.postes
-    - light.entrada
-    - light.varanda_fundos
-    - light.postes
+    - light.luz_da_garagem
+    - light.luz_arandelas_principais
+    - light.luz_arandelas_da_varanda
+    - light.luz_da_area_da_piscina
+    - light.luz_dos_postes
+    - light.luz_da_entrada
+    - light.luz_varanda_fundos
 luzes_banheiro:
   name: Banheiros
   entities:
-    - light.banheiro_da_suite
-    - light.banheiro_social
-    - light.lavabo
+    - light.luz_do_banheiro_da_suite
+    - light.luz_do_banheiro_social
+    - light.luz_do_lavabo
 luzes_cozinha:
   name: Cozinha
   entities:
-    - light.cozinha
-    - light.pia
-    - light.bebedor
-    - light.pendentes
-    - light.bancada
-luzes_game:
-  name: Sala Game
+    - light.luz_da_cozinha
+    - light.luz_da_pia
+    - light.luz_do_bebedor
+luzes_outras:
+  name: Outras Luzes
   entities:
-    - light.sala_game
-    - light.central
-    - light.trilhos
+    - light.luz_da_lavanderia
+    - light.luz_do_corredor
+luzes_game:
+  name: Araea Social
+  entities:
+    - light.luz_sala_game
+    - light.luz_central
+    - light.luz_trilhos
+    - light.luz_pendentes
 luzes_jantar:
   name: Jantar
   entities:
-    - light.jf
-    - light.jg
-    - light.entrada_garagem
-    - light.mesa_de_jantar
+    - light.luz_jf
+    - light.luz_jg
+    - light.luz_da_mesa_de_jantar
 luzes_estar:
   name: Estar
   entities:
-    - light.lustre
-    - light.sala_de_estar
+    - light.luz_do_lustre
+    - light.luz_da_sala_de_estar
 luzes_quartos:
-  name: Quartos / Corredor
+  name: Quartos
   entities:
-    - light.quarto_da_frente
-    - light.quarto_do_meio
-    - light.corredor
-    - light.quarto_da_suite
+    - light.luz_do_quarto_da_frente
+    - light.luz_do_quarto_do_meio
+    - light.luz_da_suite
     - light.yeelight_color1_7c49eb15924b
-    - light.closet
-all_devices:
-  name: all_devices
+    - light.luz_do_closet
+    - light.luz_da_cabeceira
+arandelas:
+  name: Arandelas
   entities:
-    - device_tracker.life360_flavia_cristine_vendruscolo
-    - device_tracker.life360_rudimar_remontti
-
+    - light.luz_arandelas_principais
+    - light.luz_arandelas_da_varanda
 all_lights:
   name: all_lights
   entities:
@@ -66,3 +67,27 @@ all_lights:
     - group.luzes_game
     - group.luzes_jantar
     - group.luzes_quartos
+    - group.luzes_outras
+all_devices:
+  name: all_devices
+  entities:
+    - device_tracker.life360_flavia_cristine_vendruscolo
+    - device_tracker.life360_rudimar_remontti
+# Grupos de luz alternativos
+luzes_quentes:
+  name: Luzes Quentes
+  entities:
+    - light.luz_da_mesa_de_jantar
+    - light.luz_trilhos
+    - light.luz_pendentes
+    - light.luz_do_lustre
+luzes_frias:
+  name: Luzes Frias
+  entities:
+    - light.luz_sala_game
+    - light.luz_central
+    - light.luz_jf
+    - light.luz_jg
+    - light.luz_da_sala_de_estar
+    - light.luz_do_bebedor
+    - light.luz_da_pia

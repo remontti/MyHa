@@ -19,7 +19,6 @@
 # Controle do volume
 - alias: Ajusta Volume do Player de Audio
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: input_number.audio_volume
@@ -46,7 +45,6 @@
 # Controle do volume
 - alias: Ajusta Volume do Player de Video
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: input_number.video_volume
@@ -59,20 +57,19 @@
         {% endif %}
       volume_level: '{{  states.input_number.video_volume.state  }}'
 
-- alias: Ajusta Volume do Player de Video Streaming
+- alias: Ajusta Volume do Player Streaming
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
-    entity_id: input_number.video_teste_volume
+    entity_id: input_number.volume_media_extractor
   action:
   - service: media_player.volume_set
     data_template:
       entity_id: >
-        {% if is_state("input_select.src_cast_video", "Quarto") %} media_player.tv_do_quarto
-        {% elif is_state("input_select.src_cast_video", "Sala") %} media_player.tv_da_sala
+        {% if is_state("input_select.src_cast_video", "Quarto") %} media_player.google_home
+        {% elif is_state("input_select.src_cast_video", "Sala") %} media_player.google_home_sala
         {% endif %}
-      volume_level: '{{  states.input_number.video_teste_volume.state  }}'
+      volume_level: '{{  states.input_number.volume_media_extractor.state  }}'
 
 #  _____                              _          _         ______                             _
 # |  __ \                            | |        | |       |  ____|                           | |
@@ -103,7 +100,6 @@
 # BOTAO ARMAR
 - alias: Controle (1) - Armar
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c1_armar
@@ -117,7 +113,6 @@
 # BOTAO DESARMAR
 - alias: Controle (1) - Desarmar
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c1_desarmar
@@ -131,7 +126,6 @@
 # HOME (Liga luz Poste se estiver off)
 - alias: Controle (1) - Bt Home (Liga Poste)
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c1_home
@@ -139,19 +133,18 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.postes
+    entity_id: light.luz_dos_postes
     state: 'off'
   action:
   - service: light.turn_on
     data:
       entity_id: 
-        - light.postes
-        - light.area_da_piscina
+        - light.luz_dos_postes
+        - light.luz_da_area_da_piscina
 
 # HOME (Desliga luz Poste se estiver on)
 - alias: Controle (1) - Bt Home (Desligar Poste)
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c1_home
@@ -159,19 +152,18 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.postes
+    entity_id: light.luz_dos_postes
     state: 'on'
   action:
   - service: light.turn_off
     data:
       entity_id: 
-        - light.postes
-        - light.area_da_piscina
+        - light.luz_dos_postes
+        - light.luz_da_area_da_piscina
 
 # SOS (Liga luz pendentes se estiver off)
 - alias: Controle (1) - Bt SOS (Liga QM)
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c1_sos
@@ -179,17 +171,16 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.pendentes
+    entity_id: light.luz_pendentes
     state: 'off'
   action:
   - service: light.turn_on
     data:
-      entity_id: light.pendentes
+      entity_id: light.luz_pendentes
 
 # SOS (Desliga luz pendentes se estiver on)
 - alias: Controle (1) - Bt SOS (Desligar QM)
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c1_sos
@@ -197,12 +188,12 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.pendentes
+    entity_id: light.luz_pendentes
     state: 'on'
   action:
   - service: light.turn_off
     data:
-      entity_id: light.pendentes
+      entity_id: light.luz_pendentes
 
 
 #   _____            _             _            __      ___
@@ -215,7 +206,6 @@
 # ARMAR
 - alias: Controle (2) - Armar
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c2_armar
@@ -229,7 +219,6 @@
 # DESARMAR
 - alias: Controle (2) - Desarmar
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c2_desarmar
@@ -243,7 +232,6 @@
 # HOME ( SEM FUNCAO)
 - alias: Controle (2) - Btn Home
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c2_home
@@ -266,7 +254,6 @@
 # SOS ( SEM FUNCAO)
 - alias: Controle (2) - Btn SOS
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c2_sos
@@ -297,7 +284,6 @@
 # ARMAR
 - alias: Controle (3) - Armar
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c3_armar
@@ -311,7 +297,6 @@
 # DESARMAR
 - alias: Controle (3) - Desarmar
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c3_desarmar
@@ -325,7 +310,6 @@
 # HOME (Liga luz do Abajur se estiver off)
 - alias: Controle (3) - Bt Home (Liga abajur)
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c3_home
@@ -344,7 +328,6 @@
 # HOME (Desliga luz do Abajur se estiver on)
 - alias: Controle (3) - Bt Home (Desligar abajur)
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c3_home
@@ -363,7 +346,6 @@
 # SOS (Liga luz do postes se estiver off)
 - alias: Controle (3) - SOS Home (Liga Postes)
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c3_sos
@@ -371,19 +353,18 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.postes
+    entity_id: light.luz_dos_postes
     state: 'off'
   action:
   - service: light.turn_on
     data:
       entity_id: 
-        - light.postes
-        - light.area_da_piscina
+        - light.luz_dos_postes
+        - light.luz_da_area_da_piscina
 
 # SOS (Desliga luz do postes se estiver on)
 - alias: Controle (3) - Bt SOS (Desligar Postes)
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.c3_sos
@@ -391,14 +372,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.postes
+    entity_id: light.luz_dos_postes
     state: 'on'
   action:
   - service: light.turn_off
     data:
       entity_id: 
-        - light.postes
-        - light.area_da_piscina
+        - light.luz_dos_postes
+        - light.luz_da_area_da_piscina
 
 
 #  _____       _                             _                        _  _  ____ ____  __  __ _         
@@ -411,7 +392,6 @@
 # Cozinha - 2 Teclas
 - alias: RF1 Cozinha On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_coz
@@ -419,16 +399,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.pia
+    entity_id: light.luz_da_pia
     state: 'off'
   action:
   - service: light.turn_on
     data:
       entity_id: 
-        - light.pia
+        - light.luz_da_pia
 - alias: RF1 Cozinha Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_coz
@@ -436,16 +415,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.pia
+    entity_id: light.luz_da_pia
     state: 'on'
   action:
   - service: light.turn_off
     data:
       entity_id: 
-        - light.pia
+        - light.luz_da_pia
 - alias: RF2 Cozinha On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_coz
@@ -461,7 +439,6 @@
       entity_id: switch.pressurizador
 - alias: RF2 Cozinha Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_coz
@@ -477,7 +454,6 @@
       entity_id: switch.pressurizador
 - alias: RF1e2 Cozinha On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1e2_interruptor_coz
@@ -485,16 +461,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.cozinha
+    entity_id: light.luz_da_cozinha
     state: 'off'
   action:
   - service: light.turn_on
     data:
       entity_id: 
-        - light.cozinha
+        - light.luz_da_cozinha
 - alias: RF1e2 Cozinha Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1e2_interruptor_coz
@@ -502,17 +477,16 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.cozinha
+    entity_id: light.luz_da_cozinha
     state: 'on'
   action:
   - service: light.turn_off
     data:
       entity_id: 
-        - light.cozinha
+        - light.luz_da_cozinha
 #Banheiro da Suite - 2 Teclas
 - alias: RF1 Banheiro Suite On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_bsu
@@ -520,16 +494,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.banheiro_da_suite
+    entity_id: light.luz_do_banheiro_da_suite
     state: 'off'
   action:
   - service: light.turn_on
     data:
       entity_id: 
-        - light.banheiro_da_suite
+        - light.luz_do_banheiro_da_suite
 - alias: RF1 Banheiro Suite Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_bsu
@@ -537,16 +510,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.banheiro_da_suite
+    entity_id: light.luz_do_banheiro_da_suite
     state: 'on'
   action:
   - service: light.turn_off
     data:
       entity_id: 
-        - light.banheiro_da_suite
+        - light.luz_do_banheiro_da_suite
 - alias: RF2 Banheiro Suite On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_bsu
@@ -562,7 +534,6 @@
       entity_id: switch.pressurizador
 - alias: RF2 Banheiro Suite Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_bsu
@@ -578,7 +549,6 @@
       entity_id: switch.pressurizador
 - alias: RF1e2 Banheiro Suite SOS
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1e2_interruptor_bsu
@@ -609,7 +579,6 @@
 #Banheiro Social - 2 Teclas
 - alias: RF1 Banheiro Social On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_bso
@@ -617,16 +586,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.banheiro_social
+    entity_id: light.luz_do_banheiro_social
     state: 'off'
   action:
   - service: light.turn_on
     data:
       entity_id: 
-        - light.banheiro_social
+        - light.luz_do_banheiro_social
 - alias: RF1 Banheiro Social Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_bso
@@ -634,16 +602,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.banheiro_social
+    entity_id: light.luz_do_banheiro_social
     state: 'on'
   action:
   - service: light.turn_off
     data:
       entity_id: 
-        - light.banheiro_social
+        - light.luz_do_banheiro_social
 - alias: RF2 Banheiro Social On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_bso
@@ -659,7 +626,6 @@
       entity_id: switch.pressurizador
 - alias: RF2 Banheiro Social Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_bso
@@ -675,7 +641,6 @@
       entity_id: switch.pressurizador
 - alias: RF1e2 Banheiro Social SOS
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1e2_interruptor_bso
@@ -706,7 +671,6 @@
 # Quarto da Suite - 3 teclas
 - alias: RF1 Interruptor Suite On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_suite
@@ -714,15 +678,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.quarto_da_suite
+    entity_id: light.luz_da_suite
     state: 'off'
   action:
   - service: light.turn_on
     data:
-      entity_id: light.quarto_da_suite
+      entity_id: light.luz_da_suite
 - alias: RF1 Interruptor Suite Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_suite
@@ -730,15 +693,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.quarto_da_suite
+    entity_id: light.luz_da_suite
     state: 'on'
   action:
   - service: light.turn_off
     data:
-      entity_id: light.quarto_da_suite
+      entity_id: light.luz_da_suite
 - alias: RF2 Interruptor Suite On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_suite
@@ -755,7 +717,6 @@
       transition: 5
 - alias: RF2 Interruptor Suite Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_suite
@@ -772,7 +733,6 @@
       transition: 5
 - alias: RF3 Interruptor Suite On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf3_interruptor_suite
@@ -780,15 +740,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.banheiro_da_suite
+    entity_id: light.luz_do_banheiro_da_suite
     state: 'off'
   action:
   - service: light.turn_on
     data:
-      entity_id: light.banheiro_da_suite
+      entity_id: light.luz_do_banheiro_da_suite
 - alias: RF3 Interruptor Suite Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf3_interruptor_suite
@@ -796,15 +755,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.banheiro_da_suite
+    entity_id: light.luz_do_banheiro_da_suite
     state: 'on'
   action:
   - service: light.turn_off
     data:
-      entity_id: light.banheiro_da_suite
+      entity_id: light.luz_do_banheiro_da_suite
 - alias: RF1e3 Interruptor Suite On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1e3_interruptor_suite
@@ -812,15 +770,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.postes
+    entity_id: light.luz_dos_postes
     state: 'off'
   action:
   - service: light.turn_on
     data:
-      entity_id: light.postes
+      entity_id: light.luz_dos_postes
 - alias: RF1e3 Interruptor Suite Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1e3_interruptor_suite
@@ -828,15 +785,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.postes
+    entity_id: light.luz_dos_postes
     state: 'on'
   action:
   - service: light.turn_off
     data:
-      entity_id: light.postes
+      entity_id: light.luz_dos_postes
 - alias: RF1e2 Interruptor Suite On Alarme
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1e2_interruptor_suite
@@ -848,7 +804,6 @@
       entity_id: switch.seguranca_casa
 - alias: RF2e3 Interruptor Suite Off Alarme
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2e3_interruptor_suite
@@ -860,10 +815,9 @@
       entity_id: switch.seguranca_casa
 
 # Quarto da Q Frente - 3 teclas
-# ON - light.quarto_da_frente
+# ON - light.luz_do_quarto_da_frente
 - alias: RF1 Interruptor Q Frente On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_quarto_frente
@@ -871,16 +825,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.quarto_da_frente
+    entity_id: light.luz_do_quarto_da_frente
     state: 'off'
   action:
   - service: light.turn_on
     data:
-      entity_id: light.quarto_da_frente
-# OFF - light.quarto_da_frente
+      entity_id: light.luz_do_quarto_da_frente
+# OFF - light.luz_do_quarto_da_frente
 - alias: RF1 Interruptor Q Frente Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_quarto_frente
@@ -888,16 +841,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.quarto_da_frente
+    entity_id: light.luz_do_quarto_da_frente
     state: 'on'
   action:
   - service: light.turn_off
     data:
-      entity_id: light.quarto_da_frente
-# ON - light.corredor
+      entity_id: light.luz_do_quarto_da_frente
+# ON - light.luz_do_corredor
 - alias: RF2 Interruptor Q Frente On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_quarto_frente
@@ -905,17 +857,16 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.corredor
+    entity_id: light.luz_do_corredor
     state: 'off'
   action:
   - service: light.turn_on
     data:
-      entity_id: light.corredor
+      entity_id: light.luz_do_corredor
       transition: 5
-# OFF - light.corredor
+# OFF - light.luz_do_corredor
 - alias: RF2 Interruptor Q Frente Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_quarto_frente
@@ -923,17 +874,16 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.corredor
+    entity_id: light.luz_do_corredor
     state: 'on'
   action:
   - service: light.turn_off
     data:
-      entity_id: light.corredor
+      entity_id: light.luz_do_corredor
       transition: 5
-# ON - light.banheiro_social
+# ON - light.luz_do_banheiro_social
 - alias: RF3 Interruptor Q Frente On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf3_interruptor_quarto_frente
@@ -941,16 +891,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.quarto_da_frente
+    entity_id: light.luz_do_quarto_da_frente
     state: 'off'
   action:
   - service: light.turn_on
     data:
-      entity_id: light.quarto_da_frente
-# OFF - light.banheiro_social
+      entity_id: light.luz_do_quarto_da_frente
+# OFF - light.luz_do_banheiro_social
 - alias: RF3 Interruptor Q Frente Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf3_interruptor_quarto_frente
@@ -958,15 +907,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.quarto_da_frente
+    entity_id: light.luz_do_quarto_da_frente
     state: 'on'
   action:
   - service: light.turn_off
     data:
-      entity_id: light.quarto_da_frente
+      entity_id: light.luz_do_quarto_da_frente
 - alias: RF1e3 Interruptor Q Frente SOS
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1e3_interruptor_quarto_frente
@@ -974,7 +922,7 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.postes
+    entity_id: light.luz_dos_postes
     state: 'off'
   action:
     - service: notify.telegramtodos
@@ -1000,7 +948,6 @@
 
 - alias: RF1e2 Interruptor Q Frente On Alarme
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1e2_interruptor_quarto_frente
@@ -1012,7 +959,6 @@
       entity_id: switch.seguranca_casa
 - alias: RF2e3 Interruptor Q Frente Off Alarme
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2e3_interruptor_quarto_frente
@@ -1026,7 +972,6 @@
 # Quarto da Q Meio - 3 teclas
 - alias: RF1 Interruptor Q Meio On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_quarto_meio
@@ -1034,15 +979,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.quarto_do_meio
+    entity_id: light.luz_do_quarto_do_meio
     state: 'off'
   action:
   - service: light.turn_on
     data:
-      entity_id: light.quarto_do_meio
+      entity_id: light.luz_do_quarto_do_meio
 - alias: RF1 Interruptor Q Meio Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf1_interruptor_quarto_meio
@@ -1050,15 +994,14 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.quarto_do_meio
+    entity_id: light.luz_do_quarto_do_meio
     state: 'on'
   action:
   - service: light.turn_off
     data:
-      entity_id: light.quarto_do_meio
+      entity_id: light.luz_do_quarto_do_meio
 - alias: RF2 Interruptor Q Meio On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_quarto_meio
@@ -1066,16 +1009,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.corredor
+    entity_id: light.luz_do_corredor
     state: 'off'
   action:
   - service: light.turn_on
     data:
-      entity_id: light.quarto_do_meio
+      entity_id: light.luz_do_quarto_do_meio
 #      transition: 5
 - alias: RF2 Interruptor Q Meio Off
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: binary_sensor.rf2_interruptor_quarto_meio
@@ -1083,16 +1025,15 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.corredor
+    entity_id: light.luz_do_corredor
     state: 'on'
   action:
   - service: light.turn_off
     data:
-      entity_id: light.quarto_do_meio
+      entity_id: light.luz_do_quarto_do_meio
 #      transition: 5
 #- alias: RF3 Interruptor Q Meio On
 #  initial_state: true
-#  hide_entity: true
 #  trigger:
 #  - platform: state
 #    entity_id: binary_sensor.rf3_interruptor_quarto_meio
@@ -1100,15 +1041,14 @@
 #    to: 'on'
 #  condition:
 #    condition: state
-#    entity_id: light.banheiro_social
+#    entity_id: light.luz_do_banheiro_social
 #    state: 'off'
 #  action:
 #  - service: light.turn_on
 #    data:
-#      entity_id: light.banheiro_social
+#      entity_id: light.luz_do_banheiro_social
 #- alias: RF3 Interruptor Q Meio Off
 #  initial_state: true
-#  hide_entity: true
 #  trigger:
 #  - platform: state
 #    entity_id: binary_sensor.rf3_interruptor_quarto_meio
@@ -1116,15 +1056,14 @@
 #    to: 'on'
 #  condition:
 #    condition: state
-#    entity_id: light.banheiro_social
+#    entity_id: light.luz_do_banheiro_social
 #    state: 'on'
 #  action:
 #  - service: light.turn_off
 #    data:
-#      entity_id: light.banheiro_social
+#      entity_id: light.luz_do_banheiro_social
 - alias: RF1e3 Interruptor Q Meio On
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
 #    entity_id: binary_sensor.rf1e3_interruptor_quarto_meio
@@ -1133,7 +1072,7 @@
     to: 'on'
   condition:
     condition: state
-    entity_id: light.postes
+    entity_id: light.luz_dos_postes
     state: 'off'
   action:
     - service: notify.telegramtodos
@@ -1159,7 +1098,6 @@
 
 #- alias: RF1e2 Interruptor Q Meio On Alarme
 #  initial_state: true
-#  hide_entity: true
 #  trigger:
 #  - platform: state
 #    entity_id: binary_sensor.rf1e2_interruptor_quarto_meio
@@ -1171,7 +1109,6 @@
 #      entity_id: switch.seguranca_casa
 #- alias: RF2e3 Interruptor Q Meio Off Alarme
 #  initial_state: true
-#  hide_entity: true
 #  trigger:
 #  - platform: state
 #    entity_id: binary_sensor.rf2e3_interruptor_quarto_meio
@@ -1194,72 +1131,72 @@
   initial_state: true
   trigger:
   - entity_id:
-      - light.garagem
-      - light.arandelas
-      - light.arandelas_da_varanda
-      - light.area_da_piscina
+      - light.luz_da_garagem
+      - light.luz_arandelas_principais
+      - light.luz_arandelas_da_varanda
+      - light.luz_da_area_da_piscina
       - light.refretores_piscina
-      - light.entrada
-      - light.varanda_fundos
-      - light.postes
-      - light.lavanderia
-      - light.banheiro_da_suite
-      - light.banheiro_social
-      - light.lavabo
-      - light.cozinha
-      - light.pia
-      - light.bebedor
-      - light.pendentes
-      - light.sala_game
-      - light.central
-      - light.trilhos
-      - light.bancada
-      - light.jf
-      - light.entrada_garagem
-      - light.mesa_de_jantar
-      - light.lustre
-      - light.sala_de_estar
-      - light.quarto_da_frente
-      - light.quarto_do_meio
-      - light.corredor
-      - light.quarto_da_suite
+      - light.luz_da_entrada
+      - light.luz_varanda_fundos
+      - light.luz_dos_postes
+      - light.luz_da_lavanderia
+      - light.luz_do_banheiro_da_suite
+      - light.luz_do_banheiro_social
+      - light.luz_do_lavabo
+      - light.luz_da_cozinha
+      - light.luz_da_pia
+      - light.luz_do_bebedor
+      - light.luz_pendentes
+      - light.luz_sala_game
+      - light.luz_central
+      - light.luz_trilhos
+      - light.luz_da_cabeceira
+      - light.luz_jf
+      - light.luz_da_entrada_garagem
+      - light.luz_da_mesa_de_jantar
+      - light.luz_do_lustre
+      - light.luz_da_sala_de_estar
+      - light.luz_do_quarto_da_frente
+      - light.luz_do_quarto_do_meio
+      - light.luz_do_corredor
+      - light.luz_da_suite
       - light.yeelight_color1_7c49eb15924b
-      - light.closet
+      - light.luz_do_closet
     from: 'off'
     platform: state
     to: 'on'
   - entity_id:
-      - light.garagem
-      - light.arandelas
-      - light.arandelas_da_varanda
-      - light.area_da_piscina
+      - light.luz_da_garagem
+      - light.luz_arandelas_principais
+      - light.luz_arandelas_da_varanda
+      - light.luz_da_area_da_piscina
       - light.refretores_piscina
-      - light.entrada
-      - light.varanda_fundos
-      - light.postes
-      - light.lavanderia
-      - light.banheiro_da_suite
-      - light.banheiro_social
-      - light.lavabo
-      - light.cozinha
-      - light.pia
-      - light.bebedor
-      - light.pendentes
-      - light.sala_game
-      - light.central
-      - light.trilhos
-      - light.bancada
-      - light.jf
-      - light.entrada_garagem
-      - light.mesa_de_jantar
-      - light.lustre
-      - light.sala_de_estar
-      - light.quarto_da_frente
-      - light.quarto_do_meio
-      - light.corredor
-      - light.quarto_da_suite
+      - light.luz_da_entrada
+      - light.luz_varanda_fundos
+      - light.luz_dos_postes
+      - light.luz_da_lavanderia
+      - light.luz_do_banheiro_da_suite
+      - light.luz_do_banheiro_social
+      - light.luz_do_lavabo
+      - light.luz_da_cozinha
+      - light.luz_da_pia
+      - light.luz_do_bebedor
+      - light.luz_pendentes
+      - light.luz_sala_game
+      - light.luz_central
+      - light.luz_trilhos
+      - light.luz_da_cabeceira
+      - light.luz_jf
+      - light.luz_da_entrada_garagem
+      - light.luz_da_mesa_de_jantar
+      - light.luz_do_lustre
+      - light.luz_da_sala_de_estar
+      - light.luz_do_quarto_da_frente
+      - light.luz_do_quarto_do_meio
+      - light.luz_do_corredor
+      - light.luz_da_suite
       - light.yeelight_color1_7c49eb15924b
-      - light.closet
+      - light.luz_do_closet
     from: 'on'
     platform: state
     to: 'off'
@@ -1721,11 +1658,11 @@
   - service: light.turn_on
     data:
       entity_id:
-        - light.postes
+        - light.luz_dos_postes
         - light.varanda_fundo
-        - light.area_da_piscina
-        - light.garagem
-        - light.arandelas
+        - light.luz_da_area_da_piscina
+        - light.luz_da_garagem
+        - light.luz_arandelas_principais
 
 # Desliga luz area piscina e postes se nao tiver mais movimento
 - alias: "Piscina (Alarme ON) - Luz (S/Movimento)"
@@ -1744,11 +1681,11 @@
     service: light.turn_off
     data:
       entity_id:
-        - light.postes
+        - light.luz_dos_postes
         - light.varanda_fundo
-        - light.area_da_piscina
-        - light.garagem
-        - light.arandelas
+        - light.luz_da_area_da_piscina
+        - light.luz_da_garagem
+        - light.luz_arandelas_principais
 
 # Movimento suspeitos garagem
 - alias: "Garagem (Alarme ON) - Movimento"
@@ -1790,11 +1727,11 @@
   - service: light.turn_on
     data:
       entity_id:
-        - light.postes
-        - light.garagem
+        - light.luz_dos_postes
+        - light.luz_da_garagem
         - light.varanda_fundo
-        - light.area_da_piscina
-        - light.arandelas
+        - light.luz_da_area_da_piscina
+        - light.luz_arandelas_principais
 
 # Desliga luz garagem e postes se nao tiver mais movimento
 - alias: "Garagem (Alarme ON) - Luz (S/Movimento)"
@@ -1813,11 +1750,11 @@
     service: light.turn_off
     data:
       entity_id:
-        - light.postes
-        - light.garagem
+        - light.luz_dos_postes
+        - light.luz_da_garagem
         - light.varanda_fundo
-        - light.area_da_piscina
-        - light.arandelas
+        - light.luz_da_area_da_piscina
+        - light.luz_arandelas_principais
 
 #           _
 #     /\   | |
@@ -1832,8 +1769,11 @@
   trigger:
   - platform: state
     entity_id: alarm_control_panel.alarme_da_casa
-    to: pending
+    to: arming
+#    pending
   action:
+  - service: script.turn_on
+    entity_id: script.reseta_sensores
   - service: switch.turn_on
     data:
       entity_id: switch.sirenes
@@ -1842,7 +1782,7 @@
       entity_id: switch.sirenes
   - service: notify.telegramtodos
     data:
-      message: Alarme será ativo em 30s.
+      message: Alarme será ativo em 10s.
   - service: media_player.volume_set
     data_template:
       entity_id: media_player.google_home_sala
@@ -1855,7 +1795,7 @@
         {% endif %}
     data_template:
       entity_id: media_player.google_home_sala
-      message: Ativando alarme em 30 segundos.
+      message: Ativando alarme em 10 segundos.
 
 - alias: "Alarme - Notif. que foi ativado"
   initial_state: true
@@ -1864,14 +1804,6 @@
     entity_id: alarm_control_panel.alarme_da_casa
     to: armed_away
   action:
-  - service: script.turn_on
-    entity_id: script.reseta_sensores
-  - service: switch.turn_on
-    data:
-      entity_id: switch.sirenes
-  - service: switch.turn_off
-    data:
-      entity_id: switch.sirenes
   - service: notify.telegramtodos
     data:
       message: Alarme ativado!
@@ -1887,7 +1819,7 @@
         {% endif %}
     data_template:
       entity_id: media_player.google_home_sala
-      message: Alarme ativado
+      message: "Alarme ativado!"
 
 # Quando ativo apaga todas as luzes
 - alias: "Alarme - Apaga todas as luzes quando ativo"
@@ -1904,7 +1836,6 @@
 # Desliga sirene ao ser desativado
 - alias: "Alarme - Desliga sirene ao ser desativado"
   initial_state: true
-  hide_entity: true
   trigger:
   - platform: state
     entity_id: alarm_control_panel.alarme_da_casa
@@ -2013,12 +1944,15 @@
     entity_id: script.fotos_garagem_dupla
   - service: script.turn_on
     entity_id: script.fotos_380rtsp1
-  # Ligação
-  - service: notify.twilio
-    data:
-      message: 'Alarme disparou! Alarme disparou! Alarme disparou! Alarme disparou! Alarme disparou! Alarme disparou!'
-      target:
-        - +5555999382319
+  - service: script.turn_on
+    entity_id: script.telegram_call_alarme
+
+# Ligação Parou de funcionar
+#  - service: notify.twilio
+#    data:
+#      message: 'Alarme disparou! Alarme disparou! Alarme disparou! Alarme disparou! Alarme disparou! Alarme disparou!'
+#      target:
+#        - +5555999382319
 
 #                _          _____            _ _                    _
 #     /\        | |        |  __ \          | (_)                  | |
@@ -2032,18 +1966,34 @@
 
 # Banheiro da suite
 - alias: Luz Sem desligar - Banheiro Suite
-  initial_state: true
   trigger:
     platform: state
-    entity_id: light.banheiro_da_suite
-    from: 'off'
+    entity_id: light.luz_do_banheiro_da_suite
     to: 'on'
-    for:
-      minutes: 30
   action:
-#  - delay: '00:{{ states.input_number.tempo_banheiro_suite.state | int }}:00' # Não funciona corretamente (estudando)
+    service: timer.start
+    entity_id: timer.timer_suite
+    data_template:
+      duration: '00:{{ states.input_number.tempo_banheiro_suite.state | int }}:00'
+
+- alias: "Cancela Timer Suite"
+  trigger:
+    platform: state
+    entity_id: light.luz_do_banheiro_da_suite
+    to: 'off'
+  action:
+    service: timer.cancel
+    entity_id: timer.timer_suite
+
+- alias: Timer Suite
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.timer_suite
+  action:
   - service: light.turn_off
-    entity_id: light.banheiro_da_suite
+    entity_id: light.luz_do_banheiro_da_suite
   - service_template: >
         {% if is_state("input_select.padrao_tts", "Google") %} tts.google_translate_say
         {% elif is_state("input_select.padrao_tts", "Voicerss") %} tts.voicerss_say
@@ -2056,18 +2006,34 @@
 
 # Banheiro social
 - alias: Luz Sem desligar - Banheiro Social
-  initial_state: true
   trigger:
     platform: state
-    entity_id: light.banheiro_social
-    from: 'off'
+    entity_id: light.luz_do_banheiro_social
     to: 'on'
-    for:
-      minutes: 30
   action:
-#  - delay: '00:{{ states.input_number.tempo_banheiro_social.state | int }}:00' # Não funciona corretamente (estudando)
+    service: timer.start
+    entity_id: timer.timer_social
+    data_template:
+      duration: '00:{{ states.input_number.tempo_banheiro_social.state | int }}:00'
+
+- alias: "Cancela Timer Social"
+  trigger:
+    platform: state
+    entity_id: light.luz_do_banheiro_social
+    to: 'off'
+  action:
+    service: timer.cancel
+    entity_id: timer.timer_social
+
+- alias: Timer Social
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.timer_social
+  action:
   - service: light.turn_off
-    entity_id: light.banheiro_social
+    entity_id: light.luz_do_banheiro_social
   - service_template: >
         {% if is_state("input_select.padrao_tts", "Google") %} tts.google_translate_say
         {% elif is_state("input_select.padrao_tts", "Voicerss") %} tts.voicerss_say
@@ -2076,22 +2042,39 @@
         {% endif %}
     data_template:
       entity_id: media_player.todos_google_homes
-      message: "Oops! Desliguei a luz do banheiro Social, estava à {{ states.input_number.tempo_banheiro_social.state | int }} minutos ligada!"
+      message: "Oops! Desliguei a luz do banheiro social, estava à {{ states.input_number.tempo_banheiro_social.state | int }} minutos ligada!"
+
 
 # Banheiro lavabo
-- alias: Luz Sem desligar - Lavabo
-  initial_state: true
+- alias: "Luz Sem desligar - Lavabo"
   trigger:
     platform: state
-    entity_id: light.lavabo
-    from: 'off'
+    entity_id: light.luz_do_lavabo
     to: 'on'
-    for:
-      minutes: 10
   action:
-#  - delay: '00:{{ states.input_number.tempo_banheiro_lavabo.state | int }}:00' # Não funciona corretamente (estudando)
+    service: timer.start
+    entity_id: timer.timer_lavabo
+    data_template:
+      duration: '00:{{ states.input_number.tempo_banheiro_lavabo.state | int }}:00'
+
+- alias: "Cancela Timer Lavabo"
+  trigger:
+    platform: state
+    entity_id: light.luz_do_lavabo
+    to: 'off'
+  action:
+    service: timer.cancel
+    entity_id: timer.timer_lavabo
+
+- alias: Timer Lavabo
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.timer_lavabo
+  action:
   - service: light.turn_off
-    entity_id: light.lavabo
+    entity_id: light.luz_do_lavabo
   - service_template: >
         {% if is_state("input_select.padrao_tts", "Google") %} tts.google_translate_say
         {% elif is_state("input_select.padrao_tts", "Voicerss") %} tts.voicerss_say
@@ -2109,7 +2092,7 @@
 # | |___| |_| |/ /  | |___| (_) | |  | | |  __/ (_| | (_) | |
 # |______\__,_/___|  \_____\___/|_|  |_|  \___|\__,_|\___/|_|
 
-# Liga se tiver movimento
+# Liga se tiver movimento quando o sol se poe
 - alias: Luz Corredor Liga (Movimento)
   initial_state: true
   trigger:
@@ -2118,29 +2101,72 @@
     from: 'off'
     to: 'on'
   condition:
-    condition: time
-    after: '18:30:00'
-    before: '07:00:00'
+    condition: state
+    entity_id: sun.sun
+    state: 'below_horizon'
   action:
     service: light.turn_on
-    entity_id: light.corredor
+    entity_id: light.luz_do_corredor
 
-# Desliga se nao tiver movimento por 2min
-- alias: Luz Corredor Desliga - (S/Movimento 2min)
+# Nublado de dia
+- alias: Luz Corredor Liga Nublado (Movimento)
   initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.corredor
+    from: 'off'
+    to: 'on'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.dark_sky_cloud_coverage
+      above: 75
+    - condition: state
+      entity_id: sun.sun
+      state: 'above_horizon'
+  action:
+    service: light.turn_on
+    entity_id: light.luz_do_corredor
+
+# Poderia iniciar o start na automacao de cima mas se ligado a luz manual nao iniciará o timer
+- alias: Luz Corredor Timer
+  trigger:
+    platform: state
+    entity_id: light.luz_do_corredor
+    to: 'on'
+  action:
+    service: timer.start
+    entity_id: timer.timer_corredor
+    data_template:
+      duration: '00:{{ states.input_number.tempo_corredor.state | int }}:00'
+
+- alias: "Cancela Timer Corredor"
+  trigger:
+    platform: state
+    entity_id: light.luz_do_corredor
     to: 'off'
-    for:
-      minutes: 2
-#  condition:
-#    condition: time
-#    after: '17:00:00'
-#    before: '08:30:00'
+  action:
+    service: timer.cancel
+    entity_id: timer.timer_corredor
+
+- alias: "Reinicia Timer Corredor com movimento"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.corredor
+    from: 'off'
+    to: 'on'
+  action:
+    service: timer.start
+    entity_id: timer.timer_corredor
+
+- alias: Luz Corredor Desliga - (S/Movimento)
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.timer_corredor
   action:
     service: light.turn_off
-    entity_id: light.corredor
+    entity_id: light.luz_do_corredor
 
 #  _                  _____ _                _
 # | |                / ____| |              | |
@@ -2157,26 +2183,57 @@
     entity_id: binary_sensor.closet
     from: 'off'
     to: 'on'
+#  condition:
+#    condition: time
+#    after: '19:00:00'
+#    before: '06:30:00'
   condition:
-    condition: time
-    after: '19:00:00'
-    before: '06:30:00'
+    condition: state
+    entity_id: sun.sun
+    state: 'below_horizon'
   action:
     service: light.turn_on
-    entity_id: light.closet
+    entity_id: light.luz_do_closet
 
-# Desliga se nao tiver movimento por 2min
-- alias: Luz Closet Desliga - (S/Movimento 3min)
-  initial_state: true
+- alias: Luz Closet Timer
+  trigger:
+    platform: state
+    entity_id: light.luz_do_closet
+    to: 'on'
+  action:
+    service: timer.start
+    entity_id: timer.timer_closet
+    data_template:
+      duration: '00:{{ states.input_number.tempo_closet.state | int }}:00'
+
+- alias: "Cancela Timer Closet"
+  trigger:
+    platform: state
+    entity_id: light.luz_do_closet
+    to: 'off'
+  action:
+    service: timer.cancel
+    entity_id: timer.timer_closet
+
+- alias: "Reinicia Timer Closet com movimento"
   trigger:
     platform: state
     entity_id: binary_sensor.closet
-    to: 'off'
-    for:
-      minutes: 2
+    from: 'off'
+    to: 'on'
+  action:
+    service: timer.start
+    entity_id: timer.timer_closet
+
+- alias: Luz Closet Desliga - (S/Movimento)
+  trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.timer_closet
   action:
     service: light.turn_off
-    entity_id: light.closet
+    entity_id: light.luz_do_closet
 
 #  _                 _____          _                                                  _      _
 # | |               |  __ \        | |                       /\                       | |    | |
@@ -2196,7 +2253,7 @@
   - service: light.turn_on
     data:
       entity_id:
-        - light.postes
+        - light.luz_dos_postes
 # Desliga postes
 - alias: "Luz Postes - Desligar"
   initial_state: true
@@ -2207,7 +2264,7 @@
   - service: light.turn_off
     data:
       entity_id:
-        - light.postes
+        - light.luz_dos_postes
 
 # Liga arandelas
 - alias: "Luz Arandelas - Ligar"
@@ -2220,8 +2277,8 @@
   - service: light.turn_on
     data:
       entity_id:
-        - light.arandelas
-        - light.arandelas_da_varanda
+        - light.luz_arandelas_principais
+        - light.luz_arandelas_da_varanda
 
 # Desliga arandelas
 - alias: "Luz Arandelas - Desligar"
@@ -2233,8 +2290,8 @@
   - service: light.turn_off
     data:
       entity_id:
-        - light.arandelas
-        - light.arandelas_da_varanda
+        - light.luz_arandelas_principais
+        - light.luz_arandelas_da_varanda
 
 
 #  _______   _                                   _____                                _
@@ -2247,7 +2304,6 @@
 #                   |___/
 - alias: 'Telegram bot start'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2267,7 +2323,6 @@
 
 - alias: 'Telegram bot responde ping'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2276,11 +2331,10 @@
   action:
     - service: notify.telegramrudi
       data:
-        message: '<b>pong</b>'
+        message: '<b>pong</b><pre> </pre>Nova Linha<pre>Linha tag pre</pre>Outra linha<pre> </pre><i>Mais linhas</i>'
 
 - alias: 'Telegram bot Fotos cameras'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2301,7 +2355,6 @@
 
 - alias: 'Telegram bot video garagem'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2316,7 +2369,6 @@
 
 - alias: 'Telegram bot video piscina'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2331,7 +2383,6 @@
 
 - alias: 'Telegram bot video interna'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2346,7 +2397,6 @@
 
 - alias: 'Telegram bot foto garagem'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2361,7 +2411,6 @@
 
 - alias: 'Telegram bot foto piscina'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2378,7 +2427,6 @@
 
 - alias: 'Telegram bot foto interna'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2449,7 +2497,7 @@
   - service: light.turn_on
     data:
       entity_id:
-        - light.postes
+        - light.luz_dos_postes
 
 # Movimento na garagem a noite sem ninguem em casa ----------------------------- PROVIDENCIAR ATRASO NA CHEGADA $$$$$$
 - alias: "Garagem Movimento - Liga Luzez após sol se por"
@@ -2473,8 +2521,8 @@
   - service: light.turn_on
     data:
       entity_id:
-        - light.postes
-        - light.garagem
+        - light.luz_dos_postes
+        - light.luz_da_garagem
 
 # Liga luzes internas ao abrir porta da garagem () ------------------------------>>>>$$$$$$$$$$$$$$$$$$$$
 - alias: Liga Luzez int. ao abrir porta garagem (Noite)
@@ -2500,10 +2548,10 @@
   - service: light.turn_on
     data:
       entity_id:
-        - light.mesa_de_jantar
-        - light.pendentes
-        - light.trilhos
-        - light.lustre
+        - light.luz_da_mesa_de_jantar
+        - light.luz_pendentes
+        - light.luz_trilhos
+        - light.luz_do_lustre
   - service_template: >
         {% if is_state("input_select.padrao_tts", "Google") %} tts.google_translate_say
         {% elif is_state("input_select.padrao_tts", "Voicerss") %} tts.voicerss_say
@@ -2717,9 +2765,15 @@
     platform: homeassistant
     event: start
   action:
-    service: notify.telegramrudi
+  - service: notify.telegramrudi
     data:
       message: "Home Assistant foi iniciado."
+  - service: switch.turn_on
+    data:
+      entity_id:
+        - switch.purificador
+        - switch.geladeira
+
 
 - alias: 'Raspberry temperatura elevada'
   trigger:
@@ -2773,7 +2827,6 @@
 
 - alias: 'Telegram bot responde: Energia'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2789,7 +2842,6 @@
 
 - alias: 'Telegram bot responde: Água'
   initial_state: true
-  hide_entity: true
   trigger:
     platform: event
     event_type: telegram_command
@@ -2846,6 +2898,40 @@
     data_template:
       message: "Sem energia por mais de 3h, recomendo fazer o procedimento de desligamento para evitar corromper o SD."
 
+
+# PURIFICADOR INVERNO 
+- alias: "Desliga Purificador 23:00"
+  initial_state: false
+  trigger:
+    - platform: time
+      at: '23:00:00'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.purificador
+
+- alias: "Liga Purificador 11:00"
+  initial_state: false
+  trigger:
+    - platform: time
+      at: '11:00:00'
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.purificador
+
+- alias: "Desliga Purificador 13:30"
+  initial_state: false
+  trigger:
+    - platform: time
+      at: '13:30:00'
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.purificador
+
+
+
 #  _           _
 # | |         | |
 # | |     __ _| |__
@@ -2855,7 +2941,6 @@
 
 #- alias: "99-Liga Garagem 20:30h"
 #  initial_state: false
-#  #hide_entity: false
 #  trigger:
 #    - platform: time
 #      at: '20:30:00'
@@ -2870,11 +2955,10 @@
 #  action:
 #  - service: light.turn_on
 #    data:
-#      entity_id: light.garagem
+#      entity_id: light.luz_da_garagem
 
 #- alias: "99-Desliga Garagem 5:30h"
 #  initial_state: false
-#  #hide_entity: false
 #  trigger:
 #    - platform: time
 #      at: '05:30:00'
@@ -2889,7 +2973,7 @@
 #  action:
 #  - service: light.turn_off
 #    data:
-#      entity_id: light.garagem
+#      entity_id: light.luz_da_garagem
 
 # ex.: Não executar se foi executado nos ultimos 2min
 #- alias: 'NOME DA AUTOMACAO'

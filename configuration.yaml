@@ -60,7 +60,7 @@ zone:
     longitude: !secret back_longitude
     radius: 130
     icon: mdi:briefcase
-  - name: "B.Cerutti"
+  - name: "D.Femme"
     latitude: !secret mj_latitude
     longitude: !secret mj_longitude
     radius: 100
@@ -129,6 +129,7 @@ frontend:
 #                          |___/
 # https://www.home-assistant.io/components/config/
 config:
+mobile_app:
 
 #default_config:
 #[
@@ -191,6 +192,8 @@ updater:
 #                                       |___/
 # https://www.home-assistant.io/components/discovery/
 discovery:
+  ignore:
+    - yeelight
 
 # Permite que você emita comandos de voz do frontend em navegadores ativados
 #   _____                                    _   _
@@ -210,17 +213,19 @@ conversation:
 # | | \ \  __/ (_| (_) | | | (_| |  __/ |
 # |_|  \_\___|\___\___/|_|  \__,_|\___|_|
 # https://www.home-assistant.io/components/recorder/
-
 recorder:
   purge_keep_days: 1
   db_url: !secret maria_db
   exclude:
     domains:
       - automation
+      - updater
     entities:
       - sun.sun
       - sensor.last_boot
       - sensor.date
+    event_types:
+      - call_service
 
 # Suporte para rastrear mudanças de estado ao longo do tempo
 #  _    _ _     _
@@ -233,13 +238,8 @@ recorder:
 # https://www.home-assistant.io/components/history/
 history:
   exclude:
-    entities:
-      - sensor.last_boot
-      - sensor.date
-      - sensor.distancia_d_agua
-      - sensor.nivel_real
-#      - sensor.vazao_de_agua
     domains:
+      - updater
       - sun
       - binary_sensor
       - media_player
@@ -251,7 +251,13 @@ history:
       - input_text
       - camera
       - script
-#      - automation
+#     - automation
+    entities:
+      - sensor.last_boot
+      - sensor.date
+      - sensor.distancia_d_agua
+      - sensor.nivel_real
+#     - sensor.vazao_de_agua
 
 # Ver todos os eventos em um diário de bordo
 #  _                 _                 _
@@ -281,7 +287,7 @@ logbook:
       - input_text
       - camera
       - script
-#      - automation
+#     - automation
 
 # Nível de registro de atividades
 #  _
@@ -292,10 +298,11 @@ logbook:
 #              |___/ |___/
 # https://www.home-assistant.io/components/logger/
 logger:
+#  default: critical
   default: warning
-#  logs:
-#    asyncio: debug
-
+  logs:
+#    homeassistant.core: critical
+    homeassistant.components.mqtt: fatal
 
 # Texto em voz
 #  _   _
@@ -377,30 +384,16 @@ media_player:
   - platform: spotify
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret
-  - platform: lg_netcast
-    name: "LG Smart TV"
-    host: 192.168.87.13
-    access_token: 431855
-#  - platform: smartir
-#    name: TV do Quarto
-#    unique_id: quarto_tv
-#    device_code: 1100
-#    controller_data: 192.168.87.7
-#    power_sensor: binary_sensor.tv_power
-#  - platform: webostv
-#    host: 192.168.0.142
-#    name: "Televisao 32"
-#    filename: webostv.conf
-#    timeout: 5
-#    turn_on_action:
-#      service: persistent_notification.create
-#      data:
-#        message: "Turn on action"
-#    customize:
-#      sources:
-#        - youtube
-#        - netflix
+#  - platform: lg_netcast
+#    name: "LG Smart TV"
+#    host: 192.168.87.13
+#    access_token: 431855
 
+
+# https://www.home-assistant.io/integrations/webostv/
+#webostv:
+#  host: 192.168.87.250
+#  name: TV Estar
 
 # Casts (google home mini/chrome cast)
 #   _____          _
@@ -923,28 +916,28 @@ sensor:
 # Contador de vezes que as luzes foram ligadas
   - platform: history_stats
     name: "Corredor (Contador)"
-    entity_id: light.corredor
+    entity_id: light.luz_do_corredor
     state: 'on'
     type: count
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
   - platform: history_stats
     name: "Banheiro Social (Contador)"
-    entity_id: light.banheiro_social
+    entity_id: light.luz_do_banheiro_social
     state: 'on'
     type: count
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
   - platform: history_stats
     name: "Banheiro da suite (Contador)"
-    entity_id: light.banheiro_da_suite
+    entity_id: light.luz_do_banheiro_da_suite
     state: 'on'
     type: count
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
     end: '{{ now() }}'
   - platform: history_stats
     name: "Lavabo (Contador)"
-    entity_id: light.lavabo
+    entity_id: light.luz_do_lavabo
     state: 'on'
     type: count
     start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
@@ -998,12 +991,12 @@ sensor:
     icon: "mdi:water-pump"
     unit_of_measurement: 'litros'
     value_template: '{{ value_json.vazao }}'
-#  - platform: mqtt
-#    state_topic: 'SensorAgua/contagem'
-#    name: 'Vazão de água (Méd/Min)'
-#    icon: "mdi:water"
-#    unit_of_measurement: 'litros/min'
-#    value_template: '{{ value_json.consumo_agua }}'
+  - platform: mqtt
+    state_topic: 'SensorAgua/contagem'
+    name: 'Vazão de água Min'
+    icon: "mdi:water"
+    unit_of_measurement: 'litros/min'
+    value_template: '{{ value_json.consumo_agua }}'
   - platform: mqtt
     state_topic: 'SensorAgua/contagem'
     name: "Distancia D'água"
@@ -1452,12 +1445,12 @@ sensor:
           {% endif %}
 
 #Caixa dágua
-      # Desconta o espaco da tampa ate a agua que no meu caso é 28cm
+      # Desconta o espaco da tampa ate a agua que no meu caso é 27cm
       nivel_real_variavel:
         friendly_name_template: "Nível Real Var"
         unit_of_measurement: 'cm'
         icon_template: 'mdi:waves'
-        value_template: "{{ ( float(states.sensor.distancia_d_agua.state) - 28 ) }}" 
+        value_template: "{{ ( float(states.sensor.distancia_d_agua.state) - 26 ) }}" 
 
       # Evita valor negativos
       nivel_real:
@@ -1471,12 +1464,12 @@ sensor:
             {{ states('sensor.nivel_real_variavel') }}
           {% endif %}
 
-      # Centimetros Real * 100 / 61cm que é o total qnd vazia
+      # Centimetros Real * 100 / 56cm que é o total qnd vazia
       caixa_dagua:
         friendly_name_template: "Caixa D'água"
         unit_of_measurement: '%'
         icon_template: 'mdi:waves'
-        value_template: "{{ (100 - ( float(states.sensor.nivel_real.state) * 100 / 60 )) | round(2) }}" 
+        value_template: "{{ (100 - ( float(states.sensor.nivel_real.state) * 100 / 56 )) | round(2) }}" 
 
       # Logo se em 61 cm tem 2000 litros, logo 2000/61 = 32,7868852459
       caixa_dagua_litros:
@@ -1596,6 +1589,8 @@ utility_meter:
   agua_gasta_dia:
     source: sensor.vazao_de_agua
     cycle: daily
+  agua_gasta_dia_min:
+    source: sensor.vazao_de_agua_min
   agua_gasta_semana:
     source: sensor.vazao_de_agua
     cycle: weekly
@@ -2316,9 +2311,9 @@ binary_sensor:
   - platform: ping
     name: Google WiFi
     host: 192.168.87.1
-  - platform: ping
-    name: PC Desktop
-    host: 192.168.87.2
+#  - platform: ping
+#    name: PC Desktop
+#    host: 192.168.87.2
   - platform: ping
     name: Sonoff RF Bridge
     host: 192.168.87.6
@@ -2340,9 +2335,9 @@ binary_sensor:
   - platform: ping
     name: Chrome Cast Game
     host: 192.168.87.12
-  - platform: ping
-    name: Tv LG Game
-    host: 192.168.87.13
+#  - platform: ping
+#    name: Tv LG Game
+#    host: 192.168.87.13
   - platform: ping
     name: Camera Digoo
     host: 192.168.87.14
@@ -2358,13 +2353,12 @@ binary_sensor:
   - platform: ping
     name: V380 Interna
     host: 192.168.87.18
-  - platform: ping
-    name: Fita Led Bancada
-    host: 192.168.87.19
+#  - platform: ping
+#    name: Fita Led Cabeceira 
+#    host: 192.168.87.19
 #  - platform: ping
 #    name: Yeelink-Ligth
 #    host: 192.168.87.20
-
 #    count: 5
 #    scan_interval: 240
 
@@ -2380,13 +2374,18 @@ binary_sensor:
 # https://www.home-assistant.io/components/light.group/
 # https://www.home-assistant.io/components/flux_led/
 # https://www.home-assistant.io/components/light.mqtt/
+# https://www.home-assistant.io/integrations/yeelight/
+yeelight:
+  devices:
+    192.168.87.20:
+      name: Luz do Abajur
 light:
   - platform: flux_led
     devices:
       192.168.87.19:
-        name: "Bancada"
+        name: "Luz da Cabeceira"
   - platform: mqtt
-    name: "Garagem"
+    name: "Luz da Garagem"
     state_topic: "stat/sonoff13/POWER"
     command_topic: "cmnd/sonoff13/POWER"
     availability_topic: "tele/sonoff13/LWT"
@@ -2397,7 +2396,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Pia"
+    name: "Luz da Pia"
     state_topic: "stat/sonoff15/POWER"
     command_topic: "cmnd/sonoff15/POWER"
     availability_topic: "tele/sonoff15/LWT"
@@ -2408,7 +2407,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Bebedor"
+    name: "Luz do Bebedor"
     state_topic: "stat/sonoff21/POWER"
     command_topic: "cmnd/sonoff21/POWER"
     availability_topic: "tele/sonoff21/LWT"
@@ -2419,7 +2418,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Entrada"
+    name: "Luz da Entrada"
     state_topic: "stat/sonoff28/POWER"
     command_topic: "cmnd/sonoff28/POWER"
     availability_topic: "tele/sonoff28/LWT"
@@ -2430,7 +2429,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "JF"
+    name: "Luz JF"
     state_topic: "stat/sonoff11/POWER"
     command_topic: "cmnd/sonoff11/POWER"
     availability_topic: "tele/sonoff11/LWT"
@@ -2441,7 +2440,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "JG"
+    name: "Luz JG"
     state_topic: "stat/sonoff20/POWER"
     command_topic: "cmnd/sonoff20/POWER"
     availability_topic: "tele/sonoff20/LWT"
@@ -2452,7 +2451,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Sala Game"
+    name: "Luz Sala Game"
     state_topic: "stat/sonoff14/POWER"
     command_topic: "cmnd/sonoff14/POWER"
     availability_topic: "tele/sonoff14/LWT"
@@ -2463,7 +2462,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Central"
+    name: "Luz Central"
     state_topic: "stat/sonoff07/POWER"
     command_topic: "cmnd/sonoff07/POWER"
     availability_topic: "tele/sonoff07/LWT"
@@ -2474,7 +2473,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Trilhos"
+    name: "Luz Trilhos"
     state_topic: "stat/sonoff19/POWER"
     command_topic: "cmnd/sonoff19/POWER"
     availability_topic: "tele/sonoff19/LWT"
@@ -2485,7 +2484,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Mesa de Jantar"
+    name: "Luz da Mesa de Jantar"
     state_topic: "stat/sonoff29/POWER"
     command_topic: "cmnd/sonoff29/POWER"
     availability_topic: "tele/sonoff29/LWT"
@@ -2496,7 +2495,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Postes"
+    name: "Luz dos Postes"
     state_topic: "stat/sonoff23/POWER"
     command_topic: "cmnd/sonoff23/POWER"
     availability_topic: "tele/sonoff23/LWT"
@@ -2507,7 +2506,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Pendentes"
+    name: "Luz Pendentes"
     state_topic: "stat/sonoff16/POWER"
     command_topic: "cmnd/sonoff16/POWER"
     availability_topic: "tele/sonoff16/LWT"
@@ -2518,7 +2517,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Cozinha"
+    name: "Luz da Cozinha"
     state_topic: "stat/sonoff05/POWER"
     command_topic: "cmnd/sonoff05/POWER"
     availability_topic: "tele/sonoff05/LWT"
@@ -2529,7 +2528,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Lavanderia"
+    name: "Luz da Lavanderia"
     state_topic: "stat/sonoff22/POWER"
     command_topic: "cmnd/sonoff22/POWER"
     availability_topic: "tele/sonoff22/LWT"
@@ -2540,7 +2539,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Lavabo"
+    name: "Luz do Lavabo"
     state_topic: "stat/sonoff01/POWER"
     command_topic: "cmnd/sonoff01/POWER"
     availability_topic: "tele/sonoff01/LWT"
@@ -2551,7 +2550,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Lustre"
+    name: "Luz do Lustre"
     state_topic: "stat/sonoff12/POWER"
     command_topic: "cmnd/sonoff12/POWER"
     availability_topic: "tele/sonoff12/LWT"
@@ -2562,7 +2561,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Sala de Estar"
+    name: "Luz da Sala de Estar"
     state_topic: "stat/sonoff31/POWER"
     command_topic: "cmnd/sonoff31/POWER"
     availability_topic: "tele/sonoff31/LWT"
@@ -2573,7 +2572,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Corredor"
+    name: "Luz do Corredor"
     state_topic: "stat/sonoff08/POWER"
     command_topic: "cmnd/sonoff08/POWER"
     availability_topic: "tele/sonoff08/LWT"
@@ -2584,7 +2583,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Quarto da Frente"
+    name: "Luz do Quarto da Frente"
     state_topic: "stat/sonoff04/POWER"
     command_topic: "cmnd/sonoff04/POWER"
     availability_topic: "tele/sonoff04/LWT"
@@ -2595,7 +2594,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Quarto do Meio"
+    name: "Luz do Quarto do Meio"
     state_topic: "stat/sonoff06/POWER"
     command_topic: "cmnd/sonoff06/POWER"
     availability_topic: "tele/sonoff06/LWT"
@@ -2606,7 +2605,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Banheiro Social"
+    name: "Luz do Banheiro Social"
     state_topic: "stat/sonoff24/POWER"
     command_topic: "cmnd/sonoff24/POWER"
     availability_topic: "tele/sonoff24/LWT"
@@ -2617,7 +2616,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Quarto da Suite"
+    name: "Luz da Suite"
     state_topic: "stat/sonoff26/POWER"
     command_topic: "cmnd/sonoff26/POWER"
     availability_topic: "tele/sonoff26/LWT"
@@ -2628,7 +2627,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Banheiro da Suite"
+    name: "Luz do Banheiro da Suite"
     command_topic: "cmnd/sonoff09/POWER"
     state_topic: "stat/sonoff09/POWER"
     availability_topic: "tele/sonoff09/LWT"
@@ -2639,7 +2638,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Closet"
+    name: "Luz do Closet"
     state_topic: "stat/sonoff30/POWER"
     command_topic: "cmnd/sonoff30/POWER"
     availability_topic: "tele/sonoff30/LWT"
@@ -2650,7 +2649,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Area da Piscina"
+    name: "Luz da Area da Piscina"
     state_topic: "stat/sonoff10/POWER"
     command_topic: "cmnd/sonoff10/POWER"
     availability_topic: "tele/sonoff10/LWT"
@@ -2661,7 +2660,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Varanda Fundo"
+    name: "Luz Varanda Fundos"
     state_topic: "stat/sonoff03/POWER"
     command_topic: "cmnd/sonoff03/POWER"
     availability_topic: "tele/sonoff03/LWT"
@@ -2672,7 +2671,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Arandelas da Varanda"
+    name: "Luz Arandelas da Varanda"
     state_topic: "stat/sonoff17/POWER"
     command_topic: "cmnd/sonoff17/POWER"
     availability_topic: "tele/sonoff17/LWT"
@@ -2683,7 +2682,7 @@ light:
     payload_off: "OFF"
 #    retain: true
   - platform: mqtt
-    name: "Arandelas"
+    name: "Luz Arandelas Principais"
     state_topic: "stat/sonoff25/POWER"
     command_topic: "cmnd/sonoff25/POWER"
     availability_topic: "tele/sonoff25/LWT"
@@ -2700,12 +2699,6 @@ light:
 #Tasmota Console Command: ButtonRetain On
 #Tasmota Console Command: ButtonRetain Off
 #Tasmota Console Command: PowerRetain On
-
-#  Auto detectado
-#  - platform: yeelight
-#    devices:
-#      192.168.87.20:
-#        name: "Abajur do Quarto"
 
 
 # Interruptores
@@ -2778,6 +2771,18 @@ switch:
         command_on: 'JgBYAAABKpUTExQRExMTEhQRFBIUERQRFDYUNhI4EjgSNxM3EzcSOBITFREVEBUQFREVEBURFBEVNRI4ETgTNxM3EjgSOBI3EwAFIwABLUgVAAxbAAErShMADQU='
         command_off: 'JgBYAAABKpUTExQRExMTEhQRFBIUERQRFDYUNhI4EjgSNxM3EzcSOBITFREVEBUQFREVEBURFBEVNRI4ETgTNxM3EjgSOBI3EwAFIwABLUgVAAxbAAErShMADQU='
 
+  - platform: broadlink
+    host: 192.168.87.251
+    mac: '24:DF:A7:7A:75:D3'
+    type: rm_mini3_redbean
+    friendly_name: Broadlink3
+    timeout: 300
+#    switches:
+#      tv_onoff_estar:
+#        friendly_name: "TV Estar OnOff"
+#        command_on: 'JgBYAAABKpUTExQRExMTEhQRFBIUERQRFDYUNhI4EjgSNxM3EzcSOBITFREVEBUQFREVEBURFBEVNRI4ETgTNxM3EjgSOBI3EwAFIwABLUgVAAxbAAErShMADQU='
+#        command_off: 'JgBYAAABKpUTExQRExMTEhQRFBIUERQRFDYUNhI4EjgSNxM3EzcSOBITFREVEBUQFREVEBURFBEVNRI4ETgTNxM3EjgSOBI3EwAFIwABLUgVAAxbAAErShMADQU='
+
   - platform: mqtt
     name: "Sirenes"
     state_topic: "stat/sonoff27/POWER"
@@ -2794,6 +2799,17 @@ switch:
     state_topic: "stat/sonoff32/POWER"
     command_topic: "cmnd/sonoff32/power"
     availability_topic: "tele/sonoff32/LWT"
+    payload_available: "Conectado"
+    payload_not_available: "Desconectado"
+#    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "Aquecedor"
+    state_topic: "stat/aquecedor/POWER"
+    command_topic: "cmnd/aquecedor/power"
+    availability_topic: "tele/aquecedor/LWT"
     payload_available: "Conectado"
     payload_not_available: "Desconectado"
 #    qos: 1
@@ -2951,9 +2967,9 @@ input_text:
     name: Mensagem
     initial: "Já está na hora de ir trabalhar!"
     icon: mdi:voice
-  url_teste_video:
+  url_media_extractor:
     name: URL
-    initial: "Insira a URL"
+    initial: "https://www.youtube.com/watch?v=8NGcbkRJLfk&t=935s"
     icon: mdi:link-variant
   text_valor_kwh:
     name: "Valor kW/h"
@@ -3085,6 +3101,22 @@ input_number:
     max: 30
     step: 1
     mode: slider
+  tempo_corredor:
+    name: "Tempo máx. luz corredor"
+    icon: mdi:timer
+    initial: 2
+    min: 0
+    max: 30
+    step: 1
+    mode: slider
+  tempo_closet:
+    name: "Tempo máx. luz closet"
+    icon: mdi:timer
+    initial: 2
+    min: 0
+    max: 30
+    step: 1
+    mode: slider
   audio_volume:
     name: Volume
     icon: mdi:volume-high
@@ -3101,7 +3133,7 @@ input_number:
     max: 1
     step: 0.01
     mode: slider
-  video_teste_volume:
+  volume_media_extractor:
     name: Volume
     icon: mdi:volume-high
     initial: 1
@@ -3109,6 +3141,7 @@ input_number:
     max: 1
     step: 0.01
     mode: slider
+    
 #  #fake sensor
 #  nivel:
 #    name: 'Ultrassônico HC-SR04'
@@ -3278,12 +3311,12 @@ input_select:
       - CONECTV Osasco SP
       - TV MAR Maceio
     icon: mdi:library-video
-  src_cast_teste_video:
-    name: 'Chrome Cast'
+  src_cast_media_extractor:
+    name: 'Google Home'
     options:
       - Quarto
       - Sala
-    icon: mdi:google-chrome
+    icon: mdi:google-home
   padrao_tts:
     name: 'TTS Padrão'
     options:
@@ -3417,7 +3450,7 @@ alexa:
         - binary_sensor
     entity_config:
       light.yeelight_color1_7c49eb15924b:
-        name: "Abajur"
+        name: "Luz do Abajur"
       group.all_lights:
         name: Todas as Luzes
         display_categories: LIGHT
@@ -3451,12 +3484,12 @@ alexa_media:
 #                   |___/                 |______|
 # https://www.home-assistant.io/components/polling/
 telegram_bot:
-#  - platform: polling
-#    api_key: !secret tg_api
-#    parse_mode: html
-#    allowed_chat_ids:
-#      - !secret tg_chat_idr
-#      - !secret tg_chat_idf
+  - platform: polling
+    api_key: !secret tg_api
+    parse_mode: html
+    allowed_chat_ids:
+      - !secret tg_chat_idr
+      - !secret tg_chat_idf
     # Parse mode HTMN
     # <b>bold</b>, <strong>bold</strong>
     # <i>italic</i>, <em>italic</em>
@@ -3464,12 +3497,7 @@ telegram_bot:
     # <a href="tg://user?id=123456789">inline mention of a user</a>
     # <code>inline fixed-width code</code>
     # <pre>pre-formatted fixed-width code block</pre>
-  - platform: broadcast
-    api_key: !secret tg_api
-    parse_mode: html
-    allowed_chat_ids:
-      - !secret tg_chat_idr
-      - !secret tg_chat_idf
+
 
 # Notificações
 #  _   _       _   _  __
@@ -3482,6 +3510,9 @@ telegram_bot:
 #                        |___/
 # https://www.home-assistant.io/components/notify/
 notify:
+  - name: callmebot
+    platform: command_line
+    command: 'wget $(cat) -O /dev/null'
   - name: telegramrudi
     platform: telegram
     chat_id: !secret tg_chat_idr
@@ -3498,9 +3529,9 @@ notify:
     vapid_pub_key: !secret vapid_pub_key
     vapid_prv_key: !secret vapid_prv_key
     vapid_email: !secret gmail_user
-  - name: twilio
-    platform: twilio_call
-    from_number: !secret twilio_numero
+#  - name: twilio
+#    platform: twilio_call
+#    from_number: !secret twilio_numero
 
 # Alarme da casa
 #           _                         _____            _             _   _____                 _
@@ -3510,17 +3541,17 @@ notify:
 #  / ____ \| | (_| | |  | | | | | | | |___| (_) | | | | |_| | | (_) | | | |  | (_| | | | |  __/ |
 # /_/    \_\_|\__,_|_|  |_| |_| |_|  \_____\___/|_| |_|\__|_|  \___/|_| |_|   \__,_|_| |_|\___|_|
 # https://www.home-assistant.io/components/alarm_control_panel/
+# https://www.home-assistant.io/integrations/manual
 alarm_control_panel:
   - platform: manual
     name: Alarme da Casa
     code: !secret senha_alarme
-    pending_time: 30
-    delay_time: 20
+    arming_time: 10
+    delay_time: 5
     trigger_time: 4
     disarmed:
       trigger_time: 0
-    armed_home:
-      pending_time: 0
+    armed_away:
       delay_time: 0
 
 # Previsao do tempo
@@ -3575,7 +3606,7 @@ climate:
     name: "Ar da Sala"
     unique_id: arsala
     device_code: 1702
-    controller_data: 192.168.87.7
+    controller_data: 192.168.87.251
     temperature_sensor: sensor.cozinha_temperatura
     humidity_sensor: sensor.suite_umidade
     #power_sensor: switch.climatizador
@@ -3735,6 +3766,7 @@ shell_command:
   wascam_posicao_1: !secret shell_wascam_posicao_1
   wascam_posicao_2: !secret shell_wascam_posicao_2
   wascam_posicao_3: !secret shell_wascam_posicao_3
+  telegram_call: '/usr/bin/wget {{ url }} -O /dev/null'
 
 # Streaming (camera.play_stream)
 #   _____ _
@@ -3804,7 +3836,20 @@ life360:
   warning_threshold: 2
   error_threshold: 3
 
-
+#  _______ 
+# |__   __(_)                    
+#    | |   _ _ __ ___   ___ _ __ 
+#    | |  | | '_ ` _ \ / _ \ '__|
+#    | |  | | | | | | |  __/ |   
+#    |_|  |_|_| |_| |_|\___|_|   
+# https://www.home-assistant.io/integrations/timer/
+#
+timer:
+  timer_lavabo:
+  timer_social:
+  timer_suite:
+  timer_corredor:
+  timer_closet:
 
 # Grupos
 #   _____
