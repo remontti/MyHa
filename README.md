@@ -73,7 +73,7 @@ Mas recomendo comprar o aprova d'agua <b> Ultrasonic Module SN-SR04T </b> http:/
 Para rede wireless foi usado um kit <b>Google Wifi</b> com 3.
 <hr>
   
-<h2>Screeshots HA 0.106.2 / HassOS 3.11 (29/02/2020)</h2>
+<h2>Screeshots HA 0.113.3 / HassOS 4.12 (08/08/2020)</h2>
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/001.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/002.png">
 <img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/003.png">
