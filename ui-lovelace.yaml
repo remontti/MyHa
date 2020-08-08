@@ -1,12 +1,3 @@
-resources:
-  - type: module
-    url: /local/mini-graph-card-bundle.js?v=0.9.2
-  - type: js
-    url: /local/custom-fan-card.js
-  - type: module
-    url: /local/button-card.js?v=3.1.1
-  - type: js
-    url: /local/bignumber-card.js
 title: Remontti House
 views:
   - badges: []
@@ -42,7 +33,7 @@ views:
                       top: 96%
                     type: state-label
                   - entity: script.cade_o_rudi
-                    icon: 'mdi:map-marker-radius'
+                    icon: 'hass:map-marker-radius'
                     style:
                       color: white
                       font-size: 1.4em
@@ -80,7 +71,7 @@ views:
                       top: 96%
                     type: state-label
                   - entity: script.cade_a_flavia
-                    icon: 'mdi:map-marker-radius'
+                    icon: 'hass:map-marker-radius'
                     style:
                       color: white
                       font-size: 1.4em
@@ -90,22 +81,22 @@ views:
                 image: /local/imgs/flavia.jpg
                 type: picture-elements
             type: horizontal-stack
-          - color: '#222222'
+          - color: var(--card-background-color)
             color_type: label-card
             name: Segurança da Casa
             styles:
               card:
-                - font-size: 12px
-                - height: 37px
+                - height: 48px
+                - font-size: 14px
             type: 'custom:button-card'
           - cards:
               - entity: switch.seguranca_casa
-                icon: 'mdi:shield-home'
+                icon: 'hass:shield-home'
                 name: Alarme
                 show_label: true
                 state:
                   - color: green
-                    icon: 'mdi:shield-check'
+                    icon: 'hass:shield-check'
                     label: Armado
                     operator: template
                     styles:
@@ -122,7 +113,7 @@ views:
                         - color: red
                 styles:
                   card:
-                    - height: 80px
+                    - height: 84px
                     - filter: opacity(85%)
                   label:
                     - font-size: 13px
@@ -151,7 +142,7 @@ views:
                         - color: '#FF8F00'
                 styles:
                   card:
-                    - height: 80px
+                    - height: 84px
                     - filter: opacity(85%)
                   label:
                     - font-size: 13px
@@ -176,7 +167,7 @@ views:
                     value: 'off'
                 styles:
                   card:
-                    - height: 80px
+                    - height: 84px
                     - filter: opacity(85%)
                   name:
                     - font-weight: 500
@@ -185,17 +176,17 @@ views:
                     - font-size: 13px
                 type: 'custom:button-card'
             type: horizontal-stack
-          - color: '#222222'
+          - color: var(--card-background-color)
             color_type: label-card
             name: Atalhos Rápidos
             styles:
               card:
-                - font-size: 13px
-                - height: 37px
+                - height: 40px
+                - font-size: 14px
             type: 'custom:button-card'
           - cards:
               - entity: switch.tv_quarto
-                icon: 'mdi:television-classic'
+                icon: 'hass:television-classic'
                 name: Tv Suíte
                 show_state: true
                 state:
@@ -203,16 +194,18 @@ views:
                       card:
                         - filter: opacity(85%)
                       state:
-                        - color: '#616161'
+                        - color: var(--disabled-text-color)
                     value: 'off'
                   - styles:
                       card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
+                        - filter: opacity(50%)
+                        - color: var(--disabled-text-color)
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -225,7 +218,7 @@ views:
                 type: 'custom:button-card'
               - color: '#4DD0E1'
                 entity: switch.pressurizador
-                icon: 'mdi:engine-outline'
+                icon: 'hass:engine-outline'
                 show_state: true
                 state:
                   - styles:
@@ -240,6 +233,8 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: '0px 2px #4DD0E1'
                       state:
                         - color: '#4DD0E1'
                     value: 'on'
@@ -252,10 +247,9 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - color: '#FFB74D'
-                entity: group.all_lights
-                icon: 'mdi:lightbulb-on-outline'
-                name: Todas Luzes
+              - color: '#F44336'
+                entity: switch.aquecedor
+                icon: 'hass:fire'
                 show_state: true
                 state:
                   - styles:
@@ -270,8 +264,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: '0px 2px #EF6C00'
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: '#EF6C00'
                     value: 'on'
                 styles:
                   card:
@@ -285,7 +281,7 @@ views:
             type: horizontal-stack
           - cards:
               - entity: switch.tv_lg_55
-                icon: 'mdi:television-classic'
+                icon: 'hass:television-classic'
                 name: Tv Sala
                 show_state: true
                 state:
@@ -301,8 +297,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -314,7 +312,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: switch.xboom_som
-                icon: 'mdi:speaker'
+                icon: 'hass:speaker'
                 name: Xboom
                 show_state: true
                 state:
@@ -330,8 +328,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -343,7 +343,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: switch.htv
-                icon: 'mdi:android'
+                icon: 'hass:android'
                 name: Android TV
                 show_state: true
                 state:
@@ -359,8 +359,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -374,7 +376,7 @@ views:
             type: horizontal-stack
           - cards:
               - entity: climate.ar_da_cozinha
-                icon: 'mdi:air-filter'
+                icon: 'hass:air-filter'
                 show_state: true
                 state:
                   - styles:
@@ -389,9 +391,35 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: green
+                        - color: var(--state-icon-active-color)
                     value: auto
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #F44336'
+                      state:
+                        - color: '#F44336'
+                    value: heat
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #18FFFF'
+                      state:
+                        - color: '#18FFFF'
+                    value: cool
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #795548'
+                      state:
+                        - color: '#795548'
+                    value: dry
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #B2FF59'
+                      state:
+                        - color: '#B2FF59'
+                    value: fan_only
                 styles:
                   card:
                     - height: 78px
@@ -402,7 +430,7 @@ views:
                     - font-size: 11px
                 type: 'custom:button-card'
               - entity: climate.climatizador
-                icon: 'mdi:air-filter'
+                icon: 'hass:air-filter'
                 name: Ar da Suíte
                 show_state: true
                 state:
@@ -418,9 +446,35 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: green
+                        - color: var(--state-icon-active-color)
                     value: auto
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #F44336'
+                      state:
+                        - color: '#F44336'
+                    value: heat
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #18FFFF'
+                      state:
+                        - color: '#18FFFF'
+                    value: cool
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #795548'
+                      state:
+                        - color: '#795548'
+                    value: dry
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #B2FF59'
+                      state:
+                        - color: '#B2FF59'
+                    value: fan_only
                 styles:
                   card:
                     - height: 78px
@@ -432,7 +486,7 @@ views:
                 type: 'custom:button-card'
               - color: '#4DD0E1'
                 entity: climate.ar_da_sala
-                icon: 'mdi:air-filter'
+                icon: 'hass:air-filter'
                 show_state: true
                 state:
                   - styles:
@@ -447,9 +501,35 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: '#4DD0E1'
-                    value: 'on'
+                        - color: var(--state-icon-active-color)
+                    value: auto
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #F44336'
+                      state:
+                        - color: '#F44336'
+                    value: heat
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #18FFFF'
+                      state:
+                        - color: '#18FFFF'
+                    value: cool
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #795548'
+                      state:
+                        - color: '#795548'
+                    value: dry
+                  - styles:
+                      card:
+                        - box-shadow: '0px 2px #B2FF59'
+                      state:
+                        - color: '#B2FF59'
+                    value: fan_only
                 styles:
                   card:
                     - height: 75px
@@ -460,36 +540,237 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
             type: horizontal-stack
+          - color: '#FFB74D'
+            entity: group.all_lights
+            icon: 'hass:lightbulb-on-outline'
+            layout: icon_name_state
+            name: Todas Luzes
+            show_state: true
+            state:
+              - styles:
+                  card:
+                    - color: var(--state-icon-active-color)
+                    - box-shadow: 2px 0px 0px 0px var(--state-icon-active-color)
+                value: 'on'
+            styles:
+              card:
+                - height: 64px
+                - background-color: var(--card-background-color)
+                - padding: 10px
+            type: 'custom:button-card'
         type: vertical-stack
       - cards:
           - cards:
-              - entity: climate.climatizador
-                name: Suíte
-                type: thermostat
-              - entities:
-                  - entity: fan.ventilacao_quarto
-                    type: 'custom:custom-fan-card'
-                  - entity: script.air_quarto_led
-                    name: Lig. / Des. Led
-                  - entity: script.air_quarto_swing
-                    name: Swing
-                type: entities
+              - entity: weather.casa
+                type: weather-forecast
             type: vertical-stack
           - cards:
               - custom_fields:
                   icone: |
                     [[[
-                      return `<ha-icon icon="mdi:waves"
+                      return `
+                        <ha-icon icon="hass:hotel"
+                        style="width: 48px; height: 48px;">
+                        </ha-icon><br>Quarto Suíte</span>`
+                    ]]]
+                  temp: |
+                    [[[
+                      return `<ha-icon
+                        icon="hass:thermometer"
+                        style="width: 24px; height: 24px; color: #B2FF59;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
+                    ]]]
+                  umidade: |
+                    [[[
+                      return `<ha-icon
+                        icon="hass:water-percent"
+                        style="width: 24px; height: 24px; color: #42A5F5;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.suite_umidade'].state}%</b></span></span>`
+                    ]]]
+                entity: sensor.suite_temperatura
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - padding: 20%
+                    - font-size: 18px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 5%
+                      - top: 10%
+                      - font-size: 14px
+                    temp:
+                      - position: absolute
+                      - left: 45%
+                      - top: 20%
+                    umidade:
+                      - position: absolute
+                      - left: 45%
+                      - top: 60%
+                type: 'custom:button-card'
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `
+                        <ha-icon icon="hass:microwave"
+                        style="width: 48px; height: 48px;">
+                        </ha-icon><br>Cozinha</span>`
+                    ]]]
+                  temp: |
+                    [[[
+                      return `<ha-icon
+                        icon="hass:thermometer"
+                        style="width: 24px; height: 24px; color: #B2FF59;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
+                    ]]]
+                  umidade: |
+                    [[[
+                      return `<ha-icon
+                        icon="hass:water-percent"
+                        style="width: 24px; height: 24px; color: #42A5F5;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.cozinha_umidade'].state}%</b></span></span>`
+                    ]]]
+                entity: sensor.cozinha_temperatura
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - padding: 20%
+                    - font-size: 18px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 6%
+                      - top: 10%
+                      - font-size: 14px
+                    temp:
+                      - position: absolute
+                      - left: 45%
+                      - top: 20%
+                    umidade:
+                      - position: absolute
+                      - left: 45%
+                      - top: 60%
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `
+                        <ha-icon icon="hass:shower-head"
+                        style="width: 48px; height: 48px;">
+                        </ha-icon><br>Banh. Suíte</span>`
+                    ]]]
+                  temp: |
+                    [[[
+                      return `<ha-icon
+                        icon="hass:thermometer"
+                        style="width: 24px; height: 24px; color: #B2FF59;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
+                    ]]]
+                  umidade: |
+                    [[[
+                      return `<ha-icon
+                        icon="hass:water-percent"
+                        style="width: 24px; height: 24px; color: #42A5F5;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.banheiro_suite_umidade'].state}%</b></span></span>`
+                    ]]]
+                entity: sensor.banheiro_suite_temperatura
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - padding: 20%
+                    - font-size: 18px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 5%
+                      - top: 10%
+                      - font-size: 14px
+                    temp:
+                      - position: absolute
+                      - left: 45%
+                      - top: 20%
+                    umidade:
+                      - position: absolute
+                      - left: 45%
+                      - top: 60%
+                type: 'custom:button-card'
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `
+                        <ha-icon icon="hass:shower-head"
+                        style="width: 48px; height: 48px;">
+                        </ha-icon><br>Banh. Social</span>`
+                    ]]]
+                  temp: |
+                    [[[
+                      return `<ha-icon
+                        icon="hass:thermometer"
+                        style="width: 24px; height: 24px; color: #B2FF59;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
+                    ]]]
+                  umidade: |
+                    [[[
+                      return `<ha-icon
+                        icon="hass:water-percent"
+                        style="width: 24px; height: 24px; color: #42A5F5;">
+                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.banheiro_social_umidade'].state}%</b></span></span>`
+                    ]]]
+                entity: sensor.banheiro_social_temperatura
+                show_icon: false
+                show_name: false
+                show_state: false
+                styles:
+                  card:
+                    - padding: 20%
+                    - font-size: 18px
+                  custom_fields:
+                    icone:
+                      - position: absolute
+                      - left: 2%
+                      - top: 10%
+                      - font-size: 14px
+                    temp:
+                      - position: absolute
+                      - left: 45%
+                      - top: 20%
+                    umidade:
+                      - position: absolute
+                      - left: 45%
+                      - top: 60%
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.dark_sky_temperature
+                graph: line
+                type: sensor
+              - entity: sensor.dark_sky_humidity
+                graph: line
+                type: sensor
+            type: horizontal-stack
+          - cards:
+              - custom_fields:
+                  icone: |
+                    [[[
+                      return `<ha-icon icon="hass:waves"
                         style="width: 60px; height: 60px;">
                         </ha-icon><br><b>Nível Caixa</b></span>
                         <br>${entity.state} %`
                     ]]]
                   vazao: |
                     [[[
-                     return `<ha-icon icon="mdi:water-pump"
+                     return `<ha-icon icon="hass:water-pump"
                         style="width: 60px; height: 60px;">
-                        </ha-icon><br><b>Litros/seg</b></span>
-                        <br>${states['sensor.vazao_de_agua'].state} l/s`
+                        </ha-icon><br><b>Litros Hoje</b></span>
+                        <br>${states['sensor.agua_gasta_dia'].state} l/s`
                         
                     ]]]
                 entity: sensor.caixa_dagua
@@ -514,9 +795,9 @@ views:
               - custom_fields:
                   icone: |
                     [[[
-                      return `<ha-icon icon="mdi:flash-circle"
+                      return `<ha-icon icon="hass:flash-circle"
                         style="width: 50px; height: 62px;">
-                        </ha-icon><br><b>Energia Gasta</b></span>
+                        </ha-icon><br><b>Energia Mês</b></span>
                         <br>R$ ${entity.state}`
                     ]]]
                   tensao: |
@@ -526,12 +807,12 @@ views:
                   watts: |
                     [[[
                       return `<span style="line-height: 25px"><ha-icon
-                        icon="mdi:power-plug"
+                        icon="hass:power-plug"
                         style="width: 48px; height: 56px;">
                         </ha-icon><br><span style="font-size: 26px;">
                         <b>${states['sensor.watts'].state}</b></span>W</span>`
                     ]]]
-                entity: sensor.energia_gasta_dia
+                entity: sensor.gasto_mes
                 layout: icon_state_name2nd
                 show_icon: false
                 show_name: false
@@ -574,242 +855,34 @@ views:
                 show_legend: false
                 show_state: true
             font_size: 80
-            height: 120
+            height: 100
             hours_to_show: 2
-            icon: 'mdi:wan'
+            icon: 'hass:wan'
             line_width: 1
-            name: Internet - WAN
+            name: Tráfego da Internet
             points_per_hour: 30
             show:
               extrema: true
-              fill: true
+              fill: false
             type: 'custom:mini-graph-card'
           - cards:
-              - color_thresholds:
-                  - color: '#E65100'
-                    value: 30
-                  - color: '#4CAF50'
-                    value: 20
-                  - color: '#03A9F4'
-                    value: 10
-                entities:
-                  - entity: sensor.dark_sky_temperature
-                    index: 0
-                font_size: 85
-                height: 200
-                hours_to_show: 36
-                line_width: 2
-                name: Externa
-                show:
-                  extrema: true
-                  fill: true
-                type: 'custom:mini-graph-card'
-              - color_thresholds:
-                  - color: '#29B6F6'
-                    value: 90
-                  - color: '#00897B'
-                    value: 70
-                  - color: '#FFAB00'
-                    value: 50
-                entities:
-                  - entity: sensor.dark_sky_humidity
-                    index: 0
-                font_size: 85
-                height: 200
-                hours_to_show: 36
-                line_width: 2
-                name: Externa
-                show:
-                  extrema: true
-                  fill: true
-                type: 'custom:mini-graph-card'
+              - entity: climate.climatizador
+                name: Ar Suíte
+                type: thermostat
             type: horizontal-stack
           - cards:
-              - custom_fields:
-                  icone: |
-                    [[[
-                      return `
-                        <ha-icon icon="mdi:hotel"
-                        style="width: 48px; height: 48px;">
-                        </ha-icon><br>Quarto Suíte</span>`
-                    ]]]
-                  temp: |
-                    [[[
-                      return `<ha-icon
-                        icon="mdi:thermometer"
-                        style="width: 24px; height: 24px; color: #B2FF59;">
-                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
-                    ]]]
-                  umidade: |
-                    [[[
-                      return `<ha-icon
-                        icon="mdi:water-percent"
-                        style="width: 24px; height: 24px; color: #42A5F5;">
-                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.suite_umidade'].state}%</b></span></span>`
-                    ]]]
-                entity: sensor.suite_temperatura
-                show_icon: false
-                show_name: false
-                show_state: false
-                styles:
-                  card:
-                    - padding: 20%
-                    - font-size: 18px
-                  custom_fields:
-                    icone:
-                      - position: absolute
-                      - left: 5%
-                      - top: 10%
-                      - font-size: 14px
-                    temp:
-                      - position: absolute
-                      - left: 45%
-                      - top: 20%
-                    umidade:
-                      - position: absolute
-                      - left: 45%
-                      - top: 60%
-                type: 'custom:button-card'
-              - custom_fields:
-                  icone: |
-                    [[[
-                      return `
-                        <ha-icon icon="mdi:microwave"
-                        style="width: 48px; height: 48px;">
-                        </ha-icon><br>Cozinha</span>`
-                    ]]]
-                  temp: |
-                    [[[
-                      return `<ha-icon
-                        icon="mdi:thermometer"
-                        style="width: 24px; height: 24px; color: #B2FF59;">
-                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
-                    ]]]
-                  umidade: |
-                    [[[
-                      return `<ha-icon
-                        icon="mdi:water-percent"
-                        style="width: 24px; height: 24px; color: #42A5F5;">
-                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.cozinha_umidade'].state}%</b></span></span>`
-                    ]]]
-                entity: sensor.cozinha_temperatura
-                show_icon: false
-                show_name: false
-                show_state: false
-                styles:
-                  card:
-                    - padding: 20%
-                    - font-size: 18px
-                  custom_fields:
-                    icone:
-                      - position: absolute
-                      - left: 6%
-                      - top: 10%
-                      - font-size: 14px
-                    temp:
-                      - position: absolute
-                      - left: 45%
-                      - top: 20%
-                    umidade:
-                      - position: absolute
-                      - left: 45%
-                      - top: 60%
-                type: 'custom:button-card'
-            type: horizontal-stack
-          - cards:
-              - custom_fields:
-                  icone: |
-                    [[[
-                      return `
-                        <ha-icon icon="mdi:shower-head"
-                        style="width: 48px; height: 48px;">
-                        </ha-icon><br>Banh. Suíte</span>`
-                    ]]]
-                  temp: |
-                    [[[
-                      return `<ha-icon
-                        icon="mdi:thermometer"
-                        style="width: 24px; height: 24px; color: #B2FF59;">
-                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
-                    ]]]
-                  umidade: |
-                    [[[
-                      return `<ha-icon
-                        icon="mdi:water-percent"
-                        style="width: 24px; height: 24px; color: #42A5F5;">
-                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.banheiro_suite_umidade'].state}%</b></span></span>`
-                    ]]]
-                entity: sensor.banheiro_suite_temperatura
-                show_icon: false
-                show_name: false
-                show_state: false
-                styles:
-                  card:
-                    - padding: 20%
-                    - font-size: 18px
-                  custom_fields:
-                    icone:
-                      - position: absolute
-                      - left: 5%
-                      - top: 10%
-                      - font-size: 14px
-                    temp:
-                      - position: absolute
-                      - left: 45%
-                      - top: 20%
-                    umidade:
-                      - position: absolute
-                      - left: 45%
-                      - top: 60%
-                type: 'custom:button-card'
-              - custom_fields:
-                  icone: |
-                    [[[
-                      return `
-                        <ha-icon icon="mdi:shower-head"
-                        style="width: 48px; height: 48px;">
-                        </ha-icon><br>Banh. Social</span>`
-                    ]]]
-                  temp: |
-                    [[[
-                      return `<ha-icon
-                        icon="mdi:thermometer"
-                        style="width: 24px; height: 24px; color: #B2FF59;">
-                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${entity.state}°C</span></span>`
-                    ]]]
-                  umidade: |
-                    [[[
-                      return `<ha-icon
-                        icon="mdi:water-percent"
-                        style="width: 24px; height: 24px; color: #42A5F5;">
-                        </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.banheiro_social_umidade'].state}%</b></span></span>`
-                    ]]]
-                entity: sensor.banheiro_social_temperatura
-                show_icon: false
-                show_name: false
-                show_state: false
-                styles:
-                  card:
-                    - padding: 20%
-                    - font-size: 18px
-                  custom_fields:
-                    icone:
-                      - position: absolute
-                      - left: 2%
-                      - top: 10%
-                      - font-size: 14px
-                    temp:
-                      - position: absolute
-                      - left: 45%
-                      - top: 20%
-                    umidade:
-                      - position: absolute
-                      - left: 45%
-                      - top: 60%
-                type: 'custom:button-card'
+              - entities:
+                  - entity: fan.ventilacao_quarto
+                    name: Ventilação Suíte (Ar)
+                    type: 'custom:custom-fan-card'
+                  - entity: script.air_quarto_led
+                    name: Lig. / Des. Led
+                  - entity: script.air_quarto_swing
+                    name: Swing
+                type: entities
             type: horizontal-stack
         type: vertical-stack
-    icon: 'mdi:home-assistant'
+    icon: 'hass:home-assistant'
     panel: false
     path: home
     title: Home Inicial
@@ -817,8 +890,28 @@ views:
     cards:
       - cards:
           - cards:
-              - entity: light.quarto_da_suite
-                icon: 'mdi:hotel'
+              - color_type: label-card
+                entity: group.luzes_quartos
+                icon: 'hass:hotel'
+                layout: icon_name_state
+                name: Quartos
+                state:
+                  - styles:
+                      card:
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 38px
+                    - background-color: var(--card-background-color)
+                    - font-size: 14px
+                    - padding: 3px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_da_suite
+                icon: 'hass:hotel'
                 name: Suíte
                 show_state: true
                 state:
@@ -826,16 +919,49 @@ views:
                       card:
                         - filter: opacity(85%)
                       state:
-                        - color: '#616161'
+                        - color: var(--disabled-text-color)
                     value: 'off'
                   - styles:
                       card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
+                        - filter: opacity(50%)
+                        - color: var(--disabled-text-color)
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 11px
+                type: 'custom:button-card'
+              - entity: light.luz_da_cabeceira
+                icon: 'hass:led-strip'
+                name: Cabeceira
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: var(--disabled-text-color)
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(50%)
+                        - color: var(--disabled-text-color)
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -847,7 +973,7 @@ views:
                     - font-size: 11px
                 type: 'custom:button-card'
               - entity: light.yeelight_color1_7c49eb15924b
-                icon: 'mdi:floor-lamp'
+                icon: 'hass:floor-lamp'
                 name: Abajur
                 show_state: true
                 state:
@@ -855,16 +981,18 @@ views:
                       card:
                         - filter: opacity(85%)
                       state:
-                        - color: '#616161'
+                        - color: var(--disabled-text-color)
                     value: 'off'
                   - styles:
                       card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
+                        - filter: opacity(50%)
+                        - color: var(--disabled-text-color)
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -873,10 +1001,74 @@ views:
                     - font-weight: 500
                     - font-size: 14px
                   state:
-                    - font-size: 12px
+                    - font-size: 11px
                 type: 'custom:button-card'
-              - entity: light.closet
-                icon: 'mdi:tshirt-crew'
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_do_quarto_da_frente
+                icon: 'hass:hotel'
+                name: Frente
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: var(--disabled-text-color)
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(50%)
+                        - color: var(--disabled-text-color)
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 11px
+                type: 'custom:button-card'
+              - entity: light.luz_do_quarto_do_meio
+                icon: 'hass:hotel'
+                name: Meio
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: var(--disabled-text-color)
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(50%)
+                        - color: var(--disabled-text-color)
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 11px
+                type: 'custom:button-card'
+              - entity: light.luz_do_closet
+                icon: 'hass:tshirt-crew'
                 name: Closet
                 show_state: true
                 state:
@@ -884,16 +1076,18 @@ views:
                       card:
                         - filter: opacity(85%)
                       state:
-                        - color: '#616161'
+                        - color: var(--disabled-text-color)
                     value: 'off'
                   - styles:
                       card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
+                        - filter: opacity(50%)
+                        - color: var(--disabled-text-color)
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -902,96 +1096,29 @@ views:
                     - font-weight: 500
                     - font-size: 14px
                   state:
-                    - font-size: 12px
+                    - font-size: 11px
                 type: 'custom:button-card'
             type: horizontal-stack
+        type: vertical-stack
+      - cards:
           - cards:
-              - entity: light.cozinha
-                icon: 'mdi:fridge-outline'
-                name: Cozinha
-                show_state: true
+              - color_type: label-card
+                entity: group.luzes_banheiro
+                icon: 'hass:toilet'
+                layout: icon_name_state
+                name: Banheiros
                 state:
                   - styles:
                       card:
-                        - filter: opacity(85%)
-                      state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
-                    - height: 78px
-                  name:
-                    - font-weight: 500
+                    - height: 38px
+                    - background-color: var(--card-background-color)
                     - font-size: 14px
-                  state:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: light.pia
-                icon: 'mdi:silverware-fork-knife'
-                name: Pia
-                show_state: true
-                state:
-                  - styles:
-                      card:
-                        - filter: opacity(85%)
-                      state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
-                    value: 'on'
-                styles:
-                  card:
-                    - height: 78px
-                  name:
-                    - font-weight: 500
-                    - font-size: 14px
-                  state:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: light.bebedor
-                icon: 'mdi:cup-water'
-                name: Bebedor
-                show_state: true
-                state:
-                  - styles:
-                      card:
-                        - filter: opacity(85%)
-                      state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
-                    value: 'on'
-                styles:
-                  card:
-                    - height: 78px
-                  name:
-                    - font-weight: 500
-                    - font-size: 14px
-                  state:
-                    - font-size: 12px
+                    - padding: 3px
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
@@ -1000,8 +1127,8 @@ views:
                     [[[ return
                     Math.floor(states['sensor.banheiro_da_suite_contador'].state
                     ) ]]]
-                entity: light.banheiro_da_suite
-                icon: 'mdi:toilet'
+                entity: light.luz_do_banheiro_da_suite
+                icon: 'hass:shower'
                 name: Suíte
                 show_state: true
                 state:
@@ -1017,8 +1144,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1028,8 +1157,8 @@ views:
                       - background-color: |
                           [[[
                             if (states['sensor.banheiro_da_suite_contador'].state == 0)
-                              return "var(--primary-color)";
-                              return "var(--primary-color)";
+                              return "var(--state-icon-active-color)";
+                              return "var(--state-icon-active-color)";
                           ]]]
                       - border-radius: 50%
                       - position: absolute
@@ -1039,6 +1168,7 @@ views:
                       - width: 18px
                       - font-size: 10px
                       - line-height: 20px
+                      - color: var(--sidebar-background-color)
                   name:
                     - font-weight: 500
                     - font-size: 14px
@@ -1050,8 +1180,8 @@ views:
                     [[[ return
                     Math.floor(states['sensor.banheiro_social_contador'].state )
                     ]]]
-                entity: light.banheiro_social
-                icon: 'mdi:toilet'
+                entity: light.luz_do_banheiro_social
+                icon: 'hass:shower-head'
                 name: Social
                 show_state: true
                 state:
@@ -1067,8 +1197,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1078,8 +1210,8 @@ views:
                       - background-color: |
                           [[[
                             if (states['sensor.banheiro_social_contador'].state == 0)
-                              return "var(--primary-color)";
-                              return "var(--primary-color)";
+                              return "var(--state-icon-active-color)";
+                              return "var(--state-icon-active-color)";
                           ]]]
                       - border-radius: 50%
                       - position: absolute
@@ -1089,6 +1221,7 @@ views:
                       - width: 18px
                       - font-size: 10px
                       - line-height: 20px
+                      - color: var(--sidebar-background-color)
                   name:
                     - font-weight: 500
                     - font-size: 14px
@@ -1099,8 +1232,8 @@ views:
                   notification: >
                     [[[ return Math.floor(states['sensor.lavabo_contador'].state
                     ) ]]]
-                entity: light.lavabo
-                icon: 'mdi:toilet'
+                entity: light.luz_do_lavabo
+                icon: 'hass:toilet'
                 name: Lavabo
                 show_state: true
                 state:
@@ -1116,8 +1249,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1127,8 +1262,8 @@ views:
                       - background-color: |
                           [[[
                             if (states['sensor.lavabo_contador'].state == 0)
-                              return "var(--primary-color)";
-                              return "var(--primary-color)";
+                              return "var(--state-icon-active-color)";
+                              return "var(--state-icon-active-color)";
                           ]]]
                       - border-radius: 50%
                       - position: absolute
@@ -1138,6 +1273,7 @@ views:
                       - width: 18px
                       - font-size: 10px
                       - line-height: 20px
+                      - color: var(--sidebar-background-color)
                   name:
                     - font-weight: 500
                     - font-size: 14px
@@ -1148,8 +1284,260 @@ views:
         type: vertical-stack
       - cards:
           - cards:
-              - entity: light.pendentes
-                icon: 'mdi:ceiling-light'
+              - color_type: label-card
+                entity: group.luzes_cozinha
+                icon: 'hass:food-fork-drink'
+                layout: icon_name_state
+                name: Cozinha
+                state:
+                  - styles:
+                      card:
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 38px
+                    - background-color: var(--card-background-color)
+                    - font-size: 14px
+                    - padding: 3px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_da_cozinha
+                icon: 'hass:fridge-outline'
+                name: Cozinha
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.luz_da_pia
+                icon: 'hass:silverware-fork-knife'
+                name: Pia
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.luz_do_bebedor
+                icon: 'hass:cup-water'
+                name: Bebedor
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color_type: label-card
+                entity: group.luzes_jantar
+                icon: 'hass:pasta'
+                layout: icon_name_state
+                name: Mesa de Jantar
+                state:
+                  - styles:
+                      card:
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 38px
+                    - background-color: var(--card-background-color)
+                    - font-size: 14px
+                    - padding: 3px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_da_mesa_de_jantar
+                icon: 'hass:ceiling-light'
+                name: Jantar Pendente
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.luz_jf
+                name: Spots Frente
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.luz_jg
+                name: Spots Garagem
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color_type: label-card
+                entity: group.luzes_game
+                icon: 'hass:account-group'
+                layout: icon_name_state
+                name: Area Social
+                state:
+                  - styles:
+                      card:
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 38px
+                    - background-color: var(--card-background-color)
+                    - font-size: 14px
+                    - padding: 3px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_pendentes
+                icon: 'hass:vanity-light'
                 name: Pendentes
                 show_state: true
                 state:
@@ -1165,8 +1553,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1177,8 +1567,8 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - entity: light.trilhos
-                icon: 'mdi:track-light'
+              - entity: light.luz_trilhos
+                icon: 'hass:track-light'
                 name: Trilhos
                 show_state: true
                 state:
@@ -1194,8 +1584,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1206,9 +1598,11 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - entity: light.mesa_de_jantar
-                icon: 'mdi:ceiling-light'
-                name: Jantar
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_sala_game
+                icon: 'hass:sofa'
+                name: Sofá Social
                 show_state: true
                 state:
                   - styles:
@@ -1223,8 +1617,41 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: light.luz_central
+                icon: 'hass:wall-sconce-flat'
+                name: Spots L
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1236,9 +1663,31 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
             type: horizontal-stack
+        type: vertical-stack
+      - cards:
           - cards:
-              - entity: light.lustre
-                icon: 'mdi:ceiling-light'
+              - color_type: label-card
+                entity: group.luzes_estar
+                icon: 'hass:account-supervisor'
+                layout: icon_name_state
+                name: Sala Estar
+                state:
+                  - styles:
+                      card:
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 38px
+                    - background-color: var(--card-background-color)
+                    - font-size: 14px
+                    - padding: 3px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_do_lustre
+                icon: 'hass:ceiling-light'
                 name: Lustre
                 show_state: true
                 state:
@@ -1254,8 +1703,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1266,9 +1717,9 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - entity: light.sala_game
-                icon: 'mdi:sofa'
-                name: Social
+              - entity: light.luz_da_sala_de_estar
+                icon: 'hass:wall-sconce-flat'
+                name: Spots
                 show_state: true
                 state:
                   - styles:
@@ -1283,235 +1734,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
-                      state:
-                        - color: var(--secondary-text-color)
-                    value: 'on'
-                styles:
-                  card:
-                    - height: 78px
-                  name:
-                    - font-weight: 500
-                    - font-size: 14px
-                  state:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - custom_fields:
-                  notification: >
-                    [[[ return
-                    Math.floor(states['sensor.corredor_contador'].state ) ]]]
-                entity: light.corredor
-                icon: 'mdi:wall-sconce-flat'
-                name: Corredor
-                show_state: true
-                state:
-                  - styles:
                       card:
-                        - filter: opacity(85%)
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
-                    value: 'on'
-                styles:
-                  card:
-                    - height: 78px
-                  custom_fields:
-                    notification:
-                      - background-color: |
-                          [[[
-                            if (states['sensor.corredor_contador'].state == 0)
-                              return "var(--primary-color)";
-                              return "var(--primary-color)";
-                          ]]]
-                      - border-radius: 50%
-                      - position: absolute
-                      - left: 70%
-                      - top: 7%
-                      - height: 18px
-                      - width: 18px
-                      - font-size: 10px
-                      - line-height: 20px
-                  name:
-                    - font-weight: 500
-                    - font-size: 14px
-                  state:
-                    - font-size: 12px
-                type: 'custom:button-card'
-            type: horizontal-stack
-          - cards:
-              - entity: light.sala_de_estar
-                icon: 'mdi:wall-sconce-flat'
-                name: Spots Estar
-                show_state: true
-                state:
-                  - styles:
-                      card:
-                        - filter: opacity(85%)
-                      state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
-                    value: 'on'
-                styles:
-                  card:
-                    - height: 78px
-                  name:
-                    - font-weight: 500
-                    - font-size: 14px
-                  state:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: light.central
-                icon: 'mdi:wall-sconce-flat'
-                name: Spots Social
-                show_state: true
-                state:
-                  - styles:
-                      card:
-                        - filter: opacity(85%)
-                      state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
-                    value: 'on'
-                styles:
-                  card:
-                    - height: 78px
-                  name:
-                    - font-weight: 500
-                    - font-size: 14px
-                  state:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: light.jf
-                icon: 'mdi:car-parking-lights'
-                name: J. Frente
-                show_state: true
-                state:
-                  - styles:
-                      card:
-                        - filter: opacity(85%)
-                      state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
-                    value: 'on'
-                styles:
-                  card:
-                    - height: 78px
-                  name:
-                    - font-weight: 500
-                    - font-size: 14px
-                  state:
-                    - font-size: 12px
-                type: 'custom:button-card'
-            type: horizontal-stack
-          - cards:
-              - entity: light.quarto_do_meio
-                icon: 'mdi:hotel'
-                name: Quarto Meio
-                show_state: true
-                state:
-                  - styles:
-                      card:
-                        - filter: opacity(85%)
-                      state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
-                    value: 'on'
-                styles:
-                  card:
-                    - height: 78px
-                  name:
-                    - font-weight: 500
-                    - font-size: 14px
-                  state:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: light.quarto_da_frente
-                icon: 'mdi:hotel'
-                name: Quarto Frente
-                show_state: true
-                state:
-                  - styles:
-                      card:
-                        - filter: opacity(85%)
-                      state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
-                    value: 'on'
-                styles:
-                  card:
-                    - height: 78px
-                  name:
-                    - font-weight: 500
-                    - font-size: 14px
-                  state:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: light.jg
-                icon: 'mdi:car-parking-lights'
-                name: J. Garagem
-                show_state: true
-                state:
-                  - styles:
-                      card:
-                        - filter: opacity(85%)
-                      state:
-                        - color: '#616161'
-                    value: 'off'
-                  - styles:
-                      card:
-                        - filter: opacity(40%)
-                        - color: '#5D4037'
-                    value: unavailable
-                  - styles:
-                      state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1526,8 +1752,28 @@ views:
         type: vertical-stack
       - cards:
           - cards:
-              - entity: light.garagem
-                icon: 'mdi:car'
+              - color_type: label-card
+                entity: group.luzes_externas
+                icon: 'hass:home-lightbulb-outline'
+                layout: icon_name_state
+                name: Externas
+                state:
+                  - styles:
+                      card:
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 38px
+                    - background-color: var(--card-background-color)
+                    - font-size: 14px
+                    - padding: 3px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_da_garagem
+                icon: 'hass:car'
                 name: Garagem
                 show_state: true
                 state:
@@ -1543,8 +1789,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1555,8 +1803,8 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - entity: light.postes
-                icon: 'mdi:lighthouse-on'
+              - entity: light.luz_dos_postes
+                icon: 'hass:lighthouse-on'
                 name: Postes
                 show_state: true
                 state:
@@ -1572,8 +1820,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1584,8 +1834,8 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - entity: light.area_da_piscina
-                icon: 'mdi:pool'
+              - entity: light.luz_da_area_da_piscina
+                icon: 'hass:pool'
                 name: A.Piscina
                 show_state: true
                 state:
@@ -1601,8 +1851,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1615,9 +1867,9 @@ views:
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
-              - entity: light.arandelas
-                icon: 'mdi:wall-sconce-variant'
-                name: Arandelas
+              - entity: light.luz_da_entrada
+                icon: 'hass:door-closed'
+                name: Porta Entrada
                 show_state: true
                 state:
                   - styles:
@@ -1632,8 +1884,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1644,8 +1898,8 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - entity: light.varanda_fundo
-                icon: 'mdi:spotlight'
+              - entity: light.luz_varanda_fundos
+                icon: 'hass:spotlight'
                 name: Varanda
                 show_state: true
                 state:
@@ -1661,8 +1915,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1673,9 +1929,9 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - entity: light.entrada
-                icon: 'mdi:door-closed'
-                name: Entrada
+              - entity: group.arandelas
+                icon: 'hass:wall-sconce-variant'
+                name: Arandelas
                 show_state: true
                 state:
                   - styles:
@@ -1690,8 +1946,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1703,10 +1961,32 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
             type: horizontal-stack
+        type: vertical-stack
+      - cards:
           - cards:
-              - entity: light.arandelas_da_varanda
-                icon: 'mdi:wall-sconce-variant'
-                name: Arandelas V.
+              - color_type: label-card
+                entity: group.arandelas
+                icon: 'hass:outdoor-lamp'
+                layout: icon_name_state
+                name: Arandelas
+                state:
+                  - styles:
+                      card:
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 38px
+                    - background-color: var(--card-background-color)
+                    - font-size: 14px
+                    - padding: 3px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_arandelas_principais
+                icon: 'hass:outdoor-lamp'
+                name: Arandelas Principais
                 show_state: true
                 state:
                   - styles:
@@ -1721,8 +2001,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1733,8 +2015,63 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - entity: light.lavanderia
-                icon: 'mdi:washing-machine'
+              - entity: light.luz_arandelas_da_varanda
+                icon: 'hass:outdoor-lamp'
+                name: Arandelas Varanda
+                show_state: true
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 78px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color_type: label-card
+                entity: group.luzes_outras
+                icon: 'hass:lightbulb-on-outline'
+                layout: icon_name_state
+                name: Outras
+                state:
+                  - styles:
+                      card:
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 38px
+                    - background-color: var(--card-background-color)
+                    - font-size: 14px
+                    - padding: 3px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: light.luz_da_lavanderia
+                icon: 'hass:washing-machine'
                 name: Lavanderia
                 show_state: true
                 state:
@@ -1750,8 +2087,10 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
@@ -1762,9 +2101,13 @@ views:
                   state:
                     - font-size: 12px
                 type: 'custom:button-card'
-              - entity: light.bancada
-                icon: 'mdi:led-strip'
-                name: Bancada
+              - custom_fields:
+                  notification: >
+                    [[[ return
+                    Math.floor(states['sensor.corredor_contador'].state ) ]]]
+                entity: light.luz_do_corredor
+                icon: 'hass:wall-sconce-flat'
+                name: Corredor
                 show_state: true
                 state:
                   - styles:
@@ -1779,12 +2122,110 @@ views:
                         - color: '#5D4037'
                     value: unavailable
                   - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
                       state:
-                        - color: var(--secondary-text-color)
+                        - color: var(--state-icon-active-color)
                     value: 'on'
                 styles:
                   card:
                     - height: 78px
+                  custom_fields:
+                    notification:
+                      - background-color: |
+                          [[[
+                            if (states['sensor.corredor_contador'].state == 0)
+                              return "var(--state-icon-active-color)";
+                              return "var(--state-icon-active-color)";
+                          ]]]
+                      - border-radius: 50%
+                      - position: absolute
+                      - left: 70%
+                      - top: 7%
+                      - height: 18px
+                      - width: 18px
+                      - font-size: 10px
+                      - line-height: 20px
+                      - color: var(--sidebar-background-color)
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - color_type: label-card
+                entity: group.all_lights
+                icon: 'hass:lightbulb-group'
+                layout: icon_name_state
+                name: Todas as Luzes
+                state:
+                  - styles:
+                      card:
+                        - color: var(--state-icon-active-color)
+                        - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 38px
+                    - background-color: var(--card-background-color)
+                    - font-size: 14px
+                    - padding: 3px
+                type: 'custom:button-card'
+            type: horizontal-stack
+          - cards:
+              - entity: group.luzes_quentes
+                icon: 'hass:candle'
+                name: Quentes
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 68px
+                  name:
+                    - font-weight: 500
+                    - font-size: 14px
+                  state:
+                    - font-size: 12px
+                type: 'custom:button-card'
+              - entity: group.luzes_frias
+                icon: 'hass:snowflake-variant'
+                name: Frias
+                state:
+                  - styles:
+                      card:
+                        - filter: opacity(85%)
+                      state:
+                        - color: '#616161'
+                    value: 'off'
+                  - styles:
+                      card:
+                        - filter: opacity(40%)
+                        - color: '#5D4037'
+                    value: unavailable
+                  - styles:
+                      card:
+                        - box-shadow: 0px 2px var(--state-icon-active-color)
+                      state:
+                        - color: var(--state-icon-active-color)
+                    value: 'on'
+                styles:
+                  card:
+                    - height: 68px
                   name:
                     - font-weight: 500
                     - font-size: 14px
@@ -1796,108 +2237,31 @@ views:
       - entity: light.yeelight_color1_7c49eb15924b
         name: Abajur Suíte
         type: light
-      - cards:
-          - color: '#333'
-            color_type: label-card
-            name: Todas as Luzes
-            styles:
-              card:
-                - font-size: 13px
-                - height: 37px
-            type: 'custom:button-card'
-          - cards:
-              - entity: script.on_todas_luzes
-                icon: 'mdi:lightbulb-on'
-                name: Ligar Todas
-                styles:
-                  card:
-                    - height: 70px
-                  name:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: script.off_todas_luzes
-                icon: 'mdi:lightbulb'
-                name: Desligar Todas
-                styles:
-                  card:
-                    - height: 70px
-                  name:
-                    - font-size: 12px
-                type: 'custom:button-card'
-            type: horizontal-stack
-          - color: '#333'
-            color_type: label-card
-            name: Luzes Quentes / Frias
-            styles:
-              card:
-                - font-size: 13px
-                - height: 37px
-            type: 'custom:button-card'
-          - cards:
-              - entity: script.on_todas_luzes_amarelas
-                icon: 'mdi:lightbulb-on-outline'
-                name: On Quentes
-                styles:
-                  card:
-                    - height: 60px
-                  name:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: script.off_todas_luzes_amarelas
-                icon: 'mdi:lightbulb-outline'
-                name: Off Quentes
-                styles:
-                  card:
-                    - height: 60px
-                  name:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: script.on_todas_luzes_brancas
-                icon: 'mdi:lightbulb-on-outline'
-                name: On Frias
-                styles:
-                  card:
-                    - height: 60px
-                  name:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: script.off_todas_luzes_brancas
-                icon: 'mdi:lightbulb-outline'
-                name: Off Frias
-                styles:
-                  card:
-                    - height: 60px
-                  name:
-                    - font-size: 12px
-                type: 'custom:button-card'
-            type: horizontal-stack
-        type: vertical-stack
-      - entity: light.bancada
-        name: Fita LED Bancada
+      - entity: light.luz_da_cabeceira
+        name: 'Cabeceira '
         type: light
-    icon: 'mdi:lightbulb-on-outline'
-    path: iluminacao
+    icon: 'hass:lightbulb-on-outline'
+    path: Iluminacao
     title: Iluminação
   - badges: []
     cards:
       - cards:
-          - color: var(--secondary-text-color)
+          - color: var(--state-icon-active-color)
             entity: switch.tv_quarto
-            icon: 'mdi:television-classic'
+            icon: 'hass:television-classic'
             layout: icon_name_state2nd
             show_state: true
             state:
-              - color: var(--secondary-text-color)
-                styles:
+              - styles:
                   card:
-                    - background-color: var(--paper-card-background-color)
-                  state:
-                    - color: var(--secondary-text-color)
+                    - color: var(--state-icon-active-color)
+                    - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
                 value: 'on'
             styles:
               card:
-                - height: 82px
-                - background-color: var(--switch-unchecked-button-color)
+                - height: 52px
+                - background-color: var(--card-background-color)
+                - padding: 3px
               name:
                 - font-weight: 500
               state:
@@ -1908,25 +2272,37 @@ views:
                 name: Vol -
                 styles:
                   card:
-                    - height: 60px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.tv_quarto_mute
                 name: Mute
                 styles:
                   card:
-                    - height: 60px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.tv_quarto_vol_up
                 name: Vol +
                 styles:
                   card:
-                    - height: 60px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
@@ -1936,41 +2312,47 @@ views:
                 name: Sleep
                 styles:
                   card:
-                    - height: 60px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.tv_quarto_input
                 name: Input
                 styles:
                   card:
-                    - height: 60px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - color_type: blank-card
                 type: 'custom:button-card'
             type: horizontal-stack
         type: vertical-stack
       - cards:
-          - cards: null
-            color: var(--secondary-text-color)
+          - color: var(--state-icon-active-color)
             entity: switch.tv_lg_55
-            icon: 'mdi:television-classic'
+            icon: 'hass:television-classic'
             layout: icon_name_state2nd
             show_state: true
             state:
-              - color: var(--secondary-text-color)
-                styles:
+              - styles:
                   card:
-                    - background-color: var(--paper-card-background-color)
-                  state:
-                    - color: var(--secondary-text-color)
+                    - color: var(--state-icon-active-color)
+                    - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
                 value: 'on'
             styles:
               card:
-                - height: 82px
-                - background-color: var(--switch-unchecked-button-color)
+                - height: 52px
+                - background-color: var(--card-background-color)
+                - padding: 3px
               name:
                 - font-weight: 500
               state:
@@ -1981,131 +2363,177 @@ views:
                 name: Vol -
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.lg55_mute
                 name: Mute
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.lg55_vol_up
                 name: Vol +
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
               - entity: script.lg55_settings
-                icon: 'mdi:settings'
+                icon: 'hass:settings'
                 name: Settings
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.lg55_cima
-                icon: 'mdi:arrow-up-thick'
-                name: ' '
+                icon: 'hass:arrow-up-thick'
+                show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.lg55_input
                 name: Input
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
               - entity: script.lg55_esq
-                icon: 'mdi:arrow-left-bold'
-                name: ' '
-                styles:
-                  card:
-                    - height: 60px
-                  name:
-                    - font-size: 12px
-                type: 'custom:button-card'
-              - entity: script.lg55_ok
-                icon: 'mdi:chevron-down-circle-outline'
+                icon: 'hass:arrow-left-bold'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
-              - entity: script.lg55_dir
-                icon: 'mdi:arrow-right-bold'
-                name: ' '
+              - entity: script.lg55_ok
+                icon: 'hass:chevron-down-circle-outline'
+                show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
+                type: 'custom:button-card'
+              - entity: script.lg55_dir
+                icon: 'hass:arrow-right-bold'
+                show_name: false
+                styles:
+                  card:
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
+                  name:
+                    - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
               - entity: script.lg55_voltar
-                icon: 'mdi:undo-variant'
+                icon: 'hass:undo-variant'
                 name: Voltar
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.lg55_baixo
-                icon: 'mdi:arrow-down-thick'
+                icon: 'hass:arrow-down-thick'
                 name: ' '
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.lg55_exit
                 name: Exit
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
         type: vertical-stack
       - cards:
-          - cards: null
-            color: var(--secondary-text-color)
+          - color: var(--state-icon-active-color)
             entity: switch.xboom_som
             layout: icon_name_state2nd
             show_state: true
             state:
-              - color: var(--secondary-text-color)
-                styles:
+              - styles:
                   card:
-                    - background-color: var(--paper-card-background-color)
-                  state:
-                    - color: var(--secondary-text-color)
+                    - color: var(--state-icon-active-color)
+                    - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
                 value: 'on'
             styles:
               card:
-                - height: 82px
-                - background-color: var(--switch-unchecked-button-color)
+                - height: 52px
+                - background-color: var(--card-background-color)
+                - padding: 3px
               name:
                 - font-weight: 500
               state:
@@ -2116,25 +2544,37 @@ views:
                 name: Vol -
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.xboom_mute
                 name: Mute
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.xboom_vol_up
                 name: Vol +
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
@@ -2142,58 +2582,72 @@ views:
                 name: Input
                 styles:
                   card:
-                    - height: 60px
+                    - height: 58px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.xboom_equalizer
                 name: Equalizar
                 styles:
                   card:
-                    - height: 60px
+                    - height: 58px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.xbom_auxiliar
-                icon: 'mdi:television'
+                icon: 'hass:television'
                 name: Auxiliar
                 styles:
                   card:
-                    - height: 60px
+                    - height: 58px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.xbom_bluetooth
-                icon: 'mdi:bluetooth'
+                icon: 'hass:bluetooth'
                 name: Bluetooth
                 styles:
                   card:
-                    - height: 60px
+                    - height: 58px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
         type: vertical-stack
       - cards:
-          - cards: null
-            color: var(--secondary-text-color)
+          - color: var(--state-icon-active-color)
             entity: switch.htv
-            icon: 'mdi:android'
+            icon: 'hass:android'
             layout: icon_name_state2nd
             name: Android TV
             show_state: true
             state:
-              - color: var(--secondary-text-color)
-                styles:
+              - styles:
                   card:
-                    - background-color: var(--paper-card-background-color)
-                  state:
-                    - color: var(--secondary-text-color)
+                    - color: var(--state-icon-active-color)
+                    - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
                 value: 'on'
             styles:
               card:
-                - height: 82px
-                - background-color: var(--switch-unchecked-button-color)
+                - height: 52px
+                - background-color: var(--card-background-color)
+                - padding: 3px
               name:
                 - font-weight: 500
               state:
@@ -2201,212 +2655,300 @@ views:
             type: 'custom:button-card'
           - cards:
               - entity: script.htv_vmenos
-                icon: 'mdi:volume-minus'
+                icon: 'hass:volume-minus'
                 name: Vol -
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_mute
-                icon: 'mdi:volume-mute'
+                icon: 'hass:volume-mute'
                 name: Mute
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_vmais
-                icon: 'mdi:volume-plus'
+                icon: 'hass:volume-plus'
                 name: Vol +
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
               - entity: script.htv_menu
-                icon: 'mdi:dots-horizontal-circle-outline'
+                icon: 'hass:dots-horizontal-circle-outline'
                 name: null
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_cima
-                icon: 'mdi:arrow-up-thick'
+                icon: 'hass:arrow-up-thick'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_exit
-                icon: 'mdi:exit-to-app'
+                icon: 'hass:exit-to-app'
                 name: Exit
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
               - entity: script.htv_esq
-                icon: 'mdi:arrow-left-thick'
+                icon: 'hass:arrow-left-thick'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_ok
-                icon: 'mdi:chevron-down-circle-outline'
+                icon: 'hass:chevron-down-circle-outline'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_direita
-                icon: 'mdi:arrow-right-thick'
+                icon: 'hass:arrow-right-thick'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
               - entity: script.htv_home
-                icon: 'mdi:home'
+                icon: 'hass:home'
                 name: Home
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_baixo
-                icon: 'mdi:arrow-down-thick'
+                icon: 'hass:arrow-down-thick'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_info
-                icon: 'mdi:information-outline'
+                icon: 'hass:information-outline'
                 name: Info
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
               - entity: script.htv_1
-                icon: 'mdi:numeric-1'
+                icon: 'hass:numeric-1'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_2
-                icon: 'mdi:numeric-2'
+                icon: 'hass:numeric-2'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_3
-                icon: 'mdi:numeric-3'
+                icon: 'hass:numeric-3'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_4
-                icon: 'mdi:numeric-4'
+                icon: 'hass:numeric-4'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_5
-                icon: 'mdi:numeric-5'
+                icon: 'hass:numeric-5'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
               - entity: script.htv_6
-                icon: 'mdi:numeric-6'
+                icon: 'hass:numeric-6'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_7
-                icon: 'mdi:numeric-7'
+                icon: 'hass:numeric-7'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_8
-                icon: 'mdi:numeric-8'
+                icon: 'hass:numeric-8'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_9
-                icon: 'mdi:numeric-9'
+                icon: 'hass:numeric-9'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_0
-                icon: 'mdi:numeric-0'
+                icon: 'hass:numeric-0'
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
@@ -2417,6 +2959,8 @@ views:
                   card:
                     - background-color: '#C62828'
                     - height: 20px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_verde
                 show_icon: false
@@ -2425,6 +2969,8 @@ views:
                   card:
                     - background-color: '#2E7D32'
                     - height: 20px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_amarelo
                 show_icon: false
@@ -2433,6 +2979,8 @@ views:
                   card:
                     - background-color: '#FDD835'
                     - height: 20px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.htv_azul
                 show_icon: false
@@ -2441,27 +2989,28 @@ views:
                   card:
                     - background-color: '#1565C0'
                     - height: 20px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
         type: vertical-stack
       - cards:
-          - cards: null
-            color: var(--secondary-text-color)
+          - color: var(--state-icon-active-color)
             entity: switch.projetor
             layout: icon_name_state2nd
             show_state: true
             state:
-              - color: var(--secondary-text-color)
-                styles:
+              - styles:
                   card:
-                    - background-color: var(--paper-card-background-color)
-                  state:
-                    - color: var(--secondary-text-color)
+                    - color: var(--state-icon-active-color)
+                    - box-shadow: 4px 2px 0px 0px var(--state-icon-active-color)
+                    - margin: 30px;
                 value: 'on'
             styles:
               card:
-                - height: 82px
-                - background-color: var(--switch-unchecked-button-color)
+                - height: 52px
+                - background-color: var(--card-background-color)
+                - padding: 3px
               name:
                 - font-weight: 500
               state:
@@ -2472,25 +3021,37 @@ views:
                 name: Vol -
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.proj_mute
                 name: Mute
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.proj_vup
                 name: Vol +
                 styles:
                   card:
-                    - height: 70px
+                    - height: 64px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
@@ -2498,25 +3059,37 @@ views:
                 name: Menu
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.proj_c
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.proj_esc
                 name: Esc
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
@@ -2524,25 +3097,37 @@ views:
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.proj_ok
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.proj_f
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
@@ -2552,38 +3137,45 @@ views:
                 show_name: false
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.proj_input
                 name: Input
                 styles:
                   card:
-                    - height: 60px
+                    - height: 48px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
         type: vertical-stack
       - cards:
-          - color: var(--secondary-text-color)
+          - color: var(--state-icon-active-color)
             entity: switch.umidificador
-            icon: 'mdi:air-humidifier'
+            icon: 'hass:air-humidifier'
             layout: icon_name_state2nd
             show_state: true
             state:
-              - color: var(--secondary-text-color)
-                styles:
+              - styles:
                   card:
-                    - background-color: var(--paper-card-background-color)
-                  state:
-                    - color: var(--secondary-text-color)
+                    - color: var(--state-icon-active-color)
+                    - box-shadow: 4px 0px 0px 0px var(--state-icon-active-color)
                 value: 'on'
             styles:
               card:
-                - height: 82px
-                - background-color: var(--switch-unchecked-button-color)
+                - height: 52px
+                - background-color: var(--card-background-color)
+                - padding: 3px
               name:
                 - font-weight: 500
               state:
@@ -2591,59 +3183,79 @@ views:
             type: 'custom:button-card'
           - cards:
               - entity: script.umidificador_intermitente
-                icon: 'mdi:fast-forward-10'
+                icon: 'hass:fast-forward-10'
                 name: Intermitente
                 styles:
                   card:
-                    - height: 60px
+                    - height: 58px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.umidificador_cronometrar
-                icon: 'mdi:clock-outline'
+                icon: 'hass:clock-outline'
                 name: Cronometrar
                 styles:
                   card:
-                    - height: 60px
+                    - height: 58px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.umidificador_continuo
-                icon: 'mdi:play'
+                icon: 'hass:play'
                 name: Contínuo
                 styles:
                   card:
-                    - height: 60px
+                    - height: 58px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
             type: horizontal-stack
           - cards:
               - color_type: blank-card
                 type: 'custom:button-card'
               - entity: script.umidificador_grande_pequeno
-                icon: 'mdi:swap-vertical'
+                icon: 'hass:swap-vertical'
                 name: Grande/Pequeno
                 styles:
                   card:
-                    - height: 60px
+                    - height: 58px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - entity: script.umidificador_luz
-                icon: 'mdi:lightbulb-on-outline'
+                icon: 'hass:lightbulb-on-outline'
                 name: Luz
                 styles:
                   card:
-                    - height: 60px
+                    - height: 58px
+                    - background-color: var(--primary-background-color)
+                    - box-shadow: 1px 1px var(--disabled-text-color)
                   name:
                     - font-size: 12px
+                tap_action:
+                  action: toggle
                 type: 'custom:button-card'
               - color_type: blank-card
                 type: 'custom:button-card'
             type: horizontal-stack
         type: vertical-stack
-    icon: 'mdi:remote'
+    icon: 'hass:remote'
     path: remote
     title: Controles IR
   - badges: []
@@ -2660,6 +3272,10 @@ views:
           - entity: script.camwascam_p2
           - entity: script.fotos_garagem_dupla
           - entity: script.video_garagem
+        hold_action:
+          action: more-info
+        tap_action:
+          action: more-info
         type: picture-glance
       - camera_image: camera.xiaofang
         entities:
@@ -2685,29 +3301,34 @@ views:
         show_header_toggle: false
         title: Sirenes
         type: entities
-    icon: 'mdi:cctv'
+    icon: 'hass:cctv'
     path: cameras
     title: Segurança
   - badges: []
     cards:
       - entity: media_player.google_home
+        name: Google Home - Suíte
         type: media-control
       - entity: media_player.google_home_sala
-        type: media-control
-      - entity: media_player.lg_smart_tv
+        name: Google Home - Social
         type: media-control
       - entity: media_player.tv_do_quarto
+        name: ChromeCast - TV Suíde
         type: media-control
       - entity: media_player.tv_da_sala
+        name: ChromeCast - TV Sala Social
+        type: media-control
+      - entity: media_player.echo_dot_de_rudima
+        name: Echo dot - Sala
         type: media-control
       - entities:
           - entity: input_select.src_cast_audio
           - entity: input_select.str_audio
           - entity: script.ouvir_audio
-            icon: 'mdi:play-circle-outline'
+            icon: 'hass:play-circle-outline'
             name: Play
           - entity: script.stop_audio
-            icon: 'mdi:stop-circle-outline'
+            icon: 'hass:stop-circle-outline'
             name: Stop
           - entity: input_number.audio_volume
         show_header_toggle: false
@@ -2717,41 +3338,47 @@ views:
           - entity: input_select.src_cast_video
           - entity: input_select.str_video
           - entity: script.ver_video
-            icon: 'mdi:play-circle-outline'
+            icon: 'hass:play-circle-outline'
             name: Play
           - entity: script.stop_video
-            icon: 'mdi:stop-circle-outline'
+            icon: 'hass:stop-circle-outline'
             name: Stop
           - entity: input_number.video_volume
         show_header_toggle: false
         title: TV Player
         type: entities
       - entities:
-          - entity: input_select.src_cast_teste_video
-          - entity: input_text.url_teste_video
-          - entity: script.ver_teste_video
-            icon: 'mdi:play-circle-outline'
+          - entity: input_select.src_cast_media_extractor
+          - entity: input_text.url_media_extractor
+          - entity: script.play_media_ext
+            icon: 'hass:play-circle-outline'
             name: Play
-          - entity: script.stop_teste_video
-            icon: 'mdi:stop-circle-outline'
+          - entity: script.stop_media_ext
+            icon: 'hass:stop-circle-outline'
             name: Stop
-          - entity: input_number.video_teste_volume
+          - entity: input_number.volume_media_extractor
         show_header_toggle: false
-        title: Streaming Player  via URL
+        title: Streaming Media Extractor
+        type: entities
+      - entities:
+          - entity: switch.echo_dot_de_rudima_do_not_disturb_switch
+            name: Microfone mute
+          - entity: switch.echo_dot_de_rudima_repeat_switch
+            name: Repeat
+          - entity: switch.echo_dot_de_rudima_shuffle_switch
+            name: Shuffle
+          - entity: sensor.echo_dot_de_rudima_next_alarm
+            name: Alarme
+          - entity: sensor.echo_dot_de_rudima_next_reminder
+            name: Lembrete
+          - entity: sensor.echo_dot_de_rudima_next_timer
+            name: Timer
+        show_header_toggle: false
+        title: Echo dot - Sala
         type: entities
       - entity: media_player.todos_google_homes
         type: media-control
-      - entities:
-          - switch.echo_dot_de_rudima_do_not_disturb_switch
-          - sensor.echo_dot_de_rudima_next_alarm
-          - sensor.echo_dot_de_rudima_next_reminder
-          - sensor.echo_dot_de_rudima_next_timer
-          - switch.echo_dot_de_rudima_repeat_switch
-          - switch.echo_dot_de_rudima_shuffle_switch
-        type: entities
-      - entity: media_player.echo_dot_de_rudima
-        type: media-control
-    icon: 'mdi:play-speed'
+    icon: 'hass:play-speed'
     path: multimidia
     title: Multimídia
   - badges: []
@@ -2836,7 +3463,7 @@ views:
                     index: 0
                 font_size: 75
                 hours_to_show: 16
-                icon: 'mdi:vector-triangle'
+                icon: 'hass:vector-triangle'
                 line_width: 4
                 points_per_hour: 2
                 show:
@@ -2857,7 +3484,7 @@ views:
                     index: 0
                 font_size: 75
                 hours_to_show: 16
-                icon: 'mdi:triforce'
+                icon: 'hass:triforce'
                 line_width: 4
                 points_per_hour: 2
                 show:
@@ -2915,7 +3542,7 @@ views:
           - label: Valor médio do kW/h da última fatura
             type: section
           - entity: input_text.text_valor_kwh
-            icon: 'mdi:square-inc-cash'
+            icon: 'hass:square-inc-cash'
           - label: Estimativa de gastos em R$
             type: section
           - entity: sensor.energia_gasta_dia
@@ -2942,7 +3569,7 @@ views:
         show_header_toggle: false
         title: Estimativa de gastos
         type: entities
-    icon: 'mdi:power-plug'
+    icon: 'hass:power-plug'
     path: energia
     title: Energia
   - badges: []
@@ -2952,6 +3579,9 @@ views:
               - entity: input_text.text_valor_agua
               - entity: sensor.vazao_de_agua
                 name: Vazão de água (l/seg)
+              - entity: sensor.vazao_de_agua_min
+                name: Vazão de água (l/min)
+              - entity: sensor.agua_gasta_dia_min
             show_header_toggle: false
             title: Consumo de Água
             type: entities
@@ -2974,7 +3604,7 @@ views:
             type: horizontal-stack
           - cards:
               - entity: sensor.agua_gasta_dia
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Hoje
                 show_state: true
                 styles:
@@ -2987,7 +3617,7 @@ views:
                     - font-size: 11px
                 type: 'custom:button-card'
               - entity: sensor.agua_gasta_semana
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Semana
                 show_state: true
                 styles:
@@ -3000,7 +3630,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.agua_gasta_mes
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Mês
                 show_state: true
                 styles:
@@ -3013,7 +3643,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.agua_gasta_ano
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Ano
                 show_state: true
                 styles:
@@ -3074,7 +3704,7 @@ views:
               - entity: sensor.distancia_d_agua
                 name: Sensor Ultrasonico
               - entity: sensor.nivel_real
-                icon: 'mdi:waves'
+                icon: 'hass:waves'
               - entity: sensor.status_caixa_dagua
               - entity: sensor.status_abastecimento_agua
             show_header_toggle: false
@@ -3105,11 +3735,11 @@ views:
         type: vertical-stack
       - entities:
           - entity: sensor.vazao_de_agua
-        hours_to_show: 8
+        hours_to_show: 1
         refresh_interval: 0
-        title: Vazão
+        title: Vazão última hora
         type: history-graph
-    icon: 'mdi:water'
+    icon: 'hass:water'
     path: agua
     title: Água
   - badges: []
@@ -3117,7 +3747,7 @@ views:
       - cards:
           - entities:
               - entity: switch.geladeira
-                icon: 'mdi:power-plug'
+                icon: 'hass:power-plug'
                 name: Energia
             show_header_toggle: false
             title: Geladeira
@@ -3129,7 +3759,7 @@ views:
                     Math.floor(states['sensor.geladeira_vezes_aberta'].state )
                     ]]]
                 entity: sensor.geladeira_status
-                icon: 'mdi:fridge-outline'
+                icon: 'hass:fridge-outline'
                 layout: vertical
                 name: Status
                 show_icon: true
@@ -3229,7 +3859,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.consumo_dia_anterior_geladeira
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Ontem
                 show_icon: false
                 show_state: true
@@ -3240,7 +3870,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_semana_ge
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Semana
                 show_icon: false
                 show_state: true
@@ -3251,7 +3881,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_mes_ge
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Mês
                 show_icon: false
                 show_state: true
@@ -3288,14 +3918,14 @@ views:
       - cards:
           - entities:
               - entity: switch.maquina_de_lavar
-                icon: 'mdi:power-plug'
+                icon: 'hass:power-plug'
                 name: Energia
             show_header_toggle: false
             title: Maquina de Lavar
             type: entities
           - cards:
               - entity: sensor.geladeira_status
-                icon: 'mdi:washing-machine'
+                icon: 'hass:washing-machine'
                 layout: vertical
                 name: Status
                 show_icon: true
@@ -3387,7 +4017,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.consumo_dia_anterior_lava_e_seca
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Ontem
                 show_icon: false
                 show_state: true
@@ -3398,7 +4028,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_semana_ml
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Semana
                 show_icon: false
                 show_state: true
@@ -3409,7 +4039,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_mes_ml
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Mês
                 show_icon: false
                 show_state: true
@@ -3446,14 +4076,14 @@ views:
       - cards:
           - entities:
               - entity: switch.motor_da_piscina
-                icon: 'mdi:power-plug'
+                icon: 'hass:power-plug'
                 name: Energia
             show_header_toggle: false
             title: Motor Piscina
             type: entities
           - cards:
               - entity: sensor.geladeira_status
-                icon: 'mdi:pool'
+                icon: 'hass:pool'
                 layout: vertical
                 name: Status
                 show_icon: true
@@ -3545,7 +4175,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.consumo_dia_anterior_piscina
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Ontem
                 show_icon: false
                 show_state: true
@@ -3556,7 +4186,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_semana_ml
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Semana
                 show_icon: false
                 show_state: true
@@ -3567,7 +4197,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_mes_mp
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Mês
                 show_icon: false
                 show_state: true
@@ -3604,14 +4234,14 @@ views:
       - cards:
           - entities:
               - entity: switch.purificador
-                icon: 'mdi:power-plug'
+                icon: 'hass:power-plug'
                 name: Energia
             show_header_toggle: false
             title: Purificador
             type: entities
           - cards:
               - entity: sensor.purificador_status
-                icon: 'mdi:water-well'
+                icon: 'hass:water-well'
                 layout: vertical
                 name: Status
                 show_icon: true
@@ -3703,7 +4333,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.consumo_dia_anterior_purificador
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Ontem
                 show_icon: false
                 show_state: true
@@ -3714,7 +4344,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_semana_pur
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Semana
                 show_icon: false
                 show_state: true
@@ -3725,7 +4355,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_mes_pur
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Mês
                 show_icon: false
                 show_state: true
@@ -3762,14 +4392,14 @@ views:
       - cards:
           - entities:
               - entity: switch.cervejeira
-                icon: 'mdi:power-plug'
+                icon: 'hass:power-plug'
                 name: Energia
             show_header_toggle: false
             title: Cervejeira
             type: entities
           - cards:
               - entity: sensor.cervejeira_status
-                icon: 'mdi:glass-mug-variant'
+                icon: 'hass:glass-mug-variant'
                 layout: vertical
                 name: Status
                 show_icon: true
@@ -3861,7 +4491,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.consumo_dia_anterior_cervejeira
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Ontem
                 show_icon: false
                 show_state: true
@@ -3872,7 +4502,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_semana_ceva
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Semana
                 show_icon: false
                 show_state: true
@@ -3883,7 +4513,7 @@ views:
                     - font-size: 12px
                 type: 'custom:button-card'
               - entity: sensor.kwh_gasto_mes_ceva
-                icon: 'mdi:water'
+                icon: 'hass:water'
                 name: Mês
                 show_icon: false
                 show_state: true
@@ -3919,20 +4549,20 @@ views:
         type: vertical-stack
       - entities:
           - entity: binary_sensor.porta_geladeira
-            icon: 'mdi:fridge'
+            icon: 'hass:fridge'
             secondary_info: last-changed
-          - label: Hoje
+          - entity: sensor.geladeira_vezes_aberta
+            icon: 'hass:counter'
+            name: Vezes que foi aberta
+          - label: No mês
             secondary_info: last-changed
             type: section
-          - entity: sensor.geladeira_vezes_aberta
-            icon: 'mdi:counter'
-            name: Vezes que foi aberta
           - entity: sensor.geladeira_x_aberta_mes
             name: Vezes que foi aberta
         show_header_toggle: false
-        title: Geladeira
+        title: Geladeira Hoje
         type: entities
-    icon: 'mdi:atom-variant'
+    icon: 'hass:atom-variant'
     path: lavanderiaecozinha
     title: Lavanderia e Cozinha
   - badges: []
@@ -3945,7 +4575,7 @@ views:
           - entity: input_select.despert1_tts
           - entity: input_text.despert1_mensagem
           - entity: input_boolean.despert1_tempo
-            icon: 'mdi:weather-partly-snowy-rainy'
+            icon: 'hass:weather-partly-snowy-rainy'
           - entity: input_select.despert1_audio_str
           - entity: input_number.despert1_volume
           - entity: input_boolean.despert1_status
@@ -3960,7 +4590,7 @@ views:
           - entity: input_select.despert2_tts
           - entity: input_text.despert2_mensagem
           - entity: input_boolean.despert2_tempo
-            icon: 'mdi:weather-partly-snowy-rainy'
+            icon: 'hass:weather-partly-snowy-rainy'
           - entity: input_select.despert2_audio_str
           - entity: input_number.despert2_volume
           - entity: input_boolean.despert2_status
@@ -3971,13 +4601,33 @@ views:
         name: Hora
         type: sensor
         unit: h
-    icon: 'mdi:alarm-multiple'
+      - entity: sensor.nascerdosol
+        icon: 'hass:weather-sunset-up'
+        type: entity
+        unit: h
+      - entity: sensor.pordosol
+        icon: 'hass:weather-sunset-down'
+        type: entity
+        unit: h
+    icon: 'hass:alarm-multiple'
     path: despertador
     title: Despertadores
   - badges: []
     cards:
-      - type: weather-forecast
-        entity: weather.casa
+      - entity: climate.climatizador
+        name: Ar Suíte
+        type: thermostat
+      - entity: climate.ar_da_cozinha
+        type: thermostat
+      - entity: climate.ar_da_sala
+        type: thermostat
+    icon: 'hass:air-filter'
+    path: Ar
+    title: Lab
+  - badges: []
+    cards:
+      - entity: weather.casa
+        type: weather-forecast
       - cards:
           - cards:
               - color_thresholds:
@@ -4082,7 +4732,7 @@ views:
                   https://embed.windy.com/embed2.html?lat=-27.383&lon=-53.406&zoom=5&level=surface&overlay=rain&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&detailLat=-21.371&detailLon=-53.701&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1
             type: horizontal-stack
         type: vertical-stack
-    icon: 'mdi:weather-partly-snowy-rainy'
+    icon: 'hass:weather-partly-snowy-rainy'
     path: clima
     title: Clima
   - badges: []
@@ -4291,150 +4941,150 @@ views:
         show_header_toggle: false
         title: Sensor Testes
         type: entities
-    icon: 'mdi:contactless-payment'
+    icon: 'hass:contactless-payment'
     path: 433mhz
     title: 433Mhz
   - badges: []
     cards:
       - elements:
           - entity: group.all_lights
-            icon: 'mdi:square-inc'
+            icon: 'hass:square-inc'
             style:
               left: 35%
               top: 15%
             tap_action:
               action: toggle
             type: state-badge
-          - entity: light.garagem
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_garagem
+            icon: 'hass:square-inc'
             style:
               left: 23%
               top: 81%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.garagem
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_garagem
+            icon: 'hass:square-inc'
             style:
               left: 12%
               top: 81%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.garagem
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_garagem
+            icon: 'hass:square-inc'
             style:
               left: 12%
               top: 59%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.pendentes
-            icon: 'mdi:ceiling-light'
+          - entity: light.luz_pendentes
+            icon: 'hass:ceiling-light'
             style:
               left: 44%
               top: 65%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.lustre
-            icon: 'mdi:ceiling-light'
+          - entity: light.luz_do_lustre
+            icon: 'hass:ceiling-light'
             style:
               left: 63%
               top: 81%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.pendentes
-            icon: 'mdi:ceiling-light'
+          - entity: light.luz_pendentes
+            icon: 'hass:ceiling-light'
             style:
               left: 47%
               top: 62%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.pendentes
-            icon: 'mdi:ceiling-light'
+          - entity: light.luz_pendentes
+            icon: 'hass:ceiling-light'
             style:
               left: 50%
               top: 59%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.mesa_de_jantar
-            icon: 'mdi:ceiling-light'
+          - entity: light.luz_da_mesa_de_jantar
+            icon: 'hass:ceiling-light'
             style:
               left: 40%
               top: 78%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.jg
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_jg
+            icon: 'hass:square-medium-outline'
             style:
               left: 38%
               top: 70.5%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.jg
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_jg
+            icon: 'hass:square-medium-outline'
             style:
               left: 42%
               top: 70.5%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.jf
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_jf
+            icon: 'hass:square-medium-outline'
             style:
               left: 48%
               top: 77%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.jf
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_jf
+            icon: 'hass:square-medium-outline'
             style:
               left: 48%
               top: 81%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.cozinha
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_cozinha
+            icon: 'hass:square-inc'
             style:
               left: 34%
               top: 57%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.cozinha
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_cozinha
+            icon: 'hass:square-inc'
             style:
               left: 41%
               top: 57%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.pia
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_da_pia
+            icon: 'hass:square-medium-outline'
             style:
               left: 37%
               top: 50%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.pia
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_da_pia
+            icon: 'hass:square-medium-outline'
             style:
               left: 33%
               top: 50%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.postes
-            icon: 'mdi:lighthouse-on'
+          - entity: light.luz_dos_postes
+            icon: 'hass:lighthouse-on'
             style:
               left: '-1%'
               top: 4%
@@ -4442,8 +5092,8 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.postes
-            icon: 'mdi:lighthouse-on'
+          - entity: light.luz_dos_postes
+            icon: 'hass:lighthouse-on'
             style:
               left: '-1%'
               top: 92%
@@ -4451,8 +5101,8 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.trilhos
-            icon: 'mdi:track-light'
+          - entity: light.luz_trilhos
+            icon: 'hass:track-light'
             style:
               left: 64%
               top: 57%
@@ -4460,8 +5110,8 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.trilhos
-            icon: 'mdi:track-light'
+          - entity: light.luz_trilhos
+            icon: 'hass:track-light'
             style:
               left: 64%
               top: 50%
@@ -4469,32 +5119,32 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.lavabo
-            icon: 'mdi:square-inc'
+          - entity: light.luz_do_lavabo
+            icon: 'hass:square-inc'
             style:
               left: 68.5%
               top: 40%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.quarto_da_frente
-            icon: 'mdi:square-inc'
+          - entity: light.luz_do_quarto_da_frente
+            icon: 'hass:square-inc'
             style:
               left: 82%
               top: 85%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.quarto_do_meio
-            icon: 'mdi:square-inc'
+          - entity: light.luz_do_quarto_do_meio
+            icon: 'hass:square-inc'
             style:
               left: 85%
               top: 66%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.quarto_da_suite
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_suite
+            icon: 'hass:square-inc'
             style:
               left: 85%
               top: 38%
@@ -4502,207 +5152,207 @@ views:
               action: toggle
             type: state-icon
           - entity: light.yeelight_color1_7c49eb15924b
-            icon: 'mdi:floor-lamp'
+            icon: 'hass:floor-lamp'
             style:
               left: 90%
               top: 29%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.closet
-            icon: 'mdi:square-inc'
+          - entity: light.luz_do_closet
+            icon: 'hass:square-inc'
             style:
               left: 85%
               top: 11.5%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.banheiro_da_suite
-            icon: 'mdi:square-inc'
+          - entity: light.luz_do_banheiro_da_suite
+            icon: 'hass:square-inc'
             style:
               left: 85%
               top: 21%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.banheiro_social
-            icon: 'mdi:square-inc'
+          - entity: light.luz_do_banheiro_social
+            icon: 'hass:square-inc'
             style:
               left: 85%
               top: 52%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.corredor
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_do_corredor
+            icon: 'hass:square-medium-outline'
             style:
               left: 75%
               top: 55%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.corredor
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_do_corredor
+            icon: 'hass:square-medium-outline'
             style:
               left: 75%
               top: 62%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.corredor
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_do_corredor
+            icon: 'hass:square-medium-outline'
             style:
               left: 75%
               top: 69%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.varanda_fundo
-            icon: 'mdi:square-inc'
+          - entity: light.luz_varanda_fundos
+            icon: 'hass:square-inc'
             style:
               left: 68%
               top: 23%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.area_da_piscina
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_area_da_piscina
+            icon: 'hass:square-inc'
             style:
               left: 50%
               top: 42%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.area_da_piscina
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_area_da_piscina
+            icon: 'hass:square-inc'
             style:
               left: 30%
               top: 42%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.entrada
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_entrada
+            icon: 'hass:square-inc'
             style:
               left: 49%
               top: 91%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.lavanderia
-            icon: 'mdi:square-inc'
+          - entity: light.luz_da_lavanderia
+            icon: 'hass:square-inc'
             style:
               left: 24%
               top: 59%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.sala_game
-            icon: 'mdi:square-inc'
+          - entity: light.luz_sala_game
+            icon: 'hass:square-inc'
             style:
               left: 59%
               top: 57%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.central
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_central
+            icon: 'hass:square-medium-outline'
             style:
               left: 54%
               top: 53%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.central
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_central
+            icon: 'hass:square-medium-outline'
             style:
               left: 54%
               top: 58%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.central
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_central
+            icon: 'hass:square-medium-outline'
             style:
               left: 54%
               top: 63%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.central
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_central
+            icon: 'hass:square-medium-outline'
             style:
               left: 52%
               top: 67.5%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.central
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_central
+            icon: 'hass:square-medium-outline'
             style:
               left: 49%
               top: 71%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.sala_de_estar
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_da_sala_de_estar
+            icon: 'hass:square-medium-outline'
             style:
               left: 63%
               top: 70%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.sala_de_estar
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_da_sala_de_estar
+            icon: 'hass:square-medium-outline'
             style:
               left: 68%
               top: 70%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.sala_de_estar
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_da_sala_de_estar
+            icon: 'hass:square-medium-outline'
             style:
               left: 68%
               top: 79%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.sala_de_estar
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_da_sala_de_estar
+            icon: 'hass:square-medium-outline'
             style:
               left: 68%
               top: 88%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.sala_de_estar
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_da_sala_de_estar
+            icon: 'hass:square-medium-outline'
             style:
               left: 62%
               top: 88%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.sala_de_estar
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_da_sala_de_estar
+            icon: 'hass:square-medium-outline'
             style:
               left: 56%
               top: 88%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.sala_de_estar
-            icon: 'mdi:square-medium-outline'
+          - entity: light.luz_da_sala_de_estar
+            icon: 'hass:square-medium-outline'
             style:
               left: 56%
               top: 79%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_principais
+            icon: 'hass:car-parking-lights'
             style:
               left: 90%
               top: 80%
@@ -4710,8 +5360,8 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_principais
+            icon: 'hass:car-parking-lights'
             style:
               left: 92%
               top: 60%
@@ -4719,8 +5369,8 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_principais
+            icon: 'hass:car-parking-lights'
             style:
               left: 92%
               top: 34%
@@ -4728,8 +5378,8 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_principais
+            icon: 'hass:car-parking-lights'
             style:
               left: 92%
               top: 10%
@@ -4737,56 +5387,56 @@ views:
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_principais
+            icon: 'hass:car-parking-lights'
             style:
               left: 88%
               top: 3%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_principais
+            icon: 'hass:car-parking-lights'
             style:
               left: 78%
               top: 3%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_principais
+            icon: 'hass:car-parking-lights'
             style:
               left: 77%
               top: 97%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_principais
+            icon: 'hass:car-parking-lights'
             style:
               left: 86%
               top: 97%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_principais
+            icon: 'hass:car-parking-lights'
             style:
               left: 25%
               top: 70%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas_da_varanda
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_da_varanda
+            icon: 'hass:car-parking-lights'
             style:
               left: 68%
               top: 34%
             tap_action:
               action: toggle
             type: state-icon
-          - entity: light.arandelas_da_varanda
-            icon: 'mdi:car-parking-lights'
+          - entity: light.luz_arandelas_da_varanda
+            icon: 'hass:car-parking-lights'
             style:
               left: 68%
               top: 9%
@@ -4798,20 +5448,20 @@ views:
         type: picture-elements
       - elements:
           - entity: switch.tv_quarto
-            icon: 'mdi:television-classic'
+            icon: 'hass:television-classic'
             style:
               left: 85%
               top: 29%
             type: state-icon
           - entity: switch.tv_lg_55
-            icon: 'mdi:television-classic'
+            icon: 'hass:television-classic'
             style:
               left: 65%
               top: 51%
               transform: rotate(90deg)
             type: state-icon
           - entity: switch.xboom_som
-            icon: 'mdi:speaker'
+            icon: 'hass:speaker'
             style:
               left: 64%
               top: 57%
@@ -4864,7 +5514,7 @@ views:
               top: 25%
             type: state-icon
           - entity: camera.wanscam_360
-            icon: 'mdi:cctv'
+            icon: 'hass:cctv'
             style:
               '--paper-item-icon-color': '#795548'
               left: 4%
@@ -4872,14 +5522,14 @@ views:
               transform: rotate(-80deg) scaleX(-1)
             type: state-icon
           - entity: camera.xiaofang
-            icon: 'mdi:cctv'
+            icon: 'hass:cctv'
             style:
               '--paper-item-icon-color': '#795548'
               left: 68%
               top: 10%
             type: state-icon
           - entity: binary_sensor.v380_piscina
-            icon: 'mdi:cctv'
+            icon: 'hass:cctv'
             style:
               '--paper-item-icon-color': '#795548'
               left: 3%
@@ -4887,7 +5537,7 @@ views:
               transform: rotate(-80deg) scaleX(-1)
             type: state-icon
           - entity: camera.camera_interna
-            icon: 'mdi:webcam'
+            icon: 'hass:webcam'
             style:
               '--paper-item-icon-color': '#795548'
               left: 54%
@@ -4952,7 +5602,7 @@ views:
         image: /local/imgs/planta2.svg
         title: Segurança
         type: picture-elements
-    icon: 'mdi:floor-plan'
+    icon: 'hass:floor-plan'
     panel: false
     path: planta
     title: Planta
@@ -4962,53 +5612,53 @@ views:
           icone: |
             [[[
               return `<b>HassOS</b><br><ha-icon
-                icon="mdi:raspberry-pi"
+                icon="hass:raspberry-pi"
                 style="width: 40px; height: 40px;">
                 </ha-icon><br></span>
                 <ha-icon
-                icon="mdi:radioactive"
+                icon="hass:radioactive"
                 style="width: 18px; height: 16px; color: red;">
                 </ha-icon><span> <span style="color: var(--text-color-sensor);">${states['sensor.processor_use'].state}%</span></span>`
             ]]]
           ram: |
             [[[
               return `<ha-icon
-                icon="mdi:memory"
+                icon="hass:memory"
                 style="width: 22px; height: 18px; color: #C51162;">
                 </ha-icon><span>RAM: <span style="color: var(--text-color-sensor);"><b>${states['sensor.memory_free'].state}</b> MB</span></span>`
             ]]]
           ramuse: |
             [[[
               return `<ha-icon
-                icon="mdi:memory"
+                icon="hass:memory"
                 style="width: 22px; height: 18px; color: #C51162;">
                 </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.memory_use_percent'].state}</b>%</span></span>`
             ]]]
           sd: |
             [[[
               return `<ha-icon
-                icon="mdi:harddisk"
+                icon="hass:harddisk"
                 style="width: 22px; height: 18px; color: #8BC34A;">
                 </ha-icon><span>SD: <span style="color: var(--text-color-sensor);"><b>${states['sensor.disk_free'].state}</b> GB</span></span>`
             ]]]
           sduse: |
             [[[
               return `<ha-icon
-                icon="mdi:harddisk"
+                icon="hass:harddisk"
                 style="width: 22px; height: 18px; color: #8BC34A;">
                 </ha-icon><span><span style="color: var(--text-color-sensor);"><b>${states['sensor.disk_use_percent'].state}</b>%</span></span>`
             ]]]
           temp: |
             [[[
               return `<ha-icon
-                icon="mdi:thermometer"
+                icon="hass:thermometer"
                 style="width: 22px; height: 18px; color: yellow;">
                 </ha-icon><span><b>${entity.state}</b>°C</span>`
             ]]]
           versao: |
             [[[
               return `<ha-icon
-                icon="mdi:settings"
+                icon="hass:settings"
                 style="width: 22px; height: 18px; color: deepskyblue;">
                 </ha-icon><span>Versão: <span style="color: var(--text-color-sensor);"><b>${states['sensor.versao'].state}</b></span></span>`
             ]]]
@@ -5019,7 +5669,7 @@ views:
         show_state: false
         styles:
           card:
-            - padding: 10%
+            - padding: 12%
             - font-size: 15px
           custom_fields:
             icone:
@@ -5101,10 +5751,6 @@ views:
           - entity: binary_sensor.internet
             name: RB2011 (RouterOS)
           - entity: binary_sensor.google_wifi
-          - entity: binary_sensor.pc_desktop
-            icon: 'mdi:desktop-classic'
-          - entity: binary_sensor.fita_led_bancada
-            icon: 'mdi:led-strip'
         show_header_toggle: false
         title: Diversos
         type: entities
@@ -5117,56 +5763,42 @@ views:
         type: entities
       - entities:
           - entity: binary_sensor.camera_digoo
-            icon: 'mdi:webcam'
+            icon: 'hass:webcam'
             name: Câmera Interna 360
           - entity: binary_sensor.wcam360
             name: Câmera Garagem 360
           - entity: binary_sensor.xiaofang
-            icon: 'mdi:webcam'
+            icon: 'hass:webcam'
             name: Câmera Xiaofang
           - entity: binary_sensor.v380_piscina
-            icon: 'mdi:video'
+            icon: 'hass:video'
             name: Câmera 360 Piscina
           - entity: binary_sensor.v380_interna
-            icon: 'mdi:video'
+            icon: 'hass:video'
             name: Câmera 360 Interna 2
         show_header_toggle: false
         title: Câmeras
         type: entities
       - entities:
-          - entity: binary_sensor.tv_lg_game
-            name: TV LG55 - Salva Social
           - entity: binary_sensor.chrome_cast_quarto
           - entity: binary_sensor.chrome_cast_game
           - entity: binary_sensor.google_home_quarto
           - entity: binary_sensor.google_home_sala
         show_header_toggle: false
-        title: Tv / Casts / G Home
+        title: Casts / G Home
         type: entities
       - entities:
           - entity: sensor.db_size
-            icon: 'mdi:database'
+            icon: 'hass:database'
             name: Maria DB
           - entity: sensor.last_boot
             name: Última inicialização
           - entity: sensor.uptime
         type: entities
-    icon: 'mdi:raspberry-pi'
+    icon: 'hass:raspberry-pi'
     panel: false
     path: dispositivos
     title: Dispositivos
-  - badges: []
-    cards:
-      - entity: climate.ar_da_cozinha
-        type: thermostat
-      - entity: climate.ar_da_sala
-        type: thermostat
-      - entity: climate.climatizador
-        name: Suíte
-        type: thermostat
-    icon: 'mdi:air-filter'
-    path: Ar
-    title: Lab
   - badges: []
     cards:
       - entities:
@@ -5235,38 +5867,39 @@ views:
       - entities:
           - label: 'Luz corredor liga com movimento:'
             type: section
+          - entity: input_number.tempo_corredor
+            name: Tempo máx (min)
+          - entity: timer.timer_corredor
+            name: Timer
           - entity: automation.luz_corredor_liga_movimento
-            icon: 'mdi:lightbulb-on'
-            name: 'Liga aut. entre 18:30h e 7:00h'
-          - entity: automation.luz_corredor_desliga_s_movimento_2min
-            icon: 'mdi:lightbulb'
-            name: Deseliga se não tiver movinto (2min)
+            icon: 'hass:lightbulb-on'
+            name: Liga se tiver movimento (Noite)
+          - entity: automation.luz_corredor_liga_nublado_movimento
+            icon: 'hass:lightbulb-on'
+            name: Liga se tiver movimento (Nublado 75%)
+          - entity: automation.luz_corredor_desliga_s_movimento
+            icon: 'hass:lightbulb'
+            name: Deseliga se não tiver movinto
+          - entity: automation.reinicia_timer_closet_com_movimento
+            icon: 'hass:timer'
+            name: Reinicia timer se tiver movimento
           - label: 'Luz closet liga com movimento:'
             type: section
+          - entity: input_number.tempo_closet
+            name: Tempo máx (min)
+          - entity: timer.timer_closet
+            name: Timer
           - entity: automation.luz_closet_liga_movimento
-            icon: 'mdi:lightbulb-on'
-            name: 'Liga aut. entre 19:00h e 06:30h'
-          - entity: automation.luz_closet_desliga_s_movimento_3min
-            icon: 'mdi:lightbulb'
-            name: Deseliga se não tiver movinto (2min)
-          - label: 'Luz banheiros desligam se ligada por muito tempo:'
-            type: section
-          - entity: input_number.tempo_banheiro_suite
-            name: Suíte
-          - entity: automation.luz_sem_desligar_banheiro_suite
-            name: Banhero da suíte
-          - type: section
-          - entity: input_number.tempo_banheiro_social
-            name: Social
-          - entity: automation.luz_sem_desligar_banheiro_social
-            name: Banhero social
-          - type: section
-          - entity: input_number.tempo_banheiro_lavabo
-            name: Lavabo
-          - entity: automation.luz_sem_desligar_lavabo
-            name: Lavabo
+            icon: 'hass:lightbulb-on'
+            name: Liga se tiver movimento (Noite)
+          - entity: automation.luz_closet_desliga_s_movimento
+            icon: 'hass:lightbulb'
+            name: Deseliga se não tiver movinto
+          - entity: automation.reinicia_timer_corredor_com_movimento
+            icon: 'hass:timer'
+            name: Reinicia timer se tiver movimento
         show_header_toggle: false
-        title: Regras Luzes Internas
+        title: Timers Luzes (Corredor/Closet)
         type: entities
       - entities:
           - label: 'Fala a temperatura do ar ao ligar:'
@@ -5368,7 +6001,42 @@ views:
         show_header_toggle: false
         title: Falta de energia
         type: entities
-    icon: 'mdi:home-automation'
+      - entities:
+          - entity: automation.liga_purificador_11_00
+          - entity: automation.desliga_purificador_13_30
+          - entity: automation.desliga_purificador_23_00
+        show_header_toggle: false
+        title: Purificador no Inverno
+        type: entities
+      - entities:
+          - label: Suíte
+            type: section
+          - entity: input_number.tempo_banheiro_suite
+            name: Tempo máx (min)
+          - entity: timer.timer_suite
+            name: Timer
+          - entity: automation.luz_sem_desligar_banheiro_suite
+            name: Desliga suíte se esquecer ligado?
+          - label: Social
+            type: section
+          - entity: input_number.tempo_banheiro_social
+            name: Tempo máx (min)
+          - entity: timer.timer_social
+            name: Timer
+          - entity: automation.luz_sem_desligar_banheiro_social
+            name: Desliga social se esquecer ligado?
+          - label: Lavabo
+            type: section
+          - entity: input_number.tempo_banheiro_lavabo
+            name: Tempo máx (min)
+          - entity: timer.timer_lavabo
+            name: Timer
+          - entity: automation.luz_sem_desligar_lavabo
+            name: Desliga lavabo se esquecer ligado?
+        show_header_toggle: false
+        title: Timers (Banheiros)
+        type: entities
+    icon: 'hass:home-automation'
     path: automacoes
     title: Automações
   - badges: []
@@ -5419,7 +6087,38 @@ views:
             type: cast
             view: dispositivos
         type: entities
-    icon: 'mdi:cast'
+      - entity: script.telegram_call_alarme
+        type: entity
+      - entity: light.luz_do_lavabo
+        icon: 'mdi:hotel'
+        show_last_changed: true
+        show_state: true
+        state:
+          - styles:
+              card:
+                - filter: opacity(85%)
+              state:
+                - color: '#616161'
+            value: 'off'
+          - styles:
+              card:
+                - filter: opacity(40%)
+                - color: '#5D4037'
+            value: unavailable
+          - styles:
+              card:
+                - box-shadow: '0px 0px 10px #FF0'
+              state:
+                - color: var(--secondary-text-color)
+            value: 'on'
+          - styles:
+              card:
+                - filter: opacity(85%)
+              state:
+                - color: '#616161'
+            value: 'off'
+        type: 'custom:button-card'
+    icon: 'hass:cast'
     panel: false
     path: cast
     title: Cast
