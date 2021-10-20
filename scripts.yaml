@@ -1295,7 +1295,7 @@ telegram_call_alarme:
   sequence:
     - service: shell_command.telegram_call
       data_template:
-        url: 'http://api.callmebot.com/start.php?source=auth&user=@remontti&text=Alarme%20Disparou&lang=pt-BR-Standard-A'
+        url: 'http://api.callmebot.com/start.php?source=auth&user=@SEU_URUARIO&text=MENSAGEM&lang=pt-BR-Standard-A'
 
 # TESTE BROADLINK
 #teste_10:
