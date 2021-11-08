@@ -1,5 +1,5 @@
 # Projeto Home Assistant by Rudimar Remontti
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/001.png">
+<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/1.png">
 
 http://home-assistant.io
 
