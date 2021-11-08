@@ -11,15 +11,21 @@ https://forum.homeassistantbrasil.com.br/
 
 <h2>Lista de dispositivos utilizados no Projeto</h2>
 
+<b>Kit Rasberry pi 3 +Case + SD + Fonte (Aposentei! Troquei pelo Pi4)</b> https://goo.gl/ywGofg
+
+<b>Cartão Micro Sd Sandisk Extreme Pro 64gb 170mb/s Sdxc A2 4k</b> (Aposentei! Troquei pelo Pi4 com NVME) <a href="https://produto.mercadolivre.com.br/MLB-1156511568-carto-micro-sd-sandisk-extreme-pro-64gb-170mbs-sdxc-a2-4k-_JM#position=15&search_layout=stack&type=item&tracking_id=61788fc9-4fd6-4655-90fa-f1f0f4ccaa6fLink">Link</a>
+
+<b>Kit Raspberry Pi4 8gb Ram + Case Argon One M.2 + Ssd M2 128gb</b> <a href="https://produto.mercadolivre.com.br/MLB-1832711882-kit-raspberry-pi4-8gb-ram-case-argon-one-m2-ssd-m2-128gb-_JM#backend=item_decorator&backend_type=function&client=bookmarks-polycard">Link</a>
+
+<b>Hub Zigbee Cc2531 - Zigbee2mqtt Pronto Para Uso C/case 3d</b> <a href="https://produto.mercadolivre.com.br/MLB-1803708081-hub-zigbee-cc2531-zigbee2mqtt-pronto-para-uso-ccase-3d-_JM#backend=item_decorator&backend_type=function&client=bookmarks-polycard">Link</a>
 
 <b>Google Home min </b>https://goo.gl/8owfdc
 
 <b>Google Chromecast 2 </b> https://goo.gl/mnPxqm
 
-<b>Echo Dot</b><a href="https://www.amazon.com.br/Echo-Dot-3%C2%AA-Gera%C3%A7%C3%A3o-Cor-Preta/dp/B07PDHSJ1H">Link</a>
+<b>Echo Dot</b> <a href="https://www.amazon.com.br/Echo-Dot-3%C2%AA-Gera%C3%A7%C3%A3o-Cor-Preta/dp/B07PDHSJ1H/ref=sr_1_15?adgrpid=113914054704&gclid=Cj0KCQiAsqOMBhDFARIsAFBTN3fmHzLWEVU0Wllxvcj5yvXcOVd1TG4ClvLZo2-ZM6fW1vXC1zahD8EaAvH-EALw_wcB&hvadid=457954279408&hvdev=c&hvlocphy=1031638&hvnetw=g&hvqmt=b&hvrand=1240211603840244384&hvtargid=kwd-424746325348&hydadcr=14667_10954494&keywords=echo+showe&qid=1636389823&sr=8-15&ufe=app_do%3Aamzn1.fos.95de73c3-5dda-43a7-bd1f-63af03b14751">Link</a>
 
-
-<b>Kit Rasberry +Case + SD + Fonte</b> https://goo.gl/ywGofg
+<b>Echo Show 8</b> <a href="https://www.amazon.com.br/Echo-Show-8-Smart-Speaker-Alexa/dp/B07SG8F1QF/ref=sr_1_4?adgrpid=113914054704&gclid=Cj0KCQiAsqOMBhDFARIsAFBTN3fmHzLWEVU0Wllxvcj5yvXcOVd1TG4ClvLZo2-ZM6fW1vXC1zahD8EaAvH-EALw_wcB&hvadid=457954279408&hvdev=c&hvlocphy=1031638&hvnetw=g&hvqmt=b&hvrand=1240211603840244384&hvtargid=kwd-424746325348&hydadcr=14667_10954494&keywords=echo+showe&qid=1636389796&sr=8-4&ufe=app_do%3Aamzn1.fos.95de73c3-5dda-43a7-bd1f-63af03b14751">Link</a>
 
 <b>Sirenes Residencial	3</b> https://goo.gl/8zxd59
 
@@ -46,6 +52,16 @@ Firmware utilizado Tasmota: https://github.com/arendst/Sonoff-Tasmota/wiki</i>
 <b>Diggo 433Mhz - Controle</b> https://goo.gl/Yy6ZZ3
 
 <b>Sonoff Bridge 433Mhz</b> https://goo.gl/eN9MoS
+
+<b>Sonoff Mini Zigbee</b> <a href="https://produto.mercadolivre.com.br/MLB-1962709864-sonoff-mini-zigbee-automaco-zbmini-alexa-google-_JM#position=1&search_layout=stack&type=item&tracking_id=225df5fd-49b0-4e24-8570-31e6cf147050">Link</a>
+
+<b>Sonoff Zigbee Portas E Janelas Dw2 </b> <a href="https://produto.mercadolivre.com.br/MLB-1968413392-sensor-de-portas-e-janelas-sonoff-dw2-wi-fi-_JM#position=2&search_layout=stack&type=item&tracking_id=225df5fd-49b0-4e24-8570-31e6cf147050">Link</a>
+
+<b>Sonoff Bridge Zigbee </b> <a href="https://produto.mercadolivre.com.br/MLB-2037924242-hub-sonoff-bridge-zigbee-30-ponte-inteligente-wifi-alexa-_JM#position=3&search_layout=stack&type=item&tracking_id=225df5fd-49b0-4e24-8570-31e6cf147050">Link</a>
+
+<b>Sonoff Zigbee Movimento </b> <a href="https://produto.mercadolivre.com.br/MLB-2010047624-zigbee-multi-funco-pontes-inteligente-wifi-porta-remota-_JM#position=5&search_layout=stack&type=item&tracking_id=225df5fd-49b0-4e24-8570-31e6cf147050">Link</a>
+
+<b>Sonoff Zigbee Temperatura umidade </b> <a href="https://produto.mercadolivre.com.br/MLB-2057459586-sensor-de-temperatura-e-umidade-sonoff-snzb-02-zigbee-alexa-_JM#position=42&search_layout=stack&type=item&tracking_id=225df5fd-49b0-4e24-8570-31e6cf147050">Link</a>
 
 <b>Digoo DG-M1X HD 960P</b> https://goo.gl/s7EnRi
 
