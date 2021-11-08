@@ -88,22 +88,5 @@ Mas recomendo comprar o aprova d'agua <b> Ultrasonic Module SN-SR04T </b> http:/
 <hr>
 Para rede wireless foi usado um kit <b>Google Wifi</b> com 3.
 <hr>
-  
-<h2>Screeshots HA 0.113.3 / HassOS 4.12 (08/08/2020)</h2>
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/001.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/002.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/003.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/004.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/005.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/006.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/007.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/008.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/009.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/010.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/013.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/014.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/015.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/016.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/017.png">
-<img src="https://raw.githubusercontent.com/remontti/MyHa/master/screenshots/018.png">
+
 
